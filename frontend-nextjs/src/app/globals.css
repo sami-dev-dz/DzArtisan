@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-secondary: #f8fafc;
+  --color-accent: #6366f1;
+  --color-indigo-soft: #e0e7ff;
+  
+  --animate-blob: blob 7s infinite;
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+  filter: blur(40px);
+  z-index: -1;
+  animation: blob 10s infinite;
+}
+
+.blob-2 {
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+  animation-delay: 2s;
+  width: 400px;
+  height: 400px;
+}
+
+@layer base {
+  a {
+    @apply transition-all duration-300 ease-in-out cursor-pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Text-based links (not buttons) */
+  a:not([class*="btn"]):not([class*="button"]) {
+    @apply hover:opacity-80;
+  }
+
+  /* Premium link class for consistent application */
+  .link-premium {
+    @apply relative inline-flex items-center gap-1 transition-colors duration-300;
+  }
+
+  .link-premium::after {
+    content: '';
+    @apply absolute bottom-[-2px] left-0 w-0 h-[1.5px] bg-blue-600 transition-all duration-300 ease-out;
+  }
+
+  .link-premium:hover::after {
+    @apply w-full;
+  }
+
+  /* Accessibility: Focus visible state */
+  a:focus-visible {
+    @apply outline-none ring-2 ring-blue-500/50 ring-offset-2 rounded-sm;
+  }
+}
