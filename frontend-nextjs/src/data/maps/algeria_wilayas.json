@@ -1,0 +1,9 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    { "type": "Feature", "properties": { "id": 1, "nom": "Adrar", "code": "01" }, "geometry": { "type": "Polygon", "coordinates": [[[0, 20], [5, 20], [5, 25], [0, 25], [0, 20]]] } },
+    { "type": "Feature", "properties": { "id": 2, "nom": "Chlef", "code": "02" }, "geometry": { "type": "Polygon", "coordinates": [[[1, 36], [2, 36], [2, 37], [1, 37], [1, 36]]] } },
+    { "type": "Feature", "properties": { "id": 16, "nom": "Alger", "code": "16" }, "geometry": { "type": "Polygon", "coordinates": [[[3, 36.7], [3.2, 36.7], [3.2, 36.8], [3, 36.8], [3, 36.7]]] } },
+    { "type": "Feature", "properties": { "id": 31, "nom": "Oran", "code": "31" }, "geometry": { "type": "Polygon", "coordinates": [[[-0.6, 35.7], [-0.4, 35.7], [-0.4, 35.8], [-0.6, 35.8], [-0.6, 35.7]]] } }
+  ]
+}

@@ -1,12 +1,4 @@
-import "./globals.css";
-import { AuthProvider } from "@/context/AuthContext";
-
 export default function RootLayout({ children }) {
-  return (
-    <html lang="fr">
-      <body>
-        <AuthProvider>{children}</AuthProvider>
-      </body>
-    </html>
-  );
+  // Pass through children - next-intl handles the redirection and language layout
+  return children;
 }

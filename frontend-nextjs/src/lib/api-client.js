@@ -14,7 +14,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      window.location.href = "/login";
+      // On laisse le composant ou le context gérer la déconnexion
+      console.warn("Session expirée (401)");
     }
     return Promise.reject(error);
   },

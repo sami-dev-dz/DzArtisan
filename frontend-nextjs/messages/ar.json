@@ -1,0 +1,839 @@
+{
+  "common": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "submit": "إرسال",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ.",
+    "success": "تمت العملية بنجاح.",
+    "search": "بحث",
+    "see_more": "عرض المزيد",
+    "see_all": "عرض جميع التنبيهات",
+    "all": "الكل",
+    "notifications": {
+      "title": "التنبيهات",
+      "unread_count": "{count} غير مقروءة",
+      "mark_all_read": "تحديد الكل كمقروء",
+      "empty": "ليس لديك أي تنبيهات حالياً.",
+      "types": {
+        "artisan_status": "ملف الحرفي",
+        "new_job": "فرصة عمل جديدة",
+        "subscription_alert": "الاشتراك",
+        "complaint_alert": "شكوى"
+      }
+    }
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "artisans": "حرفيونا",
+    "services": "الخدمات",
+    "how_it_works": "كيف تعمل",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "dashboard": "لوحة التحكم",
+    "profile": "ملفي الشخصي",
+    "logout": "تسجيل الخروج",
+    "browse_artisans": "تصفح الحرفيين",
+    "my_requests": "طلباتي",
+    "my_reviews": "تقييماتي",
+    "my_subscription": "اشتراكي",
+    "my_complaints": "شكاواي",
+    "admin_dashboard": "لوحة مسؤول النظام"
+  },
+  "hero": {
+    "badge": "المرجع الأول في الجزائر 🇩🇿",
+    "title": "جد الخبير المثالي لكل أشغالك",
+    "title_accent": "الحرفيين",
+    "subtitle": "المنصة الأولى والوحيدة للربط بين الزبائن والحرفيين المؤهلين في الجزائر. تغطية شاملة لـ 69 ولاية مع ملفات شخصية موثقة وأمان مضمون.",
+    "cta_find": "ابحث عن حرفي",
+    "cta_request": "أنشر طلباً",
+    "trust_verified": "ملفات موثقة",
+    "trust_fast": "رد سريع",
+    "trust_wilayas": "69 ولاية",
+    "trust_secure": "دفع آمن"
+  },
+  "how_it_works": {
+    "title": "كيف تعمل المنصة؟",
+    "subtitle": "طريقتان بسيطتان لاستخدام منطستنا حسب احتياجاتك.",
+    "tab_client": "أنشر طلباً",
+    "tab_direct": "بحث مباشر",
+    "client_steps": [
+      { "title": "التسجيل", "desc": "أنشئ حساب زبون مجاناً في ثوانٍ معدودة." },
+      { "title": "النشر", "desc": "صف احتياجك وحدد ميزانيتك." },
+      { "title": "الاختيار", "desc": "استقبل العروض واختر أفضل حرفي لك." },
+      { "title": "التقييم", "desc": "اترك رأيك حول الخدمة المقدمة." }
+    ],
+    "direct_steps": [
+      { "title": "الاستكشاف", "desc": "ابحث حسب الحرفة والمدينة بين خبرائنا." },
+      { "title": "الاتصال", "desc": "تحدث مباشرة عبر واتساب أو الهاتف." },
+      { "title": "التقييم", "desc": "شارك تجربتك مع المجتمع." }
+    ],
+    "section_label": "العملية",
+    "recommended_label": "موصى به",
+    "recommended_desc": "يحصل معظم العملاء على عروض دقيقة في غضون 24 ساعة."
+  },
+  "features": {
+    "title": "لماذا تختار DzArtisan ؟",
+    "subtitle": "نحن نضع الجودة والثقة في قلب كل تدخل.",
+    "verified": { "title": "ملفات موثقة", "desc": "يخضع كل حرفي لتدقيق صارم لوثائقه وخبرته." },
+    "fast": { "title": "خدمة سريعة", "desc": "نظام تنبيهات فوري للتواصل المباشر عبر واتساب والهاتف." },
+    "coverage": { "title": "تغطية وطنية", "desc": "سواء كنت في الجزائر، وهران أو تمنراست، ستجد خبيراً بالقرب منك." },
+    "secure": { "title": "أمان كامل", "desc": "نظام إدارة نشط للتعامل مع الشكاوى لراحة بالك." }
+  },
+  "pricing": {
+    "title": "عزز نشاطك الحرفي",
+    "subtitle": "اختر الباقة التي تناسب طموحاتك كحرفي.",
+    "cta": "اشترك الآن",
+    "note": "الدفع متاح عبر الذهبية، CIB أو CCP مع تفعيل من الإدارة.",
+    "faq_link": "عرض كل الأسعار والأسئلة الشائعة",
+    "plans": {
+      "basic": { "name": "تجريبي", "price": "0", "duration": "3 أشهر", "benefit": "استكشاف المنصة" },
+      "pro": { "name": "شهري", "price": "500", "duration": "شهر", "benefit": "وصول كامل وسريع" },
+      "premium": { "name": "فصلي", "price": "1300", "duration": "3 أشهر", "benefit": "وفر 200 دج" },
+      "annual": { "name": "سنوي", "price": "4500", "duration": "سنة كاملة", "benefit": "وفر 1500 دج", "badge": "الأكثر توفيراً" }
+    }
+  },
+  "testimonials": {
+    "title": "ثقتهم بنا هي فخرنا"
+  },
+  "cta_banner": {
+    "title": "طوّر نشاطك الحرفي اليوم",
+    "subtitle": "انضم للمحترفين الموثوقين في الجزائر.",
+    "client_btn": "أنا زبون",
+    "artisan_btn": "أنا حرفي"
+  },
+  "authentication": {
+    "login_title": "مرحباً بعودتك",
+    "login_subtitle": "سجل الدخول للوصول إلى لوحة التحكم.",
+    "register_title": "إنشاء حساب",
+    "register_subtitle": "انضم إلى أكبر منصة للحرفيين في الجزائر.",
+    "tab_client": "أنا زبون",
+    "tab_artisan": "أنا حرفي",
+    "email_label": "البريد الإلكتروني",
+    "email_placeholder": "your@email.com",
+    "email_invalid": "تنسيق البريد الإلكتروني غير صالح.",
+    "password_label": "كلمة المرور",
+    "password_placeholder": "••••••••",
+    "password_min_length": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
+    "forgot_link": "نسيتها؟",
+    "strength_empty": "فارغ",
+    "strength_weak": "ضعيف",
+    "strength_medium": "متوسط",
+    "strength_strong": "قوي",
+    "confirm_label": "تأكيد كلمة المرور",
+    "confirm_placeholder": "••••••••",
+    "confirm_mismatch": "كلمات المرور غير متطابقة.",
+    "name_label": "الاسم الكامل",
+    "name_placeholder": "مثال: أمين محمد",
+    "name_artisan_hint": "سيظهر هذا الاسم في ملفك الشخصي. أي تغيير مستقبلي سيتطلب مراجعة.",
+    "phone_label": "رقم الهاتف",
+    "phone_invalid": "تنسيق غير صالح (مثال: 05xx, 06xx, 07xx و 8 أرقام).",
+    "terms_prefix": "أوافق على",
+    "terms_link": "شروط الاستخدام",
+    "privacy_prefix": "و",
+    "privacy_link": "سياسة الخصوصية",
+    "btn_login": "تسجيل الدخول",
+    "btn_register": "إنشاء حساب",
+    "btn_submitting": "يرجى الانتظار...",
+    "or_continue_with": "أو المتابعة باستخدام",
+    "google_btn": "تسجيل الدخول بواسطة جوجل",
+    "artisan_google_note": "لأسباب أمنية ومهنية، تسجيل الدخول عبر جوجل غير متاح للحرفيين. يرجى استخدام البريد الإلكتروني.",
+    "artisan_pending_note": "الحساب الخاص بك سيتطلب موافقة من الإدارة قبل أن يصبح ملفك الشخصي متاحاً للعموم.",
+    "duplicate_email": "البريد الإلكتروني مسجل بالفعل. الرجاء تسجيل الدخول.",
+    "duplicate_phone": "رقم الهاتف هذا مرتبط بحساب آخر بالفعل.",
+    "generic_login_error": "بيانات الدخول المقدمة غير صحيحة.",
+    "forgot_title": "نسيت كلمة المرور؟",
+    "forgot_subtitle": "أدخل بريدك الإلكتروني لتلقي رابط إستعادة آمن.",
+    "btn_send_link": "إرسال الرابط",
+    "forgot_success_msg": "إذا كان هذا البريد الإلكتروني موجوداً في نظامنا، فقد تم إرسال رابط الإستعادة إليك.",
+    "back_to_login": "العودة لتسجيل الدخول",
+    "reset_title": "كلمة مرور جديدة",
+    "reset_subtitle": "الرجاء تعيين كلمة المرور الجديدة.",
+    "btn_reset": "إعادة تعيين",
+    "reset_success_msg": "تم تغيير كلمة المرور بنجاح.",
+    "invalid_token": "رابط الإستعادة غير صالح أو منتهي الصلاحية.",
+    "btn_request_new": "طلب رابط جديد",
+    "network_error": "لا يمكن الاتصال بالخادم. تحقق من اتصالك.",
+    "no_account": "ليس لديك حساب؟ سجل الآن",
+    "have_account": "لديك حساب بالفعل؟ سجل الدخول"
+  },
+  "artisan_profile": {
+    "about": "حول",
+    "services_offered": "الخدمات المقدمة",
+    "reviews": "تقييمات العملاء",
+    "contact": "تواصل",
+    "portfolio": "معرض الأعمال",
+    "availability": "التوفر",
+    "available_now": "متاح فوراً",
+    "busy": "مشغول حالياً"
+  },
+  "client_search": {
+    "search_placeholder": "ما الذي تبحث عنه؟ (مثال: سباك، كهربائي...)",
+    "filter_by_wilaya": "تصفية حسب الولاية",
+    "filter_by_category": "الفئة",
+    "sort_by": "ترتيب حسب",
+    "best_rated": "الأعلى تقييماً",
+    "most_recent": "الأحدث",
+    "no_results": "لم يتم العثور على حرفيين لهذه المعايير."
+  },
+  "interventions": {
+    "my_requests": "طلباتي",
+    "status": {
+       "ouvert": "قيد الانتظار",
+       "en_cours": "نشط",
+       "termine": "مكتمل",
+       "annule": "ملغى"
+    },
+    "history": {
+      "title": "سجل الطلبات",
+      "new_request": "طلب جديد",
+      "empty_title": "لا توجد طلبات بعد",
+      "empty_desc": "لم تقم بنشر أي طلب خدمة حتى الآن. اعثر على حرفي مؤهل الآن!",
+      "empty_btn": "انشر طلبك الأول",
+      "details_btn": "التفاصيل",
+      "cancel_btn": "إلغاء الطلب",
+      "review_btn": "ترك تقييما",
+      "submitted_on": "نشر في {date}",
+      "preferred_date": "التاريخ المفضل: {date}",
+      "no_preferred_date": "تاريخ مرن",
+      "location": "الموقع: {commune}، {wilaya}",
+      "artisan_assigned": "الحرفي: {name}",
+      "no_artisan": "في انتظار حرفي",
+      "description": "الوصف",
+      "photos": "الصور المرفقة",
+      "map": "موقع العمل"
+    },
+    "review_modal": {
+      "title": "أضف تقييمك",
+      "subtitle": "ملاحظاتك تساعد المجتمع وتشجع الحرفيين الجيدين.",
+      "rating_label": "التقييم العام",
+      "comment_label": "تعليقك",
+      "comment_placeholder": "حدثنا عن تجربتك...",
+      "submit_btn": "إرسال التقييم",
+      "success": "شكراً على تقييمك!"
+    }
+  },
+  "admin": {
+    "dashboard_title": "إدارة DzArtisan",
+    "overview": "لوحة العرض",
+    "users": "الزبائن",
+    "artisans": "الحرفيون",
+    "subscriptions": "الاشتراكات",
+    "interventions": "الطلبات",
+    "complaints": "الشكاوى",
+    "statistics": "الإحصائيات",
+    "settings": "الإعدادات",
+    "artisans_validation": "التحقق من الحرفيين",
+    "categories": "فئات المهن",
+    "reports": "التبليغات",
+    "welcome": "مرحباً",
+    "refresh": "تحديث",
+    "loading_error": "تعذر تحميل لوحة التحكم",
+    "retry": "إعادة المحاولة",
+    "all_clear": "لا توجد عناصر تحتاج إلى اهتمام فوري. كل شيء على ما يرام.",
+    "attention_required": "انتباه مطلوب",
+    "kpi": {
+      "total_users": "المستخدمون المسجلون",
+      "active_artisans": "الحرفيون النشطون",
+      "requests_month": "الطلبات هذا الشهر",
+      "revenue_month": "العائدات هذا الشهر (دج)"
+    },
+    "alerts": {
+      "pending_artisans": "حرفيون بانتظار الموافقة",
+      "unread_complaints": "شكاوى جديدة غير مقروءة",
+      "expiring_subs": "اشتراكات تنتهي خلال 7 أيام"
+    },
+    "charts": {
+      "registrations_label": "تسجيلات جديدة",
+      "registrations_title": "أسبوعياً — آخر 8 أسابيع",
+      "wilayas_label": "طلبات التدخل",
+      "wilayas_title": "أكثر 10 ولايات نشاطاً"
+    },
+    "activity": {
+      "label": "سجل الأنشطة",
+      "title": "الأحداث الأخيرة",
+      "empty": "لا توجد أنشطة حديثة.",
+      "view": "عرض",
+      "artisan_submitted": "تم تقديم ملف حرفي جديد",
+      "intervention_created": "تم نشر طلب تدخل جديد",
+      "subscription_renewed": "تم تفعيل اشتراك",
+      "account_suspended": "تم تعليق حساب"
+    },
+    "trend": {
+      "vs_last_month": "مقارنة بالشهر الماضي",
+      "stable": "مستقر مقارنة بالشهر الماضي",
+      "up": "↑ مقارنة بالشهر الماضي",
+      "down": "↓ مقارنة بالشهر الماضي"
+    },
+    "artisan_management": {
+      "title": "إدارة الحرفيين",
+      "subtitle": "تحقق من طلبات التسجيل، قم بإدارة التجميد، وبرز أفضل الخبراء لديك.",
+      "tabs": {
+        "pending": "قيد الانتظار",
+        "approved": "المقبولون",
+        "rejected": "المرفوضون",
+        "suspended": "المجمدون"
+      },
+      "table": {
+        "artisan": "الحرفي",
+        "category": "الفئة",
+        "location": "الموقع",
+        "docs": "الوثائق",
+        "date": "تاريخ التسجيل",
+        "actions": "الإجراءات",
+        "no_data": "لم يتم العثور على حرفيين في هذه الفئة."
+      },
+      "actions": {
+        "approve": "قبول",
+        "reject": "رفض",
+        "suspend": "تجميد",
+        "unsuspend": "فك التجميد",
+        "promote": "ترقية",
+        "feature": "تمييز",
+        "recommend": "توصية",
+        "view_details": "عرض التفاصيل"
+      },
+      "modals": {
+        "rejection_title": "سبب الرفض",
+        "rejection_label": "اشرح سبب رفض الطلب (سيتم إرساله عبر البريد الإلكتروني)",
+        "suspension_title": "سبب التجميد",
+        "suspension_label": "اشرح سبب تجميد الحساب (سيتم إرساله عبر البريد الإلكتروني)",
+        "confirm_btn": "تأكيد الإجراء",
+        "reason_required": "السبب إلزامي."
+      },
+      "details": {
+        "title": "تفاصيل الملف الشخصي",
+        "personal_info": "المعلومات الشخصية",
+        "professional_info": "المسار المهني",
+        "documents": "الوثائق الثبوتية",
+        "history": "سجل الحساب",
+        "experience": "{years} سنوات خبرة",
+        "member_since": "عضو منذ {date}"
+      },
+      "notifications": {
+        "approved": "تم قبول الحرفي بنجاح. تم إرسال بريد تهنئة له.",
+        "rejected": "تم رفض الطلب. تم إخطار الحرفي بالسبب عبر البريد.",
+        "suspended": "تم تجميد الحساب بنجاح.",
+        "unsuspended": "تم فك تجميد الحساب.",
+        "promoted": "تم تحديث حالة الترقية."
+      },
+      "subscription_management": {
+        "title": "إدارة الاشتراكات",
+        "subtitle": "تتبع الإيرادات، التحقق من الدفع اليدوي، وإدارة فترات التفعيل.",
+        "stats": {
+          "active": "اشتراكات نشطة",
+          "pending": "دفعات قيد الانتظار",
+          "expiring": "تنتهي قريباً",
+          "expired": "منتهية"
+        },
+        "tabs": {
+          "all": "الكل",
+          "active": "نشطة",
+          "trial": "تجريبية",
+          "expiring": "تنتهي قريباً",
+          "expired": "منتهية",
+          "suspended": "مجمدة"
+        },
+        "pending_payments": {
+          "title": "دفعات بانتظار التأكيد",
+          "confirm_btn": "تأكيد الدفع",
+          "reject_btn": "رفض",
+          "view_proof": "عرض الوصل",
+          "expected_amount": "المبلغ المتوقع",
+          "artisan_info": "معلومات الحرفي",
+          "no_pending": "لا توجد دفعات معلقة."
+        },
+        "table": {
+          "artisan": "الحرفي",
+          "plan": "الباقة",
+          "dates": "الفترة",
+          "remaining": "الأيام المتبقية",
+          "payment": "الدفع",
+          "status": "الحالة",
+          "history": "السجل",
+          "days": "{count} يوم",
+          "expired_ago": "انتهى منذ {days} يوم",
+          "manual_method": "يدوي / تحويل"
+        },
+        "manual_activation": {
+          "btn": "تفعيل يدوي",
+          "title": "إنشاء/تمديد اشتراك",
+          "search_artisan": "البحث عن حرفي",
+          "select_plan": "اختر الباقة",
+          "amount_label": "المبلغ المستلم (دج)",
+          "method_label": "طريقة الدفع",
+          "success": "تم تفعيل الاشتراك بنجاح."
+        },
+        "modals": {
+          "confirm_payment_title": "تأكيد التفعيل",
+          "confirm_payment_desc": "سيؤدي هذا لتفعيل الاشتراك فوراً وإرسال بريد تأكيد للحرفي.",
+          "reject_payment_title": "رفض الدفع",
+          "reject_payment_placeholder": "اشرح سبب رفض التحويل...",
+          "history_title": "السجل الكامل — {name}"
+        },
+        "complaints_management": {
+          "title": "إدارة الشكاوى",
+          "subtitle": "إدارة النزاعات بين الزبائن والحرفيين، التحقيق في الحالات واتخاذ إجراءات الإشراف.",
+          "tabs": {
+            "new": "جديدة",
+            "investigating": "قيد التحقيق",
+            "all": "الكل"
+          },
+          "table": {
+            "type": "النوع",
+            "complainant": "المشتكي",
+            "accused": "المشتكى عليه",
+            "category": "الفئة",
+            "date": "التاريخ",
+            "photos": "الصور",
+            "status": "الحالة"
+          },
+          "types": {
+            "client_to_artisan": "زبون ← حرفي",
+            "artisan_to_client": "حرفي ← زبون"
+          },
+          "status": {
+            "new": "جديدة",
+            "investigating": "تحقيق",
+            "resolved": "تم الحل",
+            "dismissed": "محفوظة"
+          },
+          "details": {
+            "title": "تفاصيل الشكوى",
+            "description": "وصف الوقائع",
+            "evidence": "الأدلة (صور)",
+            "linked_intervention": "التدخل المرتبط",
+            "audit_log": "سجل الإجراءات",
+            "no_evidence": "لا توجد صور مرفقة",
+            "no_intervention": "لا يوجد تدخل مرتبط"
+          },
+          "actions": {
+            "investigate": "بدء التحقيق",
+            "add_note": "إضافة ملاحظة داخلية",
+            "send_warning": "إرسال تحذير",
+            "suspend_account": "تجميد الحساب",
+            "delete_account": "حذف الحساب",
+            "resolve": "تحديد كمحلولة",
+            "dismiss": "حفظ القضية",
+            "confirm_delete": "هل أنت متأكد من رغبتك في حذف هذا الحساب نهائياً؟ هذا الإجراء غير قابل للتراجع."
+          },
+          "three_strikes": {
+            "alert_title": "تحذير: ثلاث شكاوى مؤكدة",
+            "alert_desc": "وصل هذا الحرفي إلى حد 3 شكاوى مؤكدة. نوصي بشدة بإجراء مراجعة يدوية.",
+            "badge": "3+ شكاوى"
+          },
+          "notifications": {
+            "status_updated": "تم تحديث حالة الشكوى.",
+            "note_added": "تمت إضافة ملاحظة داخلية.",
+            "warning_sent": "تم إرسال التحذير عبر البريد.",
+            "account_suspended": "تم تجميد حساب المشتكى عليه.",
+            "account_deleted": "تم حذف الحساب نهائياً.",
+            "resolved": "تم حل الشكوى.",
+            "dismissed": "تم حفظ الشكوى."
+          },
+          "user_management": {
+            "title": "إدارة المستخدمين",
+            "subtitle": "إدارة حسابات الزبائن والحرفيين، التواصل معهم والإشراف على المجتمع.",
+            "tabs": {
+              "clients": "الزبائن",
+              "artisans": "الحرفيين"
+            },
+            "filters": {
+              "search_placeholder": "الاسم، البريد أو الهاتف...",
+              "all_wilayas": "كل الولايات",
+              "all_statuses": "كل الحالات",
+              "status_active": "نشط",
+              "status_suspended": "موقوف"
+            },
+            "table": {
+              "user": "المستخدم",
+              "contact": "الاتصال",
+              "stats": "الإحصائيات",
+              "status": "الحالة",
+              "actions": "الإجراءات",
+              "requests": "{count} طلب",
+              "reviews": "{count} تقييم",
+              "rating": "{rate} ★",
+              "no_users": "لم يتم العثور على مستخدمين."
+            },
+            "actions": {
+              "view_profile": "عرض الملف",
+              "send_email": "إرسال بريد",
+              "suspend": "توقيف",
+              "unsuspend": "تفعيل",
+              "delete": "حذف نهائي",
+              "bulk_email": "بريد جماعي",
+              "bulk_suspend": "توقيف جماعي"
+            },
+            "modals": {
+              "email_title": "إرسال بريد إلى {name}",
+              "email_subject": "موضوع الرسالة",
+              "email_body": "محتوى الرسالة",
+              "email_send": "إرسال البريد",
+              "suspend_title": "توقيف حساب {name}",
+              "suspend_reason": "سبب التوقيف (يُرسل عبر البريد)",
+              "delete_title": "حذف نهائي: {name}",
+              "delete_warning": "هذا الإجراء غير قابل للتراجع. سيتم إخفاء كل البيانات الشخصية وفقاً للقانون 18-07.",
+              "delete_reason": "سبب الحذف (إلزامي)",
+              "confirm_delete": "حذف الحساب"
+            },
+            "notifications": {
+              "email_sent": "تم إرسال البريد بنجاح.",
+              "user_suspended": "تم توقيف المستخدم.",
+              "user_unsuspended": "تم رفع التوقيف.",
+              "user_deleted": "تم حذف الحساب وتجهيل البيانات.",
+              "bulk_success": "تم تنفيذ الإجراء الجماعي بنجاح."
+            }
+          },
+          "statistics": {
+            "title": "الإحصائيات والتحليلات",
+            "subtitle": "تتبع نشاط المنصة، رضا الزبائن وأداء الحرفيين.",
+            "map_title": "النشاط حسب الولاية",
+            "map_requests": "{count} طلبات",
+            "map_artisans": "{count} حرفيين",
+            "map_top_category": "التخصص الأكثر طلباً: {name}",
+            "charts": {
+              "top_wilayas": "أفضل 10 ولايات حسب النشاط",
+              "requests_by_category": "توزيع الطلبات حسب المهنة",
+              "satisfaction_trends": "اتجاه الرضا (12 شهراً)",
+              "conversion": "مقاييس التحويل",
+              "view_to_contact": "من المشاهدات إلى الاتصالات",
+              "request_to_response": "من الطلبات إلى الردود"
+            },
+            "ranking": {
+              "title": "ترتيب سرعة الاستجابة",
+              "subtitle": "الحرفيون الأكثر أداءً حسب وقت الرد.",
+              "artisan": "الحرفي",
+              "category": "المهنة",
+              "views": "مشاهدات",
+              "contacts": "اتصالات",
+              "conv_rate": "التحويل (%)",
+              "response_time": "وقت الرد (دقيقة)",
+              "requests_responded": "الردود",
+              "export_btn": "تصدير إلى CSV"
+            },
+            "no_data": "لا تتوفر بيانات لهذه الفترة."
+          }
+        }
+      }
+    }
+  },
+  "onboarding": {
+    "title": "لنقم بإعداد ملفك الشخصي",
+    "subtitle": "أكمل هذه المعلومات لتصبح مرئياً للزبائن في الجزائر.",
+    "step_info": "الخطوة {current} من {total}",
+    "section_required": "إلزامي",
+    "section_optional": "اختياري",
+    "photo_title": "الصورة الشخصية",
+    "photo_hint": "الصورة الاحترافية تزيد من فرصك بنسبة 80٪.",
+    "photo_upload": "رفع صورة",
+    "photo_remove": "حذف",
+    "name_edit_title": "تعديل الاسم",
+    "name_edit_desc": "يُستخدم اسمك الكامل للفواتير وثقة العملاء. يجب أن يتطابق مع وثائقك الرسمية.",
+    "whatsapp_label": "رابط واتساب",
+    "whatsapp_placeholder": "رابط لمحادثتك على واتساب",
+    "whatsapp_btn": "توليد من رقمي",
+    "whatsapp_test": "تجربة الرابط",
+    "categories_title": "المهن والخدمات",
+    "categories_desc": "اختر مجالاً أو أكثر من مجالات خبرتك.",
+    "wilayas_title": "مناطق التدخل",
+    "wilayas_desc": "ما هي الولايات التي يمكنك التنقل إليها؟",
+    "wilayas_placeholder": "ابحث عن ولاية...",
+    "exp_title": "مستوى الخبرة",
+    "exp_beginner": "مبتدئ",
+    "exp_1_3": "1-3 سنوات",
+    "exp_3_5": "3-5 سنوات",
+    "exp_5_10": "5-10 سنوات",
+    "exp_10_plus": "أكثر من 10 سنوات",
+    "about_title": "نبذة عنك",
+    "about_placeholder": "مثال: أنا سباك مؤهل بخبرة 5 سنوات. أتخصص في تركيب الغلايات...",
+    "about_min_chars": "مطلوب {count} أحرف كحد أدنى.",
+    "availability_title": "التوفر الحالي",
+    "availability_desc": "أشر إذا كنت مستعداً لتلقي الطلبات فوراً.",
+    "docs_title": "الوثائق المهنية",
+    "docs_desc": "إضافة الوثائق تزيد بشكل كبير من معدل الاتصال بك وتفتح شارة 'موثق'.",
+    "doc_diploma": "دبلوم / شهادة",
+    "doc_card": "بطاقة حرفي / سجل",
+    "doc_upload_hint": "انقر أو سحب وإفلات",
+    "doc_size_limit": "الحد الأقصى 5 ميجابايت (JPG، PNG، PDF)",
+    "btn_finish": "إنهاء إعداد ملفي",
+    "error_required_fields": "يرجى ملء جميع الحقول الإلزامية.",
+    "upload_success": "تم رفع الملف بنجاح"
+  },
+  "artisan_waiting": {
+    "title": "الملف قيد المراجعة",
+    "subtitle": "تم إرسال ملفك الشخصي بنجاح!",
+    "explanation": "يقوم فريقنا حالياً بمراجعة معلوماتك. سنرد عليك في غضون 48 ساعة عمل كحد أقصى.",
+    "status_submitted": "تم تقديم الملف",
+    "status_submitted_desc": "بياناتك في أمان.",
+    "status_review": "المراجعة جارية",
+    "status_review_desc": "التحقق من الوثائق والتخصصات.",
+    "status_notification": "إشعار عبر البريد",
+    "status_notification_desc": "راقب علبة الوارد الخاصة بك.",
+    "status_activation": "تفعيل الحساب",
+    "status_activation_desc": "سيكون ملفك الشخصي عاماً.",
+    "info_email": "تم إرسال الإشعار إلى",
+    "info_spam": "لا تنسَ التحقق من البريد المزعج (Spam).",
+    "info_support": "هل تحتاج مساعدة؟ اتصل بالدعم",
+    "btn_home": "العودة للرئيسية",
+    "btn_edit": "تعديل ملفي الشخصي"
+  },
+  "dashboard": {
+    "greeting": "مرحباً",
+    "artisan_verified": "حرفي موثق",
+    "opportunities_title": "فرص عمل لك",
+    "opportunities_desc": "بناءً على تخصصاتك وولاياتك.",
+    "growth_title": "النمو",
+    "completeness_title": "الملف الشخصي",
+    "suggested_actions": "إجراءات مقترحة",
+    "completeness_tip": "الملف الشخصي المكتمل يتلقى اتصالات أكثر بـ 3 أضعاف.",
+    "stats": {
+      "views": "مشاهدات الملف",
+      "contacts": "اتصالات مستلمة",
+      "rating": "متوسط التقييم",
+      "reviews": "إجمالي المراجعات"
+    },
+    "no_requests": "لم يتم العثور على طلبات",
+    "no_requests_hint": "قم بتوسيع ولاياتك أو تخصصاتك لمزيد من الظهور.",
+    "support_title": "دعم متميز",
+    "support_desc": "هل تحتاج لمساعدة في تحسين ملفك؟",
+    "support_btn": "اتصل بالدعم"
+  },
+  "subscription": {
+    "title": "إدارة الاشتراك",
+    "subtitle": "عزز ظهورك وافتح الميزات المتميزة.",
+    "current_status": "حالة الاشتراك",
+    "plan": "الباقة",
+    "expires_on": "ينتهي في",
+    "active": "نشط",
+    "expiring_soon": "ينتهي قريباً",
+    "expired": "منتهي",
+    "pending": "قيد التحقق",
+    "days_left": "{count} أيام متبقية",
+    "manage_plans": "الباقات المتاحة",
+    "best_value": "أفضل قيمة",
+    "trial_used_note": "تم استخدام العرض التجريبي بالفعل في هذا الحساب.",
+    "select_plan": "اختر الباقة",
+    "payment_modal_title": "أكمل اشتراكك",
+    "method_online": "بطاقة الذهبية / CIB",
+    "method_manual": "تحويل CCP / بريدي موب",
+    "ccp_details": "بيانات CCP",
+    "ccp_account": "رقم الحساب: 0021345678 المفتاح 45",
+    "ccp_name": "باسم: SARL DZARTISAN MARKETPLACE",
+    "upload_instruction": "يرجى تحميل صورة أو نسخة ضوئية من وصل التحويل.",
+    "upload_btn": "تحميل الوصل",
+    "confirm_payment": "تأكيد الدفع",
+    "history_title": "سجل المعاملات",
+    "table_date": "التاريخ",
+    "table_plan": "الباقة",
+    "table_amount": "المبلغ",
+    "table_method": "الطريقة",
+    "table_status": "الحالة",
+    "download_receipt": "الوصل"
+  },
+  "search": {
+    "placeholder": "ابحث بالاسم أو التخصص...",
+    "filters_title": "الفلترة",
+    "reset_filters": "إعادة تعيين الكل",
+    "geo_btn": "تفعيل موقعي",
+    "geo_denied": "تم رفض الوصول للموقع. يرجى استخدام فلتر الولاية.",
+    "wilaya_label": "الولاية",
+    "categories_label": "التخصصات",
+    "rating_label": "أقل تقييم",
+    "exp_label": "الخبرة",
+    "availability_label": "التوافر",
+    "show_available": "إظهار المتاحين فقط",
+    "sort_label": "ترتيب حسب",
+    "sort_relevance": "الأكثر ملاءمة",
+    "sort_rating": "الأعلى تقييماً",
+    "sort_exp": "الأكثر خبرة",
+    "sort_name": "الاسم (أ-ي)",
+    "results_found": "تم العثور على {count} حرفي",
+    "currently_available": "{count} متاح حالياً",
+    "view_grid": "شبكة",
+    "view_list": "قائمة",
+    "view_map": "خريطة",
+    "no_results": "لم يتم العثور على حرفيين لبحثك.",
+    "no_results_hint": "حاول توسيع الفلاتر أو إعادة تعيين البحث.",
+    "km_away": "على بعد {distance} كم",
+    "contact_whatsapp": "واتساب",
+    "contact_call": "اتصال"
+  },
+  "artisan_card": {
+    "verified_diploma": "دبلوم موثق",
+    "verified_profile": "ملف رسمي",
+    "exp_years": "{count} سنوات خبرة"
+  },
+  "wizard": {
+    "steps": {
+      "details": "التفاصيل",
+      "location": "الموقع",
+      "photos": "الصور والإرسال"
+    },
+    "step1": {
+      "title": "تفاصيل التدخل",
+      "headline": "ما الذي تبحث عنه؟",
+      "request_title": "عنوان الطلب",
+      "request_title_placeholder": "مثال: إصلاح تسرب مياه تحت حوض المطبخ",
+      "category": "فئة الخدمة",
+      "description": "وصف المشكلة",
+      "description_placeholder": "اشرح حاجتك بدقة (المواد اللازمة، الاستعجال، الأعراض...)",
+      "preferred_date": "التاريخ المفضل",
+      "date_hint": "اتركه فارغاً إذا كنت مرناً",
+      "next": "الخطوة التالية"
+    },
+    "step2": {
+      "title": "أين سيتم التدخل؟",
+      "method_title": "كيف تريد تحديد موقعك؟",
+      "auto_geo": "تحديد الموقع التلقائي",
+      "auto_geo_desc": "سريع ودقيق بنسبة 100٪",
+      "manual_entry": "إدخال يدوي",
+      "manual_entry_desc": "لعنوان مختلف",
+      "geo_btn": "اسمح لنا بتحديد موقعك",
+      "geo_denied": "تم رفض الوصول. يرجى استخدام الإدخال اليدوي.",
+      "wilaya": "اختر ولايتك",
+      "commune": "اختر بلديتك",
+      "address": "تفاصيل العنوان (الحي، الرقم، الطابق...)",
+      "map_hint": "يمكنك تحريك العلامة لمزيد من الدقة",
+      "back": "السابق",
+      "next": "الخطوة الأخيرة"
+    },
+    "step3": {
+      "title": "الصور والملخص",
+      "upload_title": "أضف صوراً (بحد أقصى 5)",
+      "upload_hint": "اسحب وأفلت أو انقر للتصفح",
+      "upload_formats": "التنسيقات: JPG، PNG، WebP (بحد أقصى 5 ميجابايت)",
+      "summary_title": "ملخص الطلب",
+      "edit_step": "تعديل الخطوة",
+      "submit": "نشر طلبي",
+      "submitting": "جاري النشر..."
+    },
+    "success": {
+      "title": "تم نشر الطلب!",
+      "message": "تم تسجيل طلبك بنجاح. سيتمكن الحرفيون في منطقتك الآن من الاتصال بك.",
+      "explanation": "ستتلقى العروض مباشرة عبر الهاتف أو واتساب.",
+      "view_requests": "عرض طلباتي",
+      "back_home": "العودة للرئيسية"
+    },
+    "client": {
+      "requests": {
+        "title": "طلبات التدخل الخاصة بي",
+        "subtitle": "تتبع حالة طلباتك واطلع على عروض الحرفيين.",
+        "tabs": {
+          "active": "قيد التنفيذ",
+          "archived": "المؤرشفة",
+          "all": "الكل"
+        },
+        "status": {
+          "en_attente": "في انتظار الردود",
+          "acceptee": "تم قبول التدخل",
+          "terminee": "مكتمل",
+          "annulee": "ملغى"
+        },
+        "card": {
+          "responses": "{count} عرض (عروض)",
+          "posted_on": "نُشر في {date}",
+          "view_details": "عرض التفاصيل",
+          "no_requests": "ليس لديك أي طلبات في هذه الفئة."
+        },
+        "details": {
+          "title": "تفاصيل الطلب",
+          "description": "الوصف",
+          "location": "الموقع",
+          "photos": "الصور المرفقة",
+          "proposals_count": "{count} حرفي (حرفيين) استجابوا لطلبك",
+          "no_proposals": "لا توجد عروض حالياً. قمنا بإخطار الحرفيين في منطقتك.",
+          "cancel_request": "إلغاء الطلب",
+          "cancel_confirm": "هل أنت متأكد من إلغاء هذا الطلب؟ هذا الإجراء غير قابل للتراجع.",
+          "accept_proposal": "قبول هذا العرض"
+        },
+        "proposal": {
+          "experience": "خبرة {years} سنوات",
+          "contact_whatsapp": "واتساب",
+          "contact_call": "اتصال",
+          "accept_btn": "اختيار هذا الحرفي"
+        }
+      }
+    },
+    "artisan": {
+      "jobs": {
+        "title": "فرص العمل المتاحة",
+        "subtitle": "ابحث عن المشاريع التي تتوافق مع مهاراتك في منطقتك.",
+        "tabs": {
+          "new": "عروض جديدة",
+          "applied": "عروضي المقدمة"
+        },
+        "card": {
+          "distance": "على بعد {km} كلم",
+          "posted": "منذ {time}",
+          "view_request": "التفاصيل",
+          "apply_now": "قدم عرضك",
+          "applied_on": "تم التقديم في {date}"
+        },
+        "modal": {
+          "title": "إرسال عرض",
+          "placeholder": "صف بإيجاز لماذا أنت الأنسب لهذا المشروع (مثلاً: خبرة مماثلة، توفر فوري...)",
+          "send": "إرسال عرضي",
+          "success": "تم إرسال عرضك بنجاح!"
+        },
+        "empty": {
+          "no_jobs": "لا توجد فرص جديدة حالياً. سنقوم بتنبيهك بمجرد أن ينشر عميل مشروعاً في تخصصاتك.",
+          "no_applied": "لم تقدم أي عروض بعد."
+        },
+        "status": {
+          "en_attente": "قيد الانتظار",
+          "acceptee": "تم القبول!",
+          "rejetee": "غير مقبول"
+        }
+      },
+      "interventions": {
+        "title": "إدارة مشاريعي",
+        "subtitle": "تتبع حالة تدخلاتك الجارية وقم بإدارة الوثائق المصورة الخاصة بك.",
+        "tabs": {
+          "active": "قيد التنفيذ",
+          "history": "السجل"
+        },
+        "status": {
+          "acceptee": "مقبول (جاهز للانطلاق)",
+          "en_cours": "قيد التنفيذ",
+          "terminee": "تم الانتهاء من التدخل",
+          "annulee": "ملغى"
+        },
+        "card": {
+          "client": "العميل: {name}",
+          "location": "الموقع: {wilaya}، {commune}",
+          "start_job": "بدء التدخل",
+          "finalize": "إنهاء المشروع",
+          "view_details": "إدارة الملف"
+        },
+        "details": {
+          "title": "ملف التدخل",
+          "client_info": "معلومات العميل",
+          "actions": "إجراءات سريعة",
+          "progress": "حالة التقدم",
+          "photos_title": "صور المشروع",
+          "add_photo": "إضافة صورة",
+          "photo_before": "قبل التدخل",
+          "photo_after": "بعد التدخل",
+          "confirm_finish": "هل تريد وضع علامة على هذا التدخل كمكتمل؟ سيتم إخطار العميل.",
+          "contact_client": "الاتصال بالعميل"
+        },
+        "empty": {
+          "no_active": "ليس لديك أي تدخلات جارية حالياً. ابحث عن فرص جديدة في ملف الطلبات.",
+          "no_history": "سجل التدخلات الخاص بك فارغ."
+        }
+      }
+    }
+  },
+  "cookie_consent": {
+    "title": "نحن نستخدم ملفات تعريف الارتباط",
+    "description": "يستخدم DzArtisan ملفات تعريف الارتباط لتحسين تجربتك ، وضمان أمن بياناتك وتحليل حركة المرور لدينا ، وفقًا للقانون الجزائري رقم 18-07 المتعلق بحماية الأشخاص الطبيعيين في معالجة البيانات ذات الطابع الشخصي.",
+    "accept_all": "قبول الكل",
+    "manage_preferences": "إدارة التفضيلات"
+  }
+}
+
+
+

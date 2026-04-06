@@ -1,0 +1,844 @@
+{
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "submit": "Soumettre",
+    "loading": "Chargement...",
+    "error": "Une erreur est survenue.",
+    "success": "Opération réussie.",
+    "search": "Rechercher",
+    "see_more": "Voir plus",
+    "all": "Tous",
+    "retry": "Réessayer",
+    "no_notifications": "Aucune notification",
+    "notifications": {
+      "title": "Notifications",
+      "unread_count": "{count} non lues",
+      "mark_all_read": "Tout marquer comme lu",
+      "see_all": "Voir toutes les notifications",
+      "empty": "Vous n'avez pas encore de notifications.",
+      "types": {
+        "artisan_status": "Profil Artisan",
+        "new_job": "Nouvelle Opportunité",
+        "subscription_alert": "Abonnement",
+        "complaint_alert": "Réclamation"
+      }
+    }
+  },
+  "navigation": {
+    "home": "Accueil",
+    "artisans": "Nos Artisans",
+    "services": "Services",
+    "how_it_works": "Comment ça marche",
+    "login": "Se connecter",
+    "register": "S'inscrire",
+    "dashboard": "Tableau de bord",
+    "profile": "Mon Profil",
+    "logout": "Déconnexion",
+    "browse_artisans": "Parcourir les artisans",
+    "my_requests": "Mes demandes",
+    "my_reviews": "Mes avis",
+    "my_subscription": "Mon abonnement",
+    "subscription": "Abonnement",
+    "my_complaints": "Mes réclamations",
+    "admin_dashboard": "Administration"
+  },
+  "hero": {
+    "badge": "LA RÉFÉRENCE EN ALGÉRIE 🇩🇿",
+    "title": "Trouvez l'expert idéal pour tous vos travaux",
+    "title_accent": "artisans",
+    "subtitle": "La première plateforme de mise en relation entre clients et artisans qualifiés en Algérie. Couvrant les 69 wilayas avec des profils vérifiés et une sécurité garantie.",
+    "cta_find": "Trouver un artisan",
+    "cta_request": "Publier une demande",
+    "trust_verified": "Profils vérifiés",
+    "trust_fast": "Réponse rapide",
+    "trust_wilayas": "69 Wilayas",
+    "trust_secure": "Paiement sécurisé"
+  },
+  "how_it_works": {
+    "title": "Comment ça marche ?",
+    "subtitle": "Deux façons simples d'utiliser notre plateforme selon vos besoins.",
+    "tab_client": "Publier une demande",
+    "tab_direct": "Recherche directe",
+    "client_steps": [
+      { "title": "Inscription", "desc": "Créez votre compte client gratuitement en quelques secondes." },
+      { "title": "Publier", "desc": "Décrivez votre besoin et fixez votre budget." },
+      { "title": "Choisir", "desc": "Recevez des offres et choisissez le meilleur artisan." },
+      { "title": "Noter", "desc": "Laissez un avis sur la prestation réalisée." }
+    ],
+    "direct_steps": [
+      { "title": "Explorer", "desc": "Recherchez par métier et par ville parmi nos experts." },
+      { "title": "Contacter", "desc": "Discutez directement via WhatsApp ou téléphone." },
+      { "title": "Évaluer", "desc": "Partagez votre expérience avec la communauté." }
+    ],
+    "section_label": "Processus",
+    "recommended_label": "Recommandé",
+    "recommended_desc": "Le moyen le plus rapide d'obtenir des devis précis."
+  },
+  "features": {
+    "title": "Pourquoi DzArtisan ?",
+    "subtitle": "Nous plaçons la qualité et la confiance au cœur de chaque intervention.",
+    "verified": { "title": "Profils Vérifiés", "desc": "Chaque artisan est soumis à une vérification stricte de ses documents et de son expérience." },
+    "fast": { "title": "Service Rapide", "desc": "Système de notification instantané pour un contact direct via WhatsApp et téléphone." },
+    "coverage": { "title": "Couverture Nationale", "desc": "Que vous soyez à Alger, Oran ou Tamanrasset, trouvez un expert près de chez vous." },
+    "secure": { "title": "Sécurité Totale", "desc": "Système de modération actif et gestion des réclamations pour votre tranquillité." }
+  },
+  "pricing": {
+    "title": "Boostez votre activité",
+    "subtitle": "Choisissez le forfait qui correspond à vos ambitions d'artisan.",
+    "cta": "S'abonner maintenant",
+    "note": "Paiement disponible via Edahabia, CIB ou CCP avec validation admin.",
+    "faq_link": "Voir tous les tarifs et FAQ",
+    "plans": {
+      "basic": { "name": "Essai", "price": "0", "duration": "3 Mois", "benefit": "Découverte de la plateforme" },
+      "pro": { "name": "Mensuel", "price": "500", "duration": "Mois", "benefit": "Accès complet rapide" },
+      "premium": { "name": "Trimestriel", "price": "1300", "duration": "3 Mois", "benefit": "Économisez 200 DA" },
+      "annual": { "name": "Annuel", "price": "4500", "duration": "1 an", "benefit": "Économisez 1500 DA", "badge": "Le plus rentable" }
+    }
+  },
+  "testimonials": {
+    "title": "Ils nous font confiance"
+  },
+  "cta_banner": {
+    "title": "Propulsez votre activité artisanale",
+    "subtitle": "Rejoignez le réseau professionnel de confiance en Algérie.",
+    "client_btn": "Je suis un Client",
+    "artisan_btn": "Je suis un Artisan"
+  },
+  "authentication": {
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "success": "Compte créé avec succès !",
+    "login_title": "Bon retour parmi nous",
+    "login_subtitle": "Connectez-vous pour accéder à votre espace.",
+    "register_title": "Créer un compte",
+    "register_subtitle": "Rejoignez la plus grande plateforme d'artisans en Algérie.",
+    "tab_client": "Je suis Client",
+    "tab_artisan": "Je suis Artisan",
+    "email_label": "Adresse email",
+    "email_placeholder": "votre@email.com",
+    "email_invalid": "Format d'email invalide.",
+    "password_label": "Mot de passe",
+    "password_placeholder": "••••••••",
+    "password_min_length": "Le mot de passe doit contenir au moins 8 caractères.",
+    "forgot_link": "Oublié ?",
+    "strength_empty": "Aucun",
+    "strength_weak": "Faible",
+    "strength_medium": "Moyen",
+    "strength_strong": "Fort",
+    "confirm_label": "Confirmer le mot de passe",
+    "confirm_placeholder": "••••••••",
+    "confirm_mismatch": "Les mots de passe ne correspondent pas.",
+    "name_label": "Nom complet",
+    "name_placeholder": "Ex: Mohamed Amine",
+    "name_artisan_hint": "Ce nom apparaîtra sur votre profil public. Toute modification ultérieure nécessitera une vérification.",
+    "phone_label": "Téléphone",
+    "phone_invalid": "Format invalide (Ex: 05xx, 06xx, 07xx et 8 chiffres).",
+    "terms_prefix": "J'accepte les",
+    "terms_link": "Conditions d'utilisation",
+    "privacy_prefix": "et la",
+    "privacy_link": "Politique de confidentialité",
+    "btn_login": "Se connecter",
+    "btn_register": "S'inscrire",
+    "btn_submitting": "Veuillez patienter...",
+    "or_continue_with": "Ou continuer avec",
+    "google_btn": "Se connecter avec Google",
+    "artisan_google_note": "",
+    "artisan_pending_note": "Votre compte nécessitera une validation par notre équipe avant que votre profil ne soit rendu public.",
+    "duplicate_email": "Cette adresse email est déjà enregistrée. Veuillez vous connecter.",
+    "duplicate_phone": "Ce numéro de téléphone est déjà associé à un compte.",
+    "generic_login_error": "Les identifiants fournis sont incorrects.",
+    "forgot_title": "Accès bloqué ?",
+    "forgot_subtitle": "Entrez votre email pour recevoir un lien de réinitialisation sécurisé.",
+    "btn_send_link": "Envoyer le lien",
+    "forgot_success_msg": "Si cet email existe dans notre système, un lien de réinitialisation vous a été envoyé.",
+    "back_to_login": "Retour à la connexion",
+    "reset_title": "Nouveau mot de passe",
+    "reset_subtitle": "Veuillez définir votre nouveau mot de passe.",
+    "btn_reset": "Réinitialiser",
+    "reset_success_msg": "Votre mot de passe a été modifié avec succès.",
+    "invalid_token": "Le lien de réinitialisation est invalide ou expiré.",
+    "btn_request_new": "Demander un nouveau lien",
+    "network_error": "Le serveur est injoignable. Vérifiez votre connexion.",
+    "no_account": "Pas encore de compte ? Créer un compte",
+    "have_account": "Déjà un compte ? Se connecter"
+  },
+  "artisan_profile": {
+    "about": "À propos",
+    "services_offered": "Services proposés",
+    "reviews": "Avis clients",
+    "contact": "Contacter",
+    "portfolio": "Portfolio",
+    "availability": "Disponibilité",
+    "available_now": "Disponible immédiatement",
+    "busy": "Actuellement occupé"
+  },
+  "client_search": {
+    "search_placeholder": "Que cherchez-vous ? (ex: Plombier, Électricien...)",
+    "filter_by_wilaya": "Filtrer par Wilaya",
+    "filter_by_category": "Catégorie",
+    "sort_by": "Trier par",
+    "best_rated": "Mieux notés",
+    "most_recent": "Plus récents",
+    "no_results": "Aucun artisan trouvé pour ces critères."
+  },
+  "interventions": {
+    "my_requests": "Mes demandes",
+    "status": {
+       "ouvert": "En attente",
+       "en_cours": "En contact",
+       "termine": "Terminé",
+       "annule": "Annulé"
+    },
+    "history": {
+      "title": "Historique des demandes",
+      "new_request": "Nouvelle demande",
+      "empty_title": "Aucune demande pour le moment",
+      "empty_desc": "Vous n'avez pas encore publié de demande d'intervention. Trouvez un artisan qualifié dès maintenant !",
+      "empty_btn": "Publier une première demande",
+      "details_btn": "Détails",
+      "cancel_btn": "Annuler la demande",
+      "review_btn": "Laisser un avis",
+      "submitted_on": "Publiée le {date}",
+      "preferred_date": "Souhaitée le {date}",
+      "no_preferred_date": "Date flexible",
+      "location": "Lieu : {commune}, {wilaya}",
+      "artisan_assigned": "Artisan : {name}",
+      "no_artisan": "En attente d'artisan",
+      "description": "Description",
+      "photos": "Photos jointes",
+      "map": "Localisation de l'intervention"
+    },
+    "review_modal": {
+      "title": "Donnez votre avis",
+      "subtitle": "Votre retour aide la communauté et encourage les bons artisans.",
+      "rating_label": "Note globale",
+      "comment_label": "Votre commentaire",
+      "comment_placeholder": "Racontez votre expérience...",
+      "submit_btn": "Enregistrer l'avis",
+      "success": "Merci pour votre évaluation !"
+    }
+  },
+  "admin": {
+    "dashboard_title": "Administration DzArtisan",
+    "overview": "Vue d'ensemble",
+    "users": "Clients",
+    "artisans": "Artisans",
+    "subscriptions": "Abonnements",
+    "interventions": "Demandes",
+    "complaints": "Plaintes",
+    "statistics": "Statistiques",
+    "settings": "Réglages",
+    "artisans_validation": "Validation des artisans",
+    "categories": "Catégories de métiers",
+    "reports": "Signalements",
+    "welcome": "Bienvenue",
+    "refresh": "Actualiser",
+    "loading_error": "Impossible de charger le tableau de bord",
+    "retry": "Réessayer",
+    "all_clear": "Aucun élément nécessitant une attention immédiate. Tout est en ordre.",
+    "attention_required": "Attention requise",
+    "kpi": {
+      "total_users": "Utilisateurs Inscrits",
+      "active_artisans": "Artisans Actifs",
+      "requests_month": "Demandes ce mois",
+      "revenue_month": "Revenus ce mois (DA)"
+    },
+    "alerts": {
+      "pending_artisans": "Artisans en attente de validation",
+      "unread_complaints": "Nouvelles plaintes non lues",
+      "expiring_subs": "Abonnements expirant dans 7 jours"
+    },
+    "charts": {
+      "registrations_label": "Nouvelles inscriptions",
+      "registrations_title": "Par semaine — 8 dernières semaines",
+      "wilayas_label": "Demandes d'intervention",
+      "wilayas_title": "Top 10 Wilayas actives"
+    },
+    "activity": {
+      "label": "Flux d'activité",
+      "title": "Événements récents",
+      "empty": "Aucune activité récente.",
+      "view": "Voir",
+      "artisan_submitted": "Nouveau profil artisan soumis",
+      "intervention_created": "Nouvelle demande publiée",
+      "subscription_renewed": "Abonnement activé",
+      "account_suspended": "Compte suspendu"
+    },
+    "trend": {
+      "vs_last_month": "vs mois dernier",
+      "stable": "Stable vs mois dernier",
+      "up": "↑ vs mois dernier",
+      "down": "↓ vs mois dernier"
+    },
+    "artisan_management": {
+      "title": "Gestion des Artisans",
+      "subtitle": "Validez les inscriptions, gérez les suspensions et mettez en avant vos meilleurs experts.",
+      "tabs": {
+        "pending": "En attente",
+        "approved": "Approuvés",
+        "rejected": "Rejetés",
+        "suspended": "Suspendus"
+      },
+      "table": {
+        "artisan": "Artisan",
+        "category": "Catégorie",
+        "location": "Localisation",
+        "docs": "Docs",
+        "date": "Date d'inscription",
+        "actions": "Actions",
+        "no_data": "Aucun artisan trouvé dans cette catégorie."
+      },
+      "actions": {
+        "approve": "Approuver",
+        "reject": "Rejeter",
+        "suspend": "Suspendre",
+        "unsuspend": "Lever la suspension",
+        "promote": "Promouvoir",
+        "feature": "Mettre en avant",
+        "recommend": "Recommander",
+        "view_details": "Voir détails"
+      },
+      "modals": {
+        "rejection_title": "Motif du rejet",
+        "rejection_label": "Expliquez pourquoi le dossier est rejeté (sera envoyé par email)",
+        "suspension_title": "Motif de suspension",
+        "suspension_label": "Expliquez la raison de la suspension (sera envoyé par email)",
+        "confirm_btn": "Confirmer l'action",
+        "reason_required": "Un motif est obligatoire."
+      },
+      "details": {
+        "title": "Détails du profil",
+        "personal_info": "Informations personnelles",
+        "professional_info": "Parcours professionnel",
+        "documents": "Documents justificatifs",
+        "history": "Historique du compte",
+        "experience": "{years} ans d'expérience",
+        "member_since": "Membre depuis le {date}"
+      },
+      "notifications": {
+        "approved": "L'artisan a été approuvé. Un email de félicitations lui a été envoyé.",
+        "rejected": "Le dossier a été rejeté. L'artisan a été informé par email.",
+        "suspended": "Le compte a été suspendu avec succès.",
+        "unsuspended": "La suspension a été levée.",
+        "promoted": "Statut de promotion mis à jour."
+      },
+      "subscription_management": {
+        "title": "Gestion des Abonnements",
+        "subtitle": "Suivez les revenus, validez les paiements manuels et gérez les durées d'activation.",
+        "stats": {
+          "active": "Abonnements Actifs",
+          "pending": "Paiements en attente",
+          "expiring": "Expire bientôt",
+          "expired": "Expirés"
+        },
+        "tabs": {
+          "all": "Tous",
+          "active": "Actifs",
+          "trial": "Essai (Trial)",
+          "expiring": "Expire bientôt",
+          "expired": "Expirés",
+          "suspended": "Suspendus"
+        },
+        "pending_payments": {
+          "title": "Paiements en attente de confirmation",
+          "confirm_btn": "Confirmer le paiement",
+          "reject_btn": "Rejeter",
+          "view_proof": "Voir la preuve",
+          "expected_amount": "Montant attendu",
+          "artisan_info": "Informations de l'artisan",
+          "no_pending": "Aucun paiement en attente."
+        },
+        "table": {
+          "artisan": "Artisan",
+          "plan": "Plan choisi",
+          "dates": "Période",
+          "remaining": "Jours restants",
+          "payment": "Paiement",
+          "status": "État",
+          "history": "Historique",
+          "days": "{count} jours",
+          "expired_ago": "Expiré il y a {days}j",
+          "manual_method": "Manuel / Virement"
+        },
+        "manual_activation": {
+          "btn": "Activation manuelle",
+          "title": "Créer/Prolonger un abonnement",
+          "search_artisan": "Rechercher un artisan",
+          "select_plan": "Sélectionner un plan",
+          "amount_label": "Montant encaissé (DA)",
+          "method_label": "Mode de règlement",
+          "success": "Abonnement activé avec succès."
+        },
+        "modals": {
+          "confirm_payment_title": "Confirmer l'activation",
+          "confirm_payment_desc": "Cela activera l'abonnement immédiatement et enverra un email de confirmation à l'artisan.",
+          "reject_payment_title": "Rejeter le paiement",
+          "reject_payment_placeholder": "Expliquez pourquoi le virement a été refusé...",
+          "history_title": "Historique complet — {name}"
+        },
+        "complaints_management": {
+          "title": "Gestion des Plaintes",
+          "subtitle": "Gérez les litiges entre clients et artisans, enquêtez et prenez des mesures de modération.",
+          "tabs": {
+            "new": "Nouvelles",
+            "investigating": "En cours",
+            "all": "Toutes"
+          },
+          "table": {
+            "type": "Type",
+            "complainant": "Plaignant",
+            "accused": "Accusé",
+            "category": "Catégorie",
+            "date": "Date",
+            "photos": "Photos",
+            "status": "Statut"
+          },
+          "types": {
+            "client_to_artisan": "Client → Artisan",
+            "artisan_to_client": "Artisan → Client"
+          },
+          "status": {
+            "new": "Nouveau",
+            "investigating": "Enquête",
+            "resolved": "Résolu",
+            "dismissed": "Classé"
+          },
+          "details": {
+            "title": "Détails de la plainte",
+            "description": "Description des faits",
+            "evidence": "Preuves (Photos)",
+            "linked_intervention": "Intervention liée",
+            "audit_log": "Historique des actions",
+            "no_evidence": "Aucune photo jointe",
+            "no_intervention": "Aucune intervention liée"
+          },
+          "actions": {
+            "investigate": "Mener l'enquête",
+            "add_note": "Ajouter une note interne",
+            "send_warning": "Envoyer un avertissement",
+            "suspend_account": "Suspendre le compte",
+            "delete_account": "Supprimer le compte",
+            "resolve": "Marquer comme résolue",
+            "dismiss": "Classer sans suite",
+            "confirm_delete": "Êtes-vous sûr de vouloir supprimer définitivement ce compte ? Cette action est irréversible."
+          },
+          "three_strikes": {
+            "alert_title": "Attention : Trois plaintes validées",
+            "alert_desc": "Cet artisan a atteint le seuil de 3 plaintes confirmées. Une révision manuelle est fortement recommandée.",
+            "badge": "3+ Plaintes"
+          },
+          "notifications": {
+            "status_updated": "Statut de la plainte mis à jour.",
+            "note_added": "Note interne ajoutée.",
+            "warning_sent": "Avertissement envoyé par email.",
+            "account_suspended": "Compte de l'accusé suspendu.",
+            "account_deleted": "Compte supprimé définitivement.",
+            "resolved": "Plainte résolue.",
+            "dismissed": "Plainte classée."
+          },
+          "user_management": {
+            "title": "Gestion des Utilisateurs",
+            "subtitle": "Gérez les comptes clients et artisans, communiquez et modérez la communauté.",
+            "tabs": {
+              "clients": "Clients",
+              "artisans": "Artisans"
+            },
+            "filters": {
+              "search_placeholder": "Nom, email ou téléphone...",
+              "all_wilayas": "Toutes les Wilayas",
+              "all_statuses": "Tous les statuts",
+              "status_active": "Actif",
+              "status_suspended": "Suspendu"
+            },
+            "table": {
+              "user": "Utilisateur",
+              "contact": "Contact",
+              "stats": "Statistiques",
+              "status": "Statut",
+              "actions": "Actions",
+              "requests": "{count} demandes",
+              "reviews": "{count} avis",
+              "rating": "{rate} ★",
+              "no_users": "Aucun utilisateur trouvé."
+            },
+            "actions": {
+              "view_profile": "Voir profil",
+              "send_email": "Envoyer un e-mail",
+              "suspend": "Suspendre",
+              "unsuspend": "Activer",
+              "delete": "Supprimer définitivement",
+              "bulk_email": "Email groupé",
+              "bulk_suspend": "Suspension groupée"
+            },
+            "modals": {
+              "email_title": "Envoyer un message à {name}",
+              "email_subject": "Sujet du message",
+              "email_body": "Contenu du message",
+              "email_send": "Envoyer l'e-mail",
+              "suspend_title": "Suspendre le compte de {name}",
+              "suspend_reason": "Raison de la suspension (envoyée par email)",
+              "delete_title": "Suppression définitive : {name}",
+              "delete_warning": "Cette action est irréversible. Toutes les données personnelles seront anonymisées conformément à la loi 18-07.",
+              "delete_reason": "Motif de la suppression (obligatoire)",
+              "confirm_delete": "Supprimer le compte"
+            },
+            "notifications": {
+              "email_sent": "E-mail envoyé avec succès.",
+              "user_suspended": "Utilisateur suspendu.",
+              "user_unsuspended": "Suspension levée.",
+              "user_deleted": "Compte supprimé et données anonymisées.",
+              "bulk_success": "Action groupée effectuée avec succès."
+            }
+          },
+          "statistics": {
+            "title": "Statistiques & Analyses",
+            "subtitle": "Suivez l'activité de la plateforme, la satisfaction client et la performance des artisans.",
+            "map_title": "Activité par Wilaya",
+            "map_requests": "{count} demandes",
+            "map_artisans": "{count} artisans",
+            "map_top_category": "Top catégorie : {name}",
+            "charts": {
+              "top_wilayas": "Top 10 Wilayas par activité",
+              "requests_by_category": "Distribution des demandes par métier",
+              "satisfaction_trends": "Tendance de satisfaction (12 mois)",
+              "conversion": "Métriques de conversion",
+              "view_to_contact": "Vues vers Contacts",
+              "request_to_response": "Demandes vers Réponses"
+            },
+            "ranking": {
+              "title": "Classement de réactivité",
+              "subtitle": "Artisans les plus performants par temps de réponse.",
+              "artisan": "Artisan",
+              "category": "Métier",
+              "views": "Vues",
+              "contacts": "Contacts",
+              "conv_rate": "Conv (%)",
+              "response_time": "Tps Réponse (min)",
+              "requests_responded": "Réponses",
+              "export_btn": "Exporter en CSV"
+            },
+            "no_data": "Aucune donnée disponible pour cette période."
+          }
+        }
+      }
+    }
+  },
+  "onboarding": {
+    "title": "Configurons votre profil",
+    "subtitle": "Complétez ces informations pour devenir visible auprès des clients en Algérie.",
+    "step_info": "Étape {current} sur {total}",
+    "section_required": "Requis",
+    "section_optional": "Optionnel",
+    "photo_title": "Photo de profil",
+    "photo_hint": "Une photo professionnelle augmente vos chances de 80%.",
+    "photo_upload": "Charger une photo",
+    "photo_remove": "Supprimer",
+    "name_edit_title": "Modifier mon nom",
+    "name_edit_desc": "Votre nom complet est utilisé pour la facturation et la confiance client. Il doit correspondre à vos documents officiels.",
+    "whatsapp_label": "Lien WhatsApp",
+    "whatsapp_placeholder": "Lien vers votre discussion WhatsApp",
+    "whatsapp_btn": "Générer depuis mon numéro",
+    "whatsapp_test": "Tester le lien",
+    "categories_title": "Métiers & Services",
+    "categories_desc": "Sélectionnez un ou plusieurs domaines d'expertise.",
+    "wilayas_title": "Zones d'intervention",
+    "wilayas_desc": "Dans quelles wilayas pouvez-vous vous déplacer ?",
+    "wilayas_placeholder": "Rechercher une wilaya...",
+    "exp_title": "Niveau d'expérience",
+    "exp_beginner": "Débutant",
+    "exp_1_3": "1-3 ans",
+    "exp_3_5": "3-5 ans",
+    "exp_5_10": "5-10 ans",
+    "exp_10_plus": "10+ ans",
+    "about_title": "À propos de vous",
+    "about_placeholder": "Ex: Je suis un plombier certifié avec 5 ans d'expérience. Je me spécialise dans l'installation de chaudières...",
+    "about_min_chars": "{count} caractères minimum requis.",
+    "availability_title": "Disponibilité actuelle",
+    "availability_desc": "Indiquez si vous êtes prêt à recevoir des demandes immédiatement.",
+    "docs_title": "Documents professionnels",
+    "docs_desc": "L'ajout de documents augmente considérablement votre taux de contact et débloque le badge 'Vérifié'.",
+    "doc_diploma": "Diplôme / Certificat",
+    "doc_card": "Carte d'artisan / Registre",
+    "doc_upload_hint": "Cliquez ou glissez-déposez",
+    "doc_size_limit": "Max 5Mo (JPG, PNG, PDF)",
+    "btn_finish": "Finaliser mon profil",
+    "error_required_fields": "Veuillez remplir tous les champs obligatoires.",
+    "upload_success": "Fichier téléchargé avec succès"
+  },
+  "artisan_waiting": {
+    "title": "Profil en cours de révision",
+    "subtitle": "Votre profil a été soumis avec succès !",
+    "explanation": "Notre équipe examine actuellement vos informations. Nous vous répondrons dans un délai maximum de 48 heures ouvrables.",
+    "status_submitted": "Profil soumis",
+    "status_submitted_desc": "Vos données sont en sécurité.",
+    "status_review": "Examen en cours",
+    "status_review_desc": "Vérification des documents et spécialités.",
+    "status_notification": "Notification par email",
+    "status_notification_desc": "Surveillez votre boîte de réception.",
+    "status_activation": "Activation du compte",
+    "status_activation_desc": "Votre profil sera public.",
+    "info_email": "Notification envoyée à",
+    "info_spam": "Pensez à vérifier vos spams.",
+    "info_support": "Besoin d'aide ? Contactez le support",
+    "btn_home": "Retour à l'accueil",
+    "btn_edit": "Modifier mon profil"
+  },
+  "dashboard": {
+    "greeting": "Bonjour",
+    "artisan_verified": "Artisan Vérifié",
+    "opportunities_title": "Opportunités pour vous",
+    "opportunities_desc": "Basé sur vos catégories et wilayas.",
+    "growth_title": "Croissance",
+    "completeness_title": "Profil",
+    "suggested_actions": "Actions suggérées",
+    "completeness_tip": "Un profil complet reçoit 3x plus de contacts.",
+    "stats": {
+      "views": "Vues du profil",
+      "contacts": "Contacts reçus",
+      "rating": "Note Moyenne",
+      "reviews": "Total Avis"
+    },
+    "no_requests": "Aucune demande trouvée",
+    "no_requests_hint": "Élargissez vos wilayas ou vos catégories pour plus de visibilité.",
+    "support_title": "Support Premium",
+    "support_desc": "Besoin d'aide pour optimiser votre profil ?",
+    "support_btn": "Contacter l'assistance"
+  },
+  "subscription": {
+    "title": "Gestion de l'abonnement",
+    "subtitle": "Boostez votre visibilité et débloquez des fonctionnalités premium.",
+    "current_status": "État de l'abonnement",
+    "plan": "Plan",
+    "expires_on": "Expire le",
+    "active": "Actif",
+    "expiring_soon": "Expire bientôt",
+    "expired": "Expiré",
+    "pending": "En attente de validation",
+    "days_left": "{count} jours restants",
+    "manage_plans": "Plans disponibles",
+    "best_value": "Meilleure Valeur",
+    "trial_used_note": "L'offre découverte a déjà été utilisée sur ce compte.",
+    "select_plan": "Choisir ce plan",
+    "payment_modal_title": "Finaliser votre abonnement",
+    "method_online": "Carte Edahabia / CIB",
+    "method_manual": "Virement CCP / Baridimob",
+    "ccp_details": "Coordonnées CCP",
+    "ccp_account": "CCP: 0021345678 Clef 45",
+    "ccp_name": "Au nom de: SARL DZARTISAN MARKETPLACE",
+    "upload_instruction": "Veuillez télécharger une photo ou un scan du reçu de virement.",
+    "upload_btn": "Télécharger le reçu",
+    "confirm_payment": "Confirmer le paiement",
+    "history_title": "Historique des transactions",
+    "table_date": "Date",
+    "table_plan": "Plan",
+    "table_amount": "Montant",
+    "table_method": "Méthode",
+    "table_status": "Statut",
+    "download_receipt": "Reçu"
+  },
+  "search": {
+    "placeholder": "Rechercher par nom ou spécialité...",
+    "filters_title": "Filtres",
+    "reset_filters": "Réinitialiser",
+    "geo_btn": "Activer ma position",
+    "geo_denied": "La géolocalisation a été refusée. Veuillez utiliser le filtre par Wilaya.",
+    "wilaya_label": "Wilaya",
+    "categories_label": "Catégories",
+    "rating_label": "Note minimale",
+    "exp_label": "Expérience",
+    "availability_label": "Disponibilité",
+    "show_available": "Artisans disponibles uniquement",
+    "sort_label": "Trier par",
+    "sort_relevance": "Pertinence",
+    "sort_rating": "Mieux notés",
+    "sort_exp": "Plus expérimentés",
+    "sort_name": "Nom (A-Z)",
+    "results_found": "{count} artisans trouvés",
+    "currently_available": "{count} actuellement disponibles",
+    "view_grid": "Grille",
+    "view_list": "Liste",
+    "view_map": "Carte",
+    "no_results": "Aucun artisan trouvé pour votre recherche.",
+    "no_results_hint": "Essayez d'élargir vos filtres ou de réinitialiser la recherche.",
+    "km_away": "à {distance} km",
+    "contact_whatsapp": "WhatsApp",
+    "contact_call": "Appeler"
+  },
+  "artisan_card": {
+    "verified_diploma": "Diplôme Vérifié",
+    "verified_profile": "Profil Officiel",
+    "exp_years": "{count} ans d'exp."
+  },
+  "wizard": {
+    "steps": {
+      "details": "Détails",
+      "location": "Localisation",
+      "photos": "Photos & Envoi"
+    },
+    "step1": {
+      "title": "Détails de l'intervention",
+      "headline": "Que recherchez-vous ?",
+      "request_title": "Titre de la demande",
+      "request_title_placeholder": "Ex: Réparation fuite d'eau sous évier kitchen",
+      "category": "Catégorie de service",
+      "description": "Description du problème",
+      "description_placeholder": "Expliquez précisément votre besoin (matériel nécessaire, urgence, symptômes...)",
+      "preferred_date": "Date souhaitée",
+      "date_hint": "Laissez vide si vous êtes flexible",
+      "next": "Étape suivante"
+    },
+    "step2": {
+      "title": "Où se déroule l'intervention ?",
+      "method_title": "Comment voulez-vous indiquer votre position ?",
+      "auto_geo": "Géolocalisation automatique",
+      "auto_geo_desc": "Rapide et précis à 100%",
+      "manual_entry": "Saisie manuelle",
+      "manual_entry_desc": "Pour une adresse différente",
+      "geo_btn": "M'autoriser à vous localiser",
+      "geo_denied": "Accès refusé. Veuillez utiliser la saisie manuelle.",
+      "wilaya": "Sélectionnez votre Wilaya",
+      "commune": "Sélectionnez votre Commune",
+      "address": "Complément d'adresse (Cité, N°, Étage...)",
+      "map_hint": "Vous pouvez déplacer le curseur pour plus de précision",
+      "back": "Précédent",
+      "next": "Dernière étape"
+    },
+    "step3": {
+      "title": "Photos & Récapitulatif",
+      "upload_title": "Ajouter des photos (max 5)",
+      "upload_hint": "Glissez-déposez ou cliquez pour parcourir",
+      "upload_formats": "Formats: JPG, PNG, WebP (Max 5Mo)",
+      "summary_title": "Récapitulatif de votre demande",
+      "edit_step": "Modifier l'étape",
+      "submit": "Publier ma demande",
+      "submitting": "Publication en cours..."
+    },
+    "success": {
+      "title": "Demande publiée !",
+      "message": "Votre demande a été enregistrée avec succès. Les artisans de votre secteur vont maintenant pouvoir vous contacter.",
+      "explanation": "Vous recevrez des propositions directement via téléphone ou WhatsApp.",
+      "view_requests": "Voir mes demandes",
+      "back_home": "Retour à l'accueil"
+    },
+    "client": {
+      "requests": {
+        "title": "Mes Demandes d'Intervention",
+        "subtitle": "Suivez l'état de vos demandes et consultez les propositions des artisans.",
+        "tabs": {
+          "active": "En cours",
+          "archived": "Archivées",
+          "all": "Toutes"
+        },
+        "status": {
+          "en_attente": "En attente de réponses",
+          "acceptee": "Intervention acceptée",
+          "terminee": "Terminée",
+          "annulee": "Annulée"
+        },
+        "card": {
+          "responses": "{count} proposition(s)",
+          "posted_on": "Publiée le {date}",
+          "view_details": "Voir les détails",
+          "no_requests": "Vous n'avez aucune demande dans cette catégorie."
+        },
+        "details": {
+          "title": "Détails de la demande",
+          "description": "Description",
+          "location": "Localisation",
+          "photos": "Photos jointes",
+          "proposals_count": "{count} artisan(s) ont répondu à votre appel",
+          "no_proposals": "Aucune proposition pour le moment. Nous avons notifié les artisans de votre région.",
+          "cancel_request": "Annuler la demande",
+          "cancel_confirm": "Êtes-vous sûr de vouloir annuler cette demande ? Cette action est irréversible.",
+          "accept_proposal": "Accepter cette proposition"
+        },
+        "proposal": {
+          "experience": "{years} ans d'exp.",
+          "contact_whatsapp": "WhatsApp",
+          "contact_call": "Appeler",
+          "accept_btn": "Choisir cet artisan"
+        }
+      }
+    },
+    "artisan": {
+      "jobs": {
+        "title": "Opportunités d'Intervention",
+        "subtitle": "Trouvez des projets qui correspondent à vos compétences dans votre région.",
+        "tabs": {
+          "new": "Nouvelles offres",
+          "applied": "Mes propositions"
+        },
+        "card": {
+          "distance": "À {km} km",
+          "posted": "Il y a {time}",
+          "view_request": "Détails",
+          "apply_now": "Postuler",
+          "applied_on": "Postulé le {date}"
+        },
+        "modal": {
+          "title": "Envoyer une proposition",
+          "placeholder": "Décrivez brièvement pourquoi vous êtes le meilleur pour ce projet (ex: expérience similaire, disponibilité immédiate...)",
+          "send": "Envoyer mon offre",
+          "success": "Votre proposition a été envoyée avec succès !"
+        },
+        "empty": {
+          "no_jobs": "Aucune nouvelle opportunité pour le moment. Nous vous alerterons dès qu'un client publie un projet dans vos catégories.",
+          "no_applied": "Vous n'avez pas encore postulé à des projets."
+        },
+        "status": {
+          "en_attente": "En attente",
+          "acceptee": "Accepté !",
+          "rejetee": "Non retenu"
+        }
+      },
+      "interventions": {
+        "title": "Gestion de mes Projets",
+        "subtitle": "Suivez l'état de vos interventions en cours et gérez vos justificatifs photos.",
+        "tabs": {
+          "active": "En cours",
+          "history": "Historique"
+        },
+        "status": {
+          "acceptee": "Acceptée (Prêt)",
+          "en_cours": "En cours d'exécution",
+          "terminee": "Intervention terminée",
+          "annulee": "Annulée"
+        },
+        "card": {
+          "client": "Client : {name}",
+          "location": "Lieu : {wilaya}, {commune}",
+          "start_job": "Démarrer l'intervention",
+          "finalize": "Finaliser le projet",
+          "view_details": "Gérer le dossier"
+        },
+        "details": {
+          "title": "Dossier d'Intervention",
+          "client_info": "Informations Client",
+          "actions": "Actions Rapides",
+          "progress": "État d'avancement",
+          "photos_title": "Photos du projet",
+          "add_photo": "Ajouter une photo",
+          "photo_before": "Avant intervention",
+          "photo_after": "Après intervention",
+          "confirm_finish": "Voulez-vous marquer cette intervention comme terminée ? Le client sera notifié.",
+          "contact_client": "Contacter le client"
+        },
+        "empty": {
+          "no_active": "Vous n'avez aucune intervention en cours. Trouvez de nouvelles opportunités dans le dossier de demandes.",
+          "no_history": "Votre historique d'interventions est vide."
+        }
+      }
+    }
+  },
+  "cookie_consent": {
+    "title": "Nous utilisons des cookies",
+    "description": "DzArtisan utilise des cookies pour améliorer votre expérience, assurer la sécurité de vos données et analyser notre trafic, conformément à la loi algérienne n° 18-07 relative à la protection des personnes physiques dans le traitement des données à caractère personnel.",
+    "accept_all": "Tout accepter",
+    "manage_preferences": "Gérer les préférences"
+  }
+}
+
+
+

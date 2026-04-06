@@ -1,82 +1,103 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-secondary: #f8fafc;
-  --color-accent: #6366f1;
-  --color-indigo-soft: #e0e7ff;
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+
+  --color-accent-50: #f0fdf4;
+  --color-accent-500: #22c55e;
+  --color-accent-600: #16a34a;
   
+  --color-warning-50: #fffbeb;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+
+  --color-danger-50: #fef2f2;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+
+  /* Themeable semantic colors */
+  --color-bg-base: var(--bg-base);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-text-base: var(--text-base);
+  --color-text-muted: var(--text-muted);
+  --color-border-base: var(--border-base);
+
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-arabic: var(--font-arabic);
+
   --animate-blob: blob 7s infinite;
 }
 
-@keyframes blob {
-  0% {
-    transform: translate(0px, 0px) scale(1);
-  }
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-  100% {
-    transform: translate(0px, 0px) scale(1);
-  }
+/* Light mode defaults */
+:root {
+  --bg-base: #ffffff;
+  --bg-surface: #f8fafc;
+  --bg-subtle: #f1f5f9;
+  --text-base: #0f172a;
+  --text-muted: #64748b;
+  --border-base: #e2e8f0;
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+/* Deep Navy Dark Mode overrides */
+:root.dark {
+  --bg-base: #0a0f1e;
+  --bg-surface: #111827; 
+  --bg-subtle: #1e293b;
+  --text-base: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-base: #334155;
 }
 
-.blob {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
-  filter: blur(40px);
-  z-index: -1;
-  animation: blob 10s infinite;
+/* RTL/LTR Transition base */
+html {
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-.blob-2 {
-  background: radial-gradient(circle, rgba(234, 179, 8, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
-  animation-delay: 2s;
-  width: 400px;
-  height: 400px;
+/* Typography styles based on direction */
+html[dir="rtl"] {
+  font-family: var(--font-arabic), sans-serif;
+}
+html[dir="ltr"] {
+  font-family: var(--font-body), sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), var(--font-arabic), sans-serif;
+}
+html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] h4, html[dir="rtl"] h5, html[dir="rtl"] h6 {
+    font-family: var(--font-arabic), sans-serif;
 }
 
 @layer base {
-  a {
-    @apply transition-all duration-300 ease-in-out cursor-pointer;
-    text-decoration: none;
-    color: inherit;
+  body {
+    background-color: var(--color-bg-base);
+    color: var(--color-text-base);
+    @apply transition-colors duration-300 ease-in-out;
   }
+}
 
-  /* Text-based links (not buttons) */
-  a:not([class*="btn"]):not([class*="button"]) {
-    @apply hover:opacity-80;
-  }
+@keyframes blob {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
 
-  /* Premium link class for consistent application */
-  .link-premium {
-    @apply relative inline-flex items-center gap-1 transition-colors duration-300;
-  }
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border-base);
+}
 
-  .link-premium::after {
-    content: '';
-    @apply absolute bottom-[-2px] left-0 w-0 h-[1.5px] bg-blue-600 transition-all duration-300 ease-out;
-  }
-
-  .link-premium:hover::after {
-    @apply w-full;
-  }
-
-  /* Accessibility: Focus visible state */
-  a:focus-visible {
-    @apply outline-none ring-2 ring-blue-500/50 ring-offset-2 rounded-sm;
-  }
+/* Fix direction flip animations (smooth flip) */
+body {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }

@@ -7,7 +7,7 @@ export default function Footer() {
         <p>© {currentYear} DzArtisan. Tous droits réservés.</p>
         <div className="flex gap-4 md:gap-6">
           <a href="#" className="hover:text-primary transition-colors">Confidentialité</a>
-          <a href="#" className="hover:text-primary transition-colors">Conditions d'utilisation</a>
+          <a href="#" className="hover:text-primary transition-colors">Conditions d&apos;utilisation</a>
           <a href="#" className="hover:text-primary transition-colors">À propos</a>
           <a href="#" className="hover:text-primary transition-colors">FAQ</a>
         </div>

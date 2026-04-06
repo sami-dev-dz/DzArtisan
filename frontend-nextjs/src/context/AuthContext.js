@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/i18n/routing'
 import api from '@/lib/api-client'
 
 const AuthContext = createContext(null)
@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
     const restoreSession = async () => {
       try {
         const { data } = await api.get('/auth/me')
-        setUser(data)
+        setUser(data.data)
       } catch {
         setUser(null)
       } finally {
@@ -26,42 +26,63 @@ export function AuthProvider({ children }) {
     restoreSession()
   }, [])
 
-  // Redirige après login selon rôle + statut
   const redirectAfterLogin = (u) => {
-    if (u.role === 'admin')   return router.push('/dashboard/admin')
-    if (u.role === 'artisan') {
-      if (u.statut === 'nouveau')     return router.push('/onboarding/artisan/profile')
-      if (u.statut === 'en_attente') return router.push('/onboarding/artisan/waiting')
-      return router.push('/dashboard/artisan')
+    if (u.type === "admin")   return router.push("/dashboard/admin");
+    if (u.type === "artisan") {
+      if (u.statut === "nouveau")     return router.push("/onboarding/artisan/profile");
+      if (u.statut === "en_attente")  return router.push("/onboarding/artisan/waiting");
+      return router.push("/dashboard/artisan");
     }
-    if (u.role === 'client') {
-      if (u.statut === 'nouveau') return router.push('/onboarding/client/setup')
-      return router.push('/dashboard/client')
+    if (u.type === "client") {
+      if (u.statut === "nouveau") return router.push("/onboarding/client/setup");
+      return router.push("/dashboard/client");
     }
-  }
+    // Fallback if type is missing
+    router.push("/");
+  };
+
+  const register = async ({ name, email, password, password_confirmation, role, telephone }) => {
+    // Required now that Sanctum is fully installed
+    await api.get("/sanctum/csrf-cookie", { baseURL: process.env.NEXT_PUBLIC_API_BASE });
+    const { data } = await api.post("/auth/register", {
+      name,
+      email,
+      password,
+      password_confirmation,
+      type: role || "client",   // La colonne s'appelle "type" dans la DB
+      telephone: telephone || null,
+    });
+    
+    const userData = data.data.user;
+    setUser(userData);
+    redirectAfterLogin(userData);
+    return userData;
+  };
 
   const login = async ({ email, password }) => {
-    // Laravel Sanctum : récupère d'abord le cookie CSRF
-    await api.get('/sanctum/csrf-cookie', { baseURL: process.env.NEXT_PUBLIC_API_BASE })
-    const { data } = await api.post('/auth/login', { email, password })
-    setUser(data.user)
-    redirectAfterLogin(data.user)
-    return data.user
-  }
+    await api.get("/sanctum/csrf-cookie", { baseURL: process.env.NEXT_PUBLIC_API_BASE });
+    const { data } = await api.post("/auth/login", { email, password });
+    
+    const userData = data.data.user;
+    setUser(userData);
+    redirectAfterLogin(userData);
+    return userData;
+  };
 
   const loginWithGoogle = () => {
     // Redirige vers le endpoint Google OAuth de Laravel
-    window.location.href = `${process.env.NEXT_PUBLIC_API_BASE}/auth/google/redirect`
-  }
+    window.location.href = `${process.env.NEXT_PUBLIC_API_BASE}/auth/google/redirect`;
+  };
 
   const logout = async () => {
-    try { await api.post('/auth/logout') } catch {}
-    setUser(null)
-    router.push('/login')
-  }
+    try { await api.post("/auth/logout"); } catch {}
+    setUser(null);
+    // Au logout, on repart sur la racine qui gérera la locale
+    router.push("/");
+  };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, loginWithGoogle, logout, redirectAfterLogin }}>
+    <AuthContext.Provider value={{ user, loading, login, register, loginWithGoogle, logout, redirectAfterLogin }}>
       {children}
     </AuthContext.Provider>
   )

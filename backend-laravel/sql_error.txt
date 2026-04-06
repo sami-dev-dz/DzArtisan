@@ -1,0 +1,16 @@
+﻿
+storage\logs\laravel.log:2
+175:[previous exception] 
+[object] 
+(PDOException(code: 
+42S02): SQLSTATE[42S02]: 
+Base table or view not 
+found: 1146 Table 
+'dzartisan.sessions' 
+doesn't exist at C:/larago
+n/www/DzArtisan/backend-la
+ravel/vendor/laravel/frame
+work/src/Illuminate/Databa
+se/Connection.php:420)
+
+
