@@ -270,6 +270,7 @@ export function RegisterForm() {
     setLoading(true);
     submitLockRef.current = true;
     try {
+      setErrors({});
       await register({
         name: formData.name,
         email: formData.email,
@@ -288,10 +289,13 @@ export function RegisterForm() {
       } else {
         const msg = err.response?.data?.message || "";
         const ve = err.response?.data?.errors || {};
-        if (msg.toLowerCase().includes("email") || ve?.email)
+        if (ve?.email)
           setErrors((p) => ({ ...p, email: t("duplicate_email") }));
-        else if (msg.toLowerCase().includes("phone") || ve?.telephone)
+        else if (ve?.telephone)
           setErrors((p) => ({ ...p, phone: t("duplicate_phone") }));
+        else if (ve?.duplicate) {
+          setGenericError(t("duplicate_email"));
+        }
         else setGenericError(msg || t("error"));
       }
     } finally {

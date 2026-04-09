@@ -16,10 +16,10 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name'                  => 'required|string|max:255',
-            'email'                 => 'required|string|email|max:255|unique:users,email',
+            'email'                 => 'required|string|email|max:255',
             'password'              => 'required|string|min:8|confirmed',
             'type'                  => ['required', Rule::in(['client', 'artisan'])],
-            'telephone'             => ['required', 'string', 'regex:/^0[567][0-9]{8}$/', 'unique:users,telephone'],
+            'telephone'             => ['required', 'string', 'regex:/^0[567][0-9]{8}$/'],
         ];
     }
 
@@ -27,10 +27,12 @@ class RegisterRequest extends FormRequest
     {
         $type = $this->input('type', $this->input('role'));
         $telephone = $this->normalizeDzPhone($this->input('telephone'));
+        $email = strtolower(trim((string) $this->input('email')));
 
         $this->merge([
             'type' => $type,
             'telephone' => $telephone,
+            'email' => $email,
         ]);
     }
 
@@ -61,7 +63,6 @@ class RegisterRequest extends FormRequest
         return [
             'type.required'         => 'Le type de compte est obligatoire.',
             'type.in'               => 'Le type de compte sélectionné est invalide.',
-            'telephone.unique'      => 'Ce numéro de téléphone est déjà associé à un compte.',
             'telephone.regex'       => 'Le numéro de téléphone doit être un numéro algérien valide (05/06/07).',
         ];
     }

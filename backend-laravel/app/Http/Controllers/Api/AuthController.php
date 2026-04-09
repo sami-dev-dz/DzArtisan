@@ -12,9 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use Throwable;
 
 class AuthController extends Controller
 {
@@ -23,60 +25,102 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request)
     {
-        if ($request->type === 'artisan' && !CategorieMetier::query()->exists()) {
-            throw ValidationException::withMessages([
-                'type' => ['Aucune catégorie métier n\'est disponible pour créer un compte artisan.'],
-            ]);
+        try {
+            if ($request->type === 'artisan' && !CategorieMetier::query()->exists()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Aucune catégorie métier n\'est disponible pour créer un compte artisan.',
+                    'errors' => [
+                        'type' => ['Aucune catégorie métier n\'est disponible pour créer un compte artisan.'],
+                    ],
+                ], 422);
+            }
+
+            $duplicateErrors = [];
+            if (User::query()->where('email', $request->email)->exists()) {
+                $duplicateErrors['email'] = ['Cette adresse email est déjà enregistrée.'];
+            }
+            if (User::query()->where('telephone', $request->telephone)->exists()) {
+                $duplicateErrors['telephone'] = ['Ce numéro de téléphone est déjà associé à un compte.'];
+            }
+
+            if (!empty($duplicateErrors)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email ou téléphone déjà utilisé.',
+                    'errors' => $duplicateErrors,
+                ], 409);
+            }
+
+            $defaultWilayaId = 16;
+            $defaultCommuneId = Commune::where('wilaya_id', $defaultWilayaId)->value('id') ?? Commune::query()->value('id');
+
+            $user = DB::transaction(function () use ($request, $defaultWilayaId, $defaultCommuneId) {
+                $createdUser = User::create([
+                    'nomComplet' => $request->name,
+                    'email'      => $request->email,
+                    'password'   => Hash::make($request->password),
+                    'telephone'  => $request->telephone,
+                    'type'       => $request->type ?? 'client',
+                    'statut'     => 'actif',
+                ]);
+
+                if ($createdUser->type === 'client') {
+                    Client::create([
+                        'user_id' => $createdUser->id,
+                        'wilaya_id' => $defaultWilayaId,
+                        'commune_id' => $defaultCommuneId,
+                        'telephone' => $request->telephone,
+                    ]);
+                }
+
+                if ($createdUser->type === 'artisan') {
+                    $defaultCategoryId = CategorieMetier::query()->value('id');
+                    Artisan::create([
+                        'user_id' => $createdUser->id,
+                        'categorie_id' => $defaultCategoryId,
+                        'wilaya_id' => $defaultWilayaId,
+                        'commune_id' => $defaultCommuneId,
+                        'statutValidation' => 'en_attente',
+                        'disponibilite' => 'indisponible',
+                    ]);
+                }
+
+                return $createdUser;
+            });
+
+            // Connexion automatique après inscription
+            Auth::login($user);
+            $user->load(['client', 'artisan.categories', 'artisan.wilayas']);
+            $user->needs_artisan_onboarding = $this->needsArtisanOnboarding($user);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Compte créé avec succès',
+                'data'    => ['user' => $user]
+            ], 201);
+        } catch (QueryException $e) {
+            // Race condition safe-guard on DB unique constraints.
+            if ((string) $e->getCode() === '23000') {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email ou téléphone déjà utilisé.',
+                    'errors' => [
+                        'duplicate' => ['Cette adresse email ou ce numéro de téléphone est déjà utilisé.'],
+                    ],
+                ], 409);
+            }
+
+            throw $e;
+        } catch (Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur serveur lors de la création du compte.',
+                'errors' => [
+                    'server' => ['Veuillez réessayer dans quelques instants.'],
+                ],
+            ], 500);
         }
-
-        $defaultWilayaId = 16;
-        $defaultCommuneId = Commune::where('wilaya_id', $defaultWilayaId)->value('id') ?? Commune::query()->value('id');
-
-        $user = DB::transaction(function () use ($request, $defaultWilayaId, $defaultCommuneId) {
-            $createdUser = User::create([
-                'nomComplet' => $request->name,
-                'email'      => $request->email,
-                'password'   => Hash::make($request->password),
-                'telephone'  => $request->telephone,
-                'type'       => $request->type ?? 'client',
-                'statut'     => 'actif',
-            ]);
-
-            if ($createdUser->type === 'client') {
-                Client::create([
-                    'user_id' => $createdUser->id,
-                    'wilaya_id' => $defaultWilayaId,
-                    'commune_id' => $defaultCommuneId,
-                    'telephone' => $request->telephone,
-                ]);
-            }
-
-            if ($createdUser->type === 'artisan') {
-                $defaultCategoryId = CategorieMetier::query()->value('id');
-                Artisan::create([
-                    'user_id' => $createdUser->id,
-                    'categorie_id' => $defaultCategoryId,
-                    'wilaya_id' => $defaultWilayaId,
-                    'commune_id' => $defaultCommuneId,
-                    'telephone' => $request->telephone,
-                    'statutValidation' => 'en_attente',
-                    'disponibilite' => 'indisponible',
-                ]);
-            }
-
-            return $createdUser;
-        });
-
-        // Connexion automatique après inscription
-        Auth::login($user);
-        $user->load(['client', 'artisan.categories', 'artisan.wilayas']);
-        $user->needs_artisan_onboarding = $this->needsArtisanOnboarding($user);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Compte créé avec succès',
-            'data'    => ['user' => $user]
-        ], 201);
     }
 
     /**
