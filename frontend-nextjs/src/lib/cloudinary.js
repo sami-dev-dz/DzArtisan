@@ -5,14 +5,22 @@
  */
 
 export const uploadToCloudinary = async (file, onProgress) => {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+  const preset = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET || "dzartisan_presets";
+  if (!cloudName) {
+    throw new Error("Cloudinary cloud name is not configured");
+  }
+
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_PRESET || "dzartisan_presets");
+  formData.append("upload_preset", preset);
   formData.append("folder", "dzartisan/profiles");
+
+  const endpoint = file.type === "application/pdf" ? "raw/upload" : "image/upload";
 
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`);
+    xhr.open("POST", `https://api.cloudinary.com/v1_1/${cloudName}/${endpoint}`);
 
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable && onProgress) {
@@ -22,11 +30,16 @@ export const uploadToCloudinary = async (file, onProgress) => {
     };
 
     xhr.onload = () => {
-      if (xhr.status === 200) {
+      if (xhr.status >= 200 && xhr.status < 300) {
         const response = JSON.parse(xhr.responseText);
         resolve(response.secure_url);
       } else {
-        reject(new Error("Cloudinary upload failed"));
+        let message = "Cloudinary upload failed";
+        try {
+          const parsed = JSON.parse(xhr.responseText);
+          message = parsed?.error?.message || message;
+        } catch {}
+        reject(new Error(message));
       }
     };
 

@@ -9,7 +9,7 @@ import {
    ShieldCheck, ExternalLink, Plus, Zap, Droplets, Paintbrush,
    Hammer, Snowflake, Wrench, Sparkles, Truck, MoreHorizontal,
    ArrowRight, FileText, Star, Award, TrendingUp, Users, BadgeCheck,
-   Construction as HardHat
+   HardHat
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/context/AuthContext"
@@ -73,6 +73,7 @@ export default function ArtisanProfileSetupPage() {
    const [isNameModalOpen, setIsNameModalOpen] = React.useState(false)
    const [newName, setNewName] = React.useState(user?.nomComplet || "")
    const [categories, setCategories] = React.useState([])
+   const [isHydratingProfile, setIsHydratingProfile] = React.useState(true)
    const [searchWilaya, setSearchWilaya] = React.useState("")
    const [wilayaFocused, setWilayaFocused] = React.useState(false)
    const [uploadProgress, setUploadProgress] = React.useState({ photo: 0, doc_diploma: 0, doc_card: 0 })
@@ -89,6 +90,44 @@ export default function ArtisanProfileSetupPage() {
          }
       }
       fetchCategories()
+   }, [])
+
+   React.useEffect(() => {
+      const fetchExistingProfile = async () => {
+         try {
+            const { data } = await api.get("/profile")
+            const payload = data?.data || {}
+            const artisan = payload?.artisan || {}
+            const existingCategoryIds = Array.isArray(artisan?.categories)
+               ? artisan.categories.map((c) => c.id)
+               : []
+            const existingWilayas = Array.isArray(artisan?.wilayas)
+               ? artisan.wilayas.map((w) => w.id)
+               : []
+
+            setFormData((prev) => ({
+               ...prev,
+               nomComplet: payload?.nomComplet || prev.nomComplet,
+               telephone: payload?.telephone || prev.telephone,
+               photo: artisan?.photo || prev.photo,
+               phone_visible_to_clients: artisan?.phone_visible_to_clients ?? prev.phone_visible_to_clients,
+               whatsapp: artisan?.lienWhatsApp || prev.whatsapp,
+               category_id: artisan?.categorie_id || existingCategoryIds[0] || prev.category_id,
+               wilayas: existingWilayas.length ? existingWilayas : prev.wilayas,
+               experience_level: artisan?.experience_level || prev.experience_level,
+               about: artisan?.description || prev.about,
+               disponibilite: artisan?.disponibilite || prev.disponibilite,
+               doc_diploma: artisan?.diploma_url || prev.doc_diploma,
+               doc_card: artisan?.artisan_card_url || prev.doc_card,
+            }))
+         } catch (err) {
+            console.error("failed to hydrate artisan profile", err)
+         } finally {
+            setIsHydratingProfile(false)
+         }
+      }
+
+      fetchExistingProfile()
    }, [])
 
    const completion = React.useMemo(() => {
@@ -123,7 +162,7 @@ export default function ArtisanProfileSetupPage() {
          setFormData(prev => ({ ...prev, photo: url }))
          addToast({ title: t("upload_success"), type: "success" })
       } catch (err) {
-         addToast({ title: common("error"), type: "error" })
+         addToast({ title: err?.message || common("error"), type: "error" })
       } finally {
          setUploadProgress(prev => ({ ...prev, photo: 0 }))
       }
@@ -133,7 +172,7 @@ export default function ArtisanProfileSetupPage() {
       const file = e.target.files[0]
       if (!file) return
 
-      const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
+      const validTypes = ['image/jpeg', 'image/png', 'application/pdf']
       if (!validTypes.includes(file.type)) {
          addToast({ title: t("invalid_doc_format"), type: "error" })
          return
@@ -149,7 +188,7 @@ export default function ArtisanProfileSetupPage() {
          setFormData(prev => ({ ...prev, [type]: url }))
          addToast({ title: t("upload_success"), type: "success" })
       } catch (err) {
-         addToast({ title: common("error"), type: "error" })
+         addToast({ title: err?.message || common("error"), type: "error" })
       } finally {
          setUploadProgress(prev => ({ ...prev, [type]: 0 }))
       }
@@ -189,31 +228,50 @@ export default function ArtisanProfileSetupPage() {
 
    const validateStep = () => {
       if (currentStep === 1 && (!formData.nomComplet || !formData.telephone.match(/^0(5|6|7)\d{8}$/)))
-         return addToast({ title: "Champs requis manquants", type: "error" }), false
+         return addToast({ title: t("error_required_fields"), type: "error" }), false
       if (currentStep === 2 && (!formData.category_id || formData.wilayas.length === 0 || formData.about.length < 20))
-         return addToast({ title: "Champs requis manquants", type: "error" }), false
+         return addToast({ title: t("error_required_fields"), type: "error" }), false
       return true
    }
 
    const goNext = () => { if (validateStep()) setCurrentStep(p => Math.min(p + 1, 3)) }
    const goBack = () => setCurrentStep(p => Math.max(p - 1, 1))
 
-   const handleSubmit = async (e) => {
-      e.preventDefault()
+   const handleSubmit = async () => {
+      if (currentStep < 3) {
+         goNext()
+         return
+      }
       if (completion < 100) return addToast({ title: t("error_required_fields"), type: "error" })
       setLoading(true)
       try {
          await api.post("/profile", {
-            ...formData,
+            nomComplet: formData.nomComplet,
+            telephone: formData.telephone,
+            phone_visible_to_clients: formData.phone_visible_to_clients,
+            photo: formData.photo,
+            description: formData.about,
+            about: formData.about,
+            experience_level: formData.experience_level,
+            disponibilite: formData.disponibilite,
             lienWhatsApp: formData.whatsapp,
+            whatsapp: formData.whatsapp,
+            doc_diploma: formData.doc_diploma,
+            doc_card: formData.doc_card,
             categorie_ids: [formData.category_id],
             wilaya_ids: formData.wilayas,
-            statutValidation: "en_attente"
          })
          addToast({ title: common("success"), type: "success" })
          router.push("/onboarding/artisan/waiting")
       } catch (err) {
-         addToast({ title: common("error"), type: "error" })
+         const apiMessage = err?.response?.data?.message
+         const apiErrors = err?.response?.data?.errors
+         const firstError = apiErrors ? Object.values(apiErrors)?.flat?.()?.[0] : null
+         console.error("onboarding profile submit failed", {
+            status: err?.response?.status,
+            data: err?.response?.data,
+         })
+         addToast({ title: firstError || apiMessage || common("error"), type: "error" })
       } finally {
          setLoading(false)
       }
@@ -223,6 +281,11 @@ export default function ArtisanProfileSetupPage() {
 
    return (
       <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#09090b]">
+         {isHydratingProfile && (
+            <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
+               <div className="h-24 rounded-2xl bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] animate-pulse" />
+            </div>
+         )}
          <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 pb-28">
 
             {/* ── Top Nav ── */}
@@ -279,7 +342,7 @@ export default function ArtisanProfileSetupPage() {
                </div>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(e) => e.preventDefault()}>
                <AnimatePresence mode="wait">
 
                   {/* ══════════════════ STEP 1 ══════════════════ */}
@@ -446,7 +509,7 @@ export default function ArtisanProfileSetupPage() {
                               Votre expertise
                            </h1>
                            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                              Précisez votre spécialité, zones d'intervention et niveau d'expérience.
+                              Précisez votre spécialité, zones d&apos;intervention et niveau d&apos;expérience.
                            </p>
                         </div>
 
@@ -461,7 +524,7 @@ export default function ArtisanProfileSetupPage() {
                                  const key = cat.nom.toLowerCase()
                                     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                                  const option = TRADE_OPTIONS.find(o => key.includes(o.key)) || TRADE_OPTIONS[TRADE_OPTIONS.length - 1]
-                                 const Icon = option.icon
+                                 const Icon = option.icon || Briefcase
                                  const isSelected = formData.category_id === cat.id
                                  return (
                                     <button
@@ -519,7 +582,7 @@ export default function ArtisanProfileSetupPage() {
                            <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-5 shadow-sm">
                               <div className="flex items-center gap-2 mb-4">
                                  <TrendingUp className="w-4 h-4 text-blue-600" />
-                                 <span className="text-sm font-bold text-slate-900 dark:text-white">Niveau d'expérience</span>
+                                 <span className="text-sm font-bold text-slate-900 dark:text-white">Niveau d&apos;expérience</span>
                               </div>
                               <div className="grid grid-cols-3 gap-2.5">
                                  {[
@@ -562,7 +625,7 @@ export default function ArtisanProfileSetupPage() {
                               <div className="flex items-center justify-between mb-4">
                                  <div className="flex items-center gap-2">
                                     <MapPin className="w-4 h-4 text-blue-600" />
-                                    <span className="text-sm font-bold text-slate-900 dark:text-white">Wilayas d'intervention</span>
+                                    <span className="text-sm font-bold text-slate-900 dark:text-white">Wilayas d&apos;intervention</span>
                                  </div>
                                  {formData.wilayas.length > 0 && (
                                     <span className="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-full">
@@ -807,7 +870,7 @@ export default function ArtisanProfileSetupPage() {
                                           onDrop={(e) => {
                                              e.preventDefault()
                                              const file = e.dataTransfer.files?.[0]
-                                             if (file) console.log("drop", file)
+                                             if (file) handleDroppedFile(file, doc.id)
                                           }}
                                           className={cn(
                                              "flex flex-col items-center gap-3 py-7 px-4 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-200",
@@ -816,7 +879,7 @@ export default function ArtisanProfileSetupPage() {
                                                 : "border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-white/[0.02] hover:border-blue-300 dark:hover:border-blue-500/40 hover:bg-blue-50/30 dark:hover:bg-blue-500/5"
                                           )}
                                        >
-                                          <input type="file" className="hidden" accept=".jpg,.png,.pdf,.webp" onChange={(e) => handleDocumentUpload(e, doc.id)} />
+                                          <input type="file" className="hidden" accept=".jpg,.jpeg,.png,.pdf" onChange={(e) => handleDocumentUpload(e, doc.id)} />
                                           {isUploaded ? (
                                              <>
                                                 <div className="w-11 h-11 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center">
@@ -938,8 +1001,9 @@ export default function ArtisanProfileSetupPage() {
                         </button>
                      ) : (
                         <button
-                           type="submit"
+                           type="button"
                            disabled={loading}
+                           onClick={handleSubmit}
                            className="h-11 px-8 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white text-sm font-extrabold transition-all flex items-center gap-2 shadow-lg shadow-blue-600/25"
                         >
                            {loading ? (

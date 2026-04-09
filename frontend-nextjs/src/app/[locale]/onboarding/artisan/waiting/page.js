@@ -19,6 +19,7 @@ import {
   ShieldCheck
 } from "lucide-react"
 import { Link } from "@/i18n/routing"
+import { useRouter } from "@/i18n/routing"
 import { Button } from "@/components/ui/Button"
 import { useAuth } from "@/context/AuthContext"
 import { cn } from "@/lib/utils"
@@ -27,6 +28,7 @@ export default function PendingVerificationPage() {
   const t = useTranslations("artisan_waiting")
   const locale = useLocale()
   const isRTL = locale === "ar"
+  const router = useRouter()
   const { user, logout } = useAuth()
 
   const timelineSteps = [
@@ -161,22 +163,23 @@ export default function PendingVerificationPage() {
 
            {/* Navigation Buttons */}
            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                type="button"
-                className="flex-1"
-                onClick={logout}
-              >
-                 <Button variant="outline" className="w-full h-14 rounded-2xl font-bold border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center gap-2 group">
+                 <Button
+                   type="button"
+                   variant="outline"
+                   className="flex-1 w-full h-14 rounded-2xl font-bold border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center gap-2 group"
+                   onClick={logout}
+                 >
                     <Home className="w-5 h-5 group-hover:scale-110 transition-transform" />
                     {t("btn_home")}
                  </Button>
-              </button>
-              <Link href="/onboarding/artisan/profile" className="flex-1">
-                 <Button className="w-full h-14 rounded-2xl font-black bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-none flex items-center justify-center gap-2 group">
+                 <Button
+                   type="button"
+                   className="flex-1 w-full h-14 rounded-2xl font-black bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-none flex items-center justify-center gap-2 group"
+                   onClick={() => router.push("/onboarding/artisan/profile")}
+                 >
                     <Pencil className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                     {t("btn_edit")}
                  </Button>
-              </Link>
            </div>
 
         </div>
