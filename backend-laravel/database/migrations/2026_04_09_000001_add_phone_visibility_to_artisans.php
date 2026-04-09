@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('artisans', function (Blueprint $table) {
-            $table->boolean('phone_visible_to_clients')->default(true)->after('telephone');
+            $table->boolean('phone_visible_to_clients')->default(true)->after('id');
         });
     }
 

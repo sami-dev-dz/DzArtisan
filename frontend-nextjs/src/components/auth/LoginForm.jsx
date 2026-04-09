@@ -169,7 +169,7 @@ export function LoginForm() {
   const t = useTranslations("authentication");
   const locale = useLocale();
   const isRTL = locale === "ar";
-  const { login } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const { addToast } = useToastStore();
 
   const [activeTab, setActiveTab] = React.useState("client");
@@ -214,11 +214,7 @@ export function LoginForm() {
   };
 
   const handleGoogleLogin = () => {
-    addToast({
-      title: t("oauth_coming_soon_title"),
-      message: t("oauth_coming_soon_message"),
-      type: "info",
-    });
+    loginWithGoogle();
   };
 
   return (

@@ -45,23 +45,38 @@ class OAuthController extends Controller
                 ]);
             }
 
-            if ($user->type !== 'client') {
-                return response()->json(['success' => false, 'message' => 'Only clients can log in with Google'], 403);
-            }
-
             Auth::login($user);
-            $token = tap($user)->createToken('auth_token')->plainTextToken; // Though we use sanctum session cookie login mostly
+            $token = urlencode($user->createToken('google_token')->plainTextToken);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Logged in with Google successfully',
-                'data' => [
-                    'user' => $user->load('client'),
-                    'token' => $token
-                ]
-            ]);
+            // Redirect to the dedicated callback page on the frontend
+            return redirect(env('FRONTEND_URL') . '/google/callback?token=' . $token);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Google Login Failed: ' . $e->getMessage()], 400);
+            \Illuminate\Support\Facades\Log::error('Google OAuth Error: ' . $e->getMessage());
+            return redirect(env('FRONTEND_URL') . '/login?error=google_failed');
         }
+    }
+
+    public function syncSession(Request $request)
+    {
+        $tokenRaw = $request->query('token');
+        \Illuminate\Support\Facades\Log::info('Tentative de sync session avec le token: ' . substr($tokenRaw, 0, 10) . '...');
+        
+        // On cherche le token dans la DB
+        $token = \Laravel\Sanctum\PersonalAccessToken::findToken($tokenRaw);
+        
+        if (!$token || !$token->tokenable) {
+            return response()->json(['success' => false], 401);
+        }
+
+        $user = $token->tokenable;
+        Auth::guard('web')->login($user);
+        
+        // On supprime ce token temporaire
+        $token->delete();
+
+        return response()->json([
+            'success' => true,
+            'user' => $user->load(['client', 'artisan.categories', 'artisan.wilayas'])
+        ]);
     }
 }

@@ -182,6 +182,8 @@
     "btn_submitting": "Please wait...",
     "or_continue_with": "Or continue with",
     "google_btn": "Sign in with Google",
+    "oauth_coming_soon_title": "Feature coming soon",
+    "oauth_coming_soon_message": "Google login will be available soon. Please use email and password for now.",
     "artisan_pending_note": "Your account will require validation by our administrative team before your profile becomes public.",
     "duplicate_email": "This email is already registered. Please log in.",
     "duplicate_phone": "This phone number is already associated with an account.",
@@ -226,9 +228,7 @@
     "strength_medium": "Medium",
     "strength_strong": "Strong",
     "show_password": "Show password",
-    "hide_password": "Hide password",
-    "oauth_coming_soon_title": "Google OAuth in development",
-    "oauth_coming_soon_message": "This feature will be available soon."
+    "hide_password": "Hide password"
   },
   "interventions": {
     "status": {

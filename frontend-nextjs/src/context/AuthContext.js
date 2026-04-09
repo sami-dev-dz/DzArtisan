@@ -15,16 +15,43 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const restoreSession = async () => {
       try {
-        const { data } = await api.get('/auth/me')
-        setUser(data?.data?.user ?? null)
-      } catch {
-        setUser(null)
+        const searchParams = new URLSearchParams(window.location.search);
+        const urlToken = searchParams.get('token');
+        const storedToken = localStorage.getItem('google_auth_token');
+        let token = urlToken || storedToken;
+
+        if (token) {
+          // On force le token dans les entêtes pour cette session
+          api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          if (urlToken) localStorage.setItem('google_auth_token', token);
+        }
+
+        const { data } = await api.get('/auth/me');
+        const userData = data?.data?.user;
+
+        if (userData) {
+          setUser(userData);
+          
+          // Si on a utilisé un token Google, on nettoie et on redirige DIRECTEMENT
+          if (token) {
+            localStorage.removeItem('google_auth_token');
+            // Nettoyage URL
+            if (urlToken) {
+              const cleanUrl = window.location.pathname.split('?')[0];
+              window.history.replaceState({}, '', cleanUrl);
+            }
+            redirectAfterLogin(userData);
+          }
+        }
+      } catch (err) {
+        localStorage.removeItem('google_auth_token');
+        setUser(null);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    restoreSession()
-  }, [])
+    };
+    restoreSession();
+  }, []);
 
   const redirectAfterLogin = (u) => {
     if (u.type === "admin")   return router.push("/dashboard/admin");
@@ -70,7 +97,7 @@ export function AuthProvider({ children }) {
 
   const loginWithGoogle = () => {
     // Redirige vers le endpoint Google OAuth de Laravel
-    window.location.href = `${process.env.NEXT_PUBLIC_API_BASE}/auth/google/redirect`;
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google/redirect`;
   };
 
   const logout = async () => {

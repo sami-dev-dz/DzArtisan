@@ -207,7 +207,7 @@ export function RegisterForm() {
   const t = useTranslations("authentication");
   const locale = useLocale();
   const isRTL = locale === "ar";
-  const { register } = useAuth();
+  const { register, loginWithGoogle } = useAuth();
   const { addToast } = useToastStore();
 
   const [activeTab, setActiveTab] = React.useState("client");
@@ -304,12 +304,7 @@ export function RegisterForm() {
     }
   };
 
-  const handleGoogleLogin = () =>
-    addToast({
-      title: t("oauth_coming_soon_title"),
-      message: t("oauth_coming_soon_message"),
-      type: "info",
-    });
+  const handleGoogleLogin = () => loginWithGoogle();
 
   const resetTab = () => {
     setErrors({});

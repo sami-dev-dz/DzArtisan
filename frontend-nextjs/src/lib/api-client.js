@@ -14,8 +14,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // On laisse le composant ou le context gérer la déconnexion
-      console.warn("Session expirée (401)");
+      // On laisse le composant ou le context gérer la déconnexion silencieusement pour les invités
     }
     return Promise.reject(error);
   },

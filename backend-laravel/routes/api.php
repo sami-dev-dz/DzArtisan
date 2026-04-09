@@ -34,6 +34,7 @@ Route::prefix('v1')->group(function () {
         // Google OAuth Routes
         Route::get('/google/redirect', [\App\Http\Controllers\Api\OAuthController::class, 'redirectToGoogle']);
         Route::get('/google/callback', [\App\Http\Controllers\Api\OAuthController::class, 'handleGoogleCallback']);
+        Route::get('/google/sync-session', [\App\Http\Controllers\Api\OAuthController::class, 'syncSession']);
 
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
         Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
