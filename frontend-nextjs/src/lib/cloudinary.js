@@ -1,22 +1,34 @@
-/**
- * Simple Cloudinary upload utility
- * Note: In a production app, the signature should be generated on the backend.
- * For this MVP, we use an unsigned upload preset.
- */
+import api from "@/lib/api-client";
 
 export const uploadToCloudinary = async (file, onProgress) => {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const preset = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET || "dzartisan_presets";
+  const apiKey = process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY;
   if (!cloudName) {
     throw new Error("Cloudinary cloud name is not configured");
+  }
+  if (!apiKey) {
+    throw new Error("Cloudinary API key is not configured");
+  }
+
+  const resourceType = file.type === "application/pdf" ? "raw" : "image";
+  const { data } = await api.post("/uploads/cloudinary/signature", {
+    resource_type: resourceType,
+    folder: "dzartisan/profiles",
+  });
+
+  const signed = data?.data;
+  if (!signed?.signature || !signed?.timestamp) {
+    throw new Error("Failed to obtain Cloudinary upload signature");
   }
 
   const formData = new FormData();
   formData.append("file", file);
-  formData.append("upload_preset", preset);
-  formData.append("folder", "dzartisan/profiles");
+  formData.append("api_key", apiKey);
+  formData.append("timestamp", String(signed.timestamp));
+  formData.append("signature", signed.signature);
+  formData.append("folder", signed.folder || "dzartisan/profiles");
 
-  const endpoint = file.type === "application/pdf" ? "raw/upload" : "image/upload";
+  const endpoint = `${resourceType}/upload`;
 
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();

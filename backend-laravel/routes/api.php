@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\AdminStatsController;
 use App\Http\Controllers\Api\ClientRequestController;
 use App\Http\Controllers\Api\ArtisanJobController;
 use App\Http\Controllers\Api\ArtisanStatsController;
+use App\Http\Controllers\Api\CloudinaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,8 @@ Route::prefix('v1')->group(function () {
 
     // Routes protégées
     Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/uploads/cloudinary/signature', [CloudinaryController::class, 'signUpload']);
+
         // Notifications
         Route::get('/notifications', [NotificationController::class, 'index']);
         Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);

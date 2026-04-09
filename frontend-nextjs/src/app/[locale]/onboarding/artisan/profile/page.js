@@ -33,10 +33,166 @@ const TRADE_OPTIONS = [
 ]
 
 const STEPS = [
-   { id: 1, label: "Identité" },
-   { id: 2, label: "Expertise" },
-   { id: 3, label: "Finaliser" },
+   { id: 1, key: "identityTitle" },
+   { id: 2, key: "expertiseTitle" },
+   { id: 3, key: "finalizeTitle" },
 ]
+
+const FORM_I18N = {
+   fr: {
+      artisanPro: "Artisan Pro",
+      step: "Étape",
+      completed: "complété",
+      identityTitle: "Votre identité",
+      identityDesc: "Ces informations seront affichées sur votre profil public.",
+      verified: "Vérifié",
+      photoMax: "Photo · Max 5 Mo",
+      editName: "Modifier le nom",
+      phone: "Téléphone",
+      phonePlaceholder: "05xx xx xx xx",
+      optional: "optionnel",
+      generate: "Générer",
+      generatedLink: "Lien généré",
+      test: "Tester",
+      expertiseTitle: "Votre expertise",
+      expertiseDesc: "Précisez votre spécialité, zones d'intervention et niveau d'expérience.",
+      trade: "Votre métier",
+      experience: "Niveau d'expérience",
+      beginner: "Débutant",
+      confirmed: "Confirmé",
+      expert: "Expert",
+      wilayas: "Wilayas d'intervention",
+      wilayaSearch: "Rechercher (ex: Be → Béjaïa)",
+      noWilaya: "Aucune wilaya trouvée",
+      wilayaHint: "Saisissez une wilaya pour la sélectionner…",
+      about: "Présentation",
+      aboutPlaceholder: "Décrivez votre expérience, vos spécialités et ce qui vous distingue des autres artisans…",
+      minChars: "Minimum 20 caractères requis",
+      finalizeTitle: "Finaliser le profil",
+      finalizeDesc: "Définissez votre disponibilité et joignez vos justificatifs pour accélérer la validation.",
+      availability: "Disponibilité",
+      available: "Disponible",
+      unavailable: "Indisponible",
+      docs: "Justificatifs",
+      docsHint: "JPG, PNG, PDF · Max 5 Mo",
+      optionalCaps: "Facultatif",
+      dragOrClick: "Glisser ou cliquer",
+      imported: "Importé",
+      verifiedBadge: "Badge Artisan Vérifié",
+      verifiedBadgeDesc: "Les profils vérifiés affichent +2× plus de visites et obtiennent en moyenne 68% de demandes supplémentaires. Joignez vos documents pour activer votre compte vérifié.",
+      back: "← Retour",
+      continue: "Continuer",
+      sending: "Envoi…",
+      submit: "Soumettre le profil",
+      editNameTitle: "Modifier le nom",
+      editNameDesc: "Ce nom sera affiché publiquement sur votre profil. Utilisez votre vrai nom pour renforcer la confiance.",
+      fullName: "Nom complet",
+      cancel: "Annuler",
+      save: "Enregistrer",
+   },
+   en: {
+      artisanPro: "Artisan Pro",
+      step: "Step",
+      completed: "completed",
+      identityTitle: "Your identity",
+      identityDesc: "This information will be displayed on your public profile.",
+      verified: "Verified",
+      photoMax: "Photo · Max 5 MB",
+      editName: "Edit name",
+      phone: "Phone",
+      phonePlaceholder: "05xx xx xx xx",
+      optional: "optional",
+      generate: "Generate",
+      generatedLink: "Link generated",
+      test: "Test",
+      expertiseTitle: "Your expertise",
+      expertiseDesc: "Specify your specialty, service areas, and experience level.",
+      trade: "Your trade",
+      experience: "Experience level",
+      beginner: "Beginner",
+      confirmed: "Intermediate",
+      expert: "Expert",
+      wilayas: "Service wilayas",
+      wilayaSearch: "Search (e.g. Be → Béjaïa)",
+      noWilaya: "No wilaya found",
+      wilayaHint: "Type a wilaya to select it…",
+      about: "Presentation",
+      aboutPlaceholder: "Describe your experience, specialties, and what makes you different from other artisans…",
+      minChars: "Minimum 20 characters required",
+      finalizeTitle: "Finalize profile",
+      finalizeDesc: "Set your availability and upload documents to speed up validation.",
+      availability: "Availability",
+      available: "Available",
+      unavailable: "Unavailable",
+      docs: "Supporting documents",
+      docsHint: "JPG, PNG, PDF · Max 5 MB",
+      optionalCaps: "Optional",
+      dragOrClick: "Drag or click",
+      imported: "Uploaded",
+      verifiedBadge: "Verified Artisan Badge",
+      verifiedBadgeDesc: "Verified profiles get +2× more views and on average 68% more requests. Upload your documents to activate your verified status.",
+      back: "← Back",
+      continue: "Continue",
+      sending: "Sending…",
+      submit: "Submit profile",
+      editNameTitle: "Edit name",
+      editNameDesc: "This name appears publicly on your profile. Use your real name to increase trust.",
+      fullName: "Full name",
+      cancel: "Cancel",
+      save: "Save",
+   },
+   ar: {
+      artisanPro: "حرفي محترف",
+      step: "الخطوة",
+      completed: "مكتمل",
+      identityTitle: "هويتك",
+      identityDesc: "سيتم عرض هذه المعلومات في ملفك الشخصي العام.",
+      verified: "موثّق",
+      photoMax: "الصورة · الحد الأقصى 5MB",
+      editName: "تعديل الاسم",
+      phone: "الهاتف",
+      phonePlaceholder: "05xx xx xx xx",
+      optional: "اختياري",
+      generate: "توليد",
+      generatedLink: "تم توليد الرابط",
+      test: "اختبار",
+      expertiseTitle: "خبرتك",
+      expertiseDesc: "حدد تخصصك ومناطق العمل ومستوى الخبرة.",
+      trade: "مهنتك",
+      experience: "مستوى الخبرة",
+      beginner: "مبتدئ",
+      confirmed: "متوسط",
+      expert: "خبير",
+      wilayas: "ولايات التدخل",
+      wilayaSearch: "ابحث (مثال: Be → Béjaïa)",
+      noWilaya: "لم يتم العثور على ولاية",
+      wilayaHint: "اكتب اسم ولاية لاختيارها…",
+      about: "نبذة",
+      aboutPlaceholder: "صف خبرتك وتخصصاتك وما يميزك عن باقي الحرفيين…",
+      minChars: "الحد الأدنى 20 حرفاً",
+      finalizeTitle: "إنهاء الملف",
+      finalizeDesc: "حدد التوفر وأرفق الوثائق لتسريع المراجعة.",
+      availability: "التوفر",
+      available: "متاح",
+      unavailable: "غير متاح",
+      docs: "الوثائق",
+      docsHint: "JPG, PNG, PDF · الحد الأقصى 5MB",
+      optionalCaps: "اختياري",
+      dragOrClick: "اسحب أو انقر",
+      imported: "تم الرفع",
+      verifiedBadge: "شارة الحرفي الموثق",
+      verifiedBadgeDesc: "الملفات الموثقة تحصل على +2× زيارات وأكثر بنسبة 68% من الطلبات. أرفق وثائقك لتفعيل حالة التوثيق.",
+      back: "← رجوع",
+      continue: "متابعة",
+      sending: "جارٍ الإرسال…",
+      submit: "إرسال الملف",
+      editNameTitle: "تعديل الاسم",
+      editNameDesc: "سيظهر هذا الاسم علنياً في ملفك الشخصي. استخدم اسمك الحقيقي لزيادة الثقة.",
+      fullName: "الاسم الكامل",
+      cancel: "إلغاء",
+      save: "حفظ",
+   },
+}
 
 function normalize(str) {
    return str
@@ -50,6 +206,7 @@ export default function ArtisanProfileSetupPage() {
    const common = useTranslations("common")
    const locale = useLocale()
    const isRTL = locale === "ar"
+   const ft = FORM_I18N[locale] || FORM_I18N.fr
    const router = useRouter()
    const { user } = useAuth()
    const { addToast } = useToastStore()
@@ -294,7 +451,7 @@ export default function ArtisanProfileSetupPage() {
                   <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md shadow-blue-600/30">
                      <Award className="w-4.5 h-4.5 text-white" style={{ width: 18, height: 18 }} />
                   </div>
-                  <span className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">Artisan Pro</span>
+                  <span className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">{ft.artisanPro}</span>
                </div>
 
                {/* Step pills */}
@@ -313,7 +470,7 @@ export default function ArtisanProfileSetupPage() {
                               ? <Check className="w-3 h-3 stroke-[3]" />
                               : <span>{s.id}</span>
                            }
-                           <span className="hidden sm:block">{s.label}</span>
+                           <span className="hidden sm:block">{ft[s.key]}</span>
                         </div>
                         {i < STEPS.length - 1 && (
                            <div className={cn("w-4 h-px transition-colors duration-300",
@@ -329,9 +486,9 @@ export default function ArtisanProfileSetupPage() {
             <div className="mb-10">
                <div className="flex items-baseline justify-between mb-2.5">
                   <p className="text-[11px] font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest">
-                     Étape {currentStep} / 3
+                     {ft.step} {currentStep} / 3
                   </p>
-                  <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500">{completion}% complété</p>
+                  <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500">{completion}% {ft.completed}</p>
                </div>
                <div className="h-1 bg-slate-200 dark:bg-white/[0.06] rounded-full overflow-hidden">
                   <motion.div
@@ -357,10 +514,10 @@ export default function ArtisanProfileSetupPage() {
                      >
                         <div className="mb-8">
                            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                              Votre identité
+                              {ft.identityTitle}
                            </h1>
                            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                              Ces informations seront affichées sur votre profil public.
+                              {ft.identityDesc}
                            </p>
                         </div>
 
@@ -400,10 +557,10 @@ export default function ArtisanProfileSetupPage() {
                                     </p>
                                     <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20">
                                        <ShieldCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
-                                       <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">Vérifié</span>
+                                       <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">{ft.verified}</span>
                                     </div>
                                  </div>
-                                 <p className="text-xs text-slate-400 mt-0.5">Photo · Max 5 Mo</p>
+                                 <p className="text-xs text-slate-400 mt-0.5">{ft.photoMax}</p>
                                  {/* FIX #1: no underline, styled as a clean button */}
                                  <button
                                     type="button"
@@ -411,7 +568,7 @@ export default function ArtisanProfileSetupPage() {
                                     className="mt-2.5 inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 px-2.5 py-1 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 transition-colors"
                                  >
                                     <Pencil className="w-3 h-3" />
-                                    Modifier le nom
+                                    {ft.editName}
                                  </button>
                               </div>
                            </div>
@@ -423,7 +580,7 @@ export default function ArtisanProfileSetupPage() {
                               {/* Phone — FIX #2: removed "Visible to clients" toggle */}
                               <div className="space-y-2">
                                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                                    Téléphone
+                                    {ft.phone}
                                  </label>
                                  <div className="relative">
                                     <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
@@ -433,7 +590,7 @@ export default function ArtisanProfileSetupPage() {
                                     <input
                                        value={formData.telephone}
                                        onChange={(e) => setFormData(p => ({ ...p, telephone: e.target.value }))}
-                                       placeholder="05xx xx xx xx"
+                                       placeholder={ft.phonePlaceholder}
                                        className="w-full h-12 pl-12 pr-12 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm font-semibold text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-mono tracking-wider"
                                     />
                                     {phoneValid && (
@@ -447,7 +604,7 @@ export default function ArtisanProfileSetupPage() {
                               {/* WhatsApp */}
                               <div className="space-y-2">
                                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                                    WhatsApp <span className="normal-case font-normal text-slate-400">(optionnel)</span>
+                                    WhatsApp <span className="normal-case font-normal text-slate-400">({ft.optional})</span>
                                  </label>
                                  <div className="flex gap-2">
                                     <div className="relative flex-1">
@@ -467,7 +624,7 @@ export default function ArtisanProfileSetupPage() {
                                        className="shrink-0 h-12 px-4 rounded-xl bg-[#25D366] hover:bg-[#1fb855] text-white text-xs font-bold transition-colors flex items-center gap-1.5"
                                     >
                                        <Zap className="w-3.5 h-3.5" />
-                                       Générer
+                                       {ft.generate}
                                     </button>
                                  </div>
                                  {/* FIX #1: no underline on link — replaced with pill button */}
@@ -475,7 +632,7 @@ export default function ArtisanProfileSetupPage() {
                                     <div className="flex items-center gap-2">
                                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20">
                                           <Check className="w-3 h-3 text-emerald-600" />
-                                          <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">Lien généré</span>
+                                          <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">{ft.generatedLink}</span>
                                        </div>
                                        <a
                                           href={`https://${formData.whatsapp}`}
@@ -484,7 +641,7 @@ export default function ArtisanProfileSetupPage() {
                                           className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors no-underline"
                                        >
                                           <ExternalLink className="w-3 h-3" />
-                                          Tester
+                                          {ft.test}
                                        </a>
                                     </div>
                                  )}
@@ -506,10 +663,10 @@ export default function ArtisanProfileSetupPage() {
                      >
                         <div className="mb-8">
                            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                              Votre expertise
+                              {ft.expertiseTitle}
                            </h1>
                            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                              Précisez votre spécialité, zones d&apos;intervention et niveau d&apos;expérience.
+                              {ft.expertiseDesc}
                            </p>
                         </div>
 
@@ -517,7 +674,7 @@ export default function ArtisanProfileSetupPage() {
                         <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-5 shadow-sm">
                            <div className="flex items-center gap-2 mb-4">
                               <Briefcase className="w-4 h-4 text-blue-600" />
-                              <span className="text-sm font-bold text-slate-900 dark:text-white">Votre métier</span>
+                              <span className="text-sm font-bold text-slate-900 dark:text-white">{ft.trade}</span>
                            </div>
                            <div className="grid grid-cols-5 gap-2">
                               {categories.map((cat) => {
@@ -582,13 +739,13 @@ export default function ArtisanProfileSetupPage() {
                            <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-5 shadow-sm">
                               <div className="flex items-center gap-2 mb-4">
                                  <TrendingUp className="w-4 h-4 text-blue-600" />
-                                 <span className="text-sm font-bold text-slate-900 dark:text-white">Niveau d&apos;expérience</span>
+                                 <span className="text-sm font-bold text-slate-900 dark:text-white">{ft.experience}</span>
                               </div>
                               <div className="grid grid-cols-3 gap-2.5">
                                  {[
-                                    { id: "beginner", label: "Débutant", sub: "< 2 ans", dot: "bg-slate-400" },
-                                    { id: "intermediate", label: "Confirmé", sub: "2 – 5 ans", dot: "bg-blue-500" },
-                                    { id: "expert", label: "Expert", sub: "> 5 ans", dot: "bg-amber-500" },
+                                    { id: "beginner", label: ft.beginner, sub: "< 2 ans", dot: "bg-slate-400" },
+                                    { id: "intermediate", label: ft.confirmed, sub: "2 – 5 ans", dot: "bg-blue-500" },
+                                    { id: "expert", label: ft.expert, sub: "> 5 ans", dot: "bg-amber-500" },
                                  ].map(level => {
                                     const isSelected = formData.experience_level === level.id
                                     return (
@@ -625,7 +782,7 @@ export default function ArtisanProfileSetupPage() {
                               <div className="flex items-center justify-between mb-4">
                                  <div className="flex items-center gap-2">
                                     <MapPin className="w-4 h-4 text-blue-600" />
-                                    <span className="text-sm font-bold text-slate-900 dark:text-white">Wilayas d&apos;intervention</span>
+                                    <span className="text-sm font-bold text-slate-900 dark:text-white">{ft.wilayas}</span>
                                  </div>
                                  {formData.wilayas.length > 0 && (
                                     <span className="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-full">
@@ -639,7 +796,7 @@ export default function ArtisanProfileSetupPage() {
                                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                                  <input
                                     ref={searchRef}
-                                    placeholder="Rechercher (ex: Be → Béjaïa)"
+                                    placeholder={ft.wilayaSearch}
                                     value={searchWilaya}
                                     onChange={(e) => setSearchWilaya(e.target.value)}
                                     onFocus={() => setWilayaFocused(true)}
@@ -702,7 +859,7 @@ export default function ArtisanProfileSetupPage() {
                                           animate={{ opacity: 1 }}
                                           className="absolute z-50 top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/[0.08] rounded-xl shadow-xl overflow-hidden px-4 py-4"
                                        >
-                                          <p className="text-sm text-slate-400 font-medium text-center">Aucune wilaya trouvée</p>
+                                          <p className="text-sm text-slate-400 font-medium text-center">{ft.noWilaya}</p>
                                        </motion.div>
                                     )}
                                  </AnimatePresence>
@@ -711,7 +868,7 @@ export default function ArtisanProfileSetupPage() {
                               {/* Selected pills */}
                               <div className="flex flex-wrap gap-1.5 mt-3 min-h-[28px]">
                                  {formData.wilayas.length === 0 ? (
-                                    <p className="text-xs text-slate-400 italic">Saisissez une wilaya pour la sélectionner…</p>
+                                    <p className="text-xs text-slate-400 italic">{ft.wilayaHint}</p>
                                  ) : (
                                     formData.wilayas.map(id => {
                                        const w = wilayas.find(x => x.id === id)
@@ -746,7 +903,7 @@ export default function ArtisanProfileSetupPage() {
                               <div className="flex items-center justify-between mb-4">
                                  <div className="flex items-center gap-2">
                                     <FileText className="w-4 h-4 text-blue-600" />
-                                    <span className="text-sm font-bold text-slate-900 dark:text-white">Présentation</span>
+                                    <span className="text-sm font-bold text-slate-900 dark:text-white">{ft.about}</span>
                                  </div>
                                  <span className={cn(
                                     "text-[11px] font-bold tabular-nums px-2 py-0.5 rounded-full transition-all",
@@ -760,14 +917,14 @@ export default function ArtisanProfileSetupPage() {
                               <textarea
                                  value={formData.about}
                                  onChange={(e) => setFormData(p => ({ ...p, about: e.target.value.slice(0, 300) }))}
-                                 placeholder="Décrivez votre expérience, vos spécialités et ce qui vous distingue des autres artisans…"
+                                 placeholder={ft.aboutPlaceholder}
                                  rows={4}
                                  className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all leading-relaxed font-medium"
                               />
                               {formData.about.length > 0 && formData.about.length < 20 && (
                                  <p className="flex items-center gap-1.5 text-[11px] text-red-500 font-semibold mt-2">
                                     <AlertCircle className="w-3 h-3" />
-                                    Minimum 20 caractères requis
+                                    {ft.minChars}
                                  </p>
                               )}
                            </div>
@@ -787,10 +944,10 @@ export default function ArtisanProfileSetupPage() {
                      >
                         <div className="mb-8">
                            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                              Finaliser le profil
+                              {ft.finalizeTitle}
                            </h1>
                            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                              Définissez votre disponibilité et joignez vos justificatifs pour accélérer la validation.
+                              {ft.finalizeDesc}
                            </p>
                         </div>
 
@@ -799,12 +956,12 @@ export default function ArtisanProfileSetupPage() {
                            <div className="p-5">
                               <div className="flex items-center gap-2 mb-4">
                                  <Clock className="w-4 h-4 text-blue-600" />
-                                 <span className="text-sm font-bold text-slate-900 dark:text-white">Disponibilité</span>
+                                 <span className="text-sm font-bold text-slate-900 dark:text-white">{ft.availability}</span>
                               </div>
                               <div className="grid grid-cols-2 gap-3">
                                  {[
-                                    { value: "disponible", label: "Disponible", sub: "Visible dans les recherches", dot: "bg-emerald-500", border: "border-emerald-500", bg: "bg-emerald-500/5 dark:bg-emerald-500/10", text: "text-emerald-700 dark:text-emerald-400" },
-                                    { value: "indisponible", label: "Indisponible", sub: "Masqué des recherches", dot: "bg-slate-400", border: "border-slate-200 dark:border-white/[0.08]", bg: "bg-slate-50 dark:bg-white/[0.03]", text: "text-slate-600 dark:text-slate-400" },
+                                    { value: "disponible", label: ft.available, sub: "Visible dans les recherches", dot: "bg-emerald-500", border: "border-emerald-500", bg: "bg-emerald-500/5 dark:bg-emerald-500/10", text: "text-emerald-700 dark:text-emerald-400" },
+                                    { value: "indisponible", label: ft.unavailable, sub: "Masqué des recherches", dot: "bg-slate-400", border: "border-slate-200 dark:border-white/[0.08]", bg: "bg-slate-50 dark:bg-white/[0.03]", text: "text-slate-600 dark:text-slate-400" },
                                  ].map(opt => {
                                     const isActive = formData.disponibilite === opt.value
                                     return (
@@ -846,12 +1003,12 @@ export default function ArtisanProfileSetupPage() {
                                     <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                                  </div>
                                  <div>
-                                    <p className="text-sm font-bold text-slate-900 dark:text-white">Justificatifs</p>
-                                    <p className="text-xs text-slate-400">JPG, PNG, PDF · Max 5 Mo</p>
+                                    <p className="text-sm font-bold text-slate-900 dark:text-white">{ft.docs}</p>
+                                    <p className="text-xs text-slate-400">{ft.docsHint}</p>
                                  </div>
                               </div>
                               <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 border border-slate-200 dark:border-white/[0.08] rounded-full px-2.5 py-1">
-                                 Facultatif
+                                 {ft.optionalCaps}
                               </span>
                            </div>
 
@@ -887,7 +1044,7 @@ export default function ArtisanProfileSetupPage() {
                                                 </div>
                                                 <div className="text-center">
                                                    <p className="text-xs font-bold text-slate-700 dark:text-slate-300">{doc.label}</p>
-                                                   <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold mt-0.5 uppercase tracking-wide">Importé ✓</p>
+                                                   <p className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold mt-0.5 uppercase tracking-wide">{ft.imported} ✓</p>
                                                 </div>
                                              </>
                                           ) : progress > 0 ? (
@@ -902,7 +1059,7 @@ export default function ArtisanProfileSetupPage() {
                                                 </div>
                                                 <div className="text-center">
                                                    <p className="text-xs font-bold text-slate-600 dark:text-slate-400">{doc.label}</p>
-                                                   <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">Glisser ou cliquer</p>
+                                                   <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">{ft.dragOrClick}</p>
                                                 </div>
                                              </>
                                           )}
@@ -930,14 +1087,10 @@ export default function ArtisanProfileSetupPage() {
                                     </div>
                                     <div>
                                        <p className="text-xs font-extrabold text-slate-900 dark:text-white tracking-tight">
-                                          Badge Artisan Vérifié
+                                          {ft.verifiedBadge}
                                        </p>
                                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                                          Les profils vérifiés affichent{" "}
-                                          <span className="font-bold text-blue-700 dark:text-blue-400">+2× plus de visites</span>
-                                          {" "}et obtiennent en moyenne{" "}
-                                          <span className="font-bold text-emerald-700 dark:text-emerald-400">68% de demandes supplémentaires</span>.
-                                          Joignez vos documents pour activer votre compte vérifié.
+                                          {ft.verifiedBadgeDesc}
                                        </p>
                                     </div>
                                  </div>
@@ -986,7 +1139,7 @@ export default function ArtisanProfileSetupPage() {
                            onClick={goBack}
                            className="h-11 px-5 rounded-xl border border-slate-200 dark:border-white/[0.08] text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors"
                         >
-                           ← Retour
+                           {ft.back}
                         </button>
                      )}
                      <div className="flex-1" />
@@ -996,7 +1149,7 @@ export default function ArtisanProfileSetupPage() {
                            onClick={goNext}
                            className="h-11 px-7 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 text-sm font-extrabold transition-all flex items-center gap-2 shadow-lg shadow-slate-900/20"
                         >
-                           Continuer
+                           {ft.continue}
                            <ArrowRight className="w-4 h-4" />
                         </button>
                      ) : (
@@ -1009,11 +1162,11 @@ export default function ArtisanProfileSetupPage() {
                            {loading ? (
                               <>
                                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                 Envoi…
+                                 {ft.sending}
                               </>
                            ) : (
                               <>
-                                 Soumettre le profil
+                                 {ft.submit}
                                  <ArrowRight className="w-4 h-4" />
                               </>
                            )}
@@ -1044,17 +1197,17 @@ export default function ArtisanProfileSetupPage() {
                   >
                      <div className="bg-white dark:bg-[#111113] border border-slate-200/80 dark:border-white/[0.08] rounded-2xl shadow-2xl overflow-hidden">
                         <div className="px-6 pt-6 pb-5 border-b border-slate-100 dark:border-white/[0.06]">
-                           <h3 className="text-base font-extrabold text-slate-900 dark:text-white">Modifier le nom</h3>
+                           <h3 className="text-base font-extrabold text-slate-900 dark:text-white">{ft.editNameTitle}</h3>
                         </div>
                         <div className="p-6 space-y-4">
                            <div className="flex items-start gap-3 p-3.5 bg-amber-50 dark:bg-amber-500/10 border border-amber-200/60 dark:border-amber-500/20 rounded-xl">
                               <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                               <p className="text-xs text-amber-700 dark:text-amber-400 leading-relaxed font-medium">
-                                 Ce nom sera affiché publiquement sur votre profil. Utilisez votre vrai nom pour renforcer la confiance.
+                                 {ft.editNameDesc}
                               </p>
                            </div>
                            <div className="space-y-1.5">
-                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Nom complet</label>
+                              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">{ft.fullName}</label>
                               <input
                                  value={newName}
                                  onChange={(e) => setNewName(e.target.value)}
@@ -1064,12 +1217,12 @@ export default function ArtisanProfileSetupPage() {
                            <div className="flex gap-3 pt-1">
                               <button type="button" onClick={() => setIsNameModalOpen(false)}
                                  className="flex-1 h-10 rounded-xl border border-slate-200 dark:border-white/[0.08] text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors">
-                                 Annuler
+                                 {ft.cancel}
                               </button>
                               <button type="button"
                                  onClick={() => { setFormData(p => ({ ...p, nomComplet: newName })); setIsNameModalOpen(false) }}
                                  className="flex-1 h-10 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-colors">
-                                 Enregistrer
+                                 {ft.save}
                               </button>
                            </div>
                         </div>

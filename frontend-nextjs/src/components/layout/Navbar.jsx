@@ -10,7 +10,10 @@ import { useAuth } from "@/context/AuthContext";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState("light"); // Default to light, will sync in useEffect
+  const [theme, setTheme] = useState(() => {
+    if (typeof document === "undefined") return "light";
+    return document.documentElement.classList.contains("dark") ? "dark" : "light";
+  });
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
   
@@ -19,6 +22,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { user, logout } = useAuth();
+  const artisanConfirmed = user?.type !== "artisan" || user?.artisan?.statutValidation === "valide";
 
   const NAV_LINKS = [];
 
@@ -44,12 +48,6 @@ export default function Navbar() {
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, []);
-
-  // Sync theme with DOM on mount
-  useEffect(() => {
-    const isDark = document.documentElement.classList.contains("dark");
-    setTheme(isDark ? "dark" : "light");
   }, []);
 
   // Apply theme class to <html>
@@ -79,8 +77,8 @@ export default function Navbar() {
     setLangOpen(false);
   };
 
-  const dashboardUrl = user?.type === 'admin' ? '/dashboard/admin' : 
-                      user?.type === 'artisan' ? '/dashboard/artisan' : 
+  const dashboardUrl = user?.type === 'admin' ? '/dashboard/admin' :
+                      user?.type === 'artisan' ? '/dashboard/artisan' :
                       '/dashboard/client';
 
   return (
@@ -460,10 +458,12 @@ export default function Navbar() {
             {/* Auth */}
             {user ? (
                <>
-                 <Link href={dashboardUrl} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <User size={14} />
-                    {t("dashboard")}
-                 </Link>
+                 {artisanConfirmed && (
+                   <Link href={dashboardUrl} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <User size={14} />
+                      {t("dashboard")}
+                   </Link>
+                 )}
                  <button onClick={logout} className="icon-btn" title={t("logout")}>
                    <LogOut size={14} />
                  </button>
@@ -614,30 +614,32 @@ export default function Navbar() {
                 >
                   {user ? (
                     <>
-                      <Link
-                        href={dashboardUrl}
-                        onClick={() => setIsOpen(false)}
-                        style={{
-                          flex: 1,
-                          padding: "13px",
-                          borderRadius: "12px",
-                          border: "1px solid var(--nav-border)",
-                          background: "var(--nav-surface)",
-                          color: "var(--nav-text-active)",
-                          textAlign: "center",
-                          fontWeight: 700,
-                          fontSize: "0.875rem",
-                          textDecoration: "none",
-                          transition: "background 0.2s",
-                          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
-                        }}
-                      >
-                         <User size={14} /> {t("dashboard")}
-                      </Link>
+                      {artisanConfirmed && (
+                        <Link
+                          href={dashboardUrl}
+                          onClick={() => setIsOpen(false)}
+                          style={{
+                            flex: 1,
+                            padding: "13px",
+                            borderRadius: "12px",
+                            border: "1px solid var(--nav-border)",
+                            background: "var(--nav-surface)",
+                            color: "var(--nav-text-active)",
+                            textAlign: "center",
+                            fontWeight: 700,
+                            fontSize: "0.875rem",
+                            textDecoration: "none",
+                            transition: "background 0.2s",
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
+                          }}
+                        >
+                           <User size={14} /> {t("dashboard")}
+                        </Link>
+                      )}
                       <button
                         onClick={() => { logout(); setIsOpen(false); }}
                         style={{
-                          flex: 0.4,
+                          flex: artisanConfirmed ? 0.4 : 1,
                           padding: "13px",
                           borderRadius: "12px",
                           background: "var(--nav-surface)",

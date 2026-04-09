@@ -20,8 +20,12 @@ export default function ArtisanLayout({ children }) {
       router.push("/dashboard")
       return
     }
-    if (!loading && user && user.type === "artisan" && user.status === "en_attente") {
-      router.push("/pending")
+    if (!loading && user && user.type === "artisan" && user.artisan?.statutValidation === "en_attente") {
+      router.push("/onboarding/artisan/waiting")
+      return
+    }
+    if (!loading && user && user.type === "artisan" && user.needs_artisan_onboarding) {
+      router.push("/onboarding/artisan/profile")
     }
   }, [user, loading, router])
 

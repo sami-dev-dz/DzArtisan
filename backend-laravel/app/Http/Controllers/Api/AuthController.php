@@ -201,8 +201,7 @@ class AuthController extends Controller
             && !empty($artisan->description)
             && strlen($artisan->description) >= 20
             && $artisan->categories()->exists()
-            && $artisan->wilayas()->exists()
-            && !empty($artisan->anneesExp);
+            && $artisan->wilayas()->exists();
 
         return !$hasCore;
     }
