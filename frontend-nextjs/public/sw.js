@@ -4,8 +4,8 @@ const OFFLINE_URL = '/offline';
 const ASSETS_TO_CACHE = [
   '/',
   OFFLINE_URL,
-  '/icon-192.png',
-  '/icon-512.png',
+  '/file.svg',
+  '/window.svg',
   '/manifest.json',
 ];
 

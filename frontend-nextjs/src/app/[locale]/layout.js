@@ -58,47 +58,44 @@ export default async function LocaleLayout({ children, params }) {
   }
 
   const messages = await getMessages();
+  const isRTL = locale === "ar";
 
   return (
-    <html
+    <div
       lang={locale}
-      dir={locale === "ar" ? "rtl" : "ltr"}
-      suppressHydrationWarning
+      dir={isRTL ? "rtl" : "ltr"}
+      className={`antialiased ${outfit.variable} ${inter.variable} ${cairo.variable}`}
     >
-      <body
-        className={`antialiased ${outfit.variable} ${inter.variable} ${cairo.variable}`}
-      >
-        {/* ✅ External file reference works correctly in Next.js 15 App Router */}
-        <Script
-          id="theme-init"
-          src="/scripts/theme-init.js"
-          strategy="afterInteractive"
-        />
-        <NextIntlClientProvider messages={messages}>
-          <AuthProvider>
-            <Navbar />
-            <main className="min-h-screen pt-20">{children}</main>
-            <Footer />
-            <CookieConsent />
-            <Toaster />
-          </AuthProvider>
-        </NextIntlClientProvider>
+      {/* ✅ External file reference works correctly in Next.js 15 App Router */}
+      <Script
+        id="theme-init"
+        src="/scripts/theme-init.js"
+        strategy="afterInteractive"
+      />
+      <NextIntlClientProvider messages={messages}>
+        <AuthProvider>
+          <Navbar />
+          <main className="min-h-screen pt-20">{children}</main>
+          <Footer />
+          <CookieConsent />
+          <Toaster />
+        </AuthProvider>
+      </NextIntlClientProvider>
 
-        {/* Register Service Worker for PWA */}
-        <Script id="register-sw" strategy="afterInteractive">
-          {`
-            if ('serviceWorker' in navigator) {
-              window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                  console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
-                  console.log('ServiceWorker registration failed: ', err);
-                });
+      {/* Register Service Worker for PWA */}
+      <Script id="register-sw" strategy="afterInteractive">
+        {`
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+              navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+              }, function(err) {
+                console.log('ServiceWorker registration failed: ', err);
               });
-            }
-          `}
-        </Script>
-      </body>
-    </html>
+            });
+          }
+        `}
+      </Script>
+    </div>
   );
 }

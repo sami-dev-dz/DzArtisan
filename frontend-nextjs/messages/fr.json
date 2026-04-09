@@ -152,6 +152,9 @@
       }
     }
   },
+  "testimonials": {
+    "title": "Ils nous font confiance"
+  },
   "cta_banner": {
     "title": "Propulsez votre activité artisanale",
     "subtitle": "Rejoignez le réseau professionnel de confiance en Algérie.",

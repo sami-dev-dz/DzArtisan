@@ -39,6 +39,14 @@ class DashboardController extends Controller
 
         // Artisan Stats
         $artisan = $user->artisan;
+        if (!$artisan) {
+            return response()->json([
+                'stats' => [],
+                'completeness' => 0,
+                'missing_items' => [],
+                'subscription' => $this->getSubscriptionSummary($user),
+            ]);
+        }
         $artisan->load(['categories', 'wilayas']);
 
         return response()->json([
@@ -80,6 +88,9 @@ class DashboardController extends Controller
         if ($user->type !== 'artisan') return response()->json(['error' => 'Non autorisé'], 403);
         
         $artisan = $user->artisan;
+        if (!$artisan) {
+            return response()->json([]);
+        }
         $requests = $artisan->scopeMatchingRequests(DemandeIntervention::query())->limit(5)->get();
         
         return response()->json($requests);
