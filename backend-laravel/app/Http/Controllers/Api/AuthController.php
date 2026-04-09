@@ -70,7 +70,6 @@ class AuthController extends Controller
                         'user_id' => $createdUser->id,
                         'wilaya_id' => $defaultWilayaId,
                         'commune_id' => $defaultCommuneId,
-                        'telephone' => $request->telephone,
                     ]);
                 }
 

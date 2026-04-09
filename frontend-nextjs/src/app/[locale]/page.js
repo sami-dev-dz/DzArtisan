@@ -11,14 +11,10 @@ import { FeaturedArtisans } from "@/components/landing/FeaturedArtisans"
 export default function LandingPage() {
   const { user, loading, redirectAfterLogin } = useAuth()
 
-  React.useEffect(() => {
-    if (!loading && user) {
-      redirectAfterLogin(user)
-    }
-  }, [user, loading, redirectAfterLogin])
-
-  if (loading || user) {
-    // Show a loading state or nothing while redirecting
+  // REMOVED: Automatic redirect if user is logged in
+  // Allowing users to see the landing page even when authenticated
+  
+  if (loading) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-white dark:bg-[#0a0f1e]">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#C4793A] border-t-transparent"></div>

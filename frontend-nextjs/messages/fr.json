@@ -23,7 +23,9 @@
         }
       }
     },
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "next": "Suivant",
+    "back": "Retour"
   },
   "navigation": {
     "home": "Accueil",
@@ -497,7 +499,13 @@
     "invalid_image_format": "Format non supporté (JPG, PNG, WEBP).",
     "invalid_doc_format": "Format non supporté (JPG, PNG, WEBP, PDF).",
     "invalid_phone": "Numéro de téléphone invalide (Ex: 05xx, 06xx, 07xx).",
-    "invalid_whatsapp": "Le lien WhatsApp est obligatoire et doit être valide."
+    "invalid_whatsapp": "Le lien WhatsApp est obligatoire et doit être valide.",
+    "whatsapp_btn": "Générer le lien",
+    "exp_beginner": "Débutant",
+    "exp_1_3": "1-3 ans",
+    "exp_3_5": "3-5 ans",
+    "exp_5_10": "5-10 ans",
+    "exp_10_plus": "10 ans et plus"
   },
   "artisan_waiting": {
     "title": "Profil en cours de révision",
@@ -699,179 +707,42 @@
   },
   "client": {
     "requests": {
-      "card": {
-        "no_requests": "No Requests",
-        "responses": "Responses",
-        "posted_on": "Posted On"
-      },
-      "title": "Title",
-      "subtitle": "Subtitle",
+      "title": "Mes Demandes d'Intervention",
+      "subtitle": "Suivez l'état de vos demandes et consultez les propositions des artisans.",
       "tabs": {
-        "${tab}": "${Tab}"
+        "active": "En cours",
+        "archived": "Archivées",
+        "all": "Toutes"
       },
       "status": {
-        "${request": {
-          "statut}": "Statut}"
-        }
+        "en_attente": "En attente de réponses",
+        "acceptee": "Intervention acceptée",
+        "terminee": "Terminée",
+        "annulee": "Annulée"
       },
-      "proposal": {
-        "experience": "Experience",
-        "accept_btn": "Accept Btn"
+      "card": {
+        "responses": "{count} proposition(s)",
+        "posted_on": "Publiée le {date}",
+        "view_details": "Voir les détails",
+        "no_requests": "Vous n'avez aucune demande dans cette catégorie."
       },
       "details": {
-        "cancel_confirm": "Cancel Confirm",
-        "cancel_request": "Cancel Request",
+        "title": "Détails de la demande",
         "description": "Description",
-        "photos": "Photos",
-        "location": "Location",
-        "no_proposals": "No Proposals"
+        "location": "Localisation",
+        "photos": "Photos jointes",
+        "proposals_count": "{count} artisan(s) ont répondu",
+        "no_proposals": "Aucune proposition pour le moment.",
+        "cancel_request": "Annuler la demande",
+        "cancel_confirm": "Êtes-vous sûr ? Cette action est irréversible.",
+        "accept_proposal": "Accepter cette proposition"
+      },
+      "proposal": {
+        "experience": "{years} ans d'exp.",
+        "contact_whatsapp": "WhatsApp",
+        "contact_call": "Appeler",
+        "accept_btn": "Choisir cet artisan"
       }
     }
   }
-}
-      "auto_geo_desc": "Rapide et précis à 100%",
-"manual_entry": "Saisie manuelle",
-"manual_entry_desc": "Pour une adresse différente",
-"geo_btn": "M'autoriser à vous localiser",
-"geo_denied": "Accès refusé. Veuillez utiliser la saisie manuelle.",
-"wilaya": "Sélectionnez votre Wilaya",
-"commune": "Sélectionnez votre Commune",
-"address": "Complément d'adresse (Cité, N°, Étage...)",
-"map_hint": "Vous pouvez déplacer le curseur pour plus de précision",
-"back": "Précédent",
-"next": "Dernière étape"
-},
-"step3": {
-"title": "Photos & Récapitulatif",
-"upload_title": "Ajouter des photos (max 5)",
-"upload_hint": "Glissez-déposez ou cliquez pour parcourir",
-"upload_formats": "Formats: JPG, PNG, WebP (Max 5Mo)",
-"summary_title": "Récapitulatif de votre demande",
-"edit_step": "Modifier l'étape",
-"submit": "Publier ma demande",
-"submitting": "Publication en cours..."
-},
-"success": {
-"title": "Demande publiée !",
-"message": "Votre demande a été enregistrée avec succès. Les artisans de votre secteur vont maintenant pouvoir vous contacter.",
-"explanation": "Vous recevrez des propositions directement via téléphone ou WhatsApp.",
-"view_requests": "Voir mes demandes",
-"back_home": "Retour à l'accueil"
-},
-"client": {
-"requests": {
-  "title": "Mes Demandes d'Intervention",
-  "subtitle": "Suivez l'état de vos demandes et consultez les propositions des artisans.",
-  "tabs": {
-    "active": "En cours",
-    "archived": "Archivées",
-    "all": "Toutes"
-  },
-  "status": {
-    "en_attente": "En attente de réponses",
-    "acceptee": "Intervention acceptée",
-    "terminee": "Terminée",
-    "annulee": "Annulée"
-  },
-  "card": {
-    "responses": "{count} proposition(s)",
-    "posted_on": "Publiée le {date}",
-    "view_details": "Voir les détails",
-    "no_requests": "Vous n'avez aucune demande dans cette catégorie."
-  },
-  "details": {
-    "title": "Détails de la demande",
-    "description": "Description",
-    "location": "Localisation",
-    "photos": "Photos jointes",
-    "proposals_count": "{count} artisan(s) ont répondu à votre appel",
-    "no_proposals": "Aucune proposition pour le moment. Nous avons notifié les artisans de votre région.",
-    "cancel_request": "Annuler la demande",
-    "cancel_confirm": "Êtes-vous sûr de vouloir annuler cette demande ? Cette action est irréversible.",
-    "accept_proposal": "Accepter cette proposition"
-  },
-  "proposal": {
-    "experience": "{years} ans d'exp.",
-    "contact_whatsapp": "WhatsApp",
-    "contact_call": "Appeler",
-    "accept_btn": "Choisir cet artisan"
-  }
-}
-},
-"artisan": {
-"jobs": {
-  "title": "Opportunités d'Intervention",
-  "subtitle": "Trouvez des projets qui correspondent à vos compétences dans votre région.",
-  "tabs": {
-    "new": "Nouvelles offres",
-    "applied": "Mes propositions"
-  },
-  "card": {
-    "distance": "À {km} km",
-    "posted": "Il y a {time}",
-    "view_request": "Détails",
-    "apply_now": "Postuler",
-    "applied_on": "Postulé le {date}"
-  },
-  "modal": {
-    "title": "Envoyer une proposition",
-    "placeholder": "Décrivez brièvement pourquoi vous êtes le meilleur pour ce projet (ex: expérience similaire, disponibilité immédiate...)",
-    "send": "Envoyer mon offre",
-    "success": "Votre proposition a été envoyée avec succès !"
-  },
-  "empty": {
-    "no_jobs": "Aucune nouvelle opportunité pour le moment. Nous vous alerterons dès qu'un client publie un projet dans vos catégories.",
-    "no_applied": "Vous n'avez pas encore postulé à des projets."
-  },
-  "status": {
-    "en_attente": "En attente",
-    "acceptee": "Accepté !",
-    "rejetee": "Non retenu"
-  }
-},
-"interventions": {
-  "title": "Gestion de mes Projets",
-  "subtitle": "Suivez l'état de vos interventions en cours et gérez vos justificatifs photos.",
-  "tabs": {
-    "active": "En cours",
-    "history": "Historique"
-  },
-  "status": {
-    "acceptee": "Acceptée (Prêt)",
-    "en_cours": "En cours d'exécution",
-    "terminee": "Intervention terminée",
-    "annulee": "Annulée"
-  },
-  "card": {
-    "client": "Client : {name}",
-    "location": "Lieu : {wilaya}, {commune}",
-    "start_job": "Démarrer l'intervention",
-    "finalize": "Finaliser le projet",
-    "view_details": "Gérer le dossier"
-  },
-  "details": {
-    "title": "Dossier d'Intervention",
-    "client_info": "Informations Client",
-    "actions": "Actions Rapides",
-    "progress": "État d'avancement",
-    "photos_title": "Photos du projet",
-    "add_photo": "Ajouter une photo",
-    "photo_before": "Avant intervention",
-    "photo_after": "Après intervention",
-    "confirm_finish": "Voulez-vous marquer cette intervention comme terminée ? Le client sera notifié.",
-    "contact_client": "Contacter le client"
-  },
-  "empty": {
-    "no_active": "Vous n'avez aucune intervention en cours. Trouvez de nouvelles opportunités dans le dossier de demandes.",
-    "no_history": "Votre historique d'interventions est vide."
-  }
-}
-}
-},
-"cookie_consent": {
-"title": "Nous utilisons des cookies",
-"description": "DzArtisan utilise des cookies pour améliorer votre expérience, assurer la sécurité de vos données et analyser notre trafic, conformément à la loi algérienne n° 18-07 relative à la protection des personnes physiques dans le traitement des données à caractère personnel.",
-"accept_all": "Tout accepter",
-"manage_preferences": "Gérer les préférences"
-}
 }

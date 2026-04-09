@@ -23,7 +23,9 @@
       },
       "see_all": "Voir toutes les notifications"
     },
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "next": "Next",
+    "back": "Back"
   },
   "navigation": {
     "home": "Home",
@@ -215,10 +217,14 @@
     "account_recovery": "Account Recovery",
     "no_email_hint": "No Email Hint",
     "try_again": "Try Again",
-    "forgot_hint": "Forgot Hint",
-    "success": "Compte créé avec succès !",
-    "terms_required": "Terms Required",
-    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "forgot_hint": "If you forgot your password, we can send you a recovery code.",
+    "success": "Account created successfully!",
+    "terms_required": "You must accept the terms of use.",
+    "error": "An error occurred. Please try again.",
+    "strength_empty": "Enter password",
+    "strength_weak": "Weak",
+    "strength_medium": "Medium",
+    "strength_strong": "Strong",
     "show_password": "Show password",
     "hide_password": "Hide password",
     "oauth_coming_soon_title": "Google OAuth in development",
@@ -493,7 +499,13 @@
     "invalid_image_format": "Unsupported format (JPG, PNG, WEBP).",
     "invalid_doc_format": "Unsupported format (JPG, PNG, WEBP, PDF).",
     "invalid_phone": "Invalid phone number (Ex: 05xx, 06xx, 07xx).",
-    "invalid_whatsapp": "WhatsApp link is required and must be valid."
+    "invalid_whatsapp": "WhatsApp link is required and must be valid.",
+    "whatsapp_btn": "Generate Link",
+    "exp_beginner": "Beginner",
+    "exp_1_3": "1-3 years",
+    "exp_3_5": "3-5 years",
+    "exp_5_10": "5-10 years",
+    "exp_10_plus": "10+ years"
   },
   "artisan_waiting": {
     "title": "Profile Under Review",
@@ -695,174 +707,42 @@
   },
   "client": {
     "requests": {
-      "card": {
-        "no_requests": "No Requests",
-        "responses": "Responses",
-        "posted_on": "Posted On"
-      },
-      "title": "Title",
-      "subtitle": "Subtitle",
+      "title": "My Service Requests",
+      "subtitle": "Follow your requests and consult artisan proposals.",
       "tabs": {
-        "${tab}": "${Tab}"
+        "active": "Active",
+        "archived": "Archived",
+        "all": "All"
       },
       "status": {
-        "${request": {
-          "statut}": "Statut}"
-        }
+        "en_attente": "Waiting for responses",
+        "acceptee": "Accepted",
+        "terminee": "Completed",
+        "annulee": "Canceled"
       },
-      "proposal": {
-        "experience": "Experience",
-        "accept_btn": "Accept Btn"
+      "card": {
+        "responses": "{count} proposals",
+        "posted_on": "Posted on {date}",
+        "view_details": "View Details",
+        "no_requests": "You have no requests in this category."
       },
       "details": {
-        "cancel_confirm": "Cancel Confirm",
-        "cancel_request": "Cancel Request",
+        "title": "Request Details",
         "description": "Description",
-        "photos": "Photos",
         "location": "Location",
-        "no_proposals": "No Proposals"
+        "photos": "Attached Photos",
+        "proposals_count": "{count} artisans replied",
+        "no_proposals": "No proposals yet.",
+        "cancel_request": "Cancel Request",
+        "cancel_confirm": "Are you sure? This action is irreversible.",
+        "accept_proposal": "Accept this proposal"
+      },
+      "proposal": {
+        "experience": "{years} yrs exp.",
+        "contact_whatsapp": "WhatsApp",
+        "contact_call": "Call",
+        "accept_btn": "Choose this artisan"
       }
     }
   }
-}
-      "wilaya": "Select your Wilaya",
-"commune": "Select your Commune",
-"address": "Address details (Quarter, No, Floor...)",
-"map_hint": "You can drag the pin for more precision",
-"back": "Previous",
-"next": "Final Step"
-},
-"step3": {
-"title": "Photos & Summary",
-"upload_title": "Add photos (max 5)",
-"upload_hint": "Drag and drop or click to browse",
-"upload_formats": "Formats: JPG, PNG, WebP (Max 5MB)",
-"summary_title": "Request Summary",
-"edit_step": "Edit step",
-"submit": "Publish my request",
-"submitting": "Publishing..."
-},
-"success": {
-"title": "Request published!",
-"message": "Your request has been successfully recorded. Artisans in your area can now contact you.",
-"explanation": "You will receive proposals directly via phone or WhatsApp.",
-"view_requests": "View my requests",
-"back_home": "Back to Home"
-},
-"client": {
-"requests": {
-  "title": "My Service Requests",
-  "subtitle": "Track the status of your requests and view artisan proposals.",
-  "tabs": {
-    "active": "Active",
-    "archived": "Archived",
-    "all": "All"
-  },
-  "status": {
-    "en_attente": "Awaiting responses",
-    "acceptee": "Intervention accepted",
-    "terminee": "Completed",
-    "annulee": "Cancelled"
-  },
-  "card": {
-    "responses": "{count} proposal(s)",
-    "posted_on": "Posted on {date}",
-    "view_details": "View details",
-    "no_requests": "You have no requests in this category."
-  },
-  "details": {
-    "title": "Request Details",
-    "description": "Description",
-    "location": "Location",
-    "photos": "Attached photos",
-    "proposals_count": "{count} artisan(s) answered your call",
-    "no_proposals": "No proposals yet. We have notified artisans in your area.",
-    "cancel_request": "Cancel request",
-    "cancel_confirm": "Are you sure you want to cancel this request? This action is irreversible.",
-    "accept_proposal": "Accept this proposal"
-  },
-  "proposal": {
-    "experience": "{years} years exp.",
-    "contact_whatsapp": "WhatsApp",
-    "contact_call": "Call",
-    "accept_btn": "Choose this artisan"
-  }
-}
-},
-"artisan": {
-"jobs": {
-  "title": "Job Opportunities",
-  "subtitle": "Find projects that match your skills in your area.",
-  "tabs": {
-    "new": "New Offers",
-    "applied": "Applied"
-  },
-  "card": {
-    "distance": "{km} km away",
-    "posted": "{time} ago",
-    "view_request": "Details",
-    "apply_now": "Apply",
-    "applied_on": "Applied on {date}"
-  },
-  "modal": {
-    "title": "Send a Proposal",
-    "placeholder": "Briefly describe why you are the best for this project (e.g., similar experience, immediate availability...)",
-    "send": "Send my offer",
-    "success": "Your proposal has been sent successfully!"
-  },
-  "empty": {
-    "no_jobs": "No new opportunities for now. We will alert you as soon as a client posts a project in your categories.",
-    "no_applied": "You haven't applied to any projects yet."
-  },
-  "status": {
-    "en_attente": "Pending",
-    "acceptee": "Accepted!",
-    "rejetee": "Not selected"
-  }
-},
-"interventions": {
-  "title": "Project Management",
-  "subtitle": "Track the status of your ongoing interventions and manage your photo documentation.",
-  "tabs": {
-    "active": "Ongoing",
-    "history": "History"
-  },
-  "status": {
-    "acceptee": "Accepted (Ready)",
-    "en_cours": "In Progress",
-    "terminee": "Intervention Finished",
-    "annulee": "Cancelled"
-  },
-  "card": {
-    "client": "Client: {name}",
-    "location": "Location: {wilaya}, {commune}",
-    "start_job": "Start intervention",
-    "finalize": "Finalize project",
-    "view_details": "Manage project"
-  },
-  "details": {
-    "title": "Intervention Details",
-    "client_info": "Client Information",
-    "actions": "Quick Actions",
-    "progress": "Project Progress",
-    "photos_title": "Project Photos",
-    "add_photo": "Add a photo",
-    "photo_before": "Before intervention",
-    "photo_after": "After intervention",
-    "confirm_finish": "Do you want to mark this intervention as finished? The client will be notified.",
-    "contact_client": "Contact client"
-  },
-  "empty": {
-    "no_active": "You have no ongoing interventions. Find new opportunities in the job board.",
-    "no_history": "Your intervention history is empty."
-  }
-}
-}
-},
-"cookie_consent": {
-"title": "We use cookies",
-"description": "DzArtisan uses cookies to improve your experience, ensure the security of your data, and analyze our traffic, in accordance with Algerian law n° 18-07 on the protection of individuals in the processing of personal data.",
-"accept_all": "Accept All",
-"manage_preferences": "Manage Preferences"
-}
 }
