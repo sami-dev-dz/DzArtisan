@@ -27,7 +27,7 @@ export default function PendingVerificationPage() {
   const t = useTranslations("artisan_waiting")
   const locale = useLocale()
   const isRTL = locale === "ar"
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
 
   const timelineSteps = [
     {
@@ -150,23 +150,27 @@ export default function PendingVerificationPage() {
               <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-3xl border border-slate-100 dark:border-white/5">
                  <AlertCircle className="w-5 h-5 text-orange-500 mx-auto mb-2" />
                  <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">{t("info_spam")}</span>
-                 <span className="text-xs font-black text-slate-700 dark:text-slate-300">Boîte Spams</span>
+                 <span className="text-xs font-black text-slate-700 dark:text-slate-300">{t("spam_folder")}</span>
               </div>
               <div className="bg-slate-50 dark:bg-slate-950/50 p-4 rounded-3xl border border-slate-100 dark:border-white/5 group hover:border-blue-600/30 transition-colors cursor-help">
                  <HelpCircle className="w-5 h-5 text-indigo-500 mx-auto mb-2" />
-                 <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Support</span>
-                 <span className="text-xs font-black text-slate-700 dark:text-slate-300">support@dzartisan.dz</span>
+                 <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">{t("support_label")}</span>
+                 <span className="text-xs font-black text-slate-700 dark:text-slate-300">{t("support_email")}</span>
               </div>
            </div>
 
            {/* Navigation Buttons */}
            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/" className="flex-1">
+              <button
+                type="button"
+                className="flex-1"
+                onClick={logout}
+              >
                  <Button variant="outline" className="w-full h-14 rounded-2xl font-bold border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center gap-2 group">
                     <Home className="w-5 h-5 group-hover:scale-110 transition-transform" />
                     {t("btn_home")}
                  </Button>
-              </Link>
+              </button>
               <Link href="/onboarding/artisan/profile" className="flex-1">
                  <Button className="w-full h-14 rounded-2xl font-black bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-none flex items-center justify-center gap-2 group">
                     <Pencil className="w-5 h-5 group-hover:rotate-12 transition-transform" />
@@ -181,7 +185,7 @@ export default function PendingVerificationPage() {
         <div className="bg-slate-100 dark:bg-slate-800/50 px-8 py-4 flex items-center justify-center gap-3">
            <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
            <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-none">
-              Certification de conformité DzArtisan &bull; Plateforme de confiance
+              {t("compliance_note")}
            </p>
         </div>
 

@@ -73,6 +73,21 @@ const GoogleIcon = () => (
   </svg>
 );
 
+const DzFlagIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-4 h-4 rounded-full overflow-hidden" aria-hidden="true">
+    <rect x="0" y="0" width="12" height="24" fill="#0f9d58" />
+    <rect x="12" y="0" width="12" height="24" fill="#ffffff" />
+    <path
+      d="M14.4 6.9a5.2 5.2 0 1 0 0 10.2 4.2 4.2 0 1 1 0-10.2z"
+      fill="#d93025"
+    />
+    <path
+      d="M16.8 10.3l0.7 2.1h2.2l-1.8 1.3 0.7 2.1-1.8-1.3-1.8 1.3 0.7-2.1-1.8-1.3h2.2z"
+      fill="#d93025"
+    />
+  </svg>
+);
+
 /* ─────────────────────────────────────────────
    Reusable field wrapper
 ───────────────────────────────────────────── */
@@ -206,6 +221,7 @@ export function RegisterForm() {
   });
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const submitLockRef = React.useRef(false);
   const [errors, setErrors] = React.useState({});
   const [genericError, setGenericError] = React.useState(null);
   const phoneValid = /^(05|06|07)[0-9]{8}$/.test(formData.phone);
@@ -238,19 +254,21 @@ export function RegisterForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (submitLockRef.current || loading) return;
     setGenericError(null);
     const errs = {};
     if (strength.score < 3) errs.password = t("password_min_length");
     if (formData.password !== formData.confirmPassword)
       errs.confirmPassword = t("confirm_mismatch");
     if (!formData.termsAccepted)
-      errs.terms = t("terms_required") || "Vous devez accepter les conditions.";
+      errs.terms = t("terms_required");
     if (Object.keys(errs).length) {
       setErrors((p) => ({ ...p, ...errs }));
       return;
     }
 
     setLoading(true);
+    submitLockRef.current = true;
     try {
       await register({
         name: formData.name,
@@ -261,7 +279,7 @@ export function RegisterForm() {
         telephone: formData.phone,
       });
       addToast({
-        title: t("success") || "Compte créé avec succès",
+        title: t("success"),
         type: "success",
       });
     } catch (err) {
@@ -277,14 +295,15 @@ export function RegisterForm() {
         else setGenericError(msg || t("error"));
       }
     } finally {
+      submitLockRef.current = false;
       setLoading(false);
     }
   };
 
   const handleGoogleLogin = () =>
     addToast({
-      title: "Google OAuth en développement",
-      message: "Disponible prochainement.",
+      title: t("oauth_coming_soon_title"),
+      message: t("oauth_coming_soon_message"),
       type: "info",
     });
 
@@ -417,101 +436,85 @@ export function RegisterForm() {
               />
             </Field>
 
-            {/* Phone & Email Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
-              {/* Phone */}
-              <Field
-                id="reg-phone"
-                label={t("phone_label")}
-                isRTL={isRTL}
-                error={errors.phone}
-              >
-                <div className="flex h-[48px] group relative">
-                  <div
-                    className={cn(
-                      "flex items-center justify-center px-3.5 text-[13px] font-bold shrink-0 transition-colors duration-200 h-full",
-                      "bg-slate-100/50 dark:bg-white/[0.03]",
-                      "text-slate-500 dark:text-slate-400",
-                      "border border-slate-200 dark:border-white/[0.08]",
-                      isRTL ? "rounded-r-xl border-l-0" : "rounded-l-xl border-r-0",
-                      errors.phone && "border-red-400 dark:border-red-500/50",
-                      "group-focus-within:border-blue-500 dark:group-focus-within:border-blue-400"
-                    )}
-                  >
-                    <span className="opacity-70 text-[12px]">+213</span>
-                  </div>
-                  <input
-                    id="reg-phone"
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) =>
-                      handleChange(
-                        "phone",
-                        e.target.value.replace(/\D/g, "").slice(0, 10),
-                      )
-                    }
-                    placeholder="05XX XX XX XX"
-                    dir="ltr"
-                    autoComplete="tel"
-                    className={cn(
-                      "w-full h-full px-4 text-[14px] font-medium transition-all duration-200",
-                      "bg-slate-50 dark:bg-[#0d1326]",
-                      "text-slate-900 dark:text-white",
-                      "placeholder:text-slate-300 dark:placeholder:text-slate-600",
-                      "focus:outline-none focus:ring-2",
-                      isRTL ? "rounded-l-xl pr-4" : "rounded-r-xl pl-3",
-                      errors.phone
-                        ? "border border-red-400 dark:border-red-500/50 focus:ring-red-500/20"
-                        : "border border-slate-200 dark:border-white/[0.08] focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20",
-                    )}
-                  />
-                  {phoneValid && (
-                    <div className={cn(
-                      "absolute top-1/2 -translate-y-1/2",
-                      isRTL ? "left-3" : "right-3"
-                    )}>
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                    </div>
-                  )}
-                </div>
-              </Field>
-
-              {/* Email */}
-              <Field
+            {/* Email */}
+            <Field
+              id="reg-email"
+              label={t("email_label")}
+              icon={Mail}
+              isRTL={isRTL}
+              error={errors.email}
+            >
+              <input
                 id="reg-email"
-                label={t("email_label")}
-                icon={Mail}
-                isRTL={isRTL}
-                error={errors.email}
-              >
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+                placeholder={t("email_placeholder")}
+                dir="ltr"
+                autoComplete="email"
+                className={inputCls(errors.email, isRTL, "h-[54px]")}
+              />
+            </Field>
+
+            {/* Phone */}
+            <Field
+              id="reg-phone"
+              label={t("phone_label")}
+              isRTL={isRTL}
+              error={errors.phone}
+            >
+              <div className="flex h-[54px] group relative">
+                <div
+                  className={cn(
+                    "flex items-center justify-center gap-1.5 px-3.5 text-[13px] font-bold shrink-0 transition-colors duration-200 h-full",
+                    "bg-slate-100/50 dark:bg-white/[0.03]",
+                    "text-slate-500 dark:text-slate-400",
+                    "border border-slate-200 dark:border-white/[0.08]",
+                    isRTL ? "rounded-r-xl border-l-0" : "rounded-l-xl border-r-0",
+                    errors.phone && "border-red-400 dark:border-red-500/50",
+                    "group-focus-within:border-blue-500 dark:group-focus-within:border-blue-400"
+                  )}
+                >
+                  <span className="opacity-70 text-[12px]">+213</span>
+                  <DzFlagIcon />
+                </div>
                 <input
-                  id="reg-email"
-                  type="email"
+                  id="reg-phone"
+                  type="tel"
                   required
-                  value={formData.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
-                  placeholder={t("email_placeholder")}
+                  value={formData.phone}
+                  onChange={(e) =>
+                    handleChange(
+                      "phone",
+                      e.target.value.replace(/\D/g, "").slice(0, 10),
+                    )
+                  }
+                  placeholder="05XX XX XX XX"
                   dir="ltr"
-                  autoComplete="email"
-                  className={inputCls(errors.email, isRTL, "h-[48px]")}
+                  autoComplete="tel"
+                  className={cn(
+                    "w-full h-full text-[15px] font-medium transition-all duration-200",
+                    "bg-slate-50 dark:bg-[#0d1326]",
+                    "text-slate-900 dark:text-white",
+                    "placeholder:text-slate-300 dark:placeholder:text-slate-600",
+                    "focus:outline-none focus:ring-2",
+                    isRTL ? "rounded-l-xl pr-4 pl-10" : "rounded-r-xl pl-3 pr-10",
+                    errors.phone
+                      ? "border border-red-400 dark:border-red-500/50 focus:ring-red-500/20"
+                      : "border border-slate-200 dark:border-white/[0.08] focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20",
+                  )}
                 />
-                {/* duplicate email action */}
-                {errors.email === t("duplicate_email") && (
-                  <span className={cn(
+                {phoneValid && (
+                  <div className={cn(
                     "absolute top-1/2 -translate-y-1/2",
                     isRTL ? "left-3" : "right-3"
                   )}>
-                    <Link
-                      href="/login"
-                      className="text-[10px] font-bold text-blue-500 hover:text-blue-600"
-                    >
-                      {isRTL ? "← دخول" : "Login →"}
-                    </Link>
-                  </span>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                  </div>
                 )}
-              </Field>
-            </div>
+              </div>
+            </Field>
 
             {/* Password */}
             <Field
@@ -529,12 +532,12 @@ export function RegisterForm() {
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   className="p-2 text-slate-400 hover:text-slate-600 dark:text-slate-600 dark:hover:text-slate-300 transition-colors rounded-lg"
-                  aria-label={showPassword ? "Masquer" : "Afficher"}
+                  aria-label={showPassword ? t("hide_password") : t("show_password")}
                 >
                   {showPassword ? (
-                    <Eye className="w-4 h-4" />
-                  ) : (
                     <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
                   )}
                 </button>
               }
@@ -734,7 +737,7 @@ export function RegisterForm() {
                 <div className="relative flex items-center my-5">
                   <div className="flex-grow border-t border-slate-100 dark:border-white/[0.05]" />
                   <span className="flex-shrink-0 mx-4 text-[11px] font-semibold uppercase tracking-widest text-slate-300 dark:text-slate-600">
-                    {t("or_continue_with") || "ou continuer avec"}
+                    {t("or_continue_with")}
                   </span>
                   <div className="flex-grow border-t border-slate-100 dark:border-white/[0.05]" />
                 </div>
@@ -751,7 +754,7 @@ export function RegisterForm() {
                   )}
                 >
                   <GoogleIcon />
-                  {t("google_btn") || "Continuer avec Google"}
+                  {t("google_btn")}
                 </button>
               </motion.div>
             )}
@@ -759,22 +762,18 @@ export function RegisterForm() {
 
           {/* ── Footer ── */}
           <div className="mt-7 pt-6 border-t border-slate-100 dark:border-white/[0.05] flex flex-col items-center gap-3">
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-1.5 text-[13px] text-slate-400 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group font-medium"
-            >
-              {t("have_account") || "Déjà un compte ? Se connecter"}
-              <ArrowRight
-                className={cn(
-                  "w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5",
-                  isRTL && "rotate-180",
-                )}
-              />
-            </Link>
+            <p className="text-[13px] text-slate-400 dark:text-slate-500 font-medium">
+              {t("have_account_prefix")}{" "}
+              <Link
+                href="/login"
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-500 transition-colors"
+              >
+                {t("have_account_action")}
+              </Link>
+            </p>
             <span className="flex items-center gap-1.5 text-[11px] text-slate-300 dark:text-slate-700 font-medium select-none">
               <ShieldCheck className="w-3 h-3" />
-              {t("trust_signal") ||
-                "Inscription sécurisée · Données chiffrées SSL"}
+              {t("trust_signal")}
             </span>
           </div>
         </div>

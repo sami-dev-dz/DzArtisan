@@ -14,7 +14,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { Link, useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { useAuth } from "@/context/AuthContext";
 import { useToastStore } from "@/store/toastStore";
 import { cn } from "@/lib/utils";
@@ -200,8 +200,8 @@ export function LoginForm() {
     if (!email || !password) return;
     setLoading(true);
     try {
-      await login({ email, password });
-      addToast({ title: t("success") || "Connexion réussie", type: "success" });
+      await login({ email, password, role: activeTab });
+      addToast({ title: t("success"), type: "success" });
     } catch (err) {
       if (!err.response) {
         addToast({ title: t("network_error"), type: "error" });
@@ -215,8 +215,8 @@ export function LoginForm() {
 
   const handleGoogleLogin = () => {
     addToast({
-      title: "Google OAuth en développement",
-      message: "Cette fonctionnalité sera disponible prochainement.",
+      title: t("oauth_coming_soon_title"),
+      message: t("oauth_coming_soon_message"),
       type: "info",
     });
   };
@@ -309,8 +309,7 @@ export function LoginForm() {
               isRTL={isRTL}
               error={errors.email}
               hint={
-                t("email_hint") ||
-                "Entrez l'adresse email associée à votre compte"
+                t("email_hint")
               }
               inputProps={{
                 type: "email",
@@ -334,8 +333,7 @@ export function LoginForm() {
               isRTL={isRTL}
               error={errors.password}
               hint={
-                t("password_hint") ||
-                "Entrez votre mot de passe (8 caractères minimum)"
+                t("password_hint")
               }
               rightSlot={
                 <button
@@ -344,14 +342,14 @@ export function LoginForm() {
                   className="p-2 text-slate-350 hover:text-slate-500 dark:text-slate-600 dark:hover:text-slate-300 transition-colors rounded-lg"
                   aria-label={
                     showPassword
-                      ? "Masquer le mot de passe"
-                      : "Afficher le mot de passe"
+                      ? t("hide_password")
+                      : t("show_password")
                   }
                 >
                   {showPassword ? (
-                    <Eye className="w-4 h-4" />
-                  ) : (
                     <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
                   )}
                 </button>
               }
@@ -374,8 +372,7 @@ export function LoginForm() {
                 href="/forgot-password"
                 className="inline-flex items-center gap-1 text-[12px] font-semibold text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors"
               >
-                {/* Descriptive: "Vous avez oublié votre mot de passe ?" */}
-                {t("forgot_link") || "Vous avez oublié votre mot de passe ?"}
+                {t("forgot_link")}
               </Link>
             </div>
 
@@ -443,7 +440,7 @@ export function LoginForm() {
                 <div className="relative flex items-center my-5">
                   <div className="flex-grow border-t border-slate-100 dark:border-white/[0.06]" />
                   <span className="flex-shrink-0 mx-4 text-[11px] font-semibold uppercase tracking-widest text-slate-300 dark:text-slate-600">
-                    {t("or_continue_with") || "ou continuer avec"}
+                    {t("or_continue_with")}
                   </span>
                   <div className="flex-grow border-t border-slate-100 dark:border-white/[0.06]" />
                 </div>
@@ -461,7 +458,7 @@ export function LoginForm() {
                   )}
                 >
                   <GoogleIcon />
-                  {t("google_btn") || "Continuer avec Google"}
+                  {t("google_btn")}
                 </button>
               </motion.div>
             )}
@@ -469,27 +466,20 @@ export function LoginForm() {
 
           {/* ── Footer ── */}
           <div className="mt-7 pt-6 border-t border-slate-100 dark:border-white/[0.05] flex flex-col items-center gap-3">
-            <Link
-              href="/register"
-              className={cn(
-                "inline-flex items-center gap-1.5 text-[13px] text-slate-400 dark:text-slate-500",
-                "hover:text-blue-600 dark:hover:text-blue-400 transition-colors group font-medium",
-              )}
-            >
-              {t("no_account") || "Pas encore de compte ? Créer un compte"}
-              <ArrowRight
-                className={cn(
-                  "w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5",
-                  isRTL && "rotate-180",
-                )}
-              />
-            </Link>
+            <p className="text-[13px] text-slate-400 dark:text-slate-500 font-medium">
+              {t("no_account_prefix")}{" "}
+              <Link
+                href="/register"
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-500 transition-colors"
+              >
+                {t("no_account_action")}
+              </Link>
+            </p>
 
             {/* Trust signal */}
             <span className="flex items-center gap-1.5 text-[11px] text-slate-300 dark:text-slate-700 font-medium select-none">
               <ShieldCheck className="w-3 h-3" />
-              {t("trust_signal") ||
-                "Connexion sécurisée · Données chiffrées SSL"}
+              {t("trust_signal")}
             </span>
           </div>
         </div>

@@ -17,6 +17,7 @@ class Artisan extends Model
         'commune_id',
         'categorie_id',
         'telephone',
+        'phone_visible_to_clients',
         'description',
         'anneesExp',
         'experience_level',

@@ -34,7 +34,7 @@ class ProfileController extends Controller
             $artisan = $user->artisan;
             $artisan->update($request->only([
                 'description', 'experience_level', 'anneesExp', 
-                'disponibilite', 'photo', 'lienWhatsApp'
+                'disponibilite', 'photo', 'lienWhatsApp', 'phone_visible_to_clients'
             ]));
 
             if ($request->has('categorie_ids')) {

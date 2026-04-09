@@ -33,6 +33,19 @@ import { uploadToCloudinary } from "@/lib/cloudinary"
 import api from "@/lib/api-client"
 import { cn } from "@/lib/utils"
 
+const TRADE_OPTIONS = [
+  { key: "electricien", label: "Électricien", icon: "⚡" },
+  { key: "plombier", label: "Plombier", icon: "🔧" },
+  { key: "peintre", label: "Peintre", icon: "🎨" },
+  { key: "macon", label: "Maçon", icon: "🧱" },
+  { key: "menuisier", label: "Menuisier", icon: "🪚" },
+  { key: "climatisation", label: "Climatisation", icon: "❄️" },
+  { key: "mecanicien", label: "Mécanicien", icon: "🛠️" },
+  { key: "nettoyage", label: "Nettoyage", icon: "🧼" },
+  { key: "demenagement", label: "Déménagement", icon: "📦" },
+  { key: "autre", label: "Autre", icon: "✨" },
+]
+
 export default function ArtisanProfileSetupPage() {
   const t = useTranslations("onboarding")
   const common = useTranslations("common")
@@ -47,8 +60,9 @@ export default function ArtisanProfileSetupPage() {
     photo: null,
     nomComplet: user?.nomComplet || "",
     telephone: user?.telephone || "",
+    phone_visible_to_clients: true,
     whatsapp: "",
-    categories: [],
+    category_id: null,
     wilayas: [],
     experience_level: "beginner",
     about: "",
@@ -68,6 +82,7 @@ export default function ArtisanProfileSetupPage() {
     doc_diploma: 0,
     doc_card: 0,
   })
+  const [currentStep, setCurrentStep] = React.useState(1)
 
   // Fetch categories on mount
   React.useEffect(() => {
@@ -87,7 +102,7 @@ export default function ArtisanProfileSetupPage() {
     const required = [
       formData.nomComplet,
       formData.telephone,
-      formData.categories.length > 0,
+      !!formData.category_id,
       formData.wilayas.length > 0,
       formData.experience_level,
       formData.about.length >= 20,
@@ -104,7 +119,7 @@ export default function ArtisanProfileSetupPage() {
 
     const validTypes = ['image/jpeg', 'image/png', 'image/webp']
     if (!validTypes.includes(file.type)) {
-      addToast({ title: "Format non supporté (JPG, PNG, WEBP).", type: "error" })
+      addToast({ title: t("invalid_image_format"), type: "error" })
       return
     }
 
@@ -130,7 +145,7 @@ export default function ArtisanProfileSetupPage() {
 
     const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf']
     if (!validTypes.includes(file.type)) {
-      addToast({ title: "Format non supporté (JPG, PNG, WEBP, PDF).", type: "error" })
+      addToast({ title: t("invalid_doc_format"), type: "error" })
       return
     }
 
@@ -150,22 +165,20 @@ export default function ArtisanProfileSetupPage() {
     }
   }
 
+  const handleDroppedFile = async (file, type) => {
+    const fakeEvent = { target: { files: [file] } }
+    await handleDocumentUpload(fakeEvent, type)
+  }
+
   const generateWhatsApp = () => {
     if (!formData.telephone) return
     let ph = formData.telephone.replace(/\s/g, '').replace('+', '')
     if (ph.startsWith('0')) ph = '213' + ph.substring(1)
-    const link = `https://wa.me/${ph}`
+    const link = `wa.me/${ph}`
     setFormData(prev => ({ ...prev, whatsapp: link }))
   }
 
-  const toggleCategory = (id) => {
-    setFormData(prev => ({
-      ...prev,
-      categories: prev.categories.includes(id) 
-        ? prev.categories.filter(c => c !== id)
-        : [...prev.categories, id]
-    }))
-  }
+  const selectCategory = (id) => setFormData(prev => ({ ...prev, category_id: id }))
 
   const toggleWilaya = (id) => {
     setFormData(prev => ({
@@ -181,7 +194,11 @@ export default function ArtisanProfileSetupPage() {
     e.preventDefault()
 
     if (!formData.telephone.match(/^0(5|6|7)\d{8}$/)) {
-      addToast({ title: "Numéro de téléphone invalide (Ex: 05xx, 06xx, 07xx).", type: "error" })
+      addToast({ title: t("invalid_phone"), type: "error" })
+      return
+    }
+    if (!formData.whatsapp.match(/^wa\.me\/213[567][0-9]{8}$/)) {
+      addToast({ title: t("invalid_whatsapp"), type: "error" })
       return
     }
 
@@ -194,9 +211,10 @@ export default function ArtisanProfileSetupPage() {
     try {
       await api.post("/profile", {
          ...formData,
-         categorie_ids: formData.categories,
+         lienWhatsApp: formData.whatsapp,
+         categorie_ids: [formData.category_id],
          wilaya_ids: formData.wilayas,
-         statut: "en_attente" // Transition to pending
+         statutValidation: "en_attente"
       })
       addToast({ title: common("success"), type: "success" })
       router.push("/onboarding/artisan/waiting")
@@ -214,6 +232,31 @@ export default function ArtisanProfileSetupPage() {
     w.code.includes(searchWilaya)
   ).slice(0, 10)
 
+  const validateCurrentStep = () => {
+    if (currentStep === 1) {
+      if (!formData.nomComplet || !formData.telephone.match(/^0(5|6|7)\d{8}$/)) {
+        addToast({ title: t("error_required_fields"), type: "error" })
+        return false
+      }
+      return true
+    }
+
+    if (currentStep === 2) {
+      if (!formData.category_id || formData.wilayas.length === 0 || formData.about.length < 20) {
+        addToast({ title: t("error_required_fields"), type: "error" })
+        return false
+      }
+      return true
+    }
+
+    return true
+  }
+
+  const goToNextStep = () => {
+    if (!validateCurrentStep()) return
+    setCurrentStep((prev) => Math.min(prev + 1, 3))
+  }
+
   return (
     <div className="max-w-4xl mx-auto py-12 px-6">
       
@@ -226,7 +269,7 @@ export default function ArtisanProfileSetupPage() {
            </div>
            <div className="hidden sm:block text-right rtl:text-left">
               <span className="text-sm font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest block mb-1">
-                 {t("step_info", { current: completion >= 100 ? 1 : 1, total: 1 })}
+                 {t("step_info", { current: currentStep, total: 3 })}
               </span>
               <div className="text-2xl font-black text-slate-900 dark:text-white">{completion}%</div>
            </div>
@@ -246,7 +289,7 @@ export default function ArtisanProfileSetupPage() {
 
       <form onSubmit={handleSubmit} className="space-y-12">
         
-        {/* 1. Photo & Identity Section */}
+        {currentStep === 1 && (
         <section className="bg-white dark:bg-slate-900 shadow-xl rounded-3xl p-8 border border-slate-100 dark:border-white/5">
            <div className="flex flex-col md:flex-row gap-12 items-center md:items-start">
               
@@ -290,12 +333,15 @@ export default function ArtisanProfileSetupPage() {
                  <div className="space-y-4">
                     <h3 className="text-xl font-bold dark:text-white flex items-center gap-2">
                        <ShieldCheck className="w-5 h-5 text-blue-600" />
-                       Identification
+                       {t("identity_title")}
                     </h3>
                     
                     {/* Read-only Name with Modal Edit */}
                     <div className="space-y-1">
                        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">{t("name_label")}</label>
+                       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 text-[11px] font-semibold text-blue-700 dark:text-blue-300">
+                         {t("name_locked_hint")}
+                       </div>
                        <div className="flex items-center gap-3">
                           <div className="flex-1 bg-slate-50 dark:bg-slate-950/50 border border-slate-100 dark:border-white/5 rounded-2xl py-4 px-6 font-bold text-slate-900 dark:text-white">
                              {formData.nomComplet}
@@ -325,6 +371,24 @@ export default function ArtisanProfileSetupPage() {
                           {formData.telephone.match(/^0(5|6|7)\d{8}$/) && (
                              <Check className={cn("absolute top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500", isRTL ? "left-4" : "right-4")} />
                           )}
+                       </div>
+                       <div className="flex items-center justify-between rounded-xl px-3 py-2 bg-slate-50 dark:bg-slate-950/40 border border-slate-100 dark:border-white/5">
+                         <span className="text-xs font-semibold text-slate-500">{t("phone_visibility_label")}</span>
+                         <button
+                           type="button"
+                           onClick={() => setFormData(prev => ({ ...prev, phone_visible_to_clients: !prev.phone_visible_to_clients }))}
+                           className={cn(
+                             "w-11 h-6 rounded-full relative transition-colors",
+                             formData.phone_visible_to_clients ? "bg-emerald-500" : "bg-slate-300 dark:bg-slate-700"
+                           )}
+                         >
+                           <span
+                             className={cn(
+                               "absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all",
+                               formData.phone_visible_to_clients ? "left-[22px]" : "left-0.5"
+                             )}
+                           />
+                         </button>
                        </div>
                     </div>
 
@@ -360,7 +424,10 @@ export default function ArtisanProfileSetupPage() {
               </div>
            </div>
         </section>
+        )}
 
+        {currentStep === 2 && (
+        <>
         {/* 2. Expertise & Categories */}
         <section className="space-y-6">
            <div className="flex items-center gap-3">
@@ -373,14 +440,15 @@ export default function ArtisanProfileSetupPage() {
               </div>
            </div>
 
-           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
               {categories.map((cat) => {
-                 const isSelected = formData.categories.includes(cat.id)
+                 const catalog = TRADE_OPTIONS.find(option => cat.nom.toLowerCase().includes(option.key)) || TRADE_OPTIONS[TRADE_OPTIONS.length - 1]
+                 const isSelected = formData.category_id === cat.id
                  return (
                     <button
                       key={cat.id}
                       type="button"
-                      onClick={() => toggleCategory(cat.id)}
+                      onClick={() => selectCategory(cat.id)}
                       className={cn(
                         "relative flex flex-col items-center justify-center p-6 rounded-3xl border-2 transition-all duration-300 gap-3 group",
                         isSelected 
@@ -392,7 +460,7 @@ export default function ArtisanProfileSetupPage() {
                           "w-12 h-12 rounded-2xl text-2xl flex items-center justify-center transition-transform group-hover:scale-110",
                           isSelected ? "bg-blue-600 text-white" : "bg-slate-50 dark:bg-slate-800 text-slate-400"
                        )}>
-                          {cat.icone || "🛠️"}
+                          {catalog.icon}
                        </div>
                        <span className={cn(
                           "font-bold text-sm text-center line-clamp-1",
@@ -529,12 +597,12 @@ export default function ArtisanProfileSetupPage() {
                  <div className="flex justify-between items-end">
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">{t("about_title")}</label>
                     <span className={cn("text-[10px] font-black uppercase tracking-tighter", formData.about.length < 20 ? "text-red-500" : "text-emerald-500")}>
-                       {formData.about.length} / 500
+                       {formData.about.length} / 300
                     </span>
                  </div>
                  <Textarea 
                    value={formData.about}
-                   onChange={(e) => setFormData(prev => ({ ...prev, about: e.target.value.slice(0, 500) }))}
+                   onChange={(e) => setFormData(prev => ({ ...prev, about: e.target.value.slice(0, 300) }))}
                    className="min-h-[150px] rounded-2xl bg-slate-50 dark:bg-slate-950/50 border-none p-6 text-base leading-relaxed"
                    placeholder={t("about_placeholder")}
                  />
@@ -546,8 +614,10 @@ export default function ArtisanProfileSetupPage() {
               </div>
            </section>
         </div>
+        </>
+        )}
 
-        {/* 4. Availability & Documents */}
+        {currentStep === 3 && (
         <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
            
            {/* Availability */}
@@ -575,7 +645,7 @@ export default function ArtisanProfileSetupPage() {
                        </motion.div>
                     </button>
                     <span className="font-black uppercase tracking-widest text-xs">
-                       {formData.disponibilite === "disponible" ? "On" : "Off"}
+                       {formData.disponibilite === "disponible" ? t("availability_on") : t("availability_off")}
                     </span>
                  </div>
               </div>
@@ -597,7 +667,14 @@ export default function ArtisanProfileSetupPage() {
                     { id: 'doc_card', label: t("doc_card") }
                  ].map(doc => (
                     <div key={doc.id} className="relative">
-                       <label className={cn(
+                       <label
+                         onDragOver={(e) => e.preventDefault()}
+                         onDrop={(e) => {
+                           e.preventDefault()
+                           const dropped = e.dataTransfer.files?.[0]
+                           if (dropped) handleDroppedFile(dropped, doc.id)
+                         }}
+                         className={cn(
                           "flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-2xl transition-all duration-300 bg-slate-50/50 dark:bg-slate-950/20 cursor-pointer group h-full min-h-[140px]",
                           formData[doc.id] ? "border-emerald-500/50 bg-emerald-50/5 dark:bg-emerald-600/5" : "border-slate-200 dark:border-slate-800 hover:border-blue-400"
                        )}>
@@ -608,7 +685,7 @@ export default function ArtisanProfileSetupPage() {
                                 <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center mx-auto text-emerald-600">
                                    <Check className="w-5 h-5 stroke-[3]" />
                                 </div>
-                                <span className="text-[10px] font-bold text-emerald-600 block line-clamp-1">{doc.label} Uploaded</span>
+                                <span className="text-[10px] font-bold text-emerald-600 block line-clamp-1">{t("doc_uploaded", { label: doc.label })}</span>
                              </div>
                           ) : uploadProgress[doc.id] > 0 ? (
                              <div className="text-center space-y-2">
@@ -637,22 +714,46 @@ export default function ArtisanProfileSetupPage() {
               </div>
            </div>
         </section>
+        )}
 
-        {/* Submit */}
+        {/* Navigation / Submit */}
         <div className="pt-8 border-t border-slate-100 dark:border-white/5 flex flex-col items-center gap-4">
-           <Button 
-             type="submit" 
-             disabled={loading}
-             className="w-full max-w-md h-16 rounded-2xl font-black text-xl shadow-2xl shadow-blue-600/20 group overflow-hidden"
-           >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 group-hover:scale-105 transition-transform" />
-              <span className="relative z-10 flex items-center justify-center gap-3">
-                 {loading ? t("btn_submitting") : t("btn_finish")}
-                 <ArrowRight className={cn("w-6 h-6 transition-transform group-hover:translate-x-2", isRTL && "-rotate-180 group-hover:-translate-x-2")} />
-              </span>
-           </Button>
+           <div className="w-full max-w-xl flex items-center gap-3">
+             {currentStep > 1 && (
+               <Button
+                 type="button"
+                 variant="outline"
+                 className="h-14 rounded-2xl px-6 font-bold"
+                 onClick={() => setCurrentStep((prev) => Math.max(prev - 1, 1))}
+               >
+                 {common("back")}
+               </Button>
+             )}
+
+             {currentStep < 3 ? (
+               <Button
+                 type="button"
+                 className="h-14 rounded-2xl px-8 font-black ml-auto"
+                 onClick={goToNextStep}
+               >
+                 {common("next")}
+               </Button>
+             ) : (
+               <Button
+                 type="submit"
+                 disabled={loading}
+                 className="w-full h-16 rounded-2xl font-black text-xl shadow-2xl shadow-blue-600/20 group overflow-hidden"
+               >
+                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 group-hover:scale-105 transition-transform" />
+                 <span className="relative z-10 flex items-center justify-center gap-3">
+                    {loading ? t("btn_submitting") : t("btn_finish")}
+                    <ArrowRight className={cn("w-6 h-6 transition-transform group-hover:translate-x-2", isRTL && "-rotate-180 group-hover:-translate-x-2")} />
+                 </span>
+               </Button>
+             )}
+           </div>
            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest text-center">
-              DzArtisan Trusted Provider Network &bull; Algeria 2026
+              {t("trusted_network_note")}
            </p>
         </div>
 

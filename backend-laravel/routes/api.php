@@ -35,12 +35,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/google/callback', [\App\Http\Controllers\Api\OAuthController::class, 'handleGoogleCallback']);
 
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-        Route::get('/me', function (Request $request) {
-            return response()->json([
-                'success' => true,
-                'data' => $request->user()->load(['artisan', 'client'])
-            ]);
-        })->middleware('auth:sanctum');
+        Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
     });
 
     // Données publiques
@@ -63,38 +58,51 @@ Route::prefix('v1')->group(function () {
         // Profile
         Route::get('/profile', [ProfileController::class, 'index']);
         Route::post('/profile', [ProfileController::class, 'update']);
-        Route::post('/profile/toggle-availability', [ProfileController::class, 'toggleAvailability']);
+        Route::post('/profile/toggle-availability', [ProfileController::class, 'toggleAvailability'])
+            ->middleware('role:artisan');
 
         // Dashboard
         Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
-        Route::get('/dashboard/matching-requests', [DashboardController::class, 'matchingRequests']);
-        
-        // Subscription & Payments
-        Route::get('/subscription/status', [SubscriptionController::class, 'status']);
-        Route::get('/subscription/plans', [SubscriptionController::class, 'index']);
-        Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
-        Route::post('/payments/proof', [SubscriptionController::class, 'uploadProof']);
-        Route::get('/payments/history', [SubscriptionController::class, 'history']);
+        Route::get('/dashboard/matching-requests', [DashboardController::class, 'matchingRequests'])
+            ->middleware('role:artisan');
 
-        Route::get('/interventions', [InterventionController::class, 'index']);
-        Route::post('/interventions', [InterventionController::class, 'store']);
-        Route::post('/interventions/{id}/cancel', [InterventionController::class, 'cancel']);
-        Route::post('/interventions/{id}/avis', [AvisController::class, 'store']);
+        Route::middleware('role:client')->group(function () {
+            Route::get('/interventions', [InterventionController::class, 'index']);
+            Route::post('/interventions', [InterventionController::class, 'store']);
+            Route::post('/interventions/{id}/cancel', [InterventionController::class, 'cancel']);
+            Route::post('/interventions/{id}/avis', [AvisController::class, 'store']);
 
-        // Artisan Dashboard: Jobs
-        Route::get('/artisan/jobs', [ArtisanJobController::class, 'index']);
-        Route::get('/artisan/jobs/applied', [ArtisanJobController::class, 'applied']);
-        Route::post('/artisan/jobs/proposal', [ArtisanJobController::class, 'store']);
+            Route::prefix('client')->group(function () {
+                Route::get('/requests', [ClientRequestController::class, 'index']);
+                Route::get('/requests/{id}', [ClientRequestController::class, 'show']);
+                Route::post('/requests/{id}/cancel', [ClientRequestController::class, 'cancel']);
+                Route::post('/requests/{id}/proposals/{proposalId}/accept', [ClientRequestController::class, 'acceptProposal']);
+            });
+        });
 
-        // Artisan Dashboard: Interventions (Active Projects)
-        Route::get('/artisan/interventions', [InterventionController::class, 'index']);
-        Route::get('/artisan/interventions/{id}', [InterventionController::class, 'show']);
-        Route::post('/artisan/interventions/{id}/progress', [InterventionController::class, 'updateProgress']);
-        Route::post('/artisan/interventions/{id}/photo', [InterventionController::class, 'uploadPhoto']);
-        Route::delete('/artisan/interventions/{id}/photo/{photoId}', [InterventionController::class, 'deletePhoto']);
+        Route::middleware('role:artisan')->group(function () {
+            // Subscription & Payments
+            Route::get('/subscription/status', [SubscriptionController::class, 'status']);
+            Route::get('/subscription/plans', [SubscriptionController::class, 'index']);
+            Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
+            Route::post('/payments/proof', [SubscriptionController::class, 'uploadProof']);
+            Route::get('/payments/history', [SubscriptionController::class, 'history']);
+
+            // Artisan Dashboard: Jobs
+            Route::get('/artisan/jobs', [ArtisanJobController::class, 'index']);
+            Route::get('/artisan/jobs/applied', [ArtisanJobController::class, 'applied']);
+            Route::post('/artisan/jobs/proposal', [ArtisanJobController::class, 'store']);
+
+            // Artisan Dashboard: Interventions (Active Projects)
+            Route::get('/artisan/interventions', [InterventionController::class, 'index']);
+            Route::get('/artisan/interventions/{id}', [InterventionController::class, 'show']);
+            Route::post('/artisan/interventions/{id}/progress', [InterventionController::class, 'updateProgress']);
+            Route::post('/artisan/interventions/{id}/photo', [InterventionController::class, 'uploadPhoto']);
+            Route::delete('/artisan/interventions/{id}/photo/{photoId}', [InterventionController::class, 'deletePhoto']);
+        });
 
         // Admin Dashboard
-        Route::prefix('admin')->group(function () {
+        Route::prefix('admin')->middleware('role:admin')->group(function () {
             // Stats Overview (New)
             Route::get('/stats/overview', [AdminStatsController::class, 'index']);
             Route::get('/stats/rankings', [AdminStatsController::class, 'artisanRanking']);
@@ -105,12 +113,6 @@ Route::prefix('v1')->group(function () {
             Route::post('/artisans/{id}/status', [AdminController::class, 'updateArtisanStatus']);
             Route::post('/artisans/{id}/promote', [AdminController::class, 'promoteArtisan']);
             Route::delete('/users/{id}', [AdminController::class, 'deleteUser']);
-
-            // Client Dashboard: Requests
-            Route::get('/client/requests', [ClientRequestController::class, 'index']);
-            Route::get('/client/requests/{id}', [ClientRequestController::class, 'show']);
-            Route::post('/client/requests/{id}/cancel', [ClientRequestController::class, 'cancel']);
-            Route::post('/client/requests/{id}/proposals/{proposalId}/accept', [ClientRequestController::class, 'acceptProposal']);
             Route::post('/users/{id}/delete', [AdminController::class, 'deleteUser']);
             Route::post('/users/bulk', [AdminController::class, 'bulkAction']);
 

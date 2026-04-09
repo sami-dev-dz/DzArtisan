@@ -16,6 +16,7 @@ class LoginRequest extends FormRequest
         return [
             'email'    => 'required|email',
             'password' => 'required',
+            'role'     => 'nullable|in:client,artisan,admin',
         ];
     }
 }

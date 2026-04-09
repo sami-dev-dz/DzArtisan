@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
     const restoreSession = async () => {
       try {
         const { data } = await api.get('/auth/me')
-        setUser(data.data)
+        setUser(data?.data?.user ?? null)
       } catch {
         setUser(null)
       } finally {
@@ -29,12 +29,11 @@ export function AuthProvider({ children }) {
   const redirectAfterLogin = (u) => {
     if (u.type === "admin")   return router.push("/dashboard/admin");
     if (u.type === "artisan") {
-      if (u.statut === "nouveau")     return router.push("/onboarding/artisan/profile");
-      if (u.statut === "en_attente")  return router.push("/onboarding/artisan/waiting");
+      if (u.needs_artisan_onboarding) return router.push("/onboarding/artisan/profile");
+      if (u.artisan?.statutValidation === "en_attente") return router.push("/onboarding/artisan/waiting");
       return router.push("/dashboard/artisan");
     }
     if (u.type === "client") {
-      if (u.statut === "nouveau") return router.push("/onboarding/client/setup");
       return router.push("/dashboard/client");
     }
     // Fallback if type is missing
@@ -59,9 +58,9 @@ export function AuthProvider({ children }) {
     return userData;
   };
 
-  const login = async ({ email, password }) => {
+  const login = async ({ email, password, role }) => {
     await api.get("/sanctum/csrf-cookie", { baseURL: process.env.NEXT_PUBLIC_API_BASE });
-    const { data } = await api.post("/auth/login", { email, password });
+    const { data } = await api.post("/auth/login", { email, password, role });
     
     const userData = data.data.user;
     setUser(userData);
