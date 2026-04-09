@@ -7,9 +7,6 @@ import { Hero } from "@/components/landing/Hero"
 import { HowItWorks } from "@/components/landing/HowItWorks"
 import { Features } from "@/components/landing/Features"
 import { FeaturedArtisans } from "@/components/landing/FeaturedArtisans"
-import { Pricing } from "@/components/landing/Pricing"
-import { Testimonials } from "@/components/landing/Testimonials"
-import { CTABanner } from "@/components/landing/CTABanner"
 
 export default function LandingPage() {
   const { user, loading, redirectAfterLogin } = useAuth()
@@ -35,9 +32,6 @@ export default function LandingPage() {
       <HowItWorks />
       <Features />
       <FeaturedArtisans />
-      <Pricing />
-      <Testimonials />
-      <CTABanner />
     </div>
   )
 }

@@ -27,9 +27,6 @@
   },
   "navigation": {
     "home": "Home",
-    "artisans": "Our Artisans",
-    "services": "Services",
-    "how_it_works": "How it works",
     "login": "Login",
     "register": "Register",
     "dashboard": "Dashboard",
@@ -41,14 +38,14 @@
     "my_subscription": "My subscription",
     "subscription": "Subscription",
     "my_complaints": "My complaints",
-    "admin_dashboard": "Admin Dashboard"
+    "admin_dashboard": "Admin Dashboard",
+    "contact_locations": "Alger, Béjaïa"
   },
   "hero": {
     "badge": "THE REFERENCE IN ALGERIA 🇩🇿",
     "title": "Find the perfect expert for all your work",
     "subtitle": "The leading platform connecting customers and qualified artisans in Algeria. Covering all 58 wilayas with verified profiles and guaranteed security.",
     "cta_find": "Find an artisan",
-    "cta_request": "Post a request",
     "trust_verified": "Verified profiles",
     "trust_fast": "Fast response",
     "trust_secure": "Secure platform",
@@ -151,15 +148,6 @@
         "badge": "Best value"
       }
     }
-  },
-  "testimonials": {
-    "title": "They trust us"
-  },
-  "cta_banner": {
-    "title": "Accelerate your artisan business",
-    "subtitle": "Join the trusted professional network in Algeria.",
-    "client_btn": "I am a Client",
-    "artisan_btn": "I am an Artisan"
   },
   "authentication": {
     "login_title": "Welcome back",

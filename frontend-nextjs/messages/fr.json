@@ -27,9 +27,6 @@
   },
   "navigation": {
     "home": "Accueil",
-    "artisans": "Nos Artisans",
-    "services": "Services",
-    "how_it_works": "Comment ça marche",
     "login": "Se connecter",
     "register": "S'inscrire",
     "dashboard": "Tableau de bord",
@@ -41,14 +38,14 @@
     "my_subscription": "Mon abonnement",
     "subscription": "Abonnement",
     "my_complaints": "Mes réclamations",
-    "admin_dashboard": "Administration"
+    "admin_dashboard": "Administration",
+    "contact_locations": "Alger, Béjaïa"
   },
   "hero": {
     "badge": "LA RÉFÉRENCE EN ALGÉRIE 🇩🇿",
     "title": "Trouvez l'expert idéal pour tous vos travaux",
     "subtitle": "La première plateforme de mise en relation entre clients et artisans qualifiés en Algérie. Couvrant les 58 wilayas avec des profils vérifiés et une sécurité garantie.",
     "cta_find": "Trouver un artisan",
-    "cta_request": "Publier une demande",
     "trust_verified": "Profils vérifiés",
     "trust_fast": "Réponse rapide",
     "trust_secure": "Plateforme sécurisée",
@@ -151,15 +148,6 @@
         "badge": "Meilleure offre"
       }
     }
-  },
-  "testimonials": {
-    "title": "Ils nous font confiance"
-  },
-  "cta_banner": {
-    "title": "Propulsez votre activité artisanale",
-    "subtitle": "Rejoignez le réseau professionnel de confiance en Algérie.",
-    "client_btn": "Je suis un Client",
-    "artisan_btn": "Je suis un Artisan"
   },
   "authentication": {
     "error": "Une erreur est survenue. Veuillez réessayer.",

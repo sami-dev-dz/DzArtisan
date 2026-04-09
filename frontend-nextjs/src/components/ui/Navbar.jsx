@@ -7,8 +7,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import { 
   Menu, 
   Search, 
-  Bell, 
-  HelpCircle, 
   LogOut, 
   User, 
   LayoutDashboard, 
@@ -85,8 +83,6 @@ export function Navbar() {
     if (!isAuthenticated) {
       return [
         { label: t("home"), href: "/", icon: Home },
-        { label: t("services"), href: "/#services", icon: Briefcase },
-        { label: t("how_it_works"), href: "/#how-it-works", icon: HelpCircle },
       ]
     }
 

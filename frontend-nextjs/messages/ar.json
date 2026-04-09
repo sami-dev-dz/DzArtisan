@@ -27,9 +27,6 @@
   },
   "navigation": {
     "home": "الرئيسية",
-    "artisans": "حرفيونا",
-    "services": "الخدمات",
-    "how_it_works": "كيف تعمل",
     "login": "تسجيل الدخول",
     "register": "إنشاء حساب",
     "dashboard": "لوحة التحكم",
@@ -40,7 +37,8 @@
     "my_reviews": "تقييماتي",
     "my_subscription": "اشتراكي",
     "my_complaints": "شكاواي",
-    "admin_dashboard": "لوحة مسؤول النظام"
+    "admin_dashboard": "لوحة مسؤول النظام",
+    "contact_locations": "الجزائر، بجاية"
   },
   "hero": {
     "badge": "المرجع الأول في الجزائر 🇩🇿",
@@ -48,7 +46,6 @@
     "title_accent": "الحرفيين",
     "subtitle": "المنصة الأولى والوحيدة للربط بين الزبائن والحرفيين المؤهلين في الجزائر. تغطية شاملة لـ 69 ولاية مع ملفات شخصية موثقة وأمان مضمون.",
     "cta_find": "ابحث عن حرفي",
-    "cta_request": "أنشر طلباً",
     "trust_verified": "ملفات موثقة",
     "trust_fast": "رد سريع",
     "trust_wilayas": "69 ولاية",
@@ -94,15 +91,6 @@
       "premium": { "name": "فصلي", "price": "1300", "duration": "3 أشهر", "benefit": "وفر 200 دج" },
       "annual": { "name": "سنوي", "price": "4500", "duration": "سنة كاملة", "benefit": "وفر 1500 دج", "badge": "الأكثر توفيراً" }
     }
-  },
-  "testimonials": {
-    "title": "ثقتهم بنا هي فخرنا"
-  },
-  "cta_banner": {
-    "title": "طوّر نشاطك الحرفي اليوم",
-    "subtitle": "انضم للمحترفين الموثوقين في الجزائر.",
-    "client_btn": "أنا زبون",
-    "artisan_btn": "أنا حرفي"
   },
   "authentication": {
     "login_title": "مرحباً بعودتك",

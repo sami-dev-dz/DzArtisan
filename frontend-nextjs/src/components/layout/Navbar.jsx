@@ -20,11 +20,7 @@ export default function Navbar() {
   const router = useRouter();
   const { user, logout } = useAuth();
 
-  const NAV_LINKS = [
-    { href: "/artisans", label: t("artisans") },
-    { href: "/pricing",  label: t("services") },
-    { href: "/how",      label: t("how_it_works") },
-  ];
+  const NAV_LINKS = [];
 
   const LANGS = [
     { code: "fr", label: "Français", short: "FR" },

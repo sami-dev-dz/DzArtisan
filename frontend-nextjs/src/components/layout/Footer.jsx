@@ -147,7 +147,7 @@ export function Footer() {
               <li className="flex items-start gap-3">
                  <MapPin className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
                  <span className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                   Siège social: Alger,<br />Algérie 16000
+                   {t("contact_locations")}
                  </span>
               </li>
               <li className="flex items-center gap-3">

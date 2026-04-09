@@ -4,7 +4,7 @@ import * as React from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { motion } from "framer-motion"
 import {
-  Search, PlusCircle, ArrowRight,
+  Search, ArrowRight,
   ShieldCheck, Clock, CheckCircle2,
   Zap, Droplets, Hammer, Wrench, Paintbrush, Truck,
 } from "lucide-react"
@@ -272,16 +272,16 @@ export function Hero() {
 
         .hero-eyebrow {
           display: inline-flex; align-items: center; gap: 8px;
-          font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+          font-size: clamp(0.9rem, 1.6vw, 1.25rem); font-weight: 800; letter-spacing: 0.12em;
           text-transform: uppercase; color: #60a5fa;
-          padding: 7px 15px; border-radius: 99px;
+          padding: 11px 20px; border-radius: 99px;
           background: rgba(59,130,246,0.08);
           border: 1px solid rgba(59,130,246,0.2);
           margin-bottom: 28px; font-family: var(--font-sans);
           box-shadow: 0 0 0 4px rgba(59,130,246,0.04);
         }
         .hero-dot {
-          width: 6px; height: 6px; border-radius: 50%;
+          width: 11px; height: 11px; border-radius: 50%;
           background: #3b82f6; position: relative; flex-shrink: 0;
         }
         .hero-dot::after {
@@ -453,10 +453,6 @@ export function Hero() {
                 <Search size={16} strokeWidth={2.4} />
                 {t("cta_find")}
                 <ArrowRight size={14} strokeWidth={2.4} style={isRTL ? { transform: "rotate(180deg)" } : {}} />
-              </Link>
-              <Link href="/dashboard/requests/new" className="btn-outline">
-                <PlusCircle size={16} strokeWidth={1.9} />
-                {t("cta_request")}
               </Link>
             </motion.div>
 
