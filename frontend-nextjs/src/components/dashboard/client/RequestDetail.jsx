@@ -1,13 +1,7 @@
-import { Users } from 'lucide-react';
-import { Clock } from 'lucide-react';
 'use client';
 
+import { Users, Clock, X, MapPin, Calendar, MessageSquare, AlertCircle, Trash2, Phone, MessageCircle, Star, ShieldCheck, ChevronRight, ArrowLeft, Image as ImageIcon } from 'lucide-react';
 import React, { useState } from 'react';
-import { 
-  X, MapPin, Calendar, MessageSquare, AlertCircle, 
-  Trash2, Phone, MessageCircle, Star, ShieldCheck, 
-  ChevronRight, ArrowLeft, Image as ImageIcon
-} from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { format } from 'date-fns';
 import { fr, arDZ, enUS } from 'date-fns/locale';
