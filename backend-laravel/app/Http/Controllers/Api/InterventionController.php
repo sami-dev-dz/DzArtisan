@@ -55,7 +55,7 @@ class InterventionController extends Controller
 
         // ── Notify Matching Artisans ─────────────────────────────────────
         // 1. Get artisans in same category and wilaya
-        $artisans = Artisan::where('primary_categorie_id', $demande->categorie_id)
+        $artisans = Artisan::where('categorie_id', $demande->categorie_id)
             ->where('wilaya_id', $demande->wilaya_id)
             ->where('statutValidation', 'valide')
             ->whereHas('user', fn($q) => $q->where('statut', 'actif'))

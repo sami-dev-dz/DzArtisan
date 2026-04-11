@@ -4,12 +4,13 @@ import * as React from "react"
 import { useTranslations, useLocale } from "next-intl"
 import { 
   BarChart3, 
-  User, 
   ClipboardList, 
   CreditCard, 
-  AlertTriangle 
+  AlertTriangle,
+  Star 
 } from "lucide-react"
 import { Link, usePathname } from "@/i18n/routing"
+import { useAuth } from "@/context/AuthContext"
 import { cn } from "@/lib/utils"
 
 export function BottomNav() {
@@ -17,13 +18,18 @@ export function BottomNav() {
   const locale = useLocale()
   const isRTL = locale === "ar"
   const pathname = usePathname()
+  const { user } = useAuth()
 
-  const navItems = [
+  const navItems = user?.type === 'artisan' ? [
     { href: "/dashboard/artisan", icon: BarChart3, label: t("dashboard") },
-    { href: "/dashboard/interventions", icon: ClipboardList, label: t("my_requests") },
-    { href: "/dashboard/artisan/profile", icon: User, label: t("profile") },
+    { href: "/dashboard/artisan/jobs", icon: ClipboardList, label: t("my_requests") },
     { href: "/dashboard/artisan/subscription", icon: CreditCard, label: t("subscription") },
     { href: "/dashboard/artisan/complaints", icon: AlertTriangle, label: t("my_complaints") },
+  ] : [
+    { href: "/dashboard/client", icon: BarChart3, label: t("dashboard") },
+    { href: "/dashboard/client/requests", icon: ClipboardList, label: t("my_requests") },
+    { href: "/dashboard/client/reviews", icon: Star, label: t("my_reviews") || "Avis" },
+    { href: "/dashboard/client/complaints", icon: AlertTriangle, label: t("my_complaints") },
   ]
 
   return (

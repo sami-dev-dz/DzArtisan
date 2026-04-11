@@ -17,6 +17,7 @@ import dynamic from "next/dynamic"
 import api from "@/lib/api-client"
 import wilayasJson from "@/data/wilayas.json"
 import communesJson from "@/data/communes.json"
+import { useParams } from 'next/navigation'
 
 // Dynamically import Map to avoid SSR issues
 const WizardMap = dynamic(() => import("@/components/map/WizardMap"), { 
@@ -26,14 +27,17 @@ const WizardMap = dynamic(() => import("@/components/map/WizardMap"), {
 
 const STEPS = ["details", "location", "summary"]
 
-export default function NewInterventionWizard() {
+export default function EditInterventionWizard() {
   const t = useTranslations("wizard")
   const locale = useLocale()
   const router = useRouter()
+  const params = useParams()
+  const id = params?.id
   const isRTL = locale === "ar"
   const [currentStep, setCurrentStep] = useState(0)
   const [categories, setCategories] = useState([])
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const [fieldErrors, setFieldErrors] = useState({})
 
@@ -62,10 +66,8 @@ export default function NewInterventionWizard() {
     setFormData(prev => ({ ...prev, whatsapp: `wa.me/${ph}` }))
   }
 
-  // Filtered communes based on selected wilaya
   const [filteredCommunes, setFilteredCommunes] = useState([])
 
-  // Form State
   const [formData, setFormData] = useState({
     titre: "",
     categorie_id: "",
@@ -87,45 +89,70 @@ export default function NewInterventionWizard() {
     }).catch(() => {})
   }, [])
 
-  // Filter communes when wilaya changes
+  useEffect(() => {
+    if (id) {
+      api.get(`/client/requests/${id}`).then(res => {
+        const req = res.data;
+        if (req.statut !== 'en_attente') {
+           router.push("/dashboard/client/requests");
+           return;
+        }
+        setFormData({
+          titre: req.titre || "",
+          categorie_id: req.categorie_id || "",
+          description: req.description || "",
+          telephone: req.telephone || "",
+          whatsapp: req.whatsapp || "",
+          date_souhaitee: req.date_souhaitee ? req.date_souhaitee.split('T')[0] : "",
+          location_method: req.latitude && req.longitude ? "auto" : "manual",
+          wilaya_id: req.wilaya_id || "",
+          commune_id: req.commune_id || "",
+          latitude: req.latitude || 36.7538,
+          longitude: req.longitude || 3.0588,
+          adresse: req.adresse || "",
+        });
+        setIsLoading(false);
+      }).catch(err => {
+        setError("Erreur lors du chargement de la demande");
+        setIsLoading(false);
+      });
+    }
+  }, [id, router]);
+
   useEffect(() => {
     if (formData.wilaya_id) {
       const communes = communesJson.filter(c => String(c.wilaya_id) === String(formData.wilaya_id))
       setFilteredCommunes(communes)
-      // Reset commune selection
-      setFormData(prev => ({ ...prev, commune_id: "" }))
     } else {
       setFilteredCommunes([])
     }
   }, [formData.wilaya_id])
 
-  // When wilaya is selected manually, update map coordinates
   useEffect(() => {
-    if (formData.wilaya_id) {
+    if (formData.wilaya_id && !isLoading) {
       const wilaya = wilayasJson.find(w => String(w.id) === String(formData.wilaya_id))
-      if (wilaya) {
+      if (wilaya && formData.location_method === 'manual') {
         setFormData(prev => ({
           ...prev,
-          latitude: parseFloat(wilaya.longitude), // Note: JSON has lat/lng swapped
+          latitude: parseFloat(wilaya.longitude),
           longitude: parseFloat(wilaya.latitude),
         }))
       }
     }
-  }, [formData.wilaya_id, formData.location_method])
+  }, [formData.wilaya_id, formData.location_method, isLoading])
 
-  // When commune is selected, update map to commune coordinates  
   useEffect(() => {
-    if (formData.commune_id) {
+    if (formData.commune_id && !isLoading) {
       const commune = communesJson.find(c => String(c.id) === String(formData.commune_id))
-      if (commune) {
+      if (commune && formData.location_method === 'manual') {
         setFormData(prev => ({
           ...prev,
-          latitude: parseFloat(commune.longitude), // Note: JSON has lat/lng swapped
+          latitude: parseFloat(commune.longitude),
           longitude: parseFloat(commune.latitude),
         }))
       }
     }
-  }, [formData.commune_id, formData.location_method])
+  }, [formData.commune_id, formData.location_method, isLoading])
 
   const nextStep = () => {
     if (validateStep()) {
@@ -176,18 +203,17 @@ export default function NewInterventionWizard() {
         whatsapp: formData.whatsapp || null,
         date_souhaitee: formData.date_souhaitee || null,
       }
-      await api.post("/interventions", payload)
-      // Redirect to My Requests page after success
+      await api.put(`/client/requests/${id}`, payload)
       router.push("/dashboard/client/requests")
     } catch (err) {
-      setError(err.response?.data?.message || err.response?.data?.error || "Une erreur est survenue lors de la publication")
+      setError(err.response?.data?.message || err.response?.data?.error || "Une erreur est survenue lors de la modification")
     } finally {
       setIsSubmitting(false)
     }
   }
 
   const handleMapPositionChange = useCallback((lat, lng) => {
-    setFormData(prev => ({ ...prev, latitude: lat, longitude: lng }))
+    setFormData(prev => ({ ...prev, latitude: lat, longitude: lng, location_method: 'auto' }))
   }, [])
 
   const getSelectedWilayaName = () => {
@@ -203,6 +229,14 @@ export default function NewInterventionWizard() {
   const getSelectedCategoryName = () => {
     const cat = categories.find(c => c.id == formData.categorie_id)
     return cat ? cat.nom : ""
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-transparent">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+      </div>
+    );
   }
 
   return (
@@ -259,10 +293,10 @@ export default function NewInterventionWizard() {
             <div className="p-6 md:p-10 space-y-8">
                <div className="space-y-2">
                   <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                     Décrivez votre besoin
+                     Modifier votre demande
                   </h2>
                   <p className="text-slate-500 font-medium text-sm">
-                     Donnez un maximum de détails pour recevoir les meilleures propositions.
+                     Mettez à jour les détails de votre intervention pour recevoir de meilleures propositions.
                   </p>
                </div>
 
@@ -431,7 +465,11 @@ export default function NewInterventionWizard() {
                               <select 
                                 className={cn("w-full h-14 rounded-2xl bg-white dark:bg-slate-900 border-2 px-5 font-bold focus:border-blue-600 transition-all outline-none appearance-none text-slate-900 dark:text-white", fieldErrors.wilaya_id ? "border-red-500 bg-red-50/30 text-red-900" : "border-slate-100 dark:border-white/10")}
                                 value={formData.wilaya_id}
-                                onChange={(e) => handleChange('wilaya_id', e.target.value)}
+                                onChange={(e) => {
+                                  handleChange('wilaya_id', e.target.value)
+                                  handleChange('commune_id', '')
+                                  setFormData(prev => ({ ...prev, location_method: 'manual' }))
+                                }}
                                 onBlur={(e) => validateField('wilaya_id', e.target.value)}
                               >
                                  <option value="">Sélectionnez une wilaya...</option>
@@ -449,7 +487,10 @@ export default function NewInterventionWizard() {
                               <select 
                                 className={cn("w-full h-14 rounded-2xl bg-white dark:bg-slate-900 border-2 px-5 font-bold focus:border-blue-600 transition-all outline-none appearance-none text-slate-900 dark:text-white disabled:opacity-50", fieldErrors.commune_id ? "border-red-500 bg-red-50/30 text-red-900" : "border-slate-100 dark:border-white/10")}
                                 value={formData.commune_id}
-                                onChange={(e) => handleChange('commune_id', e.target.value)}
+                                onChange={(e) => {
+                                  handleChange('commune_id', e.target.value)
+                                  setFormData(prev => ({ ...prev, location_method: 'manual' }))
+                                }}
                                 onBlur={(e) => validateField('commune_id', e.target.value)}
                                 disabled={!formData.wilaya_id}
                               >
@@ -588,7 +629,7 @@ export default function NewInterventionWizard() {
                      <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
                         <MapPin className="w-4 h-4 text-blue-600" />
                         {formData.location_method === 'auto' 
-                          ? `Géolocalisation (${formData.latitude.toFixed(4)}, ${formData.longitude.toFixed(4)})`
+                          ? `Géolocalisation (${formData.latitude?.toFixed(4) || "NA"}, ${formData.longitude?.toFixed(4) || "NA"})`
                           : `${getSelectedWilayaName()} — ${getSelectedCommuneName()}`
                         }
                      </div>
@@ -615,11 +656,11 @@ export default function NewInterventionWizard() {
                      {isSubmitting ? (
                        <>
                          <Loader2 className="w-4 h-4 animate-spin" />
-                         Publication en cours...
+                         Enregistrement...
                        </>
                      ) : (
                        <>
-                         Publier ma demande <Check className="w-4 h-4" />
+                         Enregistrer les modifications <Check className="w-4 h-4" />
                        </>
                      )}
                   </Button>

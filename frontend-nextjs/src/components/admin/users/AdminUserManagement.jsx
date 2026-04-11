@@ -1,7 +1,7 @@
-import { ShieldCheck } from 'lucide-react';
-import { motion } from 'framer-motion';
 'use client';
 
+import { ShieldCheck } from 'lucide-react';
+import { motion } from 'framer-motion';
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Users, 

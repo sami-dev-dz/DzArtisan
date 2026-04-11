@@ -37,7 +37,6 @@ export function Sidebar({ collapsed, setCollapsed }) {
     { href: "/dashboard/artisan/complaints", icon: AlertTriangle, label: t("my_complaints") },
   ] : [
     { href: "/dashboard/client", icon: BarChart3, label: t("dashboard") },
-    { href: "/dashboard/client/profile", icon: User, label: t("profile") },
     { href: "/dashboard/client/requests", icon: ClipboardList, label: t("my_requests") },
     { href: "/dashboard/client/reviews", icon: Star, label: t("my_reviews") || "Mes avis" },
     { href: "/dashboard/client/complaints", icon: AlertTriangle, label: t("my_complaints") },
@@ -78,10 +77,12 @@ export function Sidebar({ collapsed, setCollapsed }) {
         </Button>
       </div>
 
-      {/* Availability Toggle - Only if not collapsed or as a tooltip-like dot */}
-      <div className={cn("px-6 mb-8 transition-all", collapsed ? "flex justify-center" : "block")}>
-         <AvailabilityToggle compact={collapsed} />
-      </div>
+      {/* Availability Toggle - Only for artisans */}
+      {user?.type === 'artisan' && (
+        <div className={cn("px-6 mb-8 transition-all", collapsed ? "flex justify-center" : "block")}>
+           <AvailabilityToggle compact={collapsed} />
+        </div>
+      )}
 
       {/* Navigation */}
       <nav className="flex-1 px-4 space-y-2">

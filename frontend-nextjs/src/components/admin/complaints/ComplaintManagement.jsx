@@ -1,6 +1,6 @@
-import { Briefcase } from 'lucide-react';
 "use client"
 
+import { Briefcase } from 'lucide-react';
 import React, { useState, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { motion, AnimatePresence } from "framer-motion"

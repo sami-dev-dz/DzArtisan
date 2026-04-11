@@ -9,7 +9,7 @@ import {
    ShieldCheck, ExternalLink, Plus, Zap, Droplets, Paintbrush,
    Hammer, Snowflake, Wrench, Sparkles, Truck, MoreHorizontal,
    ArrowRight, FileText, Star, Award, TrendingUp, Users, BadgeCheck,
-   HardHat
+   HardHat, ChevronDown
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/context/AuthContext"
@@ -671,64 +671,20 @@ export default function ArtisanProfileSetupPage() {
                         </div>
 
                         {/* FIX #3: Category icons — proper grid with large visible icons */}
-                        <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-5 shadow-sm">
-                           <div className="flex items-center gap-2 mb-4">
-                              <Briefcase className="w-4 h-4 text-blue-600" />
-                              <span className="text-sm font-bold text-slate-900 dark:text-white">{ft.trade}</span>
-                           </div>
-                           <div className="grid grid-cols-5 gap-2">
-                              {categories.map((cat) => {
-                                 const key = cat.nom.toLowerCase()
-                                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                 const option = TRADE_OPTIONS.find(o => key.includes(o.key)) || TRADE_OPTIONS[TRADE_OPTIONS.length - 1]
-                                 const Icon = option.icon || Briefcase
-                                 const isSelected = formData.category_id === cat.id
-                                 return (
-                                    <button
-                                       key={cat.id}
-                                       type="button"
-                                       onClick={() => setFormData(p => ({ ...p, category_id: cat.id }))}
-                                       className={cn(
-                                          "relative flex flex-col items-center justify-center gap-2 py-4 px-2 rounded-2xl border-2 transition-all duration-200 select-none",
-                                          isSelected
-                                             ? "border-blue-600 bg-blue-600 shadow-lg shadow-blue-600/25"
-                                             : "border-slate-100 dark:border-white/[0.07] bg-slate-50 dark:bg-white/[0.03] hover:border-slate-300 dark:hover:border-white/[0.14] hover:bg-white dark:hover:bg-white/[0.06]"
-                                       )}
-                                    >
-                                       {/* Icon container with gradient bg */}
-                                       <div className={cn(
-                                          "w-10 h-10 rounded-xl flex items-center justify-center",
-                                          isSelected
-                                             ? "bg-white/20"
-                                             : `bg-gradient-to-br ${option.gradient} opacity-80`
-                                       )}>
-                                          <Icon
-                                             className={cn(
-                                                "text-white",
-                                                isSelected ? "text-white" : "text-white"
-                                             )}
-                                             style={{ width: 22, height: 22 }}
-                                             strokeWidth={2}
-                                          />
-                                       </div>
-                                       <span className={cn(
-                                          "text-[10px] font-bold text-center leading-tight",
-                                          isSelected ? "text-white" : "text-slate-600 dark:text-slate-400"
-                                       )}>
-                                          {cat.nom}
-                                       </span>
-                                       {isSelected && (
-                                          <motion.div
-                                             initial={{ scale: 0 }}
-                                             animate={{ scale: 1 }}
-                                             className="absolute top-2 right-2 w-4 h-4 bg-white rounded-full flex items-center justify-center"
-                                          >
-                                             <Check className="w-2.5 h-2.5 text-blue-600 stroke-[3]" />
-                                          </motion.div>
-                                       )}
-                                    </button>
-                                 )
-                              })}
+                        <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-5 shadow-sm mb-4">
+                           <div className="relative">
+                              <select
+                                 value={formData.category_id || ""}
+                                 onChange={(e) => setFormData(p => ({ ...p, category_id: e.target.value }))}
+                                 className="w-full h-14 pl-12 pr-10 rounded-2xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm font-semibold text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-sans"
+                              >
+                                 <option value="" disabled>Sélectionnez votre métier principal...</option>
+                                 {categories.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>{cat.nom}</option>
+                                 ))}
+                              </select>
+                              <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-600" />
+                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
                            </div>
                         </div>
 

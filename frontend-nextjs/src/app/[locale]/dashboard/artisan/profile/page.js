@@ -21,7 +21,8 @@ import {
   Plus,
   Eye,
   Save,
-  Loader2
+  Loader2,
+  ChevronDown
 } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
@@ -317,29 +318,19 @@ export default function ArtisanProfileEditPage() {
                  <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">{t("categories_title")}</h3>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                 {categories.map((cat) => {
-                    const isSelected = formData.categories.includes(cat.id)
-                    return (
-                       <button
-                         key={cat.id}
-                         type="button"
-                         onClick={() => toggleCategory(cat.id)}
-                         className={cn(
-                           "relative flex items-center gap-3 p-4 rounded-2xl border-2 transition-all duration-300 group",
-                           isSelected 
-                             ? "border-blue-600 bg-blue-50 dark:bg-blue-600/10" 
-                             : "border-slate-50 dark:border-white/5 bg-slate-50 dark:bg-slate-950/50 hover:border-slate-200"
-                         )}
-                       >
-                          <span className="text-xl">{cat.icone || "🛠️"}</span>
-                          <span className={cn(
-                             "font-bold text-xs uppercase tracking-tight",
-                             isSelected ? "text-blue-600" : "text-slate-500"
-                          )}>{cat.nom}</span>
-                       </button>
-                    )
-                 })}
+              <div className="relative">
+                 <select
+                    value={formData.categories[0] || ""}
+                    onChange={(e) => setFormData(prev => ({ ...prev, categories: [parseInt(e.target.value)] }))}
+                    className="w-full h-14 pl-12 pr-10 rounded-2xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm font-semibold text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                 >
+                    <option value="" disabled>Sélectionnez votre métier principal...</option>
+                    {categories.map((cat) => (
+                       <option key={cat.id} value={cat.id}>{cat.nom}</option>
+                    ))}
+                 </select>
+                 <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-600" />
+                 <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
               </div>
            </section>
 

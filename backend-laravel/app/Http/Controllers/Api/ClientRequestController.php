@@ -19,7 +19,14 @@ class ClientRequestController extends Controller
         $client = $user->client;
 
         if (!$client) {
-            return response()->json(['message' => 'Client profile not found'], 404);
+            if ($user->type === 'client') {
+                $client = $user->client()->create([
+                    'wilaya_id' => 16,
+                    'commune_id' => 1,
+                ]);
+            } else {
+                return response()->json([]);
+            }
         }
 
         $query = DemandeIntervention::where('client_id', $client->id)
@@ -46,6 +53,12 @@ class ClientRequestController extends Controller
     {
         $user = Auth::user();
         $client = $user->client;
+        if (!$client && $user->type === 'client') {
+            $client = $user->client()->create(['wilaya_id' => 16, 'commune_id' => 1]);
+        }
+        if (!$client) {
+            return response()->json(['message' => 'No client profile'], 404);
+        }
 
         $demande = DemandeIntervention::where('id', $id)
             ->where('client_id', $client->id)
@@ -67,12 +80,55 @@ class ClientRequestController extends Controller
     }
 
     /**
+     * Update a pending request.
+     */
+    public function update(Request $request, $id)
+    {
+        $user = Auth::user();
+        $client = $user->client;
+        if (!$client) {
+            return response()->json(['message' => 'No client profile'], 404);
+        }
+
+        $demande = DemandeIntervention::where('id', $id)
+            ->where('client_id', $client->id)
+            ->where('statut', 'en_attente')
+            ->firstOrFail();
+
+        $validated = $request->validate([
+            'titre' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'categorie_id' => 'sometimes|exists:categories_metiers,id',
+            'wilaya_id' => 'sometimes|exists:wilayas,id',
+            'commune_id' => 'sometimes|exists:communes,id',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'telephone' => 'nullable|string|max:20',
+            'whatsapp' => 'nullable|string|max:255',
+            'date_souhaitee' => 'nullable|date',
+        ]);
+
+        $demande->update($validated);
+
+        return response()->json([
+            'message' => 'Request updated successfully',
+            'demande' => $demande
+        ]);
+    }
+
+    /**
      * Cancel a pending request.
      */
     public function cancel($id)
     {
         $user = Auth::user();
         $client = $user->client;
+        if (!$client && $user->type === 'client') {
+            $client = $user->client()->create(['wilaya_id' => 16, 'commune_id' => 1]);
+        }
+        if (!$client) {
+            return response()->json(['message' => 'No client profile'], 404);
+        }
 
         $demande = DemandeIntervention::where('id', $id)
             ->where('client_id', $client->id)
@@ -91,6 +147,12 @@ class ClientRequestController extends Controller
     {
         $user = Auth::user();
         $client = $user->client;
+        if (!$client && $user->type === 'client') {
+            $client = $user->client()->create(['wilaya_id' => 16, 'commune_id' => 1]);
+        }
+        if (!$client) {
+            return response()->json(['message' => 'No client profile'], 404);
+        }
 
         $demande = DemandeIntervention::where('id', $id)
             ->where('client_id', $client->id)

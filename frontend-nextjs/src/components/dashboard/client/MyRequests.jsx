@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import axios from '@/lib/axios';
+import api from '@/lib/api-client';
 import { RequestCard } from './RequestCard';
 import { RequestDetail } from './RequestDetail';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ClipboardList, Filter, Search, Loader2, PlusCircle } from 'lucide-react';
+import { ClipboardList, Search, Loader2, PlusCircle } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 
@@ -17,14 +17,14 @@ export const MyRequests = () => {
 
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('active'); // active, archived, all
+  const [activeTab, setActiveTab] = useState('active');
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
   const fetchRequests = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get('/api/client/requests', {
+      const res = await api.get('/client/requests', {
         params: { status: activeTab }
       });
       setRequests(res.data);
@@ -37,7 +37,7 @@ export const MyRequests = () => {
 
   const fetchRequestDetail = async (id) => {
     try {
-      const res = await axios.get(`/api/client/requests/${id}`);
+      const res = await api.get(`/client/requests/${id}`);
       setSelectedRequest(res.data);
     } catch (err) {
       console.error('Error fetching request detail:', err);
@@ -49,8 +49,8 @@ export const MyRequests = () => {
   }, [fetchRequests]);
 
   const filteredRequests = requests.filter(r => 
-    r.titre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    r.categorie?.nom.toLowerCase().includes(searchTerm.toLowerCase())
+    r.titre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    r.categorie?.nom?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (selectedRequest) {
@@ -72,17 +72,17 @@ export const MyRequests = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-7xl mx-auto">
         <div className="space-y-1">
           <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight flex items-center gap-3">
-            <ClipboardList className="w-8 h-8 text-primary-500" />
+            <ClipboardList className="w-8 h-8 text-blue-500" />
             {t('title')}
           </h1>
           <p className="text-gray-500 dark:text-gray-400 font-medium max-w-xl leading-relaxed">
             {t('subtitle')}
           </p>
         </div>
-        <Link href="/requests/new">
-          <button className="flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-2xl shadow-lg shadow-primary-500/20 transition-all font-bold group">
+        <Link href="/dashboard/client/interventions/new">
+          <button className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl shadow-lg shadow-blue-500/20 transition-all font-bold group">
             <PlusCircle className="w-5 h-5 group-hover:rotate-90 transition-transform" />
-            <span>Nouveau projet</span>
+            <span>Nouvelle demande</span>
           </button>
         </Link>
       </div>
@@ -98,7 +98,7 @@ export const MyRequests = () => {
               className={cn(
                 "px-5 py-2 rounded-xl text-sm font-bold transition-all",
                 activeTab === tab 
-                  ? "bg-white dark:bg-slate-700 text-primary-600 dark:text-white shadow-sm ring-1 ring-black/5" 
+                  ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-white shadow-sm ring-1 ring-black/5" 
                   : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               )}
             >
@@ -115,13 +115,11 @@ export const MyRequests = () => {
             placeholder="Rechercher par titre ou métier..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-11 pr-4 py-3 bg-transparent border-0 ring-1 ring-gray-100 dark:ring-gray-800 focus:ring-2 focus:ring-primary-500 rounded-2xl text-sm text-gray-900 dark:text-white transition-all outline-none"
+            className="w-full pl-11 pr-4 py-3 bg-transparent border-0 ring-1 ring-gray-100 dark:ring-gray-800 focus:ring-2 focus:ring-blue-500 rounded-2xl text-sm text-gray-900 dark:text-white transition-all outline-none"
           />
         </div>
       </div>
 
-      {/* Status Legend or Stats (Optional visual) */}
-      
       {/* Content Grid */}
       <div className="max-w-7xl mx-auto">
         {loading ? (
@@ -161,8 +159,8 @@ export const MyRequests = () => {
             <p className="text-gray-500 dark:text-gray-400 font-bold max-w-xs mx-auto">
               {t('card.no_requests')}
             </p>
-            <Link href="/requests/new">
-              <span className="text-primary-600 font-black text-sm uppercase tracking-widest hover:underline cursor-pointer">
+            <Link href="/dashboard/client/interventions/new">
+              <span className="text-blue-600 font-black text-sm uppercase tracking-widest hover:underline cursor-pointer">
                 Publier ma première demande
               </span>
             </Link>

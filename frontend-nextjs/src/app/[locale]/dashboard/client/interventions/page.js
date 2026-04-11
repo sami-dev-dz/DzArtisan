@@ -2,15 +2,14 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Plus, FileQuestion, Loader2, AlertCircle } from "lucide-react"
+import { Plus, Loader2, AlertCircle } from "lucide-react"
 import { useTranslations, useLocale } from "next-intl"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { Button } from "@/components/ui/Button"
 import { InterventionCard } from "@/components/interventions/InterventionCard"
 import { ReviewModal } from "@/components/interventions/ReviewModal"
 import api from "@/lib/api-client"
 
-// Loading skeleton for a card
 function CardSkeleton() {
   return (
     <div className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 p-6">
@@ -34,7 +33,7 @@ export default function ClientInterventionsPage() {
   const [interventions, setInterventions] = React.useState([])
   const [loading, setLoading] = React.useState(true)
   const [error, setError] = React.useState(null)
-  const [reviewTarget, setReviewTarget] = React.useState(null) // intervention to review
+  const [reviewTarget, setReviewTarget] = React.useState(null)
   const [cancellingId, setCancellingId] = React.useState(null)
 
   const fetchInterventions = React.useCallback(async () => {
@@ -42,7 +41,7 @@ export default function ClientInterventionsPage() {
     setError(null)
     try {
       const res = await api.get("/interventions")
-      setInterventions(res.data)
+      setInterventions(res.data || [])
     } catch (err) {
       setError(err.response?.data?.error || "Erreur de chargement")
     } finally {
@@ -59,7 +58,6 @@ export default function ClientInterventionsPage() {
     setCancellingId(intervention.id)
     try {
       await api.post(`/interventions/${intervention.id}/cancel`)
-      // Optimistic update
       setInterventions(prev =>
         prev.map(i => i.id === intervention.id ? { ...i, statut: "annule" } : i)
       )
@@ -71,7 +69,6 @@ export default function ClientInterventionsPage() {
   }
 
   const handleReviewSuccess = () => {
-    // Refresh to reflect new avis state so button disappears
     fetchInterventions()
   }
 
@@ -89,7 +86,7 @@ export default function ClientInterventionsPage() {
             </p>
           )}
         </div>
-        <Link href={`/${locale}/dashboard/client/interventions/new`}>
+        <Link href="/dashboard/client/interventions/new">
           <Button className="h-12 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-blue-600/20 px-6">
             <Plus className="w-4 h-4" />
             {t("history.new_request")}
@@ -133,7 +130,7 @@ export default function ClientInterventionsPage() {
               {t("history.empty_desc")}
             </p>
           </div>
-          <Link href={`/${locale}/dashboard/client/interventions/new`}>
+          <Link href="/dashboard/client/interventions/new">
             <Button className="h-14 rounded-2xl bg-blue-600 text-white font-black text-xs uppercase tracking-widest gap-2 px-8 shadow-xl shadow-blue-600/20">
               <Plus className="w-4 h-4" />
               {t("history.empty_btn")}

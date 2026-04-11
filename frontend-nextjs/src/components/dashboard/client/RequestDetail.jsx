@@ -1,28 +1,27 @@
 'use client';
 
-import { Users, Clock, X, MapPin, Calendar, MessageSquare, AlertCircle, Trash2, Phone, MessageCircle, Star, ShieldCheck, ChevronRight, ArrowLeft, Image as ImageIcon } from 'lucide-react';
+import { Users, Clock, X, MapPin, Calendar, MessageSquare, AlertCircle, Trash2, Phone, MessageCircle, Star, ShieldCheck, ChevronRight, ArrowLeft, Image as ImageIcon, Unlock, Lock, ExternalLink, Pencil } from 'lucide-react';
 import React, { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { format } from 'date-fns';
-import { fr, arDZ, enUS } from 'date-fns/locale';
 import { Button } from '@/components/ui/Button';
-import { motion, AnimatePresence } from 'framer-motion';
-import axios from '@/lib/axios';
+import { motion } from 'framer-motion';
+import api from '@/lib/api-client';
+import { cn } from '@/lib/utils';
+import { useRouter } from '@/i18n/routing';
 
 export const RequestDetail = ({ request, onBack, onUpdate }) => {
+  const router = useRouter();
   const t = useTranslations('client.requests');
   const locale = useLocale();
   const isRTL = locale === 'ar';
   const [cancelling, setCancelling] = useState(false);
   const [acceptingId, setAcceptingId] = useState(null);
 
-  const dateLocale = locale === 'fr' ? fr : (locale === 'ar' ? arDZ : enUS);
-
   const handleCancel = async () => {
     if (!confirm(t('details.cancel_confirm'))) return;
     try {
       setCancelling(true);
-      await axios.post(`/api/client/requests/${request.id}/cancel`);
+      await api.post(`/client/requests/${request.id}/cancel`);
       onUpdate();
       onBack();
     } catch (err) {
@@ -35,7 +34,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
   const handleAccept = async (proposalId) => {
     try {
       setAcceptingId(proposalId);
-      await axios.post(`/api/client/requests/${request.id}/proposals/${proposalId}/accept`);
+      await api.post(`/client/requests/${request.id}/proposals/${proposalId}/accept`);
       onUpdate();
     } catch (err) {
       console.error('Accept error:', err);
@@ -56,25 +55,45 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
             <ArrowLeft className={isRTL ? 'rotate-180' : ''} />
           </button>
           <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white leading-tight">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white leading-tight flex items-center gap-3">
               {request.titre}
+              {request.statut === 'en_attente' ? (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20 text-[10px] font-black uppercase text-emerald-700 dark:text-emerald-400 tracking-widest shadow-sm">
+                   <Unlock className="w-3 h-3" /> Modifiable
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-widest shadow-sm">
+                   <Lock className="w-3 h-3" /> Verrouillé
+                </span>
+              )}
             </h2>
-            <p className="text-xs text-gray-500 font-medium uppercase tracking-wider">
+            <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mt-1">
               {request.categorie?.nom}
             </p>
           </div>
         </div>
         {request.statut === 'en_attente' && (
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={handleCancel}
-            disabled={cancelling}
-            className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 font-bold gap-2"
-          >
-            <Trash2 className="w-4 h-4" />
-            <span className="hidden sm:inline">{t('details.cancel_request')}</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => router.push(`/dashboard/client/interventions/edit/${request.id}`)}
+              className="text-blue-500 border-blue-200 hover:text-blue-600 hover:bg-blue-50 font-bold gap-2"
+            >
+              <Pencil className="w-4 h-4" />
+              <span className="hidden sm:inline">Modifier</span>
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={handleCancel}
+              disabled={cancelling}
+              className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 font-bold gap-2"
+            >
+              <Trash2 className="w-4 h-4" />
+              <span className="hidden sm:inline">{t('details.cancel_request')}</span>
+            </Button>
+          </div>
         )}
       </div>
 
@@ -84,7 +103,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
           {/* Info Section */}
           <section className="space-y-4">
             <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-primary-500" />
+              <MessageSquare className="w-5 h-5 text-blue-500" />
               {t('details.description')}
             </h3>
             <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
@@ -101,7 +120,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {request.photos.map((photo, i) => (
-                  <div key={i} className="aspect-square rounded-2xl overflow-hidden bg-gray-100 dark:bg-slate-800 border-2 border-transparent hover:border-primary-500 transition-all group relative">
+                  <div key={i} className="aspect-square rounded-2xl overflow-hidden bg-gray-100 dark:bg-slate-800 border-2 border-transparent hover:border-blue-500 transition-all group relative">
                     <img src={photo.url} alt="Request detail" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
                   </div>
                 ))}
@@ -109,28 +128,63 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
             </section>
           )}
 
-          {/* Location & Details Summary */}
+          {/* Detailed Summary (Date, Location, Phone, WhatsApp) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center gap-4 bg-white dark:bg-slate-900 shadow-sm">
               <div className="p-2.5 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
                 <Calendar className="w-5 h-5 text-amber-600" />
               </div>
-              <div>
-                <p className="text-[10px] text-gray-500 font-bold uppercase">{t('card.posted_on', { date: '' }).split(' ')[0]}</p>
-                <p className="text-sm font-bold text-gray-900 dark:text-white">
-                  {format(new Date(request.created_at), 'PPP', { locale: dateLocale })}
+              <div className="min-w-0">
+                <p className="text-[10px] text-gray-500 font-bold uppercase truncate">Date</p>
+                <p className="text-sm font-bold text-gray-900 dark:text-white truncate">
+                  {new Date(request.created_at).toLocaleDateString(locale === 'ar' ? 'ar-DZ' : 'fr-DZ', { day: '2-digit', month: 'short', year: 'numeric' })}
                 </p>
               </div>
             </div>
+            
             <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center gap-4 bg-white dark:bg-slate-900 shadow-sm">
               <div className="p-2.5 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                 <MapPin className="w-5 h-5 text-blue-600" />
               </div>
-              <div>
-                <p className="text-[10px] text-gray-500 font-bold uppercase">{t('details.location')}</p>
-                <p className="text-sm font-bold text-gray-900 dark:text-white">{request.wilaya?.nom}, {request.commune?.nom}</p>
+              <div className="min-w-0">
+                <p className="text-[10px] text-gray-500 font-bold uppercase truncate">{t('details.location')}</p>
+                <p className="text-sm font-bold text-gray-900 dark:text-white truncate">{request.wilaya?.nom}, {request.commune?.nom}</p>
               </div>
             </div>
+
+            <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center gap-4 bg-white dark:bg-slate-900 shadow-sm">
+              <div className="p-2.5 bg-slate-100 dark:bg-slate-800 rounded-lg shrink-0">
+                <Phone className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] text-gray-500 font-bold uppercase truncate">Téléphone</p>
+                <p className="text-sm font-bold text-gray-900 dark:text-white tracking-widest font-mono truncate">{request.telephone}</p>
+              </div>
+            </div>
+
+            {request.whatsapp ? (
+               <div className="p-4 rounded-xl border border-emerald-100 dark:border-emerald-900/30 flex items-center gap-4 bg-emerald-50/30 dark:bg-emerald-900/10 shadow-sm">
+                 <div className="p-2.5 bg-[#25D366]/10 rounded-lg shrink-0">
+                   <MessageCircle className="w-5 h-5 text-[#25D366]" />
+                 </div>
+                 <div className="min-w-0 flex-1">
+                   <p className="text-[10px] text-emerald-600/70 dark:text-emerald-400/50 font-bold uppercase truncate">WhatsApp</p>
+                   <a href={`https://${request.whatsapp}`} target="_blank" rel="noopener noreferrer" className="text-sm font-bold text-[#25D366] hover:underline flex items-center gap-1 truncate w-full">
+                     wa.me/... <ExternalLink className="w-3 h-3 shrink-0" />
+                   </a>
+                 </div>
+               </div>
+            ) : (
+               <div className="p-4 rounded-xl border border-gray-100 dark:border-gray-800 flex items-center gap-4 bg-white dark:bg-slate-900 shadow-sm opacity-60 grayscale">
+                 <div className="p-2.5 bg-slate-50 dark:bg-slate-800 rounded-lg shrink-0">
+                   <MessageCircle className="w-5 h-5 text-slate-400" />
+                 </div>
+                 <div className="min-w-0 flex-1">
+                   <p className="text-[10px] text-gray-500 font-bold uppercase truncate">WhatsApp</p>
+                   <p className="text-sm font-bold text-gray-500 truncate">Non renseigné</p>
+                 </div>
+               </div>
+            )}
           </div>
         </div>
 
@@ -144,7 +198,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
 
             <div className="space-y-4">
               {request.propositions?.length > 0 ? (
-                request.propositions.map((proposal, i) => (
+                request.propositions.map((proposal) => (
                   <ProposalCard 
                     key={proposal.id} 
                     proposal={proposal} 
@@ -177,12 +231,14 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
 const ProposalCard = ({ proposal, onAccept, isAccepting, isDisabled, isAccepted, request, onUpdate }) => {
   const t = useTranslations('client.requests');
   const artisan = proposal.artisan;
-  const user = artisan.user;
+  const user = artisan?.user;
   const [marking, setMarking] = useState(false);
+
+  if (!user) return null;
 
   const logContact = async (type) => {
     try {
-      await axios.post(`/api/artisans/${artisan.id}/log-contact`, { type });
+      await api.post(`/artisans/${artisan.id}/log-contact`, { type });
     } catch (err) {
       console.error('Log contact error:', err);
     }
@@ -191,7 +247,7 @@ const ProposalCard = ({ proposal, onAccept, isAccepting, isDisabled, isAccepted,
   const markAsContacted = async () => {
     try {
       setMarking(true);
-      await axios.post(`/api/client/requests/${request.id}/status`, { 
+      await api.post(`/client/requests/${request.id}/status`, { 
         status: 'artisan_contacte',
         artisan_id: artisan.id 
       });
@@ -224,7 +280,7 @@ const ProposalCard = ({ proposal, onAccept, isAccepting, isDisabled, isAccepted,
             <img src={user.photo} alt={user.nomComplet} className="w-full h-full object-cover" />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-xl font-bold text-slate-400">
-              {user.nomComplet.charAt(0)}
+              {user.nomComplet?.charAt(0)}
             </div>
           )}
         </div>
@@ -233,7 +289,7 @@ const ProposalCard = ({ proposal, onAccept, isAccepting, isDisabled, isAccepted,
             <h4 className="font-bold text-gray-900 dark:text-white text-base">
               {user.nomComplet}
             </h4>
-            {artisan.statutValidation === 'valide' && <ShieldCheck className="w-4 h-4 text-primary-500" />}
+            {artisan.statutValidation === 'valide' && <ShieldCheck className="w-4 h-4 text-blue-500" />}
           </div>
           <div className="flex items-center gap-3 mt-0.5">
             <div className="flex items-center gap-1 text-amber-500">

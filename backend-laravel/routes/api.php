@@ -79,6 +79,7 @@ Route::prefix('v1')->group(function () {
             Route::prefix('client')->group(function () {
                 Route::get('/requests', [ClientRequestController::class, 'index']);
                 Route::get('/requests/{id}', [ClientRequestController::class, 'show']);
+                Route::put('/requests/{id}', [ClientRequestController::class, 'update']);
                 Route::post('/requests/{id}/cancel', [ClientRequestController::class, 'cancel']);
                 Route::post('/requests/{id}/proposals/{proposalId}/accept', [ClientRequestController::class, 'acceptProposal']);
             });

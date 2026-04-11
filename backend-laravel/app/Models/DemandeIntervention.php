@@ -24,7 +24,9 @@ class DemandeIntervention extends Model
         'longitude',
         'adresse',
         'wilaya_id',
-        'commune_id'
+        'commune_id',
+        'telephone',
+        'whatsapp'
     ];
 
     protected $casts = [
