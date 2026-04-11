@@ -8,6 +8,7 @@ use App\Models\Client;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class OAuthController extends Controller
@@ -34,49 +35,65 @@ class OAuthController extends Controller
                     'statut'     => 'actif',
                 ]);
 
-                // Create client profile using default wilaya and commune for now
-                // In a real scenario, they would complete their profile later
+                // Create client profile
                 Client::create([
                     'user_id' => $user->id,
                     'typeAuth' => 'google',
                     'googleId' => $googleUser->getId(),
-                    'wilaya_id' => 16, // Default to Alger
-                    'commune_id' => 1601, // Default Alger centre
+                    'wilaya_id' => 16,
+                    'commune_id' => 1601,
                 ]);
             }
 
-            Auth::login($user);
-            $token = urlencode($user->createToken('google_token')->plainTextToken);
+            // Create a temporary Sanctum token for the frontend to use
+            $token = $user->createToken('google_token')->plainTextToken;
+
+            Log::info('Google OAuth success for user: ' . $user->email . ', token prefix: ' . substr($token, 0, 10));
 
             // Redirect to the dedicated callback page on the frontend
-            return redirect(env('FRONTEND_URL') . '/google/callback?token=' . $token);
+            // Do NOT urlencode — URLSearchParams handles decoding automatically
+            return redirect(env('FRONTEND_URL') . '/google/callback?token=' . urlencode($token));
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Google OAuth Error: ' . $e->getMessage());
+            Log::error('Google OAuth Error: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
             return redirect(env('FRONTEND_URL') . '/login?error=google_failed');
         }
     }
 
     public function syncSession(Request $request)
     {
-        $tokenRaw = $request->query('token');
-        \Illuminate\Support\Facades\Log::info('Tentative de sync session avec le token: ' . substr($tokenRaw, 0, 10) . '...');
-        
-        // On cherche le token dans la DB
-        $token = \Laravel\Sanctum\PersonalAccessToken::findToken($tokenRaw);
-        
-        if (!$token || !$token->tokenable) {
-            return response()->json(['success' => false], 401);
+        try {
+            $tokenRaw = $request->query('token');
+            Log::info('sync-session called, token prefix: ' . substr($tokenRaw ?? '', 0, 10) . '...');
+            
+            // On cherche le token dans la DB
+            $token = \Laravel\Sanctum\PersonalAccessToken::findToken($tokenRaw);
+            
+            if (!$token || !$token->tokenable) {
+                Log::warning('Token invalide ou déjà consommé');
+                return response()->json(['success' => false, 'message' => 'Token invalid or expired'], 401);
+            }
+
+            $user = $token->tokenable;
+            
+            // Establish a proper web session (cookie-based)
+            Auth::guard('web')->login($user);
+            $request->session()->regenerate();
+            
+            Log::info('sync-session success for user: ' . $user->email);
+
+            // Suppress deleting the token for now — it will expire naturally
+            $token->delete();
+
+            $user->load(['client', 'artisan.categories', 'artisan.wilayas']);
+
+            return response()->json([
+                'success' => true,
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Sync session error: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
+            return response()->json(['success' => false, 'message' => 'Internal error: ' . $e->getMessage()], 500);
         }
-
-        $user = $token->tokenable;
-        Auth::guard('web')->login($user);
-        
-        // On supprime ce token temporaire
-        $token->delete();
-
-        return response()->json([
-            'success' => true,
-            'user' => $user->load(['client', 'artisan.categories', 'artisan.wilayas'])
-        ]);
     }
 }
+

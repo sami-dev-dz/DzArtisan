@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { useRouter } from '@/i18n/routing'
 import api from '@/lib/api-client'
 
@@ -15,36 +15,39 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const restoreSession = async () => {
       try {
-        const searchParams = new URLSearchParams(window.location.search);
-        const urlToken = searchParams.get('token');
-        const storedToken = localStorage.getItem('google_auth_token');
-        let token = urlToken || storedToken;
-
-        if (token) {
-          // On force le token dans les entêtes pour cette session
-          api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          if (urlToken) localStorage.setItem('google_auth_token', token);
+        // Si on est sur la page callback Google, ne PAS interférer — 
+        // la callback page gère le token et la navigation elle-même
+        if (window.location.pathname.includes('/google/callback')) {
+          setLoading(false);
+          return;
         }
 
-        const { data } = await api.get('/auth/me');
-        const userData = data?.data?.user;
+        // Vérifier si un token Google est stocké (après redirect depuis callback page)
+        const storedToken = localStorage.getItem('google_auth_token');
+        let userData = null;
+
+        if (storedToken) {
+          // Si on a un token Google, on doit appeler le endpoint specifique pour initialiser la session web
+          const { data } = await api.get('/auth/google/sync-session', {
+             params: { token: storedToken }
+          });
+          userData = data?.user;
+          
+          // Nettoyage après succès
+          localStorage.removeItem('google_auth_token');
+        } else {
+          // Sinon, charger la session habituelle par cookie
+          const { data } = await api.get('/auth/me');
+          userData = data?.data?.user;
+        }
 
         if (userData) {
           setUser(userData);
-          
-          // Si on a utilisé un token Google, on nettoie et on redirige DIRECTEMENT
-          if (token) {
-            localStorage.removeItem('google_auth_token');
-            // Nettoyage URL
-            if (urlToken) {
-              const cleanUrl = window.location.pathname.split('?')[0];
-              window.history.replaceState({}, '', cleanUrl);
-            }
-            redirectAfterLogin(userData);
-          }
         }
       } catch (err) {
+        // En cas d'erreur, nettoyer tout
         localStorage.removeItem('google_auth_token');
+        delete api.defaults.headers.common['Authorization'];
         setUser(null);
       } finally {
         setLoading(false);
@@ -53,7 +56,7 @@ export function AuthProvider({ children }) {
     restoreSession();
   }, []);
 
-  const redirectAfterLogin = (u) => {
+  const redirectAfterLogin = useCallback((u) => {
     if (u.type === "admin")   return router.push("/dashboard/admin");
     if (u.type === "artisan") {
       if (u.needs_artisan_onboarding) return router.push("/onboarding/artisan/profile");
@@ -65,7 +68,7 @@ export function AuthProvider({ children }) {
     }
     // Fallback if type is missing
     router.push("/");
-  };
+  }, [router]);
 
   const register = async ({ name, email, password, password_confirmation, role, telephone }) => {
     // Required now that Sanctum is fully installed

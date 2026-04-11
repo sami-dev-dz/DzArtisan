@@ -1,40 +1,30 @@
 "use client";
-import { useEffect } from "react";
-import { useAuth } from "@/context/AuthContext";
-import api from "@/lib/api-client";
+import { useEffect, useRef } from "react";
 import { Loader2 } from "lucide-react";
 
 export default function GoogleCallbackPage() {
-  const { setUser, redirectAfterLogin } = useAuth();
+  const hasSynced = useRef(false);
 
   useEffect(() => {
-    const sync = async () => {
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get('token');
+    // Guard against React StrictMode double-mount in dev
+    if (hasSynced.current) return;
+    hasSynced.current = true;
 
-      if (!token) {
-        window.location.href = "/login";
-        return;
-      }
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
 
-      try {
-        // Échange du token contre une session session réelle (en GET pour plus de stabilité)
-        const { data } = await api.get(`/auth/google/sync-session?token=${token}`);
-        
-        if (data.success) {
-          setUser(data.user);
-          redirectAfterLogin(data.user);
-        } else {
-          window.location.href = "/login?error=sync_failed";
-        }
-      } catch (err) {
-        console.error("Sync error:", err);
-        window.location.href = "/login?error=sync_error";
-      }
-    };
+    if (!token) {
+      window.location.href = "/en/login";
+      return;
+    }
 
-    sync();
-  }, [setUser, redirectAfterLogin]);
+    // Store token in localStorage for the AuthContext to pick up on next page load
+    localStorage.setItem('google_auth_token', token);
+    
+    // Navigate to the client dashboard — AuthContext.restoreSession will 
+    // detect the stored token, authenticate via /auth/me, and redirect properly
+    window.location.href = "/en/dashboard/client";
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-[#0a0f1e]">
@@ -51,3 +41,4 @@ export default function GoogleCallbackPage() {
     </div>
   );
 }
+
