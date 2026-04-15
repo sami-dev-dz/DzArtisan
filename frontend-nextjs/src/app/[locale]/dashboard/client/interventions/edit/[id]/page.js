@@ -538,7 +538,7 @@ export default function EditInterventionWizard() {
                   >
                      <ChevronLeft className="w-4 h-4" /> Précédent
                   </Button>
-                  <Button onClick={nextStep} className="flex-[2] h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-[0.2em] gap-3 shadow-xl shadow-blue-500/20">
+                  <Button onClick={nextStep} className="flex-2 h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-[0.2em] gap-3 shadow-xl shadow-blue-500/20">
                      Valider <ArrowRight className="w-4 h-4" />
                   </Button>
                </div>
@@ -651,7 +651,7 @@ export default function EditInterventionWizard() {
                   <Button 
                     onClick={handleSubmit} 
                     disabled={isSubmitting}
-                    className="flex-[2] h-14 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs uppercase tracking-[0.2em] gap-3 shadow-xl shadow-emerald-500/20 disabled:opacity-50"
+                    className="flex-2 h-14 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs uppercase tracking-[0.2em] gap-3 shadow-xl shadow-emerald-500/20 disabled:opacity-50"
                   >
                      {isSubmitting ? (
                        <>

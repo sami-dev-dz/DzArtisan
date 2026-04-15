@@ -44,7 +44,7 @@ export function ProfileCompletenessWidget({ percentage = 0, items = [] }) {
               <motion.div 
                 initial={{ width: 0 }}
                 animate={{ width: `${percentage}%` }}
-                className="h-full bg-gradient-to-r from-blue-600 to-indigo-500 shadow-[0_0_15px_rgba(37,99,235,0.3)]" 
+                className="h-full bg-linear-to-r from-blue-600 to-indigo-500 shadow-[0_0_15px_rgba(37,99,235,0.3)]" 
               />
            </div>
         </div>

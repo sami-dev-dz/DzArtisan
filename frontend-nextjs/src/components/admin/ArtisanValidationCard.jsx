@@ -2,9 +2,9 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { 
-  CheckCircle, XCircle, MapPin, Tag, Calendar, 
-  ExternalLink, FileText, User, ZoomIn, Loader2 
+import {
+  CheckCircle, XCircle, MapPin, Tag, Calendar,
+  ExternalLink, FileText, User, ZoomIn, Loader2
 } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils"
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 export function ArtisanValidationCard({ artisan, onAction }) {
   const [expanded, setExpanded] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
-  
+
   const handleAction = async (action, reason = "") => {
     setLoading(true)
     try {
@@ -52,13 +52,13 @@ export function ArtisanValidationCard({ artisan, onAction }) {
 
           {/* Quick Actions */}
           <div className="flex items-center gap-3 shrink-0">
-             <Button
-               variant="ghost"
-               onClick={() => setExpanded(!expanded)}
-               className="text-xs font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-600/10 px-4 rounded-xl h-11"
-             >
-               {expanded ? "Masquer" : "Examiner"}
-             </Button>
+            <Button
+              variant="ghost"
+              onClick={() => setExpanded(!expanded)}
+              className="text-xs font-black uppercase tracking-widest text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-600/10 px-4 rounded-xl h-11"
+            >
+              {expanded ? "Masquer" : "Examiner"}
+            </Button>
           </div>
         </div>
 
@@ -72,14 +72,14 @@ export function ArtisanValidationCard({ artisan, onAction }) {
               className="overflow-hidden"
             >
               <div className="pt-8 mt-6 border-t border-slate-100 dark:border-white/5 space-y-8">
-                
+
                 {/* Bio Section */}
                 <div className="space-y-3">
                   <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
                     <User className="w-3 h-3" /> Description du profil
                   </h4>
                   <p className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl bg-slate-50 dark:bg-white/5 p-4 rounded-2xl italic">
-                    &quot;{description || &quot;Aucune description fournie.&quot;}&quot;
+                    &quot;{description || & quot;Aucune description fournie.&quot;}&quot;
                   </p>
                 </div>
 
@@ -91,21 +91,21 @@ export function ArtisanValidationCard({ artisan, onAction }) {
                       <FileText className="w-3 h-3" /> Diplôme / Certification
                     </h4>
                     {diploma_url ? (
-                       <a 
-                         href={diploma_url} 
-                         target="_blank" 
-                         rel="noopener noreferrer"
-                         className="group relative block aspect-[4/3] rounded-3xl overflow-hidden bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10"
-                       >
-                         <img src={diploma_url} alt="Diplôme" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white text-slate-900 text-[10px] font-black uppercase">
-                              <ZoomIn className="w-3.5 h-3.5" /> Agrandir
-                            </div>
-                         </div>
-                       </a>
+                      <a
+                        href={diploma_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative block aspect-4/3 rounded-3xl overflow-hidden bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10"
+                      >
+                        <img src={diploma_url} alt="Diplôme" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white text-slate-900 text-[10px] font-black uppercase">
+                            <ZoomIn className="w-3.5 h-3.5" /> Agrandir
+                          </div>
+                        </div>
+                      </a>
                     ) : (
-                      <div className="aspect-[4/3] rounded-3xl border-2 border-dashed border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 text-xs font-bold">
+                      <div className="aspect-4/3 rounded-3xl border-2 border-dashed border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 text-xs font-bold">
                         Aucun diplôme fourni
                       </div>
                     )}
@@ -117,21 +117,21 @@ export function ArtisanValidationCard({ artisan, onAction }) {
                       <FileText className="w-3 h-3" /> Carte d&apos;artisan
                     </h4>
                     {artisan_card_url ? (
-                       <a 
-                         href={artisan_card_url} 
-                         target="_blank" 
-                         rel="noopener noreferrer"
-                         className="group relative block aspect-[4/3] rounded-3xl overflow-hidden bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10"
-                       >
-                         <img src={artisan_card_url} alt="Carte Artisan" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white text-slate-900 text-[10px] font-black uppercase">
-                              <ZoomIn className="w-3.5 h-3.5" /> Agrandir
-                            </div>
-                         </div>
-                       </a>
+                      <a
+                        href={artisan_card_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative block aspect-4/3 rounded-3xl overflow-hidden bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10"
+                      >
+                        <img src={artisan_card_url} alt="Carte Artisan" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white text-slate-900 text-[10px] font-black uppercase">
+                            <ZoomIn className="w-3.5 h-3.5" /> Agrandir
+                          </div>
+                        </div>
+                      </a>
                     ) : (
-                      <div className="aspect-[4/3] rounded-3xl border-2 border-dashed border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 text-xs font-bold">
+                      <div className="aspect-4/3 rounded-3xl border-2 border-dashed border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 text-xs font-bold">
                         Aucune carte fournie
                       </div>
                     )}
@@ -140,23 +140,23 @@ export function ArtisanValidationCard({ artisan, onAction }) {
 
                 {/* Final Decision Buttons */}
                 <div className="pt-6 border-t border-slate-100 dark:border-white/5 flex flex-wrap gap-4">
-                   <Button
-                     onClick={() => handleAction("valide")}
-                     disabled={loading}
-                     className="flex-1 min-w-[160px] h-14 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-emerald-500/20"
-                   >
-                     {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4" />}
-                     Approuver l&apos;artisan
-                   </Button>
-                   <Button
-                     onClick={() => handleAction("rejete")}
-                     disabled={loading}
-                     variant="outline"
-                     className="flex-1 min-w-[160px] h-14 rounded-2xl border-2 border-red-200 dark:border-red-500/20 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 font-black text-xs uppercase tracking-widest gap-2"
-                   >
-                     {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <XCircle className="w-4 h-4" />}
-                     Rejeter le dossier
-                   </Button>
+                  <Button
+                    onClick={() => handleAction("valide")}
+                    disabled={loading}
+                    className="flex-1 min-w-[160px] h-14 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-emerald-500/20"
+                  >
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4" />}
+                    Approuver l&apos;artisan
+                  </Button>
+                  <Button
+                    onClick={() => handleAction("rejete")}
+                    disabled={loading}
+                    variant="outline"
+                    className="flex-1 min-w-[160px] h-14 rounded-2xl border-2 border-red-200 dark:border-red-500/20 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 font-black text-xs uppercase tracking-widest gap-2"
+                  >
+                    {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <XCircle className="w-4 h-4" />}
+                    Rejeter le dossier
+                  </Button>
                 </div>
               </div>
             </motion.div>

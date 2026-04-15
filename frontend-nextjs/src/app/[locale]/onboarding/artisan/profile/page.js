@@ -440,7 +440,7 @@ export default function ArtisanProfileSetupPage() {
       <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#09090b]">
          {isHydratingProfile && (
             <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
-               <div className="h-24 rounded-2xl bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] animate-pulse" />
+               <div className="h-24 rounded-2xl bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 animate-pulse" />
             </div>
          )}
          <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 pb-28">
@@ -448,7 +448,7 @@ export default function ArtisanProfileSetupPage() {
             {/* ── Top Nav ── */}
             <div className="flex items-center justify-between mb-10">
                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md shadow-blue-600/30">
+                  <div className="w-9 h-9 rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-md shadow-blue-600/30">
                      <Award className="w-4.5 h-4.5 text-white" style={{ width: 18, height: 18 }} />
                   </div>
                   <span className="text-sm font-bold text-slate-900 dark:text-white tracking-tight">{ft.artisanPro}</span>
@@ -467,7 +467,7 @@ export default function ArtisanProfileSetupPage() {
                                  : "text-slate-300 dark:text-slate-700"
                         )}>
                            {currentStep > s.id
-                              ? <Check className="w-3 h-3 stroke-[3]" />
+                              ? <Check className="w-3 h-3 stroke-3" />
                               : <span>{s.id}</span>
                            }
                            <span className="hidden sm:block">{ft[s.key]}</span>
@@ -490,11 +490,11 @@ export default function ArtisanProfileSetupPage() {
                   </p>
                   <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500">{completion}% {ft.completed}</p>
                </div>
-               <div className="h-1 bg-slate-200 dark:bg-white/[0.06] rounded-full overflow-hidden">
+               <div className="h-1 bg-slate-200 dark:bg-white/6 rounded-full overflow-hidden">
                   <motion.div
                      animate={{ width: `${completion}%` }}
                      transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
-                     className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"
+                     className="h-full bg-linear-to-r from-blue-500 to-blue-600 rounded-full"
                   />
                </div>
             </div>
@@ -522,12 +522,12 @@ export default function ArtisanProfileSetupPage() {
                         </div>
 
                         {/* Profile card */}
-                        <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl overflow-hidden shadow-sm">
+                        <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl overflow-hidden shadow-sm">
 
                            {/* Avatar row */}
                            <div className="p-6 flex items-center gap-5">
                               <div className="relative shrink-0 group">
-                                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-white/[0.06] dark:to-white/[0.03] overflow-hidden flex items-center justify-center ring-1 ring-slate-200/80 dark:ring-white/10">
+                                 <div className="w-20 h-20 rounded-2xl bg-linear-to-br from-slate-100 to-slate-200 dark:from-white/6 dark:to-white/3 overflow-hidden flex items-center justify-center ring-1 ring-slate-200/80 dark:ring-white/10">
                                     {formData.photo
                                        ? <img src={formData.photo} alt="Profil" className="w-full h-full object-cover" />
                                        : <Camera className="w-7 h-7 text-slate-300 dark:text-slate-600" />
@@ -573,7 +573,7 @@ export default function ArtisanProfileSetupPage() {
                               </div>
                            </div>
 
-                           <div className="h-px bg-slate-100 dark:bg-white/[0.05] mx-6" />
+                           <div className="h-px bg-slate-100 dark:bg-white/5 mx-6" />
 
                            {/* Fields */}
                            <div className="p-6 space-y-5">
@@ -591,11 +591,11 @@ export default function ArtisanProfileSetupPage() {
                                        value={formData.telephone}
                                        onChange={(e) => setFormData(p => ({ ...p, telephone: e.target.value }))}
                                        placeholder={ft.phonePlaceholder}
-                                       className="w-full h-12 pl-12 pr-12 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm font-semibold text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-mono tracking-wider"
+                                       className="w-full h-12 pl-12 pr-12 rounded-xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-mono tracking-wider"
                                     />
                                     {phoneValid && (
                                        <div className="absolute right-3.5 top-1/2 -translate-y-1/2 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center">
-                                          <Check className="w-3.5 h-3.5 text-white stroke-[3]" />
+                                          <Check className="w-3.5 h-3.5 text-white stroke-3" />
                                        </div>
                                     )}
                                  </div>
@@ -615,7 +615,7 @@ export default function ArtisanProfileSetupPage() {
                                           value={formData.whatsapp}
                                           onChange={(e) => setFormData(p => ({ ...p, whatsapp: e.target.value }))}
                                           placeholder="wa.me/213…"
-                                          className="w-full h-12 pl-10 pr-4 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-[#25D366]/30 focus:border-[#25D366] transition-all"
+                                          className="w-full h-12 pl-10 pr-4 rounded-xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-[#25D366]/30 focus:border-[#25D366] transition-all"
                                        />
                                     </div>
                                     <button
@@ -671,12 +671,12 @@ export default function ArtisanProfileSetupPage() {
                         </div>
 
                         {/* FIX #3: Category icons — proper grid with large visible icons */}
-                        <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-5 shadow-sm mb-4">
+                        <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-5 shadow-sm mb-4">
                            <div className="relative">
                               <select
                                  value={formData.category_id || ""}
                                  onChange={(e) => setFormData(p => ({ ...p, category_id: e.target.value }))}
-                                 className="w-full h-14 pl-12 pr-10 rounded-2xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm font-semibold text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-sans"
+                                 className="w-full h-14 pl-12 pr-10 rounded-2xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-sans"
                               >
                                  <option value="" disabled>Sélectionnez votre métier principal...</option>
                                  {categories.map((cat) => (
@@ -692,7 +692,7 @@ export default function ArtisanProfileSetupPage() {
                         <div className="grid grid-cols-1 gap-4">
 
                            {/* FIX #4: Experience — visual card with prominent label */}
-                           <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-5 shadow-sm">
+                           <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-5 shadow-sm">
                               <div className="flex items-center gap-2 mb-4">
                                  <TrendingUp className="w-4 h-4 text-blue-600" />
                                  <span className="text-sm font-bold text-slate-900 dark:text-white">{ft.experience}</span>
@@ -713,7 +713,7 @@ export default function ArtisanProfileSetupPage() {
                                              "flex flex-col items-start gap-1.5 p-4 rounded-xl border-2 transition-all duration-200 text-left",
                                              isSelected
                                                 ? "border-blue-600 bg-blue-600/5 dark:bg-blue-600/10"
-                                                : "border-slate-100 dark:border-white/[0.07] hover:border-slate-300 dark:hover:border-white/[0.14]"
+                                                : "border-slate-100 dark:border-white/7 hover:border-slate-300 dark:hover:border-white/[0.14]"
                                           )}
                                        >
                                           <div className={cn(
@@ -734,7 +734,7 @@ export default function ArtisanProfileSetupPage() {
                            </div>
 
                            {/* FIX #5: Wilaya search — accent-insensitive */}
-                           <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-5 shadow-sm">
+                           <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-5 shadow-sm">
                               <div className="flex items-center justify-between mb-4">
                                  <div className="flex items-center gap-2">
                                     <MapPin className="w-4 h-4 text-blue-600" />
@@ -757,7 +757,7 @@ export default function ArtisanProfileSetupPage() {
                                     onChange={(e) => setSearchWilaya(e.target.value)}
                                     onFocus={() => setWilayaFocused(true)}
                                     onBlur={() => setTimeout(() => setWilayaFocused(false), 150)}
-                                    className="w-full h-11 pl-10 pr-4 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                                    className="w-full h-11 pl-10 pr-4 rounded-xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
                                  />
                                  {searchWilaya && (
                                     <button type="button" onClick={() => setSearchWilaya("")}
@@ -774,7 +774,7 @@ export default function ArtisanProfileSetupPage() {
                                           animate={{ opacity: 1, y: 0, scale: 1 }}
                                           exit={{ opacity: 0, y: 4, scale: 0.98 }}
                                           transition={{ duration: 0.15 }}
-                                          className="absolute z-50 top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/[0.08] rounded-xl shadow-2xl shadow-slate-200/60 dark:shadow-black/50 overflow-hidden"
+                                          className="absolute z-50 top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/8 rounded-xl shadow-2xl shadow-slate-200/60 dark:shadow-black/50 overflow-hidden"
                                        >
                                           {filteredWilayas.map((w, i) => {
                                              const already = formData.wilayas.includes(w.id)
@@ -787,8 +787,8 @@ export default function ArtisanProfileSetupPage() {
                                                       "w-full flex items-center justify-between px-4 py-3 text-sm transition-colors",
                                                       already
                                                          ? "bg-blue-50 dark:bg-blue-500/10 cursor-default"
-                                                         : "hover:bg-slate-50 dark:hover:bg-white/[0.04] cursor-pointer",
-                                                      i > 0 && "border-t border-slate-50 dark:border-white/[0.03]"
+                                                         : "hover:bg-slate-50 dark:hover:bg-white/4 cursor-pointer",
+                                                      i > 0 && "border-t border-slate-50 dark:border-white/3"
                                                    )}
                                                 >
                                                    <div className="flex items-center gap-3">
@@ -801,7 +801,7 @@ export default function ArtisanProfileSetupPage() {
                                                       </span>
                                                    </div>
                                                    {already
-                                                      ? <Check className="w-3.5 h-3.5 text-blue-600 stroke-[3]" />
+                                                      ? <Check className="w-3.5 h-3.5 text-blue-600 stroke-3" />
                                                       : <Plus className="w-3.5 h-3.5 text-slate-300" />
                                                    }
                                                 </button>
@@ -813,7 +813,7 @@ export default function ArtisanProfileSetupPage() {
                                        <motion.div
                                           initial={{ opacity: 0 }}
                                           animate={{ opacity: 1 }}
-                                          className="absolute z-50 top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/[0.08] rounded-xl shadow-xl overflow-hidden px-4 py-4"
+                                          className="absolute z-50 top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/8 rounded-xl shadow-xl overflow-hidden px-4 py-4"
                                        >
                                           <p className="text-sm text-slate-400 font-medium text-center">{ft.noWilaya}</p>
                                        </motion.div>
@@ -855,7 +855,7 @@ export default function ArtisanProfileSetupPage() {
                            </div>
 
                            {/* Bio */}
-                           <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-5 shadow-sm">
+                           <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-5 shadow-sm">
                               <div className="flex items-center justify-between mb-4">
                                  <div className="flex items-center gap-2">
                                     <FileText className="w-4 h-4 text-blue-600" />
@@ -865,7 +865,7 @@ export default function ArtisanProfileSetupPage() {
                                     "text-[11px] font-bold tabular-nums px-2 py-0.5 rounded-full transition-all",
                                     formData.about.length >= 20
                                        ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10"
-                                       : "text-slate-400 bg-slate-100 dark:bg-white/[0.05]"
+                                       : "text-slate-400 bg-slate-100 dark:bg-white/5"
                                  )}>
                                     {formData.about.length} / 300
                                  </span>
@@ -875,7 +875,7 @@ export default function ArtisanProfileSetupPage() {
                                  onChange={(e) => setFormData(p => ({ ...p, about: e.target.value.slice(0, 300) }))}
                                  placeholder={ft.aboutPlaceholder}
                                  rows={4}
-                                 className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all leading-relaxed font-medium"
+                                 className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all leading-relaxed font-medium"
                               />
                               {formData.about.length > 0 && formData.about.length < 20 && (
                                  <p className="flex items-center gap-1.5 text-[11px] text-red-500 font-semibold mt-2">
@@ -908,7 +908,7 @@ export default function ArtisanProfileSetupPage() {
                         </div>
 
                         {/* FIX #6: Disponibilité redesigned — prominent, clear toggle card */}
-                        <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl overflow-hidden shadow-sm">
+                        <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl overflow-hidden shadow-sm">
                            <div className="p-5">
                               <div className="flex items-center gap-2 mb-4">
                                  <Clock className="w-4 h-4 text-blue-600" />
@@ -917,7 +917,7 @@ export default function ArtisanProfileSetupPage() {
                               <div className="grid grid-cols-2 gap-3">
                                  {[
                                     { value: "disponible", label: ft.available, sub: "Visible dans les recherches", dot: "bg-emerald-500", border: "border-emerald-500", bg: "bg-emerald-500/5 dark:bg-emerald-500/10", text: "text-emerald-700 dark:text-emerald-400" },
-                                    { value: "indisponible", label: ft.unavailable, sub: "Masqué des recherches", dot: "bg-slate-400", border: "border-slate-200 dark:border-white/[0.08]", bg: "bg-slate-50 dark:bg-white/[0.03]", text: "text-slate-600 dark:text-slate-400" },
+                                    { value: "indisponible", label: ft.unavailable, sub: "Masqué des recherches", dot: "bg-slate-400", border: "border-slate-200 dark:border-white/8", bg: "bg-slate-50 dark:bg-white/3", text: "text-slate-600 dark:text-slate-400" },
                                  ].map(opt => {
                                     const isActive = formData.disponibilite === opt.value
                                     return (
@@ -927,14 +927,14 @@ export default function ArtisanProfileSetupPage() {
                                           onClick={() => setFormData(p => ({ ...p, disponibilite: opt.value }))}
                                           className={cn(
                                              "relative flex flex-col items-start gap-2 p-4 rounded-xl border-2 text-left transition-all duration-200",
-                                             isActive ? opt.border + " " + opt.bg : "border-slate-100 dark:border-white/[0.07] bg-slate-50/50 dark:bg-white/[0.02] hover:border-slate-200"
+                                             isActive ? opt.border + " " + opt.bg : "border-slate-100 dark:border-white/7 bg-slate-50/50 dark:bg-white/2 hover:border-slate-200"
                                           )}
                                        >
                                           <div className="flex items-center justify-between w-full">
                                              <div className={cn("w-3 h-3 rounded-full transition-all", opt.dot, isActive ? "opacity-100 scale-110" : "opacity-40")} />
                                              {isActive && (
                                                 <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center">
-                                                   <Check className="w-3 h-3 text-white stroke-[3]" />
+                                                   <Check className="w-3 h-3 text-white stroke-3" />
                                                 </div>
                                              )}
                                           </div>
@@ -952,8 +952,8 @@ export default function ArtisanProfileSetupPage() {
                         </div>
 
                         {/* Documents */}
-                        <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl overflow-hidden shadow-sm">
-                           <div className="p-5 border-b border-slate-100 dark:border-white/[0.05] flex items-center justify-between">
+                        <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl overflow-hidden shadow-sm">
+                           <div className="p-5 border-b border-slate-100 dark:border-white/5 flex items-center justify-between">
                               <div className="flex items-center gap-3">
                                  <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
                                     <FileText className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -963,7 +963,7 @@ export default function ArtisanProfileSetupPage() {
                                     <p className="text-xs text-slate-400">{ft.docsHint}</p>
                                  </div>
                               </div>
-                              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 border border-slate-200 dark:border-white/[0.08] rounded-full px-2.5 py-1">
+                              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 border border-slate-200 dark:border-white/8 rounded-full px-2.5 py-1">
                                  {ft.optionalCaps}
                               </span>
                            </div>
@@ -989,7 +989,7 @@ export default function ArtisanProfileSetupPage() {
                                              "flex flex-col items-center gap-3 py-7 px-4 rounded-xl border-2 border-dashed cursor-pointer transition-all duration-200",
                                              isUploaded
                                                 ? "border-emerald-300 dark:border-emerald-500/40 bg-emerald-50/50 dark:bg-emerald-500/5"
-                                                : "border-slate-200 dark:border-white/[0.08] bg-slate-50/50 dark:bg-white/[0.02] hover:border-blue-300 dark:hover:border-blue-500/40 hover:bg-blue-50/30 dark:hover:bg-blue-500/5"
+                                                : "border-slate-200 dark:border-white/8 bg-slate-50/50 dark:bg-white/2 hover:border-blue-300 dark:hover:border-blue-500/40 hover:bg-blue-50/30 dark:hover:bg-blue-500/5"
                                           )}
                                        >
                                           <input type="file" className="hidden" accept=".jpg,.jpeg,.png,.pdf" onChange={(e) => handleDocumentUpload(e, doc.id)} />
@@ -1010,7 +1010,7 @@ export default function ArtisanProfileSetupPage() {
                                              </>
                                           ) : (
                                              <>
-                                                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-white/[0.06] dark:to-white/[0.03] flex items-center justify-center">
+                                                <div className="w-11 h-11 rounded-xl bg-linear-to-br from-slate-100 to-slate-200 dark:from-white/6 dark:to-white/3 flex items-center justify-center">
                                                    <DocIcon className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                                                 </div>
                                                 <div className="text-center">
@@ -1033,12 +1033,12 @@ export default function ArtisanProfileSetupPage() {
                            </div>
 
                            {/* FIX #7: Professional verified badge CTA */}
-                           <div className="mx-5 mb-5 rounded-xl overflow-hidden border border-slate-100 dark:border-white/[0.06]">
+                           <div className="mx-5 mb-5 rounded-xl overflow-hidden border border-slate-100 dark:border-white/6">
                               <div className="flex items-stretch">
                                  {/* Left accent strip */}
-                                 <div className="w-1 bg-gradient-to-b from-blue-500 to-indigo-600 shrink-0 rounded-l-xl" />
-                                 <div className="flex-1 px-4 py-4 flex items-start gap-3.5 bg-gradient-to-r from-blue-50/60 to-indigo-50/30 dark:from-blue-500/5 dark:to-indigo-500/5">
-                                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
+                                 <div className="w-1 bg-linear-to-b from-blue-500 to-indigo-600 shrink-0 rounded-l-xl" />
+                                 <div className="flex-1 px-4 py-4 flex items-start gap-3.5 bg-linear-to-r from-blue-50/60 to-indigo-50/30 dark:from-blue-500/5 dark:to-indigo-500/5">
+                                    <div className="w-9 h-9 rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
                                        <BadgeCheck className="w-4.5 h-4.5 text-white" style={{ width: 18, height: 18 }} />
                                     </div>
                                     <div>
@@ -1055,10 +1055,10 @@ export default function ArtisanProfileSetupPage() {
                         </div>
 
                         {/* Summary strip */}
-                        <div className="bg-white dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.07] rounded-2xl p-4 flex items-center gap-4 shadow-sm">
+                        <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-4 flex items-center gap-4 shadow-sm">
                            {formData.photo
                               ? <img src={formData.photo} alt="" className="w-10 h-10 rounded-xl object-cover shrink-0" />
-                              : <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-white/[0.06] dark:to-white/[0.03] flex items-center justify-center shrink-0">
+                              : <div className="w-10 h-10 rounded-xl bg-linear-to-br from-slate-100 to-slate-200 dark:from-white/6 dark:to-white/3 flex items-center justify-center shrink-0">
                                  <Camera className="w-4 h-4 text-slate-400" />
                               </div>
                            }
@@ -1072,7 +1072,7 @@ export default function ArtisanProfileSetupPage() {
                               "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold shrink-0 transition-all",
                               formData.disponibilite === "disponible"
                                  ? "bg-emerald-100 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400"
-                                 : "bg-slate-100 dark:bg-white/[0.05] text-slate-500"
+                                 : "bg-slate-100 dark:bg-white/5 text-slate-500"
                            )}>
                               <div className={cn(
                                  "w-2 h-2 rounded-full",
@@ -1087,13 +1087,13 @@ export default function ArtisanProfileSetupPage() {
 
                {/* ── Bottom Nav Bar ── */}
                <div className="fixed bottom-0 left-0 right-0 z-40">
-                  <div className="absolute inset-0 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-xl border-t border-slate-200/60 dark:border-white/[0.06]" />
+                  <div className="absolute inset-0 bg-white/80 dark:bg-[#09090b]/80 backdrop-blur-xl border-t border-slate-200/60 dark:border-white/6" />
                   <div className="relative max-w-2xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-3">
                      {currentStep > 1 && (
                         <button
                            type="button"
                            onClick={goBack}
-                           className="h-11 px-5 rounded-xl border border-slate-200 dark:border-white/[0.08] text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors"
+                           className="h-11 px-5 rounded-xl border border-slate-200 dark:border-white/8 text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/4 transition-colors"
                         >
                            {ft.back}
                         </button>
@@ -1151,8 +1151,8 @@ export default function ArtisanProfileSetupPage() {
                      transition={{ duration: 0.2, ease: [0.32, 0.72, 0, 1] }}
                      className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md z-50 px-4"
                   >
-                     <div className="bg-white dark:bg-[#111113] border border-slate-200/80 dark:border-white/[0.08] rounded-2xl shadow-2xl overflow-hidden">
-                        <div className="px-6 pt-6 pb-5 border-b border-slate-100 dark:border-white/[0.06]">
+                     <div className="bg-white dark:bg-[#111113] border border-slate-200/80 dark:border-white/8 rounded-2xl shadow-2xl overflow-hidden">
+                        <div className="px-6 pt-6 pb-5 border-b border-slate-100 dark:border-white/6">
                            <h3 className="text-base font-extrabold text-slate-900 dark:text-white">{ft.editNameTitle}</h3>
                         </div>
                         <div className="p-6 space-y-4">
@@ -1167,12 +1167,12 @@ export default function ArtisanProfileSetupPage() {
                               <input
                                  value={newName}
                                  onChange={(e) => setNewName(e.target.value)}
-                                 className="w-full h-11 px-3.5 rounded-xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                                 className="w-full h-11 px-3.5 rounded-xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
                               />
                            </div>
                            <div className="flex gap-3 pt-1">
                               <button type="button" onClick={() => setIsNameModalOpen(false)}
-                                 className="flex-1 h-10 rounded-xl border border-slate-200 dark:border-white/[0.08] text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/[0.04] transition-colors">
+                                 className="flex-1 h-10 rounded-xl border border-slate-200 dark:border-white/8 text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/4 transition-colors">
                                  {ft.cancel}
                               </button>
                               <button type="button"

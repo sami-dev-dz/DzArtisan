@@ -169,7 +169,7 @@ const inputCls = (error, isRTL, extra = "") =>
     isRTL ? "pr-11 pl-4" : "pl-11 pr-4",
     error
       ? "border border-red-400 dark:border-red-500 focus:ring-red-500/20"
-      : "border border-slate-200 dark:border-white/[0.08] focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20 dark:focus:ring-blue-400/20",
+      : "border border-slate-200 dark:border-white/8 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20 dark:focus:ring-blue-400/20",
     extra,
   );
 
@@ -328,13 +328,13 @@ export function RegisterForm() {
         className={cn(
           "relative z-10 w-full lg:max-w-[500px] mx-auto",
           "bg-white dark:bg-[#111827]",
-          "border border-slate-150 dark:border-white/[0.06]",
+          "border border-slate-150 dark:border-white/6",
           "rounded-2xl overflow-hidden",
           "shadow-[0_8px_40px_rgba(0,0,0,0.07)] dark:shadow-[0_8px_60px_rgba(0,0,0,0.5)]",
         )}
       >
         {/* top accent */}
-        <div className="h-[3px] w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600" />
+        <div className="h-[3px] w-full bg-linear-to-r from-blue-500 via-blue-600 to-indigo-600" />
 
         <div className="px-7 py-8 sm:px-8 sm:py-9">
           {/* ── Desktop header ── */}
@@ -368,7 +368,7 @@ export function RegisterForm() {
           </AnimatePresence>
 
           {/* ── Tabs ── */}
-          <div className="flex gap-1 p-1 bg-slate-100 dark:bg-[#0d1326] border border-slate-200 dark:border-white/[0.05] rounded-xl mb-6">
+          <div className="flex gap-1 p-1 bg-slate-100 dark:bg-[#0d1326] border border-slate-200 dark:border-white/5 rounded-xl mb-6">
             <Tab
               active={activeTab === "client"}
               onClick={() => {
@@ -467,9 +467,9 @@ export function RegisterForm() {
                 <div
                   className={cn(
                     "flex items-center justify-center gap-1.5 px-3.5 text-[13px] font-bold shrink-0 transition-colors duration-200 h-full",
-                    "bg-slate-100/50 dark:bg-white/[0.03]",
+                    "bg-slate-100/50 dark:bg-white/3",
                     "text-slate-500 dark:text-slate-400",
-                    "border border-slate-200 dark:border-white/[0.08]",
+                    "border border-slate-200 dark:border-white/8",
                     isRTL ? "rounded-r-xl border-l-0" : "rounded-l-xl border-r-0",
                     errors.phone && "border-red-400 dark:border-red-500/50",
                     "group-focus-within:border-blue-500 dark:group-focus-within:border-blue-400"
@@ -501,7 +501,7 @@ export function RegisterForm() {
                     isRTL ? "rounded-l-xl pr-4 pl-10" : "rounded-r-xl pl-3 pr-10",
                     errors.phone
                       ? "border border-red-400 dark:border-red-500/50 focus:ring-red-500/20"
-                      : "border border-slate-200 dark:border-white/[0.08] focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20",
+                      : "border border-slate-200 dark:border-white/8 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20",
                   )}
                 />
                 {phoneValid && (
@@ -624,7 +624,7 @@ export function RegisterForm() {
                 "flex items-start gap-3 rounded-xl p-3.5 transition-colors",
                 errors.terms
                   ? "bg-red-50 dark:bg-red-500/5 border border-red-200 dark:border-red-500/20"
-                  : "bg-slate-50 dark:bg-[#0d1326] border border-slate-100 dark:border-white/[0.04]",
+                  : "bg-slate-50 dark:bg-[#0d1326] border border-slate-100 dark:border-white/4",
               )}
             >
               <div className="flex items-center h-5 mt-0.5 shrink-0">
@@ -734,18 +734,18 @@ export function RegisterForm() {
                 className="mt-6"
               >
                 <div className="relative flex items-center my-5">
-                  <div className="flex-grow border-t border-slate-100 dark:border-white/[0.05]" />
-                  <span className="flex-shrink-0 mx-4 text-[11px] font-semibold uppercase tracking-widest text-slate-300 dark:text-slate-600">
+                  <div className="grow border-t border-slate-100 dark:border-white/5" />
+                  <span className="shrink-0 mx-4 text-[11px] font-semibold uppercase tracking-widest text-slate-300 dark:text-slate-600">
                     {t("or_continue_with")}
                   </span>
-                  <div className="flex-grow border-t border-slate-100 dark:border-white/[0.05]" />
+                  <div className="grow border-t border-slate-100 dark:border-white/5" />
                 </div>
                 <button
                   type="button"
                   onClick={handleGoogleLogin}
                   className={cn(
                     "w-full flex items-center justify-center gap-2.5 h-11 rounded-xl",
-                    "border border-slate-200 dark:border-white/[0.07]",
+                    "border border-slate-200 dark:border-white/7",
                     "bg-white dark:bg-[#0d1326]",
                     "text-slate-700 dark:text-slate-300 text-[13px] font-semibold",
                     "hover:bg-slate-50 dark:hover:bg-[#161c2e] transition-colors duration-200",
@@ -760,7 +760,7 @@ export function RegisterForm() {
           </AnimatePresence>
 
           {/* ── Footer ── */}
-          <div className="mt-7 pt-6 border-t border-slate-100 dark:border-white/[0.05] flex flex-col items-center gap-3">
+          <div className="mt-7 pt-6 border-t border-slate-100 dark:border-white/5 flex flex-col items-center gap-3">
             <p className="text-[13px] text-slate-400 dark:text-slate-500 font-medium">
               {t("have_account_prefix")}{" "}
               <Link

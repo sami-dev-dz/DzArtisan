@@ -405,13 +405,13 @@ export function ResetPasswordForm() {
             "relative z-10 w-full lg:max-w-md mx-auto",
             "bg-white/80 dark:bg-[#0a0f1e]/90 backdrop-blur-xl",
             "rounded-[28px] overflow-hidden",
-            "border border-slate-200/80 dark:border-white/[0.06]",
+            "border border-slate-200/80 dark:border-white/6",
             "shadow-[0_8px_40px_-8px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.04)]",
             "dark:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.03)]",
           )}
         >
           {/* Top accent */}
-          <div className="h-[3px] w-full bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
+          <div className="h-[3px] w-full bg-linear-to-r from-blue-500 via-indigo-500 to-violet-500" />
 
           <div className="p-7 sm:p-9 md:p-10">
             {/* Desktop header */}
@@ -486,7 +486,7 @@ export function ResetPasswordForm() {
                     <button
                       className="
                       w-full h-[54px] rounded-2xl font-bold text-[16px] text-white
-                      bg-gradient-to-r from-blue-600 to-indigo-600
+                      bg-linear-to-r from-blue-600 to-indigo-600
                       hover:from-blue-500 hover:to-indigo-500
                       shadow-lg shadow-blue-500/20 hover:shadow-xl
                       transition-all duration-200 active:scale-[0.99]
@@ -568,7 +568,7 @@ export function ResetPasswordForm() {
                   </div>
 
                   {/* Divider */}
-                  <div className="h-px bg-slate-100 dark:bg-white/[0.05]" />
+                  <div className="h-px bg-slate-100 dark:bg-white/5" />
 
                   {/* Confirm password */}
                   <div className="space-y-2">
@@ -620,7 +620,7 @@ export function ResetPasswordForm() {
                       className={cn(
                         "relative w-full h-[54px] rounded-2xl font-bold text-[16px] text-white",
                         "transition-all duration-200 overflow-hidden",
-                        "bg-gradient-to-r from-blue-600 to-indigo-600",
+                        "bg-linear-to-r from-blue-600 to-indigo-600",
                         "hover:from-blue-500 hover:to-indigo-500",
                         "shadow-lg shadow-blue-600/20 hover:shadow-xl hover:shadow-blue-500/25",
                         "active:scale-[0.99]",

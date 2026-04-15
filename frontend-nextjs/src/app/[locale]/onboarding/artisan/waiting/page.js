@@ -123,7 +123,7 @@ export default function PendingVerificationPage() {
                              isCurrent && "bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-600/20 animate-pulse",
                              step.status === "pending" && "bg-white dark:bg-slate-950 border-slate-100 dark:border-white/5 text-slate-300"
                           )}>
-                             <step.icon className={cn("w-5 h-5", isCompleted || isCurrent ? "stroke-[2.5]" : "stroke-[2]")} />
+                             <step.icon className={cn("w-5 h-5", isCompleted || isCurrent ? "stroke-[2.5]" : "stroke-2")} />
                           </div>
                           
                           <div>

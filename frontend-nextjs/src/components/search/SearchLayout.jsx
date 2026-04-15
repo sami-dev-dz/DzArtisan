@@ -41,9 +41,9 @@ function SkeletonCard({ view }) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[28px] border border-slate-100 dark:border-white/[0.06] bg-white dark:bg-slate-900",
+        "relative overflow-hidden rounded-[28px] border border-slate-100 dark:border-white/6 bg-white dark:bg-slate-900",
         "before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_1.6s_infinite]",
-        "before:bg-gradient-to-r before:from-transparent before:via-white/60 dark:before:via-white/5 before:to-transparent",
+        "before:bg-linear-to-r before:from-transparent before:via-white/60 dark:before:via-white/5 before:to-transparent",
         view === "list" ? "h-28 flex gap-5 p-5" : "h-[380px]",
       )}
     >
@@ -81,7 +81,7 @@ function ViewToggle({ view, setView, t }) {
     { id: "map", icon: MapIcon, label: t("view_map") },
   ];
   return (
-    <div className="flex items-center gap-1 p-1.5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-white/[0.06] shadow-sm">
+    <div className="flex items-center gap-1 p-1.5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-white/6 shadow-sm">
       {views.map((v) => (
         <button
           key={v.id}
@@ -115,7 +115,7 @@ function SortSelect({ value, onChange, t }) {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="appearance-none h-10 bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/[0.06] rounded-xl pl-9 pr-5 text-[11px] font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all cursor-pointer"
+        className="appearance-none h-10 bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/6 rounded-xl pl-9 pr-5 text-[11px] font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all cursor-pointer"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -169,7 +169,7 @@ function Pagination({ current, last, onPage }) {
       <button
         disabled={current === 1}
         onClick={() => onPage(current - 1)}
-        className="w-10 h-10 rounded-xl border border-slate-100 dark:border-white/[0.06] bg-white dark:bg-slate-900 text-slate-500 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+        className="w-10 h-10 rounded-xl border border-slate-100 dark:border-white/6 bg-white dark:bg-slate-900 text-slate-500 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
@@ -190,7 +190,7 @@ function Pagination({ current, last, onPage }) {
               "w-10 h-10 rounded-xl text-[12px] font-bold transition-all",
               current === item
                 ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg shadow-slate-900/20"
-                : "bg-white dark:bg-slate-900 text-slate-500 border border-slate-100 dark:border-white/[0.06] hover:bg-slate-50 dark:hover:bg-white/5",
+                : "bg-white dark:bg-slate-900 text-slate-500 border border-slate-100 dark:border-white/6 hover:bg-slate-50 dark:hover:bg-white/5",
             )}
           >
             {item}
@@ -201,7 +201,7 @@ function Pagination({ current, last, onPage }) {
       <button
         disabled={current === last}
         onClick={() => onPage(current + 1)}
-        className="w-10 h-10 rounded-xl border border-slate-100 dark:border-white/[0.06] bg-white dark:bg-slate-900 text-slate-500 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+        className="w-10 h-10 rounded-xl border border-slate-100 dark:border-white/6 bg-white dark:bg-slate-900 text-slate-500 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
       >
         <ChevronRight className="w-4 h-4" />
       </button>
@@ -218,7 +218,7 @@ function EmptyState({ onReset, t }) {
       className="flex flex-col items-center justify-center py-28 text-center space-y-5"
     >
       <div className="relative">
-        <div className="w-20 h-20 bg-slate-50 dark:bg-slate-900 rounded-3xl flex items-center justify-center border border-slate-100 dark:border-white/[0.06]">
+        <div className="w-20 h-20 bg-slate-50 dark:bg-slate-900 rounded-3xl flex items-center justify-center border border-slate-100 dark:border-white/6">
           <AlertCircle className="w-9 h-9 text-slate-300 dark:text-slate-600" />
         </div>
         <div className="absolute -top-1 -right-1 w-5 h-5 bg-amber-400 rounded-full flex items-center justify-center">
@@ -264,7 +264,7 @@ function MobileFilterDrawer({ open, onClose, children, t }) {
             className="fixed right-0 top-0 bottom-0 z-[100] w-[340px] max-w-[95vw] bg-white dark:bg-slate-950 shadow-2xl lg:hidden flex flex-col"
           >
             {/* Drawer Header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-white/[0.06]">
+            <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-white/6">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 bg-slate-900 dark:bg-white rounded-xl flex items-center justify-center">
                   <SlidersHorizontal className="w-4 h-4 text-white dark:text-slate-900" />
@@ -285,7 +285,7 @@ function MobileFilterDrawer({ open, onClose, children, t }) {
             <div className="flex-1 overflow-y-auto px-6 py-5">{children}</div>
 
             {/* Drawer Footer */}
-            <div className="px-6 py-5 border-t border-slate-100 dark:border-white/[0.06]">
+            <div className="px-6 py-5 border-t border-slate-100 dark:border-white/6">
               <button
                 onClick={onClose}
                 className="w-full h-13 py-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-[11px] font-black uppercase tracking-widest rounded-2xl hover:opacity-90 transition-opacity"
@@ -305,9 +305,9 @@ function SidebarShell({ children }) {
   return (
     <aside className="hidden lg:block w-[280px] xl:w-[300px] shrink-0">
       <div className="sticky top-6">
-        <div className="rounded-[24px] border border-slate-100 dark:border-white/[0.06] bg-white dark:bg-slate-900 shadow-sm overflow-hidden">
+        <div className="rounded-[24px] border border-slate-100 dark:border-white/6 bg-white dark:bg-slate-900 shadow-sm overflow-hidden">
           {/* Sidebar Header */}
-          <div className="px-5 py-4 border-b border-slate-100 dark:border-white/[0.06] flex items-center gap-3">
+          <div className="px-5 py-4 border-b border-slate-100 dark:border-white/6 flex items-center gap-3">
             <div className="w-7 h-7 bg-slate-900 dark:bg-white rounded-lg flex items-center justify-center">
               <SlidersHorizontal className="w-3.5 h-3.5 text-white dark:text-slate-900" />
             </div>
@@ -474,7 +474,7 @@ export function SearchLayout() {
                 placeholder={t("placeholder")}
                 className={cn(
                   "w-full h-14 pl-14 pr-12 rounded-2xl bg-white dark:bg-slate-900",
-                  "border-2 border-slate-100 dark:border-white/[0.06]",
+                  "border-2 border-slate-100 dark:border-white/6",
                   "text-slate-900 dark:text-white placeholder:text-slate-400 text-[15px] font-semibold",
                   "shadow-sm focus:outline-none focus:border-blue-500 dark:focus:border-blue-400",
                   "transition-all duration-200",
@@ -500,7 +500,7 @@ export function SearchLayout() {
               <ViewToggle view={view} setView={setView} t={t} />
               <button
                 onClick={() => setIsSidebarOpen(true)}
-                className="lg:hidden w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-white/[0.06] flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors shadow-sm"
+                className="lg:hidden w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-white/6 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors shadow-sm"
               >
                 <FilterIcon className="w-5 h-5" />
               </button>
@@ -563,7 +563,7 @@ export function SearchLayout() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="h-[72vh] rounded-[28px] overflow-hidden border border-slate-100 dark:border-white/[0.06] shadow-sm"
+                  className="h-[72vh] rounded-[28px] overflow-hidden border border-slate-100 dark:border-white/6 shadow-sm"
                 >
                   <ArtisanMap
                     artisans={results.data}

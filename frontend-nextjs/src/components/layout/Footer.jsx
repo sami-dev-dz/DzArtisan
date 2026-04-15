@@ -104,7 +104,8 @@ export function Footer() {
                 { label: "Trouver un artisan", href: "/artisans" },
                 { label: "Publier une demande", href: "/requests/new" },
                 { label: "Tarifs artisans", href: "/pricing" },
-                { label: "Villes desservies", href: "/coverage" }
+                { label: "Villes desservies", href: "/coverage" },
+                { label: "Administration", href: "/admin/login" }
               ].map((link, i) => (
                 <li key={i}>
                   <Link 

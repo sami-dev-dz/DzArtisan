@@ -40,7 +40,7 @@ const Logo = ({ isRTL }) => (
       <Home className="h-5 w-5 absolute -translate-y-1 group-hover:translate-y-0 transition-transform duration-300" />
       <Wrench className="h-4 w-4 absolute translate-y-3 group-hover:translate-y-0.5 transition-transform duration-300 rotate-12" />
     </div>
-    <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent hidden sm:block">
+    <span className="text-xl font-bold tracking-tight bg-linear-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent hidden sm:block">
       DzArtisan
     </span>
   </Link>
@@ -128,7 +128,7 @@ export function Navbar() {
           <div className="flex items-center justify-between h-14">
             
             {/* Left: Logo */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <Logo isRTL={isRTL} />
             </div>
 

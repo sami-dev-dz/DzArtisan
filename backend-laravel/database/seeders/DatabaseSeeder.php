@@ -36,13 +36,24 @@ class DatabaseSeeder extends Seeder
             CategorieMetier::updateOrCreate(['nom' => $c['nom']], $c);
         }
 
-        // 3. Compte TEST  (nomComplet + type, pas name/role)
+        // 3. Compte TEST Client
         User::updateOrCreate(
             ['email' => 'test@example.com'],
             [
                 'nomComplet' => 'Sami Dev',
                 'password'   => Hash::make('password'),
                 'type'       => 'client',
+                'statut'     => 'actif',
+            ]
+        );
+
+        // 4. Compte TEST Admin
+        User::updateOrCreate(
+            ['email' => 'admin@dzartisan.dz'],
+            [
+                'nomComplet' => 'Administrateur',
+                'password'   => Hash::make('admin123'),
+                'type'       => 'admin',
                 'statut'     => 'actif',
             ]
         );

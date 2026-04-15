@@ -100,8 +100,8 @@ export default function PricingPage() {
             <ul className="space-y-4 mb-10">
               {plan.features.map((feature, i) => (
                 <li key={i} className="flex items-center gap-3 text-slate-300 text-sm font-medium">
-                  <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${plan.popular ? "bg-blue-500/20 text-blue-400" : "bg-slate-800 text-slate-500"}`}>
-                    <Check className="w-3 h-3 stroke-[3]" />
+                  <div className={`shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${plan.popular ? "bg-blue-500/20 text-blue-400" : "bg-slate-800 text-slate-500"}`}>
+                    <Check className="w-3 h-3 stroke-3" />
                   </div>
                   {feature}
                 </li>

@@ -252,7 +252,7 @@ function NewComplaintForm({ onSuccess, onCancel }) {
         <Button
           type="submit"
           disabled={submitting}
-          className="flex-[2] h-14 rounded-2xl bg-red-500 hover:bg-red-600 text-white font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-red-500/20"
+          className="flex-2 h-14 rounded-2xl bg-red-500 hover:bg-red-600 text-white font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-red-500/20"
         >
           {submitting ? (
             <Loader2 className="w-4 h-4 animate-spin" />

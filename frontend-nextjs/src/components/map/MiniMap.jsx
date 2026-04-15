@@ -181,7 +181,7 @@ export function MiniMap({ lat, lng, label, address }) {
         {/* Vignette overlay — top fade only */}
         <div className="
           absolute inset-x-0 top-0 h-8 z-10 pointer-events-none
-          bg-gradient-to-b from-white/20 dark:from-slate-900/20 to-transparent
+          bg-linear-to-b from-white/20 dark:from-slate-900/20 to-transparent
         " />
 
         <MapContainer

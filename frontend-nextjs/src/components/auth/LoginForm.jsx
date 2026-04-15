@@ -234,13 +234,13 @@ export function LoginForm() {
         className={cn(
           "relative z-10 w-full lg:max-w-[420px] mx-auto",
           "bg-white dark:bg-[#111827]",
-          "border border-slate-150 dark:border-white/[0.06]",
+          "border border-slate-150 dark:border-white/6",
           "rounded-2xl overflow-hidden",
           "shadow-[0_8px_40px_rgba(0,0,0,0.07)] dark:shadow-[0_8px_60px_rgba(0,0,0,0.5)]",
         )}
       >
         {/* ── top accent bar ── */}
-        <div className="h-[3px] w-full bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600" />
+        <div className="h-[3px] w-full bg-linear-to-r from-blue-500 via-blue-600 to-indigo-600" />
 
         <div className="px-7 py-8 sm:px-8 sm:py-9">
           {/* ── Desktop header ── */}
@@ -274,7 +274,7 @@ export function LoginForm() {
           </AnimatePresence>
 
           {/* ── Tab toggle ── */}
-          <div className="flex gap-1 p-1 bg-slate-100 dark:bg-[#0d1326] border border-slate-200 dark:border-white/[0.05] rounded-xl mb-7">
+          <div className="flex gap-1 p-1 bg-slate-100 dark:bg-[#0d1326] border border-slate-200 dark:border-white/5 rounded-xl mb-7">
             <Tab
               active={activeTab === "client"}
               onClick={() => {
@@ -434,11 +434,11 @@ export function LoginForm() {
                 className="mt-6"
               >
                 <div className="relative flex items-center my-5">
-                  <div className="flex-grow border-t border-slate-100 dark:border-white/[0.06]" />
-                  <span className="flex-shrink-0 mx-4 text-[11px] font-semibold uppercase tracking-widest text-slate-300 dark:text-slate-600">
+                  <div className="grow border-t border-slate-100 dark:border-white/6" />
+                  <span className="shrink-0 mx-4 text-[11px] font-semibold uppercase tracking-widest text-slate-300 dark:text-slate-600">
                     {t("or_continue_with")}
                   </span>
-                  <div className="flex-grow border-t border-slate-100 dark:border-white/[0.06]" />
+                  <div className="grow border-t border-slate-100 dark:border-white/6" />
                 </div>
 
                 <button
@@ -446,7 +446,7 @@ export function LoginForm() {
                   onClick={handleGoogleLogin}
                   className={cn(
                     "w-full flex items-center justify-center gap-2.5 h-11 rounded-xl",
-                    "border border-slate-200 dark:border-white/[0.07]",
+                    "border border-slate-200 dark:border-white/7",
                     "bg-white dark:bg-[#0d1326]",
                     "text-slate-700 dark:text-slate-300 text-[13px] font-semibold",
                     "hover:bg-slate-50 dark:hover:bg-[#161c2e] transition-colors duration-200",
@@ -461,7 +461,7 @@ export function LoginForm() {
           </AnimatePresence>
 
           {/* ── Footer ── */}
-          <div className="mt-7 pt-6 border-t border-slate-100 dark:border-white/[0.05] flex flex-col items-center gap-3">
+          <div className="mt-7 pt-6 border-t border-slate-100 dark:border-white/5 flex flex-col items-center gap-3">
             <p className="text-[13px] text-slate-400 dark:text-slate-500 font-medium">
               {t("no_account_prefix")}{" "}
               <Link
@@ -471,6 +471,13 @@ export function LoginForm() {
                 {t("no_account_action")}
               </Link>
             </p>
+
+            <Link
+              href="/admin/login"
+              className="mt-2 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-blue-500 transition-colors"
+            >
+              Accès Administration
+            </Link>
 
             {/* Trust signal */}
             <span className="flex items-center gap-1.5 text-[11px] text-slate-300 dark:text-slate-700 font-medium select-none">

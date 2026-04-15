@@ -181,7 +181,7 @@ export default function ArtisanDashboard() {
            />
            
            {/* Quick Action Card (Simplified for now) */}
-           <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-[32px] p-8 text-white relative overflow-hidden shadow-2xl shadow-blue-600/30">
+           <div className="bg-linear-to-br from-indigo-600 to-blue-700 rounded-[32px] p-8 text-white relative overflow-hidden shadow-2xl shadow-blue-600/30">
               <div className="absolute top-[-10%] right-[-10%] w-32 h-32 bg-white/10 rounded-full blur-2xl" />
               <h4 className="text-xl font-black mb-2 uppercase tracking-tight">Support Premium</h4>
               <p className="text-indigo-100 text-sm font-bold mb-6">Besoin d&apos;aide pour optimiser votre profil ou gérer un client ?</p>

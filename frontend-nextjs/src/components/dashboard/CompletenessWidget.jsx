@@ -39,7 +39,7 @@ export default function CompletenessWidget({ percentage = 0, artisan = {} }) {
             initial={{ width: 0 }}
             animate={{ width: `${percentage}%` }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="h-full bg-gradient-to-r from-blue-600 to-indigo-500 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)]"
+            className="h-full bg-linear-to-r from-blue-600 to-indigo-500 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)]"
           />
         </div>
 

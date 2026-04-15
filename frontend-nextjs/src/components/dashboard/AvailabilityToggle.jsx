@@ -102,7 +102,7 @@ export function AvailabilityToggle({ compact = false }) {
           {loading ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
-             <Power className="w-4 h-4 stroke-[3]" />
+             <Power className="w-4 h-4 stroke-3" />
           )}
         </div>
         

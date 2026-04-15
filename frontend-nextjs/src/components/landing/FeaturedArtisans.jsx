@@ -58,7 +58,7 @@ export function FeaturedArtisans() {
           className="w-full relative overflow-hidden rounded-3xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800"
         >
           {/* Subtle background pattern/gradient */}
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-emerald-500/5 to-transparent pointer-events-none" />
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-emerald-500/5 to-transparent pointer-events-none" />
           
           <div className="relative z-10 flex flex-col md:flex-row items-center p-8 md:p-12 lg:p-16 gap-10">
             <div className="hidden md:flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">

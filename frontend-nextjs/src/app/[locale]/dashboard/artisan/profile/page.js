@@ -322,7 +322,7 @@ export default function ArtisanProfileEditPage() {
                  <select
                     value={formData.categories[0] || ""}
                     onChange={(e) => setFormData(prev => ({ ...prev, categories: [parseInt(e.target.value)] }))}
-                    className="w-full h-14 pl-12 pr-10 rounded-2xl bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.08] text-sm font-semibold text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                    className="w-full h-14 pl-12 pr-10 rounded-2xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
                  >
                     <option value="" disabled>Sélectionnez votre métier principal...</option>
                     {categories.map((cat) => (

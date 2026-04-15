@@ -90,7 +90,7 @@ function CoordinateBadge({ lat, lng }) {
       title="Copier les coordonnées"
     >
       {/* Pin icon */}
-      <span className="flex-shrink-0 w-5 h-5 flex items-center justify-center rounded-full bg-blue-50 dark:bg-blue-500/20">
+      <span className="shrink-0 w-5 h-5 flex items-center justify-center rounded-full bg-blue-50 dark:bg-blue-500/20">
         <svg
           className="w-3 h-3 text-blue-600 dark:text-blue-400"
           fill="currentColor"
@@ -115,7 +115,7 @@ function CoordinateBadge({ lat, lng }) {
       </div>
 
       {/* Copy icon / check */}
-      <span className="flex-shrink-0 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <span className="shrink-0 ml-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         {copied ? (
           <svg
             className="w-3.5 h-3.5 text-emerald-500"
@@ -222,7 +222,7 @@ function HintChip({ visible }) {
         ${visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}`}
     >
       {/* Animated dot */}
-      <span className="relative flex h-2 w-2 flex-shrink-0">
+      <span className="relative flex h-2 w-2 shrink-0">
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-60" />
         <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600" />
       </span>

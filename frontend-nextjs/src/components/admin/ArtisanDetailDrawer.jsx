@@ -40,7 +40,7 @@ export function ArtisanDetailDrawer({ isOpen, onClose, artisan }) {
             className="fixed inset-y-0 right-0 z-[101] w-full max-w-2xl bg-white dark:bg-slate-900 shadow-2xl flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-slate-50 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02]">
+            <div className="flex items-center justify-between p-6 border-b border-slate-50 dark:border-white/5 bg-slate-50/50 dark:bg-white/2">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/20">
                   {artisan.user?.nomComplet?.charAt(0)}
@@ -107,7 +107,7 @@ export function ArtisanDetailDrawer({ isOpen, onClose, artisan }) {
                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Compétences / Catégories</span>
                      <div className="flex flex-wrap gap-2">
                         {artisan.categories?.map(cat => (
-                           <Badge key={cat.id} variant="outline" className="rounded-lg font-bold border-slate-100 dark:border-white/10 px-3 py-1 bg-slate-50/50 dark:bg-white/[0.02]">
+                           <Badge key={cat.id} variant="outline" className="rounded-lg font-bold border-slate-100 dark:border-white/10 px-3 py-1 bg-slate-50/50 dark:bg-white/2">
                               {cat.nom}
                            </Badge>
                         ))}
@@ -130,7 +130,7 @@ export function ArtisanDetailDrawer({ isOpen, onClose, artisan }) {
                 {artisansDocuments(artisan).length > 0 ? (
                   <div className="grid grid-cols-1 gap-4">
                     {artisansDocuments(artisan).map((doc, idx) => (
-                      <div key={idx} className="group relative flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-white/5 hover:border-indigo-200 dark:hover:border-indigo-500/30 transition-all">
+                      <div key={idx} className="group relative flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-white/2 border border-slate-100 dark:border-white/5 hover:border-indigo-200 dark:hover:border-indigo-500/30 transition-all">
                         <div className="flex items-center gap-4">
                            <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 flex items-center justify-center text-slate-400 shadow-sm">
                              <FileText size={20} />
@@ -191,7 +191,7 @@ export function ArtisanDetailDrawer({ isOpen, onClose, artisan }) {
             </div>
             
             {/* Footer Actions */}
-            <div className="p-6 border-t border-slate-50 dark:border-white/5 bg-slate-50/50 dark:bg-white/[0.02]">
+            <div className="p-6 border-t border-slate-50 dark:border-white/5 bg-slate-50/50 dark:bg-white/2">
                 <div className="flex gap-4">
                    {artisan.statut_validation === 'en_attente' ? (
                       <>

@@ -335,7 +335,7 @@ export default function ComplaintManagement() {
                 </Card>
               </motion.div>
             ) : (
-              <Card className="p-8 h-[500px] flex flex-col items-center justify-center text-center bg-slate-50/50 dark:bg-white/[0.02] border-dashed border-2 border-slate-200 dark:border-white/5 rounded-3xl">
+              <Card className="p-8 h-[500px] flex flex-col items-center justify-center text-center bg-slate-50/50 dark:bg-white/2 border-dashed border-2 border-slate-200 dark:border-white/5 rounded-3xl">
                 <div className="w-16 h-16 rounded-full bg-white dark:bg-white/5 shadow-sm flex items-center justify-center mb-4">
                   <ClipboardList className="w-8 h-8 text-slate-300 dark:text-slate-700" />
                 </div>

@@ -160,9 +160,9 @@ export default function SubscriptionPage() {
       <section className={cn(
         "relative rounded-[40px] p-8 md:p-12 overflow-hidden shadow-2xl border transition-all duration-500",
         subStatus?.statut === 'actif' 
-          ? "bg-gradient-to-br from-emerald-500 to-teal-600 border-emerald-400 text-white shadow-emerald-500/20"
+          ? "bg-linear-to-br from-emerald-500 to-teal-600 border-emerald-400 text-white shadow-emerald-500/20"
           : subStatus?.expiring_soon
-          ? "bg-gradient-to-br from-amber-400 to-orange-500 border-amber-300 text-white shadow-amber-500/20"
+          ? "bg-linear-to-br from-amber-400 to-orange-500 border-amber-300 text-white shadow-amber-500/20"
           : "bg-white dark:bg-slate-900 border-slate-100 dark:border-white/5 text-slate-900 dark:text-white"
       )}>
         {/* Background Patterns */}
@@ -348,7 +348,7 @@ export default function SubscriptionPage() {
            <div className="flex items-center justify-between p-6 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-dashed border-slate-200 dark:border-white/10">
               <div className="flex items-center gap-4">
                  <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/20">
-                    <Check className="w-6 h-6 stroke-[3]" />
+                    <Check className="w-6 h-6 stroke-3" />
                  </div>
                  <div>
                     <h4 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">{selectedPlan?.name}</h4>
@@ -456,7 +456,7 @@ export default function SubscriptionPage() {
                              {proofUrl ? (
                                 <div className="text-center space-y-3">
                                    <div className="w-16 h-16 rounded-full bg-emerald-500 flex items-center justify-center text-white mx-auto shadow-xl shadow-emerald-500/20">
-                                      <Check className="w-8 h-8 stroke-[3]" />
+                                      <Check className="w-8 h-8 stroke-3" />
                                    </div>
                                    <p className="text-sm font-black text-emerald-600 uppercase tracking-widest">Reçu téléchargé</p>
                                 </div>
@@ -481,7 +481,7 @@ export default function SubscriptionPage() {
              disabled={submitting || (paymentMethod === 'manual' && !proofUrl)}
              className="w-full h-18 rounded-[30px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-lg shadow-2xl flex items-center justify-center gap-3 active:scale-95 group transition-all"
            >
-              {submitting ? <div className="w-6 h-6 border-2 border-slate-400 border-t-white animate-spin rounded-full" /> : <ShieldCheck className="w-6 h-6 stroke-[3]" />}
+              {submitting ? <div className="w-6 h-6 border-2 border-slate-400 border-t-white animate-spin rounded-full" /> : <ShieldCheck className="w-6 h-6 stroke-3" />}
               {t("confirm_payment")}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
            </Button>
