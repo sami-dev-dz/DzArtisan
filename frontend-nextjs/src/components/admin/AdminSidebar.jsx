@@ -59,7 +59,7 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
     },
     {
       href: "/dashboard/admin/statistics",
-      label: t("statistics"),
+      label: t("statistics_nav"),
       icon: BarChart3,
     },
     {

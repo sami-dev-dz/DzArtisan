@@ -29,7 +29,7 @@ export default function AdminLayout({ children }) {
   React.useEffect(() => {
     if (!user || user.type !== "admin") return
     axios
-      .get("/v1/admin/overview")
+      .get("/admin/overview")
       .then(({ data }) => {
         setPendingCounts({
           pending_artisans: data?.alerts?.pending_artisans ?? 0,

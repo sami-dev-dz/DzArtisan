@@ -31,4 +31,9 @@ class Client extends Model
     {
         return $this->belongsTo(Commune::class);
     }
+
+    public function demandesInterventions()
+    {
+        return $this->hasMany(DemandeIntervention::class, 'client_id');
+    }
 }

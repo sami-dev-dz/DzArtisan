@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
 import { useToast } from "@/hooks/use-toast"
+import axios from "@/lib/axios"
 
 // Internal Components
 import { SubscriptionStats } from "@/components/admin/subscriptions/SubscriptionStats"
@@ -50,9 +51,8 @@ export default function SubscriptionsAdminPage() {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const res = await fetch(`/api/admin/subscriptions?tab=${activeTab}&search=${search}`)
-      const result = await res.json()
-      setData(result)
+      const res = await axios.get(`/admin/subscriptions`, { params: { tab: activeTab, search } })
+      setData(res.data)
     } catch (error) {
       toast({
         title: "Erreur",
@@ -71,8 +71,8 @@ export default function SubscriptionsAdminPage() {
   // Actions
   const handleConfirmPayment = async (payment) => {
     try {
-      const res = await fetch(`/api/admin/subscriptions/confirm/${payment.id}`, { method: 'POST' })
-      if (res.ok) {
+      const res = await axios.post(`/admin/subscriptions/confirm/${payment.id}`)
+      if (res.status === 200) {
         toast({ title: t("manual_activation.success") })
         fetchData()
       }
@@ -86,12 +86,8 @@ export default function SubscriptionsAdminPage() {
     if (!motif) return
 
     try {
-      const res = await fetch(`/api/admin/subscriptions/reject/${payment.id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ motif })
-      })
-      if (res.ok) {
+      const res = await axios.post(`/admin/subscriptions/reject/${payment.id}`, { motif })
+      if (res.status === 200) {
         toast({ title: "Paiement rejeté." })
         fetchData()
       }
@@ -102,12 +98,8 @@ export default function SubscriptionsAdminPage() {
 
   const handleManualActivate = async (formData) => {
     try {
-      const res = await fetch('/api/admin/subscriptions/manual-activate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-      if (res.ok) {
+      const res = await axios.post('/admin/subscriptions/manual-activate', formData)
+      if (res.status === 200) {
         setIsManualModalOpen(false)
         toast({ title: t("manual_activation.success") })
         fetchData()
@@ -118,7 +110,7 @@ export default function SubscriptionsAdminPage() {
   }
 
   return (
-    <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-8 pb-20">
+    <div className="max-w-7xl mx-auto space-y-8 pb-20">
       {/* Header section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
@@ -221,8 +213,8 @@ export default function SubscriptionsAdminPage() {
       />
 
       {/* Admin Quick Tip */}
-      <div className="mt-12 p-4 rounded-2xl bg-slate-100/50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
-         <div className="p-2 bg-white dark:bg-slate-700 rounded-lg text-slate-400">
+      <div className="mt-12 p-4 rounded-[32px] bg-slate-50/50 dark:bg-white/[0.02] border border-slate-100 dark:border-white/5 flex items-start gap-4">
+         <div className="p-2 bg-white dark:bg-white/5 rounded-xl text-slate-400">
             <Info className="w-5 h-5" />
          </div>
          <div>

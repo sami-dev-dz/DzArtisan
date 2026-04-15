@@ -113,8 +113,10 @@ Route::prefix('v1')->group(function () {
             Route::get('/stats/rankings', [AdminStatsController::class, 'artisanRanking']);
             Route::get('/stats/export', [AdminStatsController::class, 'exportCSV']);
 
-            // Artisan Management (Corrected to use AdminController)
-            Route::get('/artisans', [AdminController::class, 'indexArtisans']);
+            // Artisan & User Management
+            Route::get('/users/clients', [AdminController::class, 'indexClients']);
+            Route::get('/users/artisans', [AdminController::class, 'indexArtisans']);
+            Route::get('/artisans', [AdminController::class, 'indexArtisans']); // Legacy route
             Route::post('/artisans/{id}/status', [AdminController::class, 'updateArtisanStatus']);
             Route::post('/artisans/{id}/promote', [AdminController::class, 'promoteArtisan']);
             Route::delete('/users/{id}', [AdminController::class, 'deleteUser']);

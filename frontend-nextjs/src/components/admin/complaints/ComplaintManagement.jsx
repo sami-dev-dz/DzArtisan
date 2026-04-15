@@ -17,6 +17,7 @@ import { useToastStore } from "@/store/toastStore"
 import { format } from "date-fns"
 import { fr, arDZ, enUS } from "date-fns/locale"
 import { useLocale } from "next-intl"
+import axios from "@/lib/axios"
 
 export default function ComplaintManagement() {
   const t = useTranslations("admin.complaints_management")
@@ -38,18 +39,18 @@ export default function ComplaintManagement() {
     rejete: 0
   })
 
-  // Fetch data from real API
+// Fetch data from real API
   const fetchComplaints = async () => {
     setLoading(true)
     try {
-      const response = await fetch(`/api/v1/admin/complaints?status=${activeTab}&search=${searchQuery}`)
-      if (!response.ok) throw new Error()
-      const data = await response.json()
-      setComplaints(data.complaints.data || [])
-      setStats(data.stats)
-      setLoading(false)
+      const response = await axios.get(`/admin/complaints`, {
+        params: { status: activeTab, search: searchQuery }
+      })
+      setComplaints(response.data.complaints?.data || [])
+      setStats(response.data.stats || { nouveau: 0, en_cours: 0, resolu: 0, rejete: 0 })
     } catch (error) {
-      // toast.error(commonT("error"))
+      // showToast(commonT("error"), 'error')
+    } finally {
       setLoading(false)
     }
   }
@@ -61,12 +62,7 @@ export default function ComplaintManagement() {
   const handleUpdateStatus = async (status) => {
     if (!selectedComplaint) return
     try {
-      const response = await fetch(`/api/v1/admin/complaints/${selectedComplaint.id}/status`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
-      })
-      if (!response.ok) throw new Error()
+      await axios.post(`/admin/complaints/${selectedComplaint.id}/status`, { status })
       showToast(t("notifications.status_updated"))
       fetchComplaints()
       setSelectedComplaint(prev => ({ ...prev, statut: status }))
@@ -78,17 +74,11 @@ export default function ComplaintManagement() {
   const handleAddNote = async (notes) => {
     if (!selectedComplaint) return
     try {
-      const response = await fetch(`/api/v1/admin/complaints/${selectedComplaint.id}/note`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ notes })
-      })
-      if (!response.ok) throw new Error()
+      await axios.post(`/admin/complaints/${selectedComplaint.id}/note`, { notes })
       showToast(t("notifications.note_added"))
       // Reload history
-      const detailRes = await fetch(`/api/v1/admin/complaints/${selectedComplaint.id}`)
-      const detailData = await detailRes.json()
-      setSelectedComplaint(detailData.complaint)
+      const detailRes = await axios.get(`/admin/complaints/${selectedComplaint.id}`)
+      setSelectedComplaint(detailRes.data.complaint)
     } catch (error) {
       showToast(commonT("error"), 'error')
     }

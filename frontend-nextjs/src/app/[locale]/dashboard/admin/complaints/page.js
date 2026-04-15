@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
 
 export default async function AdminComplaintsPage() {
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div className="max-w-[1600px] mx-auto">
       <ComplaintManagement />
     </div>
   )

@@ -34,13 +34,13 @@ export const UserTable = ({
     <div className="overflow-x-auto">
       <table className="w-full text-left border-collapse">
         <thead>
-          <tr className="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+          <tr className="border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/5">
             <th className="px-6 py-4 w-12">
               <input 
                 type="checkbox" 
                 checked={allSelected}
                 onChange={onSelectAll}
-                className="w-4 h-4 rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 transition-all cursor-pointer"
+                className="w-4 h-4 rounded border-slate-300 dark:border-white/20 bg-transparent text-blue-600 focus:ring-blue-500 transition-all cursor-pointer"
               />
             </th>
             <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">{t('user')}</th>
@@ -50,7 +50,7 @@ export const UserTable = ({
             <th className="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">{t('actions')}</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+        <tbody className="divide-y divide-slate-50 dark:divide-white/5">
           {users.map((user, idx) => {
             const isSelected = selectedUsers.includes(user.user?.id || user.id);
             const userModel = user.user || user;
@@ -61,7 +61,7 @@ export const UserTable = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.03 }}
-                className={`group hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-all ${isSelected ? 'bg-blue-50/30 dark:bg-blue-900/10' : ''}`}
+                className={`group hover:bg-slate-50/80 dark:hover:bg-white/5 transition-all ${isSelected ? 'bg-blue-50/30 dark:bg-blue-900/10' : ''}`}
               >
                 <td className="px-6 py-4">
                   <input 
@@ -73,7 +73,7 @@ export const UserTable = ({
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-4">
-                    <div className="relative w-11 h-11 rounded-full overflow-hidden bg-slate-100 dark:bg-slate-800 border-2 border-white dark:border-slate-700 shadow-sm flex items-center justify-center shrink-0">
+                    <div className="relative w-11 h-11 rounded-[16px] overflow-hidden bg-slate-100 dark:bg-white/5 border-2 border-white dark:border-[#0a0f1e] shadow-sm flex items-center justify-center shrink-0">
                       {user.photo ? (
                         <Image src={user.photo} alt={userModel.nomComplet} fill className="object-cover" />
                       ) : (

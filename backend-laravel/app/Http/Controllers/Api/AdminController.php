@@ -257,15 +257,7 @@ class AdminController extends Controller
         $status = $request->query('status'); // actif, suspendu
 
         $query = Client::with(['user:id,nomComplet,email,telephone,statut,created_at', 'wilaya:id,nom'])
-            ->withCount(['user as requests_count' => function($q) {
-                // This is a bit tricky, we need to count interventions linked to this client
-            }]);
-        
-        // Let's use a cleaner approach for counts
-        $query = Client::with(['user', 'wilaya'])
-            ->leftJoin('demandes_interventions', 'clients.id', '=', 'demandes_interventions.client_id')
-            ->select('clients.*', DB::raw('count(demandes_interventions.id) as requests_count'))
-            ->groupBy('clients.id');
+            ->withCount('demandesInterventions as requests_count');
 
         if ($search) {
             $query->whereHas('user', function ($q) use ($search) {
@@ -275,14 +267,14 @@ class AdminController extends Controller
         }
 
         if ($wilayaId) {
-            $query->where('clients.wilaya_id', $wilayaId);
+            $query->where('wilaya_id', $wilayaId);
         }
 
         if ($status) {
             $query->whereHas('user', fn($q) => $q->where('statut', $status));
         }
 
-        $clients = $query->latest('clients.created_at')->paginate(15);
+        $clients = $query->latest('created_at')->paginate(15);
 
         return response()->json($clients);
     }

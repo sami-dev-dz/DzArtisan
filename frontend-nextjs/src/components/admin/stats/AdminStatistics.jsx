@@ -34,7 +34,7 @@ export const AdminStatistics = () => {
   const fetchStats = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get('/api/admin/stats/overview');
+      const res = await axios.get('/admin/stats/overview');
       setStats(res.data);
     } catch (err) {
       console.error('Error fetching admin stats:', err);
@@ -45,7 +45,7 @@ export const AdminStatistics = () => {
 
   const fetchRankings = useCallback(async (page = 1) => {
     try {
-      const res = await axios.get(`/api/admin/stats/rankings?page=${page}`);
+      const res = await axios.get(`/admin/stats/rankings?page=${page}`);
       setRankings(res.data.data);
     } catch (err) {
       console.error('Error fetching rankings:', err);
@@ -60,7 +60,7 @@ export const AdminStatistics = () => {
   const handleExport = async () => {
     try {
       setExporting(true);
-      const response = await axios.get('/api/admin/stats/export', {
+      const response = await axios.get('/admin/stats/export', {
         responseType: 'blob'
       });
       
@@ -80,43 +80,43 @@ export const AdminStatistics = () => {
 
   if (loading || !stats) {
     return (
-      <div className="p-8 space-y-8 animate-pulse">
-        <div className="h-10 w-64 bg-gray-200 dark:bg-slate-800 rounded-lg"></div>
+      <div className="space-y-8 animate-pulse">
+        <div className="h-10 w-64 bg-slate-100 dark:bg-white/5 rounded-2xl"></div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-gray-100 dark:bg-slate-800 rounded-2xl"></div>)}
+          {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-slate-100 dark:bg-white/5 rounded-[32px]"></div>)}
         </div>
-        <div className="h-[500px] bg-gray-100 dark:bg-slate-800 rounded-2xl"></div>
+        <div className="h-[500px] bg-slate-100 dark:bg-white/5 rounded-[32px]"></div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="h-[400px] bg-gray-100 dark:bg-slate-800 rounded-2xl"></div>
-          <div className="h-[400px] bg-gray-100 dark:bg-slate-800 rounded-2xl"></div>
+          <div className="h-[400px] bg-slate-100 dark:bg-white/5 rounded-[32px]"></div>
+          <div className="h-[400px] bg-slate-100 dark:bg-white/5 rounded-[32px]"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="p-4 md:p-8 space-y-8 min-h-screen bg-transparent" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="space-y-8 min-h-screen bg-transparent" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+          <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
             {t('title')}
           </h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1 max-w-2xl">
+          <p className="text-slate-500 dark:text-slate-400 mt-1 max-w-2xl font-medium">
             {t('subtitle')}
           </p>
         </div>
         <div className="flex items-center gap-3">
           <button 
             onClick={fetchStats}
-            className="p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 transition-all shadow-sm"
+            className="p-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-all shadow-sm"
           >
             <RefreshCcw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
           </button>
           <button 
             onClick={handleExport}
             disabled={exporting}
-            className="flex items-center gap-2 px-5 py-2.5 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white rounded-xl shadow-lg shadow-primary-500/20 transition-all font-medium"
+            className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-2xl shadow-lg shadow-indigo-500/20 transition-all font-bold"
           >
             {exporting ? <RefreshCcw className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
             <span>{t('ranking.export_btn')}</span>
@@ -177,25 +177,25 @@ export const AdminStatistics = () => {
       />
 
       {/* Rankings Table */}
-      <section className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/30">
+      <section className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl overflow-hidden">
+        <div className="p-6 border-b border-slate-100 dark:border-white/5 flex justify-between items-center bg-slate-50/50 dark:bg-white/[0.02]">
           <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-black text-slate-900 dark:text-white">
               {t('ranking.title')}
             </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
               {t('ranking.subtitle')}
             </p>
           </div>
-          <div className="p-2 bg-primary-100 dark:bg-primary-900/30 rounded-lg">
-            <Clock className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+          <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl">
+            <Clock className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
           </div>
         </div>
         
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse" dir={isRTL ? 'rtl' : 'ltr'}>
             <thead>
-              <tr className="bg-gray-50/50 dark:bg-slate-800/50 text-gray-500 dark:text-gray-400 text-xs font-semibold uppercase tracking-wider">
+              <tr className="bg-slate-50/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">
                 <th className={`px-6 py-4 ${isRTL ? 'text-right' : 'text-left'}`}>{t('ranking.artisan')}</th>
                 <th className="px-6 py-4 text-center">{t('ranking.category')}</th>
                 <th className="px-6 py-4 text-center">{t('ranking.views')}</th>
@@ -205,7 +205,7 @@ export const AdminStatistics = () => {
                 <th className="px-6 py-4 text-center">{t('ranking.requests_responded')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
               <AnimatePresence mode="popLayout">
                 {rankings.map((artisan, idx) => (
                   <motion.tr 
@@ -213,15 +213,15 @@ export const AdminStatistics = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.05 }}
-                    className="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                    className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-primary-50 dark:bg-primary-900/20 flex items-center justify-center text-primary-600 font-bold border border-primary-100 dark:border-primary-800/50">
+                        <div className="w-10 h-10 rounded-[14px] bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center text-indigo-600 font-black border border-indigo-100 dark:border-indigo-800/50">
                           {artisan.user?.nomComplet?.charAt(0) || 'A'}
                         </div>
                         <div>
-                          <p className="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 transition-colors">
+                          <p className="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 transition-colors">
                             {artisan.user?.nomComplet}
                           </p>
                           <p className="text-xs text-gray-500 dark:text-gray-500 font-mono">ID: {artisan.id}</p>
@@ -275,10 +275,10 @@ export const AdminStatistics = () => {
 };
 
 const KPICard = ({ title, value, icon, trend, trendUp, color }) => (
-  <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+  <div className="bg-white dark:bg-slate-900 p-6 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl relative overflow-hidden group">
     <div className={`absolute top-0 right-0 w-24 h-24 bg-${color}-500 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity rounded-bl-full`}></div>
     <div className="flex justify-between items-start mb-4">
-      <div className="p-3 bg-gray-50 dark:bg-slate-800 rounded-xl group-hover:scale-110 transition-transform duration-300">
+      <div className="p-3 bg-slate-50 dark:bg-white/5 rounded-2xl group-hover:scale-110 transition-transform duration-300">
         {icon}
       </div>
       <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold ${trendUp ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20' : 'text-rose-600 bg-rose-50 dark:bg-rose-900/20'}`}>
@@ -287,8 +287,8 @@ const KPICard = ({ title, value, icon, trend, trendUp, color }) => (
       </div>
     </div>
     <div className="space-y-1">
-      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{title}</p>
-      <h3 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">{value}</h3>
+      <p className="text-sm font-bold text-slate-500 dark:text-slate-400">{title}</p>
+      <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{value}</h3>
     </div>
   </div>
 );

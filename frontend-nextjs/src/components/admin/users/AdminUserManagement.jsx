@@ -158,7 +158,7 @@ const AdminUserManagement = () => {
   return (
     <div className="space-y-6">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-6 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl">
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
             <Users className="text-blue-600" size={28} />
@@ -178,8 +178,8 @@ const AdminUserManagement = () => {
       </div>
 
       {/* Tabs & Filters */}
-      <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-slate-100 dark:border-slate-800 p-4 gap-4">
+      <div className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl overflow-hidden">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-slate-100 dark:border-white/5 p-6 gap-4">
           {/* Tabs */}
           <div className="flex p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit">
             <button
@@ -215,14 +215,14 @@ const AdminUserManagement = () => {
                 placeholder={t('filters.search_placeholder')}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none w-64 transition-all"
+                className="pl-10 pr-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-2xl text-sm focus:ring-2 focus:ring-blue-500 outline-none w-full sm:w-64 transition-all"
               />
             </div>
             
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+              className="px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-2xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
             >
               <option value="">{t('filters.all_statuses')}</option>
               <option value="actif">{t('filters.status_active')}</option>
@@ -293,7 +293,7 @@ const AdminUserManagement = () => {
 
         {/* Pagination Placeholder */}
         {pagination.total > 1 && (
-          <div className="p-6 border-t border-slate-100 dark:border-slate-800 flex justify-center gap-2">
+          <div className="p-6 border-t border-slate-100 dark:border-white/5 flex justify-center gap-2">
             {[...Array(pagination.total)].map((_, i) => (
               <button
                 key={i}
