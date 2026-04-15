@@ -112,7 +112,7 @@ export default function SubscriptionsAdminPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-20">
       {/* Header section */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl p-8 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl">
         <div>
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
@@ -213,13 +213,13 @@ export default function SubscriptionsAdminPage() {
       />
 
       {/* Admin Quick Tip */}
-      <div className="mt-12 p-4 rounded-[32px] bg-slate-50/50 dark:bg-white/[0.02] border border-slate-100 dark:border-white/5 flex items-start gap-4">
-         <div className="p-2 bg-white dark:bg-white/5 rounded-xl text-slate-400">
+      <div className="mt-12 p-6 rounded-[32px] bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-100 dark:border-white/5 flex items-start gap-4">
+         <div className="p-3 bg-blue-50 dark:bg-blue-500/10 rounded-xl text-blue-600">
             <Info className="w-5 h-5" />
          </div>
          <div>
             <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">Information sur la conformité</h4>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                Conformément à la réglementation de la Banque d&apos;Algérie sur les services numériques, assurez-vous de conserver une trace numérique pour chaque preuve de virement CCP validé manuellement. Les audits pourront nécessiter ces documents.
             </p>
          </div>

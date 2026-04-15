@@ -25,8 +25,8 @@ export function PendingPayments({ payments, onConfirm, onReject }) {
 
   if (!payments || payments.length === 0) {
     return (
-      <div className="mb-12 p-8 rounded-3xl bg-slate-50 dark:bg-slate-900/50 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center text-center">
-        <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4">
+      <div className="mb-12 p-8 rounded-[32px] bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-md border-2 border-dashed border-slate-200 dark:border-white/5 flex flex-col items-center justify-center text-center">
+        <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5 flex items-center justify-center mb-4">
           <Check className="w-6 h-6 text-slate-400" />
         </div>
         <p className="text-slate-500 font-medium">{t("no_pending")}</p>
@@ -53,7 +53,7 @@ export function PendingPayments({ payments, onConfirm, onReject }) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="group relative p-5 rounded-3xl bg-white dark:bg-slate-900 border border-blue-100 dark:border-blue-900/40 shadow-sm hover:shadow-md transition-all"
+            className="group relative p-5 rounded-[32px] bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-blue-100 dark:border-white/5 shadow-sm hover:shadow-md transition-all"
           >
             <div className="flex items-start gap-4">
                <Avatar 

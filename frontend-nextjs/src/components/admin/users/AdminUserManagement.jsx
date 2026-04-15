@@ -158,7 +158,7 @@ const AdminUserManagement = () => {
   return (
     <div className="space-y-6">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-6 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl p-6 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl">
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
             <Users className="text-blue-600" size={28} />
@@ -178,7 +178,7 @@ const AdminUserManagement = () => {
       </div>
 
       {/* Tabs & Filters */}
-      <div className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl overflow-hidden">
+      <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl overflow-hidden">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-slate-100 dark:border-white/5 p-6 gap-4">
           {/* Tabs */}
           <div className="flex p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit">

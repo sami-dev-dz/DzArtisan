@@ -24,7 +24,7 @@ export function KpiCard({ label, value, trend, icon: Icon, color = "blue", delay
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
       className={cn(
-        "bg-white dark:bg-slate-900 rounded-[32px] p-6 border border-slate-100 dark:border-white/5 shadow-xl",
+        "bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] p-6 border border-slate-100 dark:border-white/5 shadow-xl",
         cfg.glow
       )}
     >

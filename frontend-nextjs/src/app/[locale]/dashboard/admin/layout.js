@@ -99,8 +99,8 @@ export default function AdminLayout({ children }) {
         <AdminMobileNav pendingCounts={pendingCounts} />
 
         {/* Ambient gradients */}
-        <div className="pointer-events-none absolute top-0 right-0 w-1/2 h-1/2 bg-indigo-600/5 rounded-full blur-[120px]" />
-        <div className="pointer-events-none absolute bottom-0 left-0 w-1/2 h-1/2 bg-violet-600/5 rounded-full blur-[120px]" />
+        <div className="pointer-events-none absolute top-0 right-0 w-[50%] h-[50%] bg-blue-600/5 rounded-full blur-[120px]" />
+        <div className="pointer-events-none absolute bottom-0 left-0 w-[50%] h-[50%] bg-indigo-600/5 rounded-full blur-[120px]" />
 
         <main className="flex-1 p-5 sm:p-8 lg:p-10 relative">
           {children}

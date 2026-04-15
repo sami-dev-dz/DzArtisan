@@ -109,14 +109,14 @@ export const AdminStatistics = () => {
         <div className="flex items-center gap-3">
           <button 
             onClick={fetchStats}
-            className="p-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-white/5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-all shadow-sm"
+            className="p-2.5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-100 dark:border-white/5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-all shadow-sm"
           >
             <RefreshCcw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
           </button>
           <button 
             onClick={handleExport}
             disabled={exporting}
-            className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-2xl shadow-lg shadow-indigo-500/20 transition-all font-bold"
+            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-2xl shadow-xl shadow-blue-500/20 transition-all font-bold"
           >
             {exporting ? <RefreshCcw className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
             <span>{t('ranking.export_btn')}</span>
@@ -177,8 +177,8 @@ export const AdminStatistics = () => {
       />
 
       {/* Rankings Table */}
-      <section className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl overflow-hidden">
-        <div className="p-6 border-b border-slate-100 dark:border-white/5 flex justify-between items-center bg-slate-50/50 dark:bg-white/[0.02]">
+      <section className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl overflow-hidden">
+        <div className="p-6 border-b border-slate-100 dark:border-white/5 flex justify-between items-center bg-slate-50/30 dark:bg-white/2">
           <div>
             <h2 className="text-xl font-black text-slate-900 dark:text-white">
               {t('ranking.title')}
@@ -187,8 +187,8 @@ export const AdminStatistics = () => {
               {t('ranking.subtitle')}
             </p>
           </div>
-          <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl">
-            <Clock className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+          <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-xl">
+            <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
           </div>
         </div>
         
@@ -217,11 +217,11 @@ export const AdminStatistics = () => {
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-[14px] bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center text-indigo-600 font-black border border-indigo-100 dark:border-indigo-800/50">
+                        <div className="w-10 h-10 rounded-[14px] bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 font-black border border-blue-100 dark:border-blue-800/50">
                           {artisan.user?.nomComplet?.charAt(0) || 'A'}
                         </div>
                         <div>
-                          <p className="font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 transition-colors">
+                          <p className="font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
                             {artisan.user?.nomComplet}
                           </p>
                           <p className="text-xs text-gray-500 dark:text-gray-500 font-mono">ID: {artisan.id}</p>
@@ -275,20 +275,20 @@ export const AdminStatistics = () => {
 };
 
 const KPICard = ({ title, value, icon, trend, trendUp, color }) => (
-  <div className="bg-white dark:bg-slate-900 p-6 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl relative overflow-hidden group">
+  <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl p-6 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl relative overflow-hidden group">
     <div className={`absolute top-0 right-0 w-24 h-24 bg-${color}-500 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity rounded-bl-full`}></div>
     <div className="flex justify-between items-start mb-4">
-      <div className="p-3 bg-slate-50 dark:bg-white/5 rounded-2xl group-hover:scale-110 transition-transform duration-300">
+      <div className="p-3 bg-slate-50/50 dark:bg-white/5 rounded-2xl group-hover:scale-110 transition-transform duration-300">
         {icon}
       </div>
-      <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold ${trendUp ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20' : 'text-rose-600 bg-rose-50 dark:bg-rose-900/20'}`}>
+      <div className={`flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${trendUp ? 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20' : 'text-rose-600 bg-rose-50 dark:bg-rose-900/20'}`}>
         {trendUp ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
         {trend}
       </div>
     </div>
     <div className="space-y-1">
-      <p className="text-sm font-bold text-slate-500 dark:text-slate-400">{title}</p>
-      <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{value}</h3>
+      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{title}</p>
+      <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter">{value}</h3>
     </div>
   </div>
 );

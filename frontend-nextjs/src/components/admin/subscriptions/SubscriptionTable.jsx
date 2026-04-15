@@ -20,7 +20,7 @@ import { Avatar } from "@/components/ui/Avatar"
 import { cn } from "@/lib/utils"
 
 export function SubscriptionTable({ 
-  subscriptions, 
+  subscriptions = [], 
   loading, 
   activeTab, 
   onTabChange,
@@ -66,9 +66,9 @@ export function SubscriptionTable({
   }
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
+    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 overflow-hidden shadow-xl">
       {/* Tabs Sidebar/Header */}
-      <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
+      <div className="p-4 border-b border-slate-100 dark:border-white/5 bg-slate-50/30 dark:bg-white/2">
         <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2 md:pb-0">
           {tabs.map((tab) => (
             <button
@@ -89,7 +89,7 @@ export function SubscriptionTable({
 
       <div className="overflow-x-auto">
         <table className="w-full text-left rtl:text-right">
-          <thead className="bg-slate-50 dark:bg-slate-800/50">
+          <thead className="bg-slate-50/50 dark:bg-white/[0.02]">
             <tr>
               <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">
                 {t("table.artisan")}
@@ -121,15 +121,15 @@ export function SubscriptionTable({
                    <td className="px-6 py-4"></td>
                 </tr>
               ))
-            ) : subscriptions.length === 0 ? (
+            ) : !subscriptions || subscriptions.length === 0 ? (
               <tr>
                 <td colSpan="6" className="px-6 py-12 text-center text-slate-500 dark:text-slate-400">
-                   {t("artisan_management.table.no_data")}
+                   {t("table.no_data")}
                 </td>
               </tr>
             ) : (
               subscriptions.map((sub) => (
-                <tr key={sub.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                <tr key={sub.id} className="hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors group">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <Avatar 

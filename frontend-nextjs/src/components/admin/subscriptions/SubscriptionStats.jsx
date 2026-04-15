@@ -54,7 +54,7 @@ export function SubscriptionStats({ stats }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
-          className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm"
+          className="p-6 rounded-[32px] bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-100 dark:border-white/5 shadow-xl"
         >
           <div className="flex items-center justify-between mb-4">
             <div className={cn("p-3 rounded-xl", item.color)}>

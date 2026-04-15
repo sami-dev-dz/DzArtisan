@@ -321,6 +321,12 @@
         "expired": "Expirés",
         "suspended": "Suspendus"
       },
+      "stats": {
+        "active": "Abonnements Actifs",
+        "pending": "Paiements en attente",
+        "expiring": "Bientôt expirés",
+        "expired": "Expirés"
+      },
       "pending_payments": {
         "title": "Paiements en attente de confirmation",
         "confirm_btn": "Confirmer le paiement",
@@ -342,10 +348,12 @@
         "history": "Historique",
         "days": "{count} jours",
         "expired_ago": "Expiré il y a {days}j",
-        "manual_method": "Manuel / Virement"
+        "manual_method": "Manuel / Virement",
+        "no_data": "Aucun abonnement ne correspond à ce filtre."
       },
       "manual_activation": {
         "btn": "Activation manuelle",
+        "title": "Activation Manuelle",
         "search_artisan": "Rechercher un artisan",
         "success": "Abonnement activé avec succès."
       },
@@ -382,7 +390,44 @@
       },
       "notifications": {
         "status_updated": "Statut de la plainte mis à jour.",
-        "note_added": "Note interne ajoutée."
+        "note_added": "Note interne ajoutée.",
+        "warning_sent": "Avertissement envoyé par e-mail.",
+        "account_suspended": "Compte de l'accusé suspendu.",
+        "account_deleted": "Compte supprimé définitivement.",
+        "resolved": "Plainte résolue.",
+        "dismissed": "Plainte classée."
+      }
+    },
+    "interventions_management": {
+      "title": "Gestion des Interventions",
+      "subtitle": "Supervisez l'ensemble des demandes de services et interventions sur la plateforme.",
+      "stats": {
+        "total": "Total demandes",
+        "active": "Actives",
+        "completed": "Terminées"
+      },
+      "tabs": {
+        "all": "Toutes",
+        "pending": "En attente",
+        "active": "Actives",
+        "completed": "Terminées",
+        "canceled": "Annulées"
+      },
+      "table": {
+        "info": "Intervention / ID",
+        "client": "Client",
+        "artisan": "Artisan",
+        "location": "Localisation",
+        "status": "Statut",
+        "no_data": "Aucune intervention trouvée."
+      },
+      "details": {
+        "title": "Détails de l'Intervention",
+        "general_info": "Informations Générales",
+        "parties": "Parties impliquées",
+        "address": "Adresse précise",
+        "photos": "Gallerie Photos",
+        "not_assigned": "Non attribué"
       }
     },
     "user_management": {

@@ -136,7 +136,7 @@ export default function ComplaintManagement() {
               className={cn(
                 "px-4 py-2 rounded-lg text-sm font-black transition-all whitespace-nowrap",
                 activeTab === tab 
-                  ? "bg-white dark:bg-indigo-600 text-indigo-600 dark:text-white shadow-sm"
+                  ? "bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-sm"
                   : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               )}
             >
@@ -155,7 +155,7 @@ export default function ComplaintManagement() {
           <input
             type="text"
             placeholder={commonT("search")}
-            className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-white/5 border-none focus:ring-2 focus:ring-indigo-500 text-sm font-bold placeholder:text-slate-400 outline-none"
+            className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-white/5 border-none focus:ring-2 focus:ring-blue-500 text-sm font-bold placeholder:text-slate-400 outline-none"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -188,16 +188,16 @@ export default function ComplaintManagement() {
                   layoutId={`complaint-${complaint.id}`}
                   onClick={() => setSelectedComplaint(complaint)}
                   className={cn(
-                    "p-4 rounded-2xl border transition-all cursor-pointer group",
+                    "p-4 rounded-3xl border backdrop-blur-md transition-all cursor-pointer group shadow-sm",
                     selectedComplaint?.id === complaint.id
-                      ? "bg-indigo-50/50 dark:bg-indigo-500/5 border-indigo-200 dark:border-indigo-500/20"
-                      : "bg-white dark:bg-[#0a0f1e] border-slate-100 dark:border-white/5 hover:border-indigo-100 dark:hover:border-white/10 shadow-sm"
+                      ? "bg-blue-50/50 dark:bg-blue-500/5 border-blue-200 dark:border-blue-500/20"
+                      : "bg-white/80 dark:bg-slate-900/40 border-slate-100 dark:border-white/5 hover:border-blue-100 dark:hover:border-white/10"
                   )}
                 >
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0">
-                        {complaint.accuse.role === 'artisan' ? <Briefcase className="w-6 h-6 text-indigo-600" /> : <User className="w-6 h-6 text-slate-600" />}
+                      <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5 flex items-center justify-center shrink-0">
+                        {complaint.accuse.role === 'artisan' ? <Briefcase className="w-6 h-6 text-blue-600" /> : <User className="w-6 h-6 text-slate-600" />}
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
@@ -237,24 +237,24 @@ export default function ComplaintManagement() {
                 exit={{ opacity: 0, y: 20 }}
                 className="sticky top-24"
               >
-                <Card className="bg-white dark:bg-[#0a0f1e] border-slate-100 dark:border-white/5 rounded-3xl overflow-hidden overflow-y-auto max-h-[calc(100vh-120px)] shadow-xl">
+                <Card className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl border-slate-100 dark:border-white/5 rounded-[32px] overflow-hidden overflow-y-auto max-h-[calc(100vh-120px)] shadow-2xl">
                   {/* Detailed View - Mock content for now */}
-                  <div className="p-6 bg-indigo-600 text-white">
+                  <div className="p-6 bg-blue-600 text-white">
                     <div className="flex justify-between items-start">
                       <h2 className="text-xl font-black">{t("details.title")}</h2>
                       <button onClick={() => setSelectedComplaint(null)} className="p-1 hover:bg-white/10 rounded-lg transition-colors">
                         <Eye className="w-5 h-5 rotate-180" />
                       </button>
                     </div>
-                    <p className="text-indigo-100 text-sm font-bold mt-1 uppercase tracking-widest">#{selectedComplaint.id}</p>
+                    <p className="text-blue-100 text-sm font-bold mt-1 uppercase tracking-widest">#{selectedComplaint.id}</p>
                   </div>
 
                   <div className="p-6 space-y-6">
                     {/* Parties */}
                     <div className="space-y-3">
                       <label className="text-xs font-black text-slate-400 uppercase tracking-widest">{t("table.complainant")}</label>
-                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-white/5 rounded-2xl">
-                        <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/10 flex items-center justify-center font-black text-indigo-600">
+                      <div className="flex items-center gap-3 p-3 bg-slate-50/50 dark:bg-white/5 rounded-2xl">
+                        <div className="w-10 h-10 rounded-xl bg-white dark:bg-white/10 flex items-center justify-center font-black text-blue-600">
                           {selectedComplaint.demandeur.name.charAt(0)}
                         </div>
                         <div>
@@ -298,7 +298,7 @@ export default function ComplaintManagement() {
                     <div className="grid grid-cols-2 gap-2 pt-4">
                       {selectedComplaint.statut === 'nouveau' && (
                         <Button 
-                          className="col-span-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold gap-2"
+                          className="col-span-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold gap-2"
                         >
                           <RefreshCw className="w-4 h-4" />
                           {t("actions.investigate")}

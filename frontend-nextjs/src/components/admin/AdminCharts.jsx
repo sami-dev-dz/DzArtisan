@@ -24,7 +24,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export function RegistrationsChart({ data }) {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl">
+    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl">
       <div className="mb-6">
         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Nouvelles inscriptions</p>
         <h3 className="text-lg font-black text-slate-900 dark:text-white mt-0.5">Par semaine — 8 dernières semaines</h3>
@@ -85,7 +85,7 @@ const WILAYA_COLORS = [
 
 export function WilayaBarChart({ data }) {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl">
+    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl">
       <div className="mb-6">
         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Demandes d&apos;intervention</p>
         <h3 className="text-lg font-black text-slate-900 dark:text-white mt-0.5">Top 10 Wilayas actives</h3>

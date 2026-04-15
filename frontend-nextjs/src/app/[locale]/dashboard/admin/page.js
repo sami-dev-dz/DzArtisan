@@ -26,15 +26,15 @@ const ICON_MAP = {
 /* ─────────────────────── KPI SKELETON CARD ─────────────────────── */
 function KpiSkeleton() {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[32px] p-6 border border-slate-100 dark:border-white/5 shadow-xl animate-pulse">
+    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] p-6 border border-slate-100 dark:border-white/5 shadow-xl animate-pulse">
       <div className="flex items-start justify-between mb-4">
-        <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5" />
-        <div className="w-16 h-6 rounded-full bg-slate-100 dark:bg-white/5" />
+        <div className="w-12 h-12 rounded-2xl bg-slate-100/50 dark:bg-white/5" />
+        <div className="w-16 h-6 rounded-full bg-slate-100/50 dark:bg-white/5" />
       </div>
       <div className="space-y-2">
-        <div className="h-2 w-24 rounded bg-slate-100 dark:bg-white/5" />
-        <div className="h-8 w-32 rounded bg-slate-100 dark:bg-white/5" />
-        <div className="h-2 w-20 rounded bg-slate-100 dark:bg-white/5" />
+        <div className="h-2 w-24 rounded bg-slate-100/50 dark:bg-white/5" />
+        <div className="h-8 w-32 rounded bg-slate-100/50 dark:bg-white/5" />
+        <div className="h-2 w-20 rounded bg-slate-100/50 dark:bg-white/5" />
       </div>
     </div>
   )
@@ -44,7 +44,7 @@ function KpiSkeleton() {
 function ChartSkeleton({ height = 320 }) {
   return (
     <div
-      className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl animate-pulse"
+      className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl animate-pulse"
       style={{ minHeight: height }}
     >
       <div className="h-2 w-24 rounded bg-slate-100 dark:bg-white/5 mb-2" />
@@ -83,9 +83,9 @@ function AlertsSkeleton() {
 /* ──────────────────────── ACTIVITY SKELETON ─────────────────────── */
 function ActivitySkeleton() {
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl animate-pulse">
-      <div className="h-2 w-20 rounded bg-slate-100 dark:bg-white/5 mb-2" />
-      <div className="h-5 w-40 rounded bg-slate-100 dark:bg-white/5 mb-6" />
+    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl animate-pulse">
+      <div className="h-2 w-20 rounded bg-slate-100/50 dark:bg-white/5 mb-2" />
+      <div className="h-5 w-40 rounded bg-slate-100/50 dark:bg-white/5 mb-6" />
       <div className="space-y-5 pl-5">
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="flex items-start gap-4">
@@ -154,10 +154,10 @@ export default function AdminOverviewPage() {
       >
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center">
+            <div className="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center">
               <ShieldCheck className="w-3.5 h-3.5 text-white" />
             </div>
-            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-indigo-500">
+            <span className="text-[10px] font-black uppercase tracking-[0.25em] text-blue-500">
               Administration
             </span>
           </div>
@@ -176,7 +176,7 @@ export default function AdminOverviewPage() {
           className={cn(
             "flex items-center gap-2 px-4 py-2 rounded-2xl border text-xs font-black uppercase tracking-widest transition-all",
             "border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400",
-            "hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-700 dark:hover:text-slate-200",
+            "hover:bg-blue-50 dark:hover:bg-blue-600/10 hover:text-blue-700 dark:hover:text-blue-200",
             "disabled:opacity-40 disabled:cursor-not-allowed"
           )}
         >

@@ -39,7 +39,7 @@ export function AdminAlerts({ alerts }) {
 
   if (items.length === 0) {
     return (
-      <div className="flex items-center gap-3 p-5 bg-emerald-50 dark:bg-emerald-500/10 rounded-[24px] border border-emerald-100 dark:border-emerald-500/20">
+      <div className="flex items-center gap-3 p-5 bg-emerald-50/50 dark:bg-emerald-500/10 backdrop-blur-md rounded-[32px] border border-emerald-100 dark:border-emerald-500/20">
         <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 text-lg">
           ✓
         </div>
@@ -52,7 +52,7 @@ export function AdminAlerts({ alerts }) {
 
   return (
     <div className="space-y-3">
-      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
+      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2 px-1">
         <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
         Attention requise
       </p>
@@ -66,10 +66,10 @@ export function AdminAlerts({ alerts }) {
           >
             <Link href={item.link}>
               <div className={cn(
-                "group flex items-center gap-4 p-4 rounded-[24px] border transition-all hover:scale-[1.02]",
+                "group flex items-center gap-4 p-4 rounded-[32px] border backdrop-blur-md transition-all hover:scale-[1.02] shadow-sm hover:shadow-md",
                 item.color === "amber"
-                  ? "bg-amber-50 dark:bg-amber-500/10 border-amber-100 dark:border-amber-500/20 hover:border-amber-300 dark:hover:border-amber-500/40"
-                  : "bg-red-50 dark:bg-red-500/10 border-red-100 dark:border-red-500/20 hover:border-red-300 dark:hover:border-red-500/40"
+                  ? "bg-amber-50/50 dark:bg-amber-500/10 border-amber-100 dark:border-amber-500/20 hover:border-amber-300 dark:hover:border-amber-500/40"
+                  : "bg-red-50/50 dark:bg-red-500/10 border-red-100 dark:border-red-500/20 hover:border-red-300 dark:hover:border-red-500/40"
               )}>
                 <div className={cn(
                   "w-10 h-10 rounded-2xl flex items-center justify-center shrink-0",

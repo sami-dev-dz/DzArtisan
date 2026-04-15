@@ -315,175 +315,173 @@
         "suspended": "تم تجميد الحساب بنجاح.",
         "unsuspended": "تم فك تجميد الحساب.",
         "promoted": "تم تحديث حالة الترقية."
+      }
+    },
+    "subscription_management": {
+      "title": "إدارة الاشتراكات",
+      "subtitle": "تتبع الإيرادات، التحقق من الدفع اليدوي، وإدارة فترات التفعيل.",
+      "stats": {
+        "active": "اشتراكات نشطة",
+        "pending": "دفعات قيد الانتظار",
+        "expiring": "تنتهي قريباً",
+        "expired": "منتهية"
       },
-      "subscription_management": {
-        "title": "إدارة الاشتراكات",
-        "subtitle": "تتبع الإيرادات، التحقق من الدفع اليدوي، وإدارة فترات التفعيل.",
-        "stats": {
-          "active": "اشتراكات نشطة",
-          "pending": "دفعات قيد الانتظار",
-          "expiring": "تنتهي قريباً",
-          "expired": "منتهية"
-        },
-        "tabs": {
-          "all": "الكل",
-          "active": "نشطة",
-          "trial": "تجريبية",
-          "expiring": "تنتهي قريباً",
-          "expired": "منتهية",
-          "suspended": "مجمدة"
-        },
-        "pending_payments": {
-          "title": "دفعات بانتظار التأكيد",
-          "confirm_btn": "تأكيد الدفع",
-          "reject_btn": "رفض",
-          "view_proof": "عرض الوصل",
-          "expected_amount": "المبلغ المتوقع",
-          "artisan_info": "معلومات الحرفي",
-          "no_pending": "لا توجد دفعات معلقة."
-        },
-        "table": {
-          "artisan": "الحرفي",
-          "plan": "الباقة",
-          "dates": "الفترة",
-          "remaining": "الأيام المتبقية",
-          "payment": "الدفع",
-          "status": "الحالة",
-          "history": "السجل",
-          "days": "{count} يوم",
-          "expired_ago": "انتهى منذ {days} يوم",
-          "manual_method": "يدوي / تحويل"
-        },
-        "manual_activation": {
-          "btn": "تفعيل يدوي",
-          "title": "إنشاء/تمديد اشتراك",
-          "search_artisan": "البحث عن حرفي",
-          "select_plan": "اختر الباقة",
-          "amount_label": "المبلغ المستلم (دج)",
-          "method_label": "طريقة الدفع",
-          "success": "تم تفعيل الاشتراك بنجاح."
-        },
-        "modals": {
-          "confirm_payment_title": "تأكيد التفعيل",
-          "confirm_payment_desc": "سيؤدي هذا لتفعيل الاشتراك فوراً وإرسال بريد تأكيد للحرفي.",
-          "reject_payment_title": "رفض الدفع",
-          "reject_payment_placeholder": "اشرح سبب رفض التحويل...",
-          "history_title": "السجل الكامل — {name}"
-        },
-        "complaints_management": {
-          "title": "إدارة الشكاوى",
-          "subtitle": "إدارة النزاعات بين الزبائن والحرفيين، التحقيق في الحالات واتخاذ إجراءات الإشراف.",
-          "tabs": {
-            "new": "جديدة",
-            "investigating": "قيد التحقيق",
-            "all": "الكل"
-          },
-          "table": {
-            "type": "النوع",
-            "complainant": "المشتكي",
-            "accused": "المشتكى عليه",
-            "category": "الفئة",
-            "date": "التاريخ",
-            "photos": "الصور",
-            "status": "الحالة"
-          },
-          "types": {
-            "client_to_artisan": "زبون ← حرفي",
-            "artisan_to_client": "حرفي ← زبون"
-          },
-          "status": {
-            "new": "جديدة",
-            "investigating": "تحقيق",
-            "resolved": "تم الحل",
-            "dismissed": "محفوظة"
-          },
-          "details": {
-            "title": "تفاصيل الشكوى",
-            "description": "وصف الوقائع",
-            "evidence": "الأدلة (صور)",
-            "linked_intervention": "التدخل المرتبط",
-            "audit_log": "سجل الإجراءات",
-            "no_evidence": "لا توجد صور مرفقة",
-            "no_intervention": "لا يوجد تدخل مرتبط"
-          },
-          "actions": {
-            "investigate": "بدء التحقيق",
-            "add_note": "إضافة ملاحظة داخلية",
-            "send_warning": "إرسال تحذير",
-            "suspend_account": "تجميد الحساب",
-            "delete_account": "حذف الحساب",
-            "resolve": "تحديد كمحلولة",
-            "dismiss": "حفظ القضية",
-            "confirm_delete": "هل أنت متأكد من رغبتك في حذف هذا الحساب نهائياً؟ هذا الإجراء غير قابل للتراجع."
-          },
-          "three_strikes": {
-            "alert_title": "تحذير: ثلاث شكاوى مؤكدة",
-            "alert_desc": "وصل هذا الحرفي إلى حد 3 شكاوى مؤكدة. نوصي بشدة بإجراء مراجعة يدوية.",
-            "badge": "3+ شكاوى"
-          },
-          "notifications": {
-            "status_updated": "تم تحديث حالة الشكوى.",
-            "note_added": "تمت إضافة ملاحظة داخلية.",
-            "warning_sent": "تم إرسال التحذير عبر البريد.",
-            "account_suspended": "تم تجميد حساب المشتكى عليه.",
-            "account_deleted": "تم حذف الحساب نهائياً.",
-            "resolved": "تم حل الشكوى.",
-            "dismissed": "تم حفظ الشكوى."
-          },
-          "user_management": {
-            "title": "إدارة المستخدمين",
-            "subtitle": "إدارة حسابات الزبائن والحرفيين، التواصل معهم والإشراف على المجتمع.",
-            "tabs": {
-              "clients": "الزبائن",
-              "artisans": "الحرفيين"
-            },
-            "filters": {
-              "search_placeholder": "الاسم، البريد أو الهاتف...",
-              "all_wilayas": "كل الولايات",
-              "all_statuses": "كل الحالات",
-              "status_active": "نشط",
-              "status_suspended": "موقوف"
-            },
-            "table": {
-              "user": "المستخدم",
-              "contact": "الاتصال",
-              "stats": "الإحصائيات",
-              "status": "الحالة",
-              "actions": "الإجراءات",
-              "requests": "{count} طلب",
-              "reviews": "{count} تقييم",
-              "rating": "{rate} ★",
-              "no_users": "لم يتم العثور على مستخدمين."
-            },
-            "actions": {
-              "view_profile": "عرض الملف",
-              "send_email": "إرسال بريد",
-              "suspend": "توقيف",
-              "unsuspend": "تفعيل",
-              "delete": "حذف نهائي",
-              "bulk_email": "بريد جماعي",
-              "bulk_suspend": "توقيف جماعي"
-            },
-            "modals": {
-              "email_title": "إرسال بريد إلى {name}",
-              "email_subject": "موضوع الرسالة",
-              "email_body": "محتوى الرسالة",
-              "email_send": "إرسال البريد",
-              "suspend_title": "توقيف حساب {name}",
-              "suspend_reason": "سبب التوقيف (يُرسل عبر البريد)",
-              "delete_title": "حذف نهائي: {name}",
-              "delete_warning": "هذا الإجراء غير قابل للتراجع. سيتم إخفاء كل البيانات الشخصية وفقاً للقانون 18-07.",
-              "delete_reason": "سبب الحذف (إلزامي)",
-              "confirm_delete": "حذف الحساب"
-            },
-            "notifications": {
-              "email_sent": "تم إرسال البريد بنجاح.",
-              "user_suspended": "تم توقيف المستخدم.",
-              "user_unsuspended": "تم رفع التوقيف.",
-              "user_deleted": "تم حذف الحساب وتجهيل البيانات.",
-              "bulk_success": "تم تنفيذ الإجراء الجماعي بنجاح."
-            }
-          },
+      "tabs": {
+        "all": "الكل",
+        "active": "نشطة",
+        "trial": "تجريبية",
+        "expiring": "تنتهي قريباً",
+        "expired": "منتهية",
+        "suspended": "مجمدة"
+      },
+      "pending_payments": {
+        "title": "دفعات بانتظار التأكيد",
+        "confirm_btn": "تأكيد الدفع",
+        "reject_btn": "رفض",
+        "view_proof": "عرض الوصل",
+        "expected_amount": "المبلغ المتوقع",
+        "artisan_info": "معلومات الحرفي",
+        "no_pending": "لا توجد دفعات معلقة."
+      },
+      "table": {
+        "artisan": "الحرفي",
+        "plan": "الباقة",
+        "dates": "الفترة",
+        "remaining": "الأيام المتبقية",
+        "payment": "الدفع",
+        "status": "الحالة",
+        "history": "السجل",
+        "days": "{count} يوم",
+        "expired_ago": "انتهى منذ {days} يوم",
+        "manual_method": "يدوي / تحويل",
+        "no_data": "لا توجد اشتراكات تطابق هذا الفلتر."
+      },
+      "manual_activation": {
+        "btn": "تفعيل يدوي",
+        "title": "تفعيل يدوي",
+        "search_artisan": "البحث عن حرفي",
+        "select_plan": "اختر الباقة",
+        "amount_label": "المبلغ المستلم (دج)",
+        "method_label": "طريقة الدفع",
+        "success": "تم تفعيل الاشتراك بنجاح."
+      }
+    },
+    "complaints_management": {
+      "title": "إدارة الشكاوى",
+      "subtitle": "إدارة النزاعات بين الزبائن والحرفيين، التحقيق في الحالات واتخاذ إجراءات الإشراف.",
+      "tabs": {
+        "new": "جديدة",
+        "investigating": "قيد التحقيق",
+        "all": "الكل"
+      },
+      "table": {
+        "type": "النوع",
+        "complainant": "المشتكي",
+        "accused": "المشتكى عليه",
+        "category": "الفئة",
+        "date": "التاريخ",
+        "photos": "الصور",
+        "status": "الحالة"
+      },
+      "status": {
+        "new": "نحو جديد",
+        "investigating": "تحقيق",
+        "resolved": "تم الحل",
+        "dismissed": "محفوظة"
+      },
+      "details": {
+        "title": "تفاصيل الشكوى",
+        "description": "وصف الوقائع"
+      },
+      "actions": {
+        "investigate": "بدء التحقيق",
+        "add_note": "إضافة ملاحظة داخلية",
+        "send_warning": "إرسال تحذير",
+        "suspend_account": "تجميد الحساب",
+        "resolve": "تحديد كمحلولة"
+      },
+      "notifications": {
+        "status_updated": "تم تحديث حالة الشكوى.",
+        "note_added": "تمت إضافة ملاحظة داخلية."
+      }
+    },
+    "user_management": {
+      "title": "إدارة المستخدمين",
+      "subtitle": "إدارة حسابات الزبائن والحرفيين، التواصل معهم والإشراف على المجتمع.",
+      "tabs": {
+        "clients": "الزبائن",
+        "artisans": "الحرفيين"
+      },
+      "filters": {
+        "search_placeholder": "الاسم، البريد أو الهاتف...",
+        "all_statuses": "كل الحالات",
+        "status_active": "نشط",
+        "status_suspended": "موقوف"
+      },
+      "table": {
+        "user": "المستخدم",
+        "contact": "الاتصال",
+        "stats": "الإحصائيات",
+        "status": "الحالة",
+        "actions": "الإجراءات",
+        "requests": "{count} طلب",
+        "reviews": "{count} تقييم",
+        "no_users": "لم يتم العثور على مستخدمين."
+      },
+      "modals": {
+        "email_title": "إرسال بريد إلى {name}",
+        "email_subject": "موضوع الرسالة",
+        "email_body": "محتوى الرسالة",
+        "email_send": "إرسال البريد",
+        "suspend_title": "توقيف حساب {name}",
+        "suspend_reason": "سبب التوقيف (يُرسل عبر البريد)",
+        "delete_title": "حذف نهائي: {name}",
+        "delete_warning": "هذا الإجراء غير قابل للتراجع. سيتم إخفاء كل البيانات الشخصية وفقاً للقانون 18-07.",
+        "delete_reason": "سبب الحذف (إلزامي)",
+        "confirm_delete": "حذف الحساب",
+        "bulk_email": "بريد جماعي",
+        "bulk_suspend": "توقيف جماعي"
+      },
+      "notifications": {
+        "email_sent": "تم إرسال البريد بنجاح.",
+        "user_suspended": "تم توقيف المستخدم.",
+        "user_unsuspended": "تم رفع التوقيف.",
+        "user_deleted": "تم حذف الحساب وتجهيل البيانات.",
+        "bulk_success": "تم تنفيذ الإجراء الجماعي بنجاح."
+      }
+    },
+    "interventions_management": {
+      "title": "إدارة التدخلات",
+      "subtitle": "الإشراف على جميع طلبات الخدمة والتدخلات على المنصة.",
+      "stats": {
+        "total": "إجمالي الطلبات",
+        "active": "نشطة",
+        "completed": "مكتملة"
+      },
+      "tabs": {
+        "all": "الكل",
+        "pending": "قيد الانتظار",
+        "active": "نشطة",
+        "completed": "مكتملة",
+        "canceled": "ملغاة"
+      },
+      "table": {
+        "info": "التدخل / ID",
+        "client": "الزبون",
+        "artisan": "الحرفي",
+        "location": "الموقع",
+        "status": "الحالة",
+        "no_data": "لم يتم العثور على تدخلات."
+      },
+      "details": {
+        "title": "تفاصيل التدخل",
+        "general_info": "معلومات عامة",
+        "parties": "الأطراف المعنية",
+        "address": "العنوان الدقيق",
+        "photos": "معرض الصور",
+        "not_assigned": "غير معين"
+      }
+    },
           "statistics": {
             "title": "الإحصائيات والتحليلات",
             "subtitle": "تتبع نشاط المنصة، رضا الزبائن وأداء الحرفيين.",

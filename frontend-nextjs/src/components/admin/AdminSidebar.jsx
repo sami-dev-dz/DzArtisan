@@ -86,7 +86,7 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
               exit={{ opacity: 0, x: -8 }}
               className="flex items-center gap-2"
             >
-              <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center">
                 <ShieldCheck className="w-4 h-4 text-white" />
               </div>
               <span className="font-black text-slate-900 dark:text-white text-sm tracking-tight">
@@ -118,7 +118,7 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
               <div className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-2xl transition-all group relative",
                 isActive
-                  ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
+                  ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20"
                   : "text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white"
               )}>
                 <item.icon className={cn("w-5 h-5 shrink-0 transition-transform group-hover:scale-110", isActive && "stroke-[2.5]")} />
@@ -149,7 +149,7 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
 
                 {/* Active dot (collapsed mode) */}
                 {isActive && collapsed && (
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-indigo-600 rounded-l-full" />
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-blue-600 rounded-l-full" />
                 )}
               </div>
             </Link>
@@ -161,12 +161,12 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
       <div className="p-3 border-t border-slate-100 dark:border-white/5 shrink-0 space-y-1">
         {!collapsed && (
           <div className="flex items-center gap-3 px-3 py-2.5 rounded-2xl bg-slate-50 dark:bg-white/5 mb-1">
-            <div className="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center font-black text-indigo-600 text-sm shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center font-black text-blue-600 text-sm shrink-0">
               {user?.nomComplet?.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-black text-slate-900 dark:text-white truncate">{user?.nomComplet}</p>
-              <p className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">Admin</p>
+              <p className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Admin</p>
             </div>
           </div>
         )}

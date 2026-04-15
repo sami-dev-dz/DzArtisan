@@ -321,6 +321,12 @@
         "expired": "Expired",
         "suspended": "Suspended"
       },
+      "stats": {
+        "active": "Active Subscriptions",
+        "pending": "Pending Payments",
+        "expiring": "Expiring Soon",
+        "expired": "Expired"
+      },
       "pending_payments": {
         "title": "Payments Awaiting Confirmation",
         "confirm_btn": "Confirm Payment",
@@ -342,10 +348,12 @@
         "history": "History",
         "days": "{count} days",
         "expired_ago": "Expired {days}d ago",
-        "manual_method": "Manual / Transfer"
+        "manual_method": "Manual / Transfer",
+        "no_data": "No subscriptions matching this filter."
       },
       "manual_activation": {
         "btn": "Manual Activation",
+        "title": "Manual Activation",
         "search_artisan": "Search Artisan",
         "success": "Subscription successfully activated."
       },
@@ -382,7 +390,44 @@
       },
       "notifications": {
         "status_updated": "Complaint status updated.",
-        "note_added": "Internal note added."
+        "note_added": "Internal note added.",
+        "warning_sent": "Warning sent by email.",
+        "account_suspended": "Accused account suspended.",
+        "account_deleted": "Account permanently deleted.",
+        "resolved": "Complaint resolved.",
+        "dismissed": "Complaint dismissed."
+      }
+    },
+    "interventions_management": {
+      "title": "Interventions Management",
+      "subtitle": "Supervise all service requests and interventions on the platform.",
+      "stats": {
+        "total": "Total Requests",
+        "active": "Active",
+        "completed": "Completed"
+      },
+      "tabs": {
+        "all": "All",
+        "pending": "Pending",
+        "active": "Active",
+        "completed": "Completed",
+        "canceled": "Canceled"
+      },
+      "table": {
+        "info": "Intervention / ID",
+        "client": "Client",
+        "artisan": "Artisan",
+        "location": "Location",
+        "status": "Status",
+        "no_data": "No interventions found."
+      },
+      "details": {
+        "title": "Intervention Details",
+        "general_info": "General Information",
+        "parties": "Parties Involved",
+        "address": "Precise Address",
+        "photos": "Photo Gallery",
+        "not_assigned": "Not assigned"
       }
     },
     "user_management": {

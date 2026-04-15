@@ -71,28 +71,31 @@ class AdminController extends Controller
             ? round((($requestsThisMonth - $requestsPrevMonth) / $requestsPrevMonth) * 100, 1)
             : 0;
 
-        // ── 4. Subscription Revenue this month (real sub amounts) ─────────
-        $revenueThisMonth = Abonnement::whereBetween('created_at', [$startMonth, $now])
-            ->where('status', 'active')
-            ->sum('montant_paye');
-        $revenuePrevMonth = Abonnement::whereBetween('created_at', [$startPrev, $endPrev])
-            ->where('status', 'active')
-            ->sum('montant_paye');
+        // ── 4. Subscription Revenue this month (from paiements table) ─────
+        $revenueThisMonth = DB::table('paiements')
+            ->join('abonnements', 'paiements.abonnement_id', '=', 'abonnements.id')
+            ->where('paiements.statut', 'succes')
+            ->whereBetween('paiements.created_at', [$startMonth, $now])
+            ->sum('paiements.montant');
+        $revenuePrevMonth = DB::table('paiements')
+            ->join('abonnements', 'paiements.abonnement_id', '=', 'abonnements.id')
+            ->where('paiements.statut', 'succes')
+            ->whereBetween('paiements.created_at', [$startPrev, $endPrev])
+            ->sum('paiements.montant');
         $revenueTrend = $revenuePrevMonth > 0
             ? round((($revenueThisMonth - $revenuePrevMonth) / $revenuePrevMonth) * 100, 1)
             : 0;
 
         // ── Alerts ────────────────────────────────────────────────────────
         $pendingArtisans    = Artisan::where('statutValidation', 'en_attente')->count();
-        $expiringIn7Days    = Abonnement::where('status', 'active')
-            ->whereBetween('ends_at', [$now, $now->copy()->addDays(7)])
+        $expiringIn7Days    = Abonnement::where('statut', 'actif')
+            ->whereBetween('date_fin', [$now, $now->copy()->addDays(7)])
             ->count();
 
         // Unread complaints – graceful fallback if table doesn't exist yet
         try {
-            $unreadComplaints = DB::table('plaintes')
+            $unreadComplaints = DB::table('reclamations')
                 ->where('statut', 'nouveau')
-                ->orWhere('lu', false)
                 ->count();
         } catch (\Exception $e) {
             $unreadComplaints = 0;

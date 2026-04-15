@@ -108,6 +108,7 @@ Route::prefix('v1')->group(function () {
 
         // Admin Dashboard
         Route::prefix('admin')->middleware('role:admin')->group(function () {
+            Route::get('/overview', [AdminController::class, 'overview']);
             // Stats Overview (New)
             Route::get('/stats/overview', [AdminStatsController::class, 'index']);
             Route::get('/stats/rankings', [AdminStatsController::class, 'artisanRanking']);
