@@ -85,9 +85,10 @@ export default function ArtisanManagementPage() {
         reason
       })
       
+      const actionMap = { approve: 'approved', reject: 'rejected', suspend: 'suspended', unsuspend: 'unsuspended' }
       addToast({
         title: "Succès",
-        message: t(`notifications.${action === 'unsuspend' ? 'unsuspended' : action + 'ed'}`),
+        message: t(`notifications.${actionMap[action]}`),
         type: "success"
       })
       
