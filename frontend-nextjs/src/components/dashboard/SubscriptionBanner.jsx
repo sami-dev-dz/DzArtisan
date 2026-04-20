@@ -9,14 +9,14 @@ import { cn } from "@/lib/utils"
 
 export function SubscriptionBanner({ data = {} }) {
   const t = useTranslations("pricing")
-  const { status = 'none', days_left = 0, ends_at } = data
+  const { status = 'none', days_left = 0, date_fin, plan } = data
 
   const config = {
     active: {
       color: "bg-emerald-600 border-emerald-500 shadow-emerald-600/10",
       icon: CheckCircle2,
       title: "Abonnement Actif",
-      desc: `Il vous reste ${days_left} jours d'abonnement ${data.plan || ''}.`,
+      desc: `Il vous reste ${days_left} jours d'abonnement ${plan || ''}.`,
       btn: null
     },
     warning: {
@@ -37,7 +37,8 @@ export function SubscriptionBanner({ data = {} }) {
 
   const current = config[status] || config.expired
 
-  if (status === 'none') return null
+  // Don't show banner for no subscription or free plan (handled by free plan banner in parent)
+  if (!status || status === 'none' || plan === 'gratuit') return null
 
   return (
     <motion.div 
