@@ -30,6 +30,7 @@ export default function InterventionManagement() {
   const [activeTab, setActiveTab] = React.useState("all")
   const [search, setSearch] = React.useState("")
   const [pagination, setPagination] = React.useState({ current: 1, total: 1 })
+  const [statsData, setStatsData] = React.useState({ total: 0, active: 0, completed: 0 })
   
   const [selectedIntervention, setSelectedIntervention] = React.useState(null)
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
@@ -51,6 +52,11 @@ export default function InterventionManagement() {
         current: response.data.current_page || 1,
         total: response.data.last_page || 1
       })
+      setStatsData(response.data.stats || {
+        total: (response.data.data || []).length,
+        active: (response.data.data || []).filter(i => i.statut === 'en_cours').length,
+        completed: (response.data.data || []).filter(i => i.statut === 'termine').length
+      })
     } catch (error) {
       console.error("Error fetching interventions:", error)
       // Provide mock data if API fails so the UI works for demonstration
@@ -69,9 +75,9 @@ export default function InterventionManagement() {
   }, [fetchInterventions])
 
   const stats = [
-    { label: t("stats.total"), value: interventions.length, icon: ClipboardList, color: "blue" },
-    { label: t("stats.active"), value: interventions.filter(i => i.statut === 'en_cours').length, icon: Clock, color: "amber" },
-    { label: t("stats.completed"), value: interventions.filter(i => i.statut === 'termine').length, icon: CheckCircle2, color: "emerald" },
+    { label: t("stats.total"), value: statsData.total, icon: ClipboardList, color: "blue" },
+    { label: t("stats.active"), value: statsData.active, icon: Clock, color: "amber" },
+    { label: t("stats.completed"), value: statsData.completed, icon: CheckCircle2, color: "emerald" },
   ]
 
   const tabs = [
@@ -85,9 +91,9 @@ export default function InterventionManagement() {
   return (
     <div className="space-y-6">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl p-6 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-[#0A0A0A] p-6 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
             <ClipboardList className="text-blue-600" size={28} />
             {t("title")}
           </h1>
@@ -112,9 +118,9 @@ export default function InterventionManagement() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="p-6 bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 shadow-lg flex items-center gap-4"
+            className="p-6 bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 shadow-sm flex items-center gap-4 transition-all hover:shadow-md"
           >
-            <div className={`w-12 h-12 rounded-2xl bg-${stat.color}-100 dark:bg-${stat.color}-500/10 flex items-center justify-center text-${stat.color}-600`}>
+            <div className={`w-10 h-10 rounded-lg bg-${stat.color}-50 dark:bg-${stat.color}-500/10 flex items-center justify-center text-${stat.color}-600`}>
               <stat.icon size={24} />
             </div>
             <div>
@@ -126,18 +132,18 @@ export default function InterventionManagement() {
       </div>
 
       {/* Main Content Area */}
-      <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl overflow-hidden">
+      <div className="bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 shadow-sm overflow-hidden">
         {/* Filter Bar */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-slate-100 dark:border-white/5 p-6 gap-4">
-          <div className="flex p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-x-auto no-scrollbar">
+          <div className="flex p-1 bg-slate-100 dark:bg-white/5 rounded-2xl overflow-x-auto no-scrollbar">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-6 py-2 rounded-xl font-bold transition-all text-xs whitespace-nowrap ${
                   activeTab === tab.id 
-                    ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' 
-                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'
+                    ? 'bg-white dark:bg-[#1A1A1A] text-blue-600 shadow-sm' 
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-white'
                 }`}
               >
                 {tab.label}
@@ -169,11 +175,9 @@ export default function InterventionManagement() {
         {/* Table Content */}
         <div className="relative min-h-[400px]">
           {loading && (
-            <div className="absolute inset-0 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm z-10 flex items-center justify-center">
-              <div className="flex flex-col items-center gap-4">
-                <div className="w-12 h-12 border-4 border-blue-600/30 border-t-blue-600 rounded-full animate-spin" />
-                <span className="text-xs font-black text-blue-600 uppercase tracking-widest">{commonT('loading')}</span>
-              </div>
+            <div className="absolute inset-0 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm z-10 flex flex-col items-center justify-center gap-3">
+              <div className="w-8 h-8 border-4 border-blue-600/30 border-t-blue-600 rounded-full animate-spin" />
+              <span className="text-xs font-semibold text-blue-600 uppercase tracking-widest">Chargement...</span>
             </div>
           )}
           
@@ -197,7 +201,7 @@ export default function InterventionManagement() {
                 className={`w-10 h-10 rounded-xl font-bold transition-all text-xs ${
                   pagination.current === i + 1 
                     ? 'bg-blue-600 text-white shadow-lg' 
-                    : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100'
+                    : 'bg-slate-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/10'
                 }`}
               >
                 {i + 1}

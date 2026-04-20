@@ -27,9 +27,9 @@ export const ComposeEmailModal = ({ isOpen, onClose, onConfirm, userName, isBulk
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200 dark:border-slate-800"
+        className="bg-white dark:bg-[#0A0A0A] rounded-xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200 dark:border-white/10"
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-[#141414]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
               <Mail size={20} />
@@ -55,7 +55,7 @@ export const ComposeEmailModal = ({ isOpen, onClose, onConfirm, userName, isBulk
               required
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+              className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#1A1A1A] border border-slate-200 dark:border-white/10 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all text-slate-900 dark:text-white"
               placeholder="Ex: Mise à jour importante..."
             />
           </div>
@@ -69,23 +69,23 @@ export const ComposeEmailModal = ({ isOpen, onClose, onConfirm, userName, isBulk
               rows={6}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none"
+              className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#1A1A1A] border border-slate-200 dark:border-white/10 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all resize-none text-slate-900 dark:text-white"
               placeholder="Écrivez votre message ici..."
             />
           </div>
 
-          <div className="flex gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+          <div className="flex gap-3 pt-4 border-t border-slate-100 dark:border-white/5">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-2.5 rounded-xl font-semibold text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+              className="flex-1 px-6 py-2.5 rounded-lg font-semibold text-slate-600 dark:text-slate-400 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/10 transition-colors text-sm"
             >
               Annuler
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-6 py-2.5 rounded-xl font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 dark:shadow-none transition-all flex items-center justify-center gap-2 group"
+              className="flex-1 px-6 py-2.5 rounded-lg font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-all flex items-center justify-center gap-2 group text-sm"
             >
               {loading ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -122,7 +122,7 @@ export const SuspendUserModal = ({ isOpen, onClose, onConfirm, userName, isBulk 
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800"
+        className="bg-white dark:bg-[#0A0A0A] rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-white/10"
       >
         <div className="p-8 text-center">
           <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 mx-auto mb-6">
@@ -141,7 +141,7 @@ export const SuspendUserModal = ({ isOpen, onClose, onConfirm, userName, isBulk 
               rows={3}
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-amber-500 outline-none transition-all resize-none"
+              className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#1A1A1A] border border-slate-200 dark:border-white/10 rounded-lg text-sm focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 outline-none transition-all resize-none text-slate-900 dark:text-white"
               placeholder="Ex: Violation des conditions d'utilisation..."
             />
 
@@ -149,14 +149,14 @@ export const SuspendUserModal = ({ isOpen, onClose, onConfirm, userName, isBulk 
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-6 py-3 rounded-xl font-semibold text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                className="flex-1 px-6 py-2.5 rounded-lg font-semibold text-slate-600 dark:text-slate-400 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/10 transition-colors text-sm"
               >
                 Annuler
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 px-6 py-3 rounded-xl font-semibold text-white bg-amber-600 hover:bg-amber-700 shadow-lg shadow-amber-200 dark:shadow-none transition-all flex items-center justify-center"
+                className="flex-1 px-6 py-2.5 rounded-lg font-semibold text-white bg-amber-600 hover:bg-amber-700 shadow-sm transition-all flex items-center justify-center text-sm"
               >
                 {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Suspendre'}
               </button>
@@ -189,9 +189,9 @@ export const DeleteUserModal = ({ isOpen, onClose, onConfirm, userName }) => {
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-red-200 dark:border-red-900/30"
+        className="bg-white dark:bg-[#0A0A0A] rounded-xl shadow-2xl w-full max-w-md overflow-hidden border border-red-500/20 dark:border-red-900/30"
       >
-        <div className="bg-red-50 dark:bg-red-900/10 p-4 flex gap-3 border-b border-red-100 dark:border-red-900/20">
+        <div className="bg-red-50 dark:bg-red-500/10 p-4 flex gap-3 border-b border-red-100 dark:border-red-500/20">
           <ShieldAlert className="text-red-600 shrink-0" size={24} />
           <p className="text-sm font-medium text-red-800 dark:text-red-400">
             {t('delete_warning')}
@@ -213,7 +213,7 @@ export const DeleteUserModal = ({ isOpen, onClose, onConfirm, userName }) => {
                 rows={2}
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-red-500 outline-none transition-all resize-none"
+                className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#1A1A1A] border border-slate-200 dark:border-white/10 rounded-lg text-sm focus:ring-2 focus:ring-red-500/50 focus:border-red-500 outline-none transition-all resize-none text-slate-900 dark:text-white"
               />
             </div>
 
@@ -226,7 +226,7 @@ export const DeleteUserModal = ({ isOpen, onClose, onConfirm, userName }) => {
                 required
                 value={confirmText}
                 onChange={(e) => setConfirmText(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-red-500 outline-none transition-all"
+                className="w-full px-4 py-2.5 bg-slate-50 dark:bg-[#1A1A1A] border border-slate-200 dark:border-white/10 rounded-lg text-sm focus:ring-2 focus:ring-red-500/50 focus:border-red-500 outline-none transition-all text-slate-900 dark:text-white"
               />
             </div>
 
@@ -234,14 +234,14 @@ export const DeleteUserModal = ({ isOpen, onClose, onConfirm, userName }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 px-6 py-3 rounded-xl font-semibold text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                className="flex-1 px-6 py-2.5 rounded-lg font-semibold text-slate-600 dark:text-slate-400 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/10 transition-colors text-sm"
               >
                 Annuler
               </button>
               <button
                 type="submit"
                 disabled={loading || confirmText !== userName}
-                className="flex-1 px-6 py-3 rounded-xl font-semibold text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-red-200 dark:shadow-none transition-all flex items-center justify-center"
+                className="flex-1 px-6 py-2.5 rounded-lg font-semibold text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm transition-all flex items-center justify-center text-sm"
               >
                 {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : t('confirm_delete')}
               </button>

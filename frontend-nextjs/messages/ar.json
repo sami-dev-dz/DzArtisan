@@ -219,7 +219,6 @@
     "subscriptions": "الاشتراكات",
     "interventions": "الطلبات",
     "complaints": "الشكاوى",
-    "statistics": "الإحصائيات",
     "statistics_nav": "الإحصائيات",
     "settings": "الإعدادات",
     "artisans_validation": "التحقق من الحرفيين",
@@ -482,37 +481,33 @@
         "not_assigned": "غير معين"
       }
     },
-          "statistics": {
-            "title": "الإحصائيات والتحليلات",
-            "subtitle": "تتبع نشاط المنصة، رضا الزبائن وأداء الحرفيين.",
-            "map_title": "النشاط حسب الولاية",
-            "map_requests": "{count} طلبات",
-            "map_artisans": "{count} حرفيين",
-            "map_top_category": "التخصص الأكثر طلباً: {name}",
-            "charts": {
-              "top_wilayas": "أفضل 10 ولايات حسب النشاط",
-              "requests_by_category": "توزيع الطلبات حسب المهنة",
-              "satisfaction_trends": "اتجاه الرضا (12 شهراً)",
-              "conversion": "مقاييس التحويل",
-              "view_to_contact": "من المشاهدات إلى الاتصالات",
-              "request_to_response": "من الطلبات إلى الردود"
-            },
-            "ranking": {
-              "title": "ترتيب سرعة الاستجابة",
-              "subtitle": "الحرفيون الأكثر أداءً حسب وقت الرد.",
-              "artisan": "الحرفي",
-              "category": "المهنة",
-              "views": "مشاهدات",
-              "contacts": "اتصالات",
-              "conv_rate": "التحويل (%)",
-              "response_time": "وقت الرد (دقيقة)",
-              "requests_responded": "الردود",
-              "export_btn": "تصدير إلى CSV"
-            },
-            "no_data": "لا تتوفر بيانات لهذه الفترة."
-          }
-        }
-      }
+    "statistics": {
+      "title": "الإحصائيات والتحليلات",
+      "subtitle": "تتبع نشاط المنصة، رضا الزبائن وأداء الحرفيين.",
+      "map_title": "النشاط حسب الولاية",
+      "map_requests": "{count} طلبات",
+      "map_artisans": "{count} حرفيين",
+      "map_top_category": "التخصص الأكثر طلباً: {name}",
+      "charts": {
+        "top_wilayas": "أفضل 10 ولايات حسب النشاط",
+        "requests_by_category": "توزيع الطلبات حسب المهنة",
+        "satisfaction_trends": "اتجاه الرضا (12 شهراً)",
+        "view_to_contact": "من المشاهدات إلى الاتصالات",
+        "request_to_response": "من الطلبات إلى الردود"
+      },
+      "ranking": {
+        "title": "ترتيب سرعة الاستجابة",
+        "subtitle": "الحرفيون الأكثر أداءً حسب وقت الرد.",
+        "artisan": "الحرفي",
+        "category": "المهنة",
+        "views": "مشاهدات",
+        "contacts": "اتصالات",
+        "conv_rate": "التحويل (%)",
+        "response_time": "وقت الرد (دقيقة)",
+        "requests_responded": "الردود",
+        "export_btn": "تصدير إلى CSV"
+      },
+      "no_data": "لا تتوفر بيانات لهذه الفترة."
     }
   },
   "onboarding": {

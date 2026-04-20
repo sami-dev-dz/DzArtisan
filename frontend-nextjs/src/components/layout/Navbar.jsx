@@ -70,7 +70,11 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handler);
   }, []);
 
+  // Don't render the Navbar on dashboard pages (must be placed after all hooks)
+  if (pathname.startsWith("/dashboard")) return null;
+
   const isDark = theme === "dark";
+
 
   const changeLocale = (code) => {
     router.replace(pathname, { locale: code });

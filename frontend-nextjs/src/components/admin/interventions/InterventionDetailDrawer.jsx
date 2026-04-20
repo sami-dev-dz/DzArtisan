@@ -9,6 +9,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { Badge } from "@/components/ui/Badge"
+import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 
 const STATUS_CONFIG = {
@@ -41,7 +42,7 @@ export function InterventionDetailDrawer({ isOpen, onClose, intervention }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/60"
+            className="fixed inset-0 z-100 bg-slate-900/40 backdrop-blur-sm dark:bg-black/60"
           />
 
           {/* Drawer */}
@@ -50,10 +51,10 @@ export function InterventionDetailDrawer({ isOpen, onClose, intervention }) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-y-0 right-0 z-[101] w-full max-w-2xl bg-white dark:bg-[#0a0f1e] shadow-2xl flex flex-col"
+            className="fixed inset-y-0 right-0 z-101 w-full max-w-2xl bg-white dark:bg-[#0A0A0A] shadow-2xl flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/2">
+            <div className="flex items-center justify-between p-6 border-b border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#141414]">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-blue-500/20">
                   <Info size={24} />
@@ -89,7 +90,7 @@ export function InterventionDetailDrawer({ isOpen, onClose, intervention }) {
                   </div>
                   <h3 className="text-base font-black uppercase tracking-wider text-slate-900 dark:text-white">{t("details.general_info")}</h3>
                 </div>
-                <div className="grid grid-cols-2 gap-6 bg-slate-50 dark:bg-white/2 p-6 rounded-3xl border border-slate-100 dark:border-white/5">
+                <div className="grid grid-cols-2 gap-6 bg-slate-50 dark:bg-[#141414] p-6 rounded-3xl border border-slate-200 dark:border-white/10">
                   <InfoItem label={t("table.info")} value={intervention.titre} fullWidth />
                   <InfoItem label={t("table.info")} value={intervention.categorie?.nom} />
                   <InfoItem label="Posté le" value={new Date(intervention.created_at).toLocaleDateString()} />
@@ -109,17 +110,17 @@ export function InterventionDetailDrawer({ isOpen, onClose, intervention }) {
                   {/* Client */}
                   <div className="p-4 rounded-2xl border border-slate-100 dark:border-white/5 bg-white dark:bg-slate-900/50 flex items-center gap-3 shadow-sm">
                     <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center font-black text-slate-600">
-                      {intervention.client?.nomComplet?.charAt(0)}
+                      {intervention.client?.user?.nomComplet ? String(intervention.client.user.nomComplet).charAt(0) : 'C'}
                     </div>
                     <div>
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Client</p>
-                      <p className="text-sm font-bold text-slate-900 dark:text-white">{intervention.client?.nomComplet}</p>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white">{intervention.client?.user?.nomComplet || "Client inconnu"}</p>
                     </div>
                   </div>
                   {/* Artisan */}
                   <div className="p-4 rounded-2xl border border-slate-100 dark:border-white/5 bg-white dark:bg-slate-900/50 flex items-center gap-3 shadow-sm">
                     <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-500/10 flex items-center justify-center font-black text-emerald-600">
-                      {intervention.artisan?.user?.nomComplet?.charAt(0) || <AlertCircle size={18} />}
+                      {intervention.artisan?.user?.nomComplet ? String(intervention.artisan.user.nomComplet).charAt(0) : <AlertCircle size={18} />}
                     </div>
                     <div>
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Artisan</p>
@@ -139,7 +140,7 @@ export function InterventionDetailDrawer({ isOpen, onClose, intervention }) {
                   </div>
                   <h3 className="text-base font-black uppercase tracking-wider text-slate-900 dark:text-white">Localisation</h3>
                 </div>
-                <div className="grid grid-cols-2 gap-6 bg-slate-50 dark:bg-white/2 p-6 rounded-3xl border border-slate-100 dark:border-white/5">
+                <div className="grid grid-cols-2 gap-6 bg-slate-50 dark:bg-[#141414] p-6 rounded-3xl border border-slate-200 dark:border-white/10">
                   <InfoItem label="Wilaya" value={intervention.wilaya?.nom} />
                   <InfoItem label="Commune" value={intervention.commune?.nom} />
                   <InfoItem label="Adresse précise" value={intervention.adresse || "Non fournie"} fullWidth />
@@ -170,7 +171,7 @@ export function InterventionDetailDrawer({ isOpen, onClose, intervention }) {
             </div>
 
             {/* Footer */}
-            <div className="p-6 border-t border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/2">
+            <div className="p-6 border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#141414]">
                 <Button variant="outline" className="w-full rounded-2xl h-12 border-slate-200 dark:border-white/10 font-bold" onClick={onClose}>
                   Fermer
                 </Button>

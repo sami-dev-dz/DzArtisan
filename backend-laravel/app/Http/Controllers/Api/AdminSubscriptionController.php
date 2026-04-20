@@ -20,22 +20,38 @@ class AdminSubscriptionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Abonnement::with(['artisan.user', 'paiements']);
+        // 1. Calculate Stats
+        $now = now();
+        $stats = [
+            'active' => Abonnement::where('statut', 'actif')->where('date_fin', '>', $now)->count(),
+            'pending' => Paiement::where('statut', 'en_attente')->count(),
+            'expiring' => Abonnement::where('date_fin', '>', $now)
+                                    ->where('date_fin', '<=', $now->copy()->addDays(7))
+                                    ->count(),
+            'expired' => Abonnement::where('date_fin', '<=', $now)->count(),
+        ];
 
-        // Filter by plan
-        if ($request->plan) {
-            $query->where('plan', $request->plan);
-        }
+        // 2. Pending Payments (Top 5 for overview)
+        $pending_payments = Paiement::with(['abonnement.artisan.user'])
+            ->where('statut', 'en_attente')
+            ->whereNotNull('preuve_paiement')
+            ->latest()
+            ->take(5)
+            ->get();
 
-        // Filter by status
-        if ($request->status) {
-            $now = now();
-            switch ($request->status) {
+        // 3. Paginated Subscriptions
+        $query = Abonnement::with(['artisan.user', 'paiements' => function ($q) {
+            $q->latest();
+        }]);
+
+        // Filter by tab/status
+        if ($request->tab && $request->tab !== 'all') {
+            switch ($request->tab) {
                 case 'active':
                     $query->where('statut', 'actif')->where('date_fin', '>', $now);
                     break;
                 case 'trial':
-                    $query->where('plan', 'gratuit')->where('trial_ends_at', '>', $now);
+                    $query->where('plan', 'gratuit');
                     break;
                 case 'expiring_soon':
                     $query->where('date_fin', '>', $now)
@@ -57,7 +73,24 @@ class AdminSubscriptionController extends Controller
             });
         }
 
-        return response()->json($query->latest()->paginate(15));
+        $subscriptions = $query->latest()->paginate(15);
+
+        // 4. All active artisans for manual activation dropdown
+        $all_artisans = Artisan::with('user:id,nomComplet')
+            ->where('statutValidation', 'valide')
+            ->get(['id', 'user_id']);
+
+        return response()->json([
+            'stats' => $stats,
+            'pending_payments' => $pending_payments,
+            'subscriptions' => $subscriptions->items(), // Return items array directly to match React expectation
+            'pagination' => [
+                'current_page' => $subscriptions->currentPage(),
+                'last_page' => $subscriptions->lastPage(),
+                'total' => $subscriptions->total(),
+            ],
+            'all_artisans' => $all_artisans
+        ]);
     }
 
     /**
@@ -117,14 +150,14 @@ class AdminSubscriptionController extends Controller
     public function reject(Request $request, $id)
     {
         $request->validate([
-            'reason' => 'required|string|max:500'
+            'motif' => 'required|string|max:500'
         ]);
 
         $paiement = Paiement::with('abonnement.artisan.user')->findOrFail($id);
 
         $paiement->update([
             'statut' => 'echec',
-            'notes' => $request->reason
+            'notes' => $request->motif
         ]);
 
         // Notify artisan

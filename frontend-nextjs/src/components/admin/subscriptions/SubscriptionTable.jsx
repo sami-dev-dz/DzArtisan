@@ -66,9 +66,9 @@ export function SubscriptionTable({
   }
 
   return (
-    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 overflow-hidden shadow-xl">
+    <div className="bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 overflow-hidden shadow-sm">
       {/* Tabs Sidebar/Header */}
-      <div className="p-4 border-b border-slate-100 dark:border-white/5 bg-slate-50/30 dark:bg-white/2">
+      <div className="p-4 border-b border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#141414]">
         <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2 md:pb-0">
           {tabs.map((tab) => (
             <button
@@ -78,7 +78,7 @@ export function SubscriptionTable({
                 "px-4 py-2 text-sm font-bold rounded-xl transition-all whitespace-nowrap",
                 activeTab === tab.id
                   ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20"
-                  : "text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  : "text-slate-500 hover:bg-slate-100 dark:hover:bg-white/5"
               )}
             >
               {tab.label}
@@ -89,7 +89,7 @@ export function SubscriptionTable({
 
       <div className="overflow-x-auto">
         <table className="w-full text-left rtl:text-right">
-          <thead className="bg-slate-50/50 dark:bg-white/[0.02]">
+          <thead className="bg-slate-50 dark:bg-[#1A1A1A] border-b border-slate-200 dark:border-white/10">
             <tr>
               <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">
                 {t("table.artisan")}
@@ -109,7 +109,7 @@ export function SubscriptionTable({
               <th className="px-6 py-4 text-right rtl:text-left"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+          <tbody className="divide-y divide-slate-200 dark:divide-white/10">
             {loading ? (
               [...Array(5)].map((_, i) => (
                 <tr key={i} className="animate-pulse">
@@ -129,13 +129,13 @@ export function SubscriptionTable({
               </tr>
             ) : (
               subscriptions.map((sub) => (
-                <tr key={sub.id} className="hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors group">
+                <tr key={sub.id} className="hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <Avatar 
                         src={sub.artisan?.photo} 
                         className="w-10 h-10 rounded-xl" 
-                        initials={sub.artisan?.user?.nomComplet?.charAt(0)} 
+                        initials={sub.artisan?.user?.nomComplet ? String(sub.artisan.user.nomComplet).charAt(0) : 'A'} 
                       />
                       <div className="flex flex-col">
                         <span className="font-bold text-slate-900 dark:text-white leading-tight">
@@ -190,7 +190,7 @@ export function SubscriptionTable({
                     <Button 
                       variant="secondary" 
                       size="sm" 
-                      className="rounded-xl !h-8 !w-8 p-0"
+                      className="rounded-xl h-8! w-8! p-0"
                       onClick={() => onViewHistory(sub.artisan)}
                     >
                       <History className="w-4 h-4" />

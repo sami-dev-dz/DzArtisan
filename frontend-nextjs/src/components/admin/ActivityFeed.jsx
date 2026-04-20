@@ -60,10 +60,10 @@ export function ActivityFeed({ items }) {
   }
 
   return (
-    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl">
+    <div className="bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 p-6 shadow-sm">
       <div className="mb-6">
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Flux d&apos;activité</p>
-        <h3 className="text-lg font-black text-slate-900 dark:text-white mt-0.5">Événements récents</h3>
+        <p className="text-xs font-semibold text-slate-500">Flux d&apos;activité</p>
+        <h3 className="text-lg font-bold text-slate-900 dark:text-white mt-1">Événements récents</h3>
       </div>
 
       <div className="relative space-y-0 pl-5">
@@ -88,19 +88,19 @@ export function ActivityFeed({ items }) {
               )} />
 
               {/* Icon */}
-              <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5", cfg.bg)}>
+              <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5", cfg.bg)}>
                 <Icon className={cn("w-4 h-4", cfg.color)} />
               </div>
 
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-300 leading-snug">
+                <p className="text-sm font-medium text-slate-700 dark:text-slate-300 leading-snug">
                   {item.message}
                 </p>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-[10px] font-bold text-slate-400">{timeAgo(item.at)}</span>
+                  <span className="text-xs text-slate-500">{timeAgo(item.at)}</span>
                   {item.link && (
-                    <Link href={item.link} className="text-[10px] font-black uppercase tracking-widest text-blue-500 hover:text-blue-700 flex items-center gap-0.5 transition-colors">
+                    <Link href={item.link} className="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 transition-colors">
                       Voir <ArrowRight className="w-2.5 h-2.5" />
                     </Link>
                   )}

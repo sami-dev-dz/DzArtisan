@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 import { 
   MoreHorizontal, Eye, CheckCircle, XCircle, 
   Slash, Star, ShieldCheck, MapPin, Tag, 
-  Calendar, Phone, Mail, FileText, AlertTriangle
+  Calendar, Phone, Mail, FileText, AlertTriangle, User
 } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { Badge } from "@/components/ui/Badge"
@@ -42,8 +42,8 @@ export function ArtisanManagementTable({
 
   if (!artisans?.length) {
     return (
-      <div className="py-20 text-center bg-white dark:bg-slate-900 rounded-[32px] border border-dashed border-slate-200 dark:border-white/10">
-        <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">
+      <div className="py-20 text-center bg-slate-50 dark:bg-[#0A0A0A] border-2 border-dashed border-slate-200 dark:border-white/10 rounded-xl">
+        <p className="text-slate-500 font-semibold text-sm">
           {t("table.no_data")}
         </p>
       </div>
@@ -51,7 +51,7 @@ export function ArtisanManagementTable({
   }
 
   return (
-    <div className="w-full overflow-x-auto rounded-[32px] border border-slate-100 dark:border-white/5 bg-white dark:bg-slate-900 shadow-sm">
+    <div className="w-full overflow-x-auto rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A0A0A] shadow-sm">
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-b border-slate-50 dark:border-white/5">
@@ -88,14 +88,14 @@ export function ArtisanManagementTable({
               <td className="px-6 py-4">
                 <div className="flex items-center gap-4">
                   <div className="relative w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-600/10 flex items-center justify-center text-indigo-600 font-black text-lg overflow-hidden border border-indigo-100 dark:border-indigo-500/20">
-                    {artisan.photo ? (
-                      <img src={artisan.photo} alt={artisan.user?.nomComplet} className="w-full h-full object-cover" />
+                    {artisan.photo && artisan.photo !== '0' && artisan.photo !== 0 ? (
+                      <img src={artisan.photo} alt={artisan.user?.nomComplet || 'Artisan'} className="w-full h-full object-cover" />
                     ) : (
-                      artisan.user?.nomComplet?.charAt(0)
+                      <User size={24} className="text-indigo-400" />
                     )}
-                    {artisan.is_featured && (
-                        <div className="absolute top-0 right-0 p-1 bg-amber-400 text-white rounded-bl-lg">
-                            <Star size={8} fill="currentColor" />
+                    {Boolean(artisan.is_featured) && (
+                        <div className="absolute top-0 right-0 p-1 bg-amber-400 text-white rounded-bl-[10px]">
+                            <Star size={10} fill="currentColor" />
                         </div>
                     )}
                   </div>
@@ -167,10 +167,10 @@ export function ArtisanManagementTable({
                   <Button 
                     onClick={() => onViewDetails(artisan)}
                     variant="ghost" 
-                    size="icon" 
-                    className="h-10 w-10 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-600/10 text-indigo-600"
+                    className="h-10 px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 font-bold text-xs"
                   >
-                    <Eye size={18} />
+                    <Eye size={16} className="mr-1.5" />
+                    Détails
                   </Button>
 
                   <DropdownMenu>
@@ -184,7 +184,7 @@ export function ArtisanManagementTable({
                         Actions de gestion
                       </DropdownMenuLabel>
                       
-                      {artisan.statut_validation === 'en_attente' && (
+                      {(artisan.statut_validation === 'en_attente' || artisan.statutValidation === 'en_attente') && (
                         <>
                           <DropdownMenuItem onClick={() => onAction(artisan.id, 'approve')} className="rounded-xl focus:bg-emerald-50 dark:focus:bg-emerald-500/10 focus:text-emerald-600 cursor-pointer gap-3 p-3">
                             <CheckCircle size={16} /> <span className="text-sm font-bold">{t("actions.approve")}</span>
@@ -195,7 +195,7 @@ export function ArtisanManagementTable({
                         </>
                       )}
 
-                      {artisan.statut_validation === 'valide' && artisan.user?.statut === 'actif' && (
+                      {(artisan.statut_validation === 'valide' || artisan.statutValidation === 'valide') && artisan.user?.statut === 'actif' && (
                         <DropdownMenuItem onClick={() => onAction(artisan.id, 'suspend')} className="rounded-xl focus:bg-red-50 dark:focus:bg-red-500/10 focus:text-red-600 cursor-pointer gap-3 p-3">
                           <Slash size={16} /> <span className="text-sm font-bold">{t("actions.suspend")}</span>
                         </DropdownMenuItem>

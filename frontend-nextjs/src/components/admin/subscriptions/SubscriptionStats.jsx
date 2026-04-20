@@ -54,18 +54,18 @@ export function SubscriptionStats({ stats }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
-          className="p-6 rounded-[32px] bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-100 dark:border-white/5 shadow-xl"
+          className="p-6 rounded-xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-white/10 shadow-sm"
         >
           <div className="flex items-center justify-between mb-4">
             <div className={cn("p-3 rounded-xl", item.color)}>
               <item.icon className="w-6 h-6" />
             </div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+            <span className="text-xs font-semibold text-slate-500">
               {item.trend}
             </span>
           </div>
           <div className="space-y-1">
-            <h3 className="text-2xl font-black dark:text-white">
+            <h3 className="text-2xl font-bold dark:text-white tracking-tight">
               {item.value}
             </h3>
             <p className="text-sm font-medium text-slate-500 dark:text-slate-400">

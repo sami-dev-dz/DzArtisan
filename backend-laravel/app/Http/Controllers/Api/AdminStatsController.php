@@ -43,13 +43,13 @@ class AdminStatsController extends Controller
         }
 
         // 1. Wilaya Activity (Map Data)
-        $wilayaActivity = Wilaya::select('id', 'nom', 'code')
+        $wilayaActivity = Wilaya::select('id', 'nom')
             ->withCount('communes')
             ->get()
             ->map(function($w) {
                 $requestCount = DemandeIntervention::where('wilaya_id', $w->id)->count();
                 $artisanCount = Artisan::where('wilaya_id', $w->id)->count();
-                
+
                 // Get most requested category in this wilaya
                 $topCategory = DemandeIntervention::where('wilaya_id', $w->id)
                     ->select('categorie_id', DB::raw('count(*) as total'))
@@ -61,7 +61,6 @@ class AdminStatsController extends Controller
                 return [
                     'id' => $w->id,
                     'nom' => $w->nom,
-                    'code' => $w->code,
                     'requests_count' => $requestCount,
                     'artisans_count' => $artisanCount,
                     'top_category' => $topCategory?->categorie?->nom ?? 'N/A',

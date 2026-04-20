@@ -85,7 +85,7 @@ export default function AdminLayout({ children }) {
      * (the public Navbar is still visible above, as on all dashboard pages).
      * Then we use our own AdminMobileNav top bar instead of the shared header.
      */
-    <div className="flex min-h-screen bg-slate-50 dark:bg-[#0a0f1e] -mt-20 -mx-6 sm:-mx-10 lg:-mx-12 relative">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-[#0a0f1e] -mt-20 relative">
       {/* ── Admin Sidebar (desktop) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <AdminSidebar
         collapsed={collapsed}
@@ -98,9 +98,7 @@ export default function AdminLayout({ children }) {
         {/* Mobile top nav */}
         <AdminMobileNav pendingCounts={pendingCounts} />
 
-        {/* Ambient gradients */}
-        <div className="pointer-events-none absolute top-0 right-0 w-[50%] h-[50%] bg-blue-600/5 rounded-full blur-[120px]" />
-        <div className="pointer-events-none absolute bottom-0 left-0 w-[50%] h-[50%] bg-indigo-600/5 rounded-full blur-[120px]" />
+        {/* Clean minimal background - No blobs required for enterprise UI */}
 
         <main className="flex-1 p-5 sm:p-8 lg:p-10 relative">
           {children}

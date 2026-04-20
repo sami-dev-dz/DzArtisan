@@ -12,8 +12,10 @@ import {
   ShieldCheck,
   MapPin,
   Calendar,
-  Star
+  Star,
+  Eye
 } from 'lucide-react';
+
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
@@ -34,7 +36,7 @@ export const UserTable = ({
     <div className="overflow-x-auto">
       <table className="w-full text-left border-collapse">
         <thead>
-          <tr className="border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/5">
+          <tr className="border-b border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-[#0A0A0A]">
             <th className="px-6 py-4 w-12">
               <input 
                 type="checkbox" 
@@ -50,7 +52,7 @@ export const UserTable = ({
             <th className="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">{t('actions')}</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-50 dark:divide-white/5">
+        <tbody className="divide-y divide-slate-100 dark:divide-white/5 bg-white dark:bg-[#0A0A0A]">
           {users.map((user, idx) => {
             const isSelected = selectedUsers.includes(user.user?.id || user.id);
             const userModel = user.user || user;
@@ -61,7 +63,7 @@ export const UserTable = ({
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.03 }}
-                className={`group hover:bg-slate-50/80 dark:hover:bg-white/5 transition-all ${isSelected ? 'bg-blue-50/30 dark:bg-blue-900/10' : ''}`}
+                className={`group hover:bg-slate-50 dark:hover:bg-white/5 transition-all ${isSelected ? 'bg-blue-50/50 dark:bg-blue-900/10' : ''}`}
               >
                 <td className="px-6 py-4">
                   <input 
@@ -73,9 +75,9 @@ export const UserTable = ({
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-4">
-                    <div className="relative w-11 h-11 rounded-[16px] overflow-hidden bg-slate-100 dark:bg-white/5 border-2 border-white dark:border-[#0a0f1e] shadow-sm flex items-center justify-center shrink-0">
-                      {user.photo ? (
-                        <Image src={user.photo} alt={userModel.nomComplet} fill className="object-cover" />
+                    <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 shadow-sm flex items-center justify-center shrink-0">
+                      {userModel.photo && userModel.photo !== '0' && userModel.photo !== 0 ? (
+                        <Image src={userModel.photo} alt={userModel.nomComplet || 'User'} fill className="object-cover" />
                       ) : (
                         <UserIcon className="text-slate-400" size={20} />
                       )}
@@ -137,12 +139,15 @@ export const UserTable = ({
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm">
-                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ring-1 ring-inset ${
+                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold border ${
                     userModel.statut === 'actif' 
-                      ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400 ring-emerald-600/20' 
-                      : 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400 ring-red-600/20'
+                      ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400 border-emerald-200' 
+                      : 'bg-red-50 text-red-700 dark:bg-red-500/10 dark:border-red-500/20 dark:text-red-400 border-red-200'
                   }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${userModel.statut === 'actif' ? 'bg-emerald-600' : 'bg-red-600'}`} />
+                    <span className="relative flex h-2 w-2">
+                      <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${userModel.statut === 'actif' ? 'bg-emerald-400' : 'bg-red-400'}`}></span>
+                      <span className={`relative inline-flex rounded-full h-2 w-2 ${userModel.statut === 'actif' ? 'bg-emerald-500' : 'bg-red-500'}`}></span>
+                    </span>
                     {userModel.statut === 'actif' ? 'Actif' : 'Suspendu'}
                   </span>
                 </td>
@@ -164,16 +169,18 @@ export const UserTable = ({
                     </button>
                     <button 
                       onClick={() => onAction('delete', user)}
-                      className="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
+                      className="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 dark:hover:text-red-400 transition-all"
                       title="Supprimer définitivement"
                     >
                       <Trash2 size={18} />
                     </button>
+                    <div className="w-px h-6 bg-slate-200 dark:bg-white/10 mx-1" />
                     <button 
                       onClick={() => onAction('view', user)}
-                      className="p-2 rounded-lg text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                      className="px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-500/20 font-bold text-xs transition-all flex items-center gap-1.5"
                     >
-                      <ChevronRight size={18} />
+                      <Eye size={14} />
+                      Détails
                     </button>
                   </div>
                 </td>
@@ -185,7 +192,7 @@ export const UserTable = ({
       
       {users.length === 0 && (
         <div className="py-20 text-center">
-          <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mx-auto mb-4">
+          <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-400 mx-auto mb-4 border border-slate-200 dark:border-white/10 shadow-sm">
             <UserIcon size={32} />
           </div>
           <h3 className="text-lg font-bold text-slate-900 dark:text-white">{t('no_users')}</h3>

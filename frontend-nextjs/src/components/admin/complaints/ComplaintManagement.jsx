@@ -4,9 +4,9 @@ import { Briefcase } from 'lucide-react';
 import React, { useState, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { motion, AnimatePresence } from "framer-motion"
-import { 
-  Search, Filter, RefreshCw, AlertCircle, 
-  MoreVertical, Eye, MessageSquare, AlertTriangle, 
+import {
+  Search, Filter, RefreshCw, AlertCircle,
+  MoreVertical, Eye, MessageSquare, AlertTriangle,
   UserX, Trash2, CheckCircle2, CloudAlert, Camera,
   Calendar, User, ArrowRight, ClipboardList
 } from "lucide-react"
@@ -26,7 +26,7 @@ export default function ComplaintManagement() {
   const isRTL = locale === "ar"
   const addToast = useToastStore((state) => state.addToast)
   const showToast = (msg, type = 'success') => addToast({ title: msg, type })
-  
+
   const [activeTab, setActiveTab] = useState("new")
   const [searchQuery, setSearchQuery] = useState("")
   const [loading, setLoading] = useState(true)
@@ -39,7 +39,7 @@ export default function ComplaintManagement() {
     rejete: 0
   })
 
-// Fetch data from real API
+  // Fetch data from real API
   const fetchComplaints = async () => {
     setLoading(true)
     try {
@@ -118,7 +118,7 @@ export default function ComplaintManagement() {
           </h1>
           <p className="text-slate-500 dark:text-slate-400 mt-1 font-medium">{t("subtitle")}</p>
         </div>
-        
+
         <div className="flex items-center gap-2">
           <Button variant="outline" className="rounded-xl font-bold" onClick={() => window.location.reload()}>
             <RefreshCw className="w-4 h-4" />
@@ -135,7 +135,7 @@ export default function ComplaintManagement() {
               onClick={() => setActiveTab(tab)}
               className={cn(
                 "px-4 py-2 rounded-lg text-sm font-black transition-all whitespace-nowrap",
-                activeTab === tab 
+                activeTab === tab
                   ? "bg-white dark:bg-blue-600 text-blue-600 dark:text-white shadow-sm"
                   : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
               )}
@@ -188,10 +188,10 @@ export default function ComplaintManagement() {
                   layoutId={`complaint-${complaint.id}`}
                   onClick={() => setSelectedComplaint(complaint)}
                   className={cn(
-                    "p-4 rounded-3xl border backdrop-blur-md transition-all cursor-pointer group shadow-sm",
+                    "p-4 rounded-xl border transition-all cursor-pointer group shadow-sm",
                     selectedComplaint?.id === complaint.id
-                      ? "bg-blue-50/50 dark:bg-blue-500/5 border-blue-200 dark:border-blue-500/20"
-                      : "bg-white/80 dark:bg-slate-900/40 border-slate-100 dark:border-white/5 hover:border-blue-100 dark:hover:border-white/10"
+                      ? "bg-blue-50 dark:bg-blue-500/10 border-blue-200 dark:border-blue-500/20"
+                      : "bg-white dark:bg-[#0A0A0A] border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20"
                   )}
                 >
                   <div className="flex items-center justify-between gap-4">
@@ -212,7 +212,7 @@ export default function ComplaintManagement() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center gap-4">
                       <div className="hidden sm:flex items-center gap-1 text-slate-400 font-bold text-xs uppercase">
                         <Camera className="w-3 h-3" />
@@ -237,7 +237,7 @@ export default function ComplaintManagement() {
                 exit={{ opacity: 0, y: 20 }}
                 className="sticky top-24"
               >
-                <Card className="bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl border-slate-100 dark:border-white/5 rounded-[32px] overflow-hidden overflow-y-auto max-h-[calc(100vh-120px)] shadow-2xl">
+                <Card className="bg-white dark:bg-[#0A0A0A] border-slate-200 dark:border-white/10 rounded-xl overflow-hidden overflow-y-auto max-h-[calc(100vh-120px)] shadow-sm">
                   {/* Detailed View - Mock content for now */}
                   <div className="p-6 bg-blue-600 text-white">
                     <div className="flex justify-between items-start">
@@ -262,7 +262,7 @@ export default function ComplaintManagement() {
                           <p className="text-[10px] font-bold text-slate-500 uppercase">{selectedComplaint.demandeur.role}</p>
                         </div>
                       </div>
-                      
+
                       <div className="flex justify-center -my-2 relative z-10">
                         <div className="w-8 h-8 rounded-full bg-white dark:bg-[#0a0f1e] border-2 border-slate-100 dark:border-white/5 flex items-center justify-center">
                           <ArrowRight className="w-4 h-4 text-slate-400 rotate-90" />
@@ -277,10 +277,10 @@ export default function ComplaintManagement() {
                         <div>
                           <p className="font-black text-slate-900 dark:text-white text-sm">{selectedComplaint.accuse.name}</p>
                           <div className="flex items-center gap-2">
-                             <p className="text-[10px] font-bold text-slate-500 uppercase">{selectedComplaint.accuse.role}</p>
-                             {selectedComplaint.accuse_strikes >= 3 && (
-                               <Badge className="bg-red-500 text-[8px] h-4 font-black">{t("three_strikes.badge")}</Badge>
-                             )}
+                            <p className="text-[10px] font-bold text-slate-500 uppercase">{selectedComplaint.accuse.role}</p>
+                            {selectedComplaint.accuse_strikes >= 3 && (
+                              <Badge className="bg-red-500 text-[8px] h-4 font-black">{t("three_strikes.badge")}</Badge>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -297,7 +297,7 @@ export default function ComplaintManagement() {
                     {/* Actions */}
                     <div className="grid grid-cols-2 gap-2 pt-4">
                       {selectedComplaint.statut === 'nouveau' && (
-                        <Button 
+                        <Button
                           className="col-span-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold gap-2"
                         >
                           <RefreshCw className="w-4 h-4" />

@@ -161,9 +161,9 @@ export default function ArtisanManagementPage() {
            <Button 
             variant="outline" 
             onClick={() => fetchArtisans()} 
-            className="rounded-2xl h-12 border-slate-100 dark:border-white/5 bg-white dark:bg-slate-900 group"
+            className="rounded-xl h-10 border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#1A1A1A] text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors group shadow-sm font-semibold"
            >
-              <RefreshCw size={18} className={cn("mr-2 group-hover:rotate-180 transition-transform duration-500", loading && "animate-spin")} />
+              <RefreshCw size={16} className={cn("mr-2 text-slate-500 transition-transform duration-500", loading && "animate-spin")} />
               {commonT("refresh")}
            </Button>
         </div>

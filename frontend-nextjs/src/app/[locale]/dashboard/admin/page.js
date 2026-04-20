@@ -26,7 +26,7 @@ const ICON_MAP = {
 /* ─────────────────────── KPI SKELETON CARD ─────────────────────── */
 function KpiSkeleton() {
   return (
-    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] p-6 border border-slate-100 dark:border-white/5 shadow-xl animate-pulse">
+    <div className="bg-white dark:bg-[#0A0A0A] rounded-xl p-6 border border-slate-200 dark:border-white/10 shadow-sm animate-pulse">
       <div className="flex items-start justify-between mb-4">
         <div className="w-12 h-12 rounded-2xl bg-slate-100/50 dark:bg-white/5" />
         <div className="w-16 h-6 rounded-full bg-slate-100/50 dark:bg-white/5" />
@@ -44,7 +44,7 @@ function KpiSkeleton() {
 function ChartSkeleton({ height = 320 }) {
   return (
     <div
-      className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl animate-pulse"
+      className="bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 p-6 shadow-sm animate-pulse"
       style={{ minHeight: height }}
     >
       <div className="h-2 w-24 rounded bg-slate-100 dark:bg-white/5 mb-2" />
@@ -72,7 +72,7 @@ function AlertsSkeleton() {
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="h-20 rounded-[24px] bg-slate-100 dark:bg-white/5"
+            className="h-20 rounded-xl bg-slate-100 dark:bg-white/5"
           />
         ))}
       </div>
@@ -83,7 +83,7 @@ function AlertsSkeleton() {
 /* ──────────────────────── ACTIVITY SKELETON ─────────────────────── */
 function ActivitySkeleton() {
   return (
-    <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 p-6 shadow-xl animate-pulse">
+    <div className="bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 p-6 shadow-sm animate-pulse">
       <div className="h-2 w-20 rounded bg-slate-100/50 dark:bg-white/5 mb-2" />
       <div className="h-5 w-40 rounded bg-slate-100/50 dark:bg-white/5 mb-6" />
       <div className="space-y-5 pl-5">
@@ -107,7 +107,7 @@ function ErrorBanner({ message, onRetry }) {
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex items-start gap-4 p-5 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-[24px]"
+      className="flex items-start gap-4 p-5 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-xl shadow-sm"
     >
       <div className="w-10 h-10 rounded-2xl bg-red-100 dark:bg-red-500/20 flex items-center justify-center shrink-0">
         <AlertTriangle className="w-5 h-5 text-red-500" />
@@ -120,7 +120,7 @@ function ErrorBanner({ message, onRetry }) {
       </div>
       <button
         onClick={onRetry}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-black uppercase tracking-widest hover:bg-red-200 dark:hover:bg-red-500/30 transition-colors"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-semibold hover:bg-red-200 dark:hover:bg-red-500/30 transition-colors"
       >
         <RefreshCw className="w-3 h-3" />
         Réessayer
@@ -161,7 +161,7 @@ export default function AdminOverviewPage() {
               Administration
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
             Vue d&apos;ensemble
           </h1>
           <p className="text-sm text-slate-400 font-medium mt-0.5">
@@ -174,7 +174,7 @@ export default function AdminOverviewPage() {
           onClick={refresh}
           disabled={loading}
           className={cn(
-            "flex items-center gap-2 px-4 py-2 rounded-2xl border text-xs font-black uppercase tracking-widest transition-all",
+            "flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-semibold transition-all shadow-sm bg-white dark:bg-black",
             "border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400",
             "hover:bg-blue-50 dark:hover:bg-blue-600/10 hover:text-blue-700 dark:hover:text-blue-200",
             "disabled:opacity-40 disabled:cursor-not-allowed"

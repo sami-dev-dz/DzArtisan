@@ -79,7 +79,7 @@ export function ArtisanValidationCard({ artisan, onAction }) {
                     <User className="w-3 h-3" /> Description du profil
                   </h4>
                   <p className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl bg-slate-50 dark:bg-white/5 p-4 rounded-2xl italic">
-                    &quot;{description || & quot;Aucune description fournie.&quot;}&quot;
+                    &quot;{description || "Aucune description fournie."}&quot;
                   </p>
                 </div>
 

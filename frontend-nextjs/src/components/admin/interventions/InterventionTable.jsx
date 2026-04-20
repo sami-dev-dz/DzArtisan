@@ -30,11 +30,11 @@ export function InterventionTable({ interventions = [], onViewDetails }) {
 
   if (interventions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 bg-slate-50/50 dark:bg-white/[0.02]">
+      <div className="flex flex-col items-center justify-center py-20 bg-slate-50/50 dark:bg-white/2">
         <div className="w-16 h-16 rounded-3xl bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-400 mb-4">
           <AlertCircle size={32} />
         </div>
-        <p className="text-sm font-bold text-slate-500 dark:text-slate-400">{commonT("table.no_data")}</p>
+        <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">Aucune donnée trouvée</p>
       </div>
     )
   }
@@ -50,7 +50,7 @@ export function InterventionTable({ interventions = [], onViewDetails }) {
     <div className="overflow-x-auto">
       <table className="w-full text-left rtl:text-right border-collapse">
         <thead>
-          <tr className="bg-slate-50/50 dark:bg-white/[0.02] border-b border-slate-100 dark:border-white/5">
+          <tr className="bg-slate-50 dark:bg-[#1A1A1A] border-b border-slate-200 dark:border-white/10">
             <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">{t("table.info")}</th>
             <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">{t("table.client")}</th>
             <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-400">{t("table.artisan")}</th>
@@ -59,7 +59,7 @@ export function InterventionTable({ interventions = [], onViewDetails }) {
             <th className="px-6 py-4 text-right"></th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+        <tbody className="divide-y divide-slate-200 dark:divide-white/10">
           {interventions.map((item) => {
             const cfg = STATUS_CONFIG[item.statut] || STATUS_CONFIG.ouvert
             return (
@@ -68,7 +68,7 @@ export function InterventionTable({ interventions = [], onViewDetails }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 onClick={() => onViewDetails?.(item)}
-                className="group hover:bg-slate-50/50 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer"
               >
                 {/* Intervention Info */}
                 <td className="px-6 py-5">
@@ -87,13 +87,13 @@ export function InterventionTable({ interventions = [], onViewDetails }) {
                 <td className="px-6 py-5">
                   <div className="flex items-center gap-3">
                     <Avatar 
-                      src={item.client?.photo} 
+                      src={item.client?.user?.photo} 
                       className="w-8 h-8 rounded-lg" 
-                      initials={item.client?.nomComplet?.charAt(0)} 
+                      initials={item.client?.user?.nomComplet ? String(item.client.user.nomComplet).charAt(0) : 'C'} 
                     />
                     <div className="flex flex-col">
                       <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                        {item.client?.nomComplet}
+                        {item.client?.user?.nomComplet || "Client inconnu"}
                       </span>
                       <span className="text-[10px] text-slate-400 font-medium">Bénéficiaire</span>
                     </div>
@@ -105,9 +105,9 @@ export function InterventionTable({ interventions = [], onViewDetails }) {
                   {item.artisan ? (
                     <div className="flex items-center gap-3">
                       <Avatar 
-                        src={item.artisan?.photo} 
+                        src={item.artisan?.user?.photo} 
                         className="w-8 h-8 rounded-lg" 
-                        initials={item.artisan?.user?.nomComplet?.charAt(0)} 
+                        initials={item.artisan?.user?.nomComplet ? String(item.artisan.user.nomComplet).charAt(0) : 'A'} 
                       />
                       <div className="flex flex-col">
                         <span className="text-xs font-bold text-slate-700 dark:text-slate-300">

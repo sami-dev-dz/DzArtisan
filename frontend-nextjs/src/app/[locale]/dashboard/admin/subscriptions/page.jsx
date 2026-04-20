@@ -112,7 +112,7 @@ export default function SubscriptionsAdminPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-20">
       {/* Header section */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl p-8 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 bg-white dark:bg-[#0A0A0A] p-8 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm">
         <div>
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
@@ -133,12 +133,12 @@ export default function SubscriptionsAdminPage() {
         </div>
 
         <div className="flex items-center gap-2">
-           <Button variant="outline" className="rounded-2xl h-12" onClick={fetchData}>
+           <Button variant="secondary" className="rounded-xl h-12 bg-slate-100 dark:bg-[#1A1A1A] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-white/10 transition-all font-semibold" onClick={fetchData}>
               <RotateCcw className="w-4 h-4 mr-2" />
               {t("refresh")}
            </Button>
            <Button 
-            className="rounded-2xl h-12 bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-500/20"
+            className="rounded-xl h-12 font-bold shadow-sm bg-blue-600 hover:bg-blue-700 text-white border-0"
             onClick={() => setIsManualModalOpen(true)}
            >
               <Plus className="w-4 h-4 mr-2" />
@@ -177,7 +177,7 @@ export default function SubscriptionsAdminPage() {
                       onChange={e => setSearch(e.target.value)}
                     />
                  </div>
-                 <Button variant="secondary" className="rounded-xl h-10 px-4">
+                 <Button variant="secondary" className="rounded-xl h-10 px-4 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 font-bold border border-slate-200 dark:border-white/10">
                     <Download className="w-4 h-4 mr-2" />
                     CSV
                  </Button>
@@ -213,7 +213,7 @@ export default function SubscriptionsAdminPage() {
       />
 
       {/* Admin Quick Tip */}
-      <div className="mt-12 p-6 rounded-[32px] bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-100 dark:border-white/5 flex items-start gap-4">
+      <div className="mt-12 p-6 rounded-xl bg-slate-50 dark:bg-[#141414] border border-slate-200 dark:border-white/10 flex items-start gap-4">
          <div className="p-3 bg-blue-50 dark:bg-blue-500/10 rounded-xl text-blue-600">
             <Info className="w-5 h-5" />
          </div>

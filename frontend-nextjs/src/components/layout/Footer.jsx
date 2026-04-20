@@ -10,7 +10,7 @@ import {
   Home,
   Wrench
 } from "lucide-react"
-import { Link } from "@/i18n/routing"
+import { Link, usePathname } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
 const FacebookIcon = (props) => (
@@ -57,8 +57,11 @@ export function Footer() {
   const t = useTranslations("navigation")
   const locale = useLocale()
   const isRTL = locale === "ar"
+  const pathname = usePathname()
 
   const currentYear = new Date().getFullYear()
+
+  if (pathname.startsWith("/dashboard")) return null;
 
   return (
     <footer className="bg-white dark:bg-[#0A0D14] pt-20 pb-10 border-t border-slate-100 dark:border-slate-900">

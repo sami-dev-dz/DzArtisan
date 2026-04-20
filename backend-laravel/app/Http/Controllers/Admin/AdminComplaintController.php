@@ -33,9 +33,9 @@ class AdminComplaintController extends Controller
 
         if ($search) {
             $query->whereHas('demandeur', function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
+                $q->where('nomComplet', 'like', "%{$search}%");
             })->orWhereHas('accuse', function($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%");
+                $q->where('nomComplet', 'like', "%{$search}%");
             });
         }
 

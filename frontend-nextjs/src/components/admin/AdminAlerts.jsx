@@ -39,7 +39,7 @@ export function AdminAlerts({ alerts }) {
 
   if (items.length === 0) {
     return (
-      <div className="flex items-center gap-3 p-5 bg-emerald-50/50 dark:bg-emerald-500/10 backdrop-blur-md rounded-[32px] border border-emerald-100 dark:border-emerald-500/20">
+      <div className="flex items-center gap-3 p-5 bg-emerald-50 dark:bg-emerald-500/10 rounded-xl border border-emerald-100 dark:border-emerald-500/20">
         <div className="w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center text-emerald-600 text-lg">
           ✓
         </div>
@@ -52,8 +52,8 @@ export function AdminAlerts({ alerts }) {
 
   return (
     <div className="space-y-3">
-      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2 px-1">
-        <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+      <p className="text-xs font-semibold text-slate-500 flex items-center gap-2 px-1">
+        <AlertTriangle className="w-4 h-4 text-amber-500" />
         Attention requise
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -66,13 +66,13 @@ export function AdminAlerts({ alerts }) {
           >
             <Link href={item.link}>
               <div className={cn(
-                "group flex items-center gap-4 p-4 rounded-[32px] border backdrop-blur-md transition-all hover:scale-[1.02] shadow-sm hover:shadow-md",
+                "group flex items-center gap-4 p-4 rounded-xl border transition-all hover:translate-y-[-2px] shadow-sm hover:shadow-md",
                 item.color === "amber"
-                  ? "bg-amber-50/50 dark:bg-amber-500/10 border-amber-100 dark:border-amber-500/20 hover:border-amber-300 dark:hover:border-amber-500/40"
-                  : "bg-red-50/50 dark:bg-red-500/10 border-red-100 dark:border-red-500/20 hover:border-red-300 dark:hover:border-red-500/40"
+                  ? "bg-amber-50 dark:bg-amber-500/10 border-amber-100 dark:border-amber-500/20 hover:border-amber-300 dark:hover:border-amber-500/40"
+                  : "bg-red-50 dark:bg-red-500/10 border-red-100 dark:border-red-500/20 hover:border-red-300 dark:hover:border-red-500/40"
               )}>
                 <div className={cn(
-                  "w-10 h-10 rounded-2xl flex items-center justify-center shrink-0",
+                  "w-10 h-10 rounded-lg flex items-center justify-center shrink-0",
                   item.color === "amber"
                     ? "bg-amber-100 dark:bg-amber-500/20 text-amber-600"
                     : "bg-red-100 dark:bg-red-500/20 text-red-600"
@@ -81,12 +81,12 @@ export function AdminAlerts({ alerts }) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className={cn(
-                    "text-2xl font-black leading-none",
+                    "text-2xl font-bold leading-none tracking-tight",
                     item.color === "amber" ? "text-amber-700 dark:text-amber-400" : "text-red-700 dark:text-red-400"
                   )}>
                     {item.count}
                   </p>
-                  <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 mt-0.5 truncate">
+                  <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1 truncate">
                     {item.label}
                   </p>
                 </div>

@@ -158,9 +158,9 @@ const AdminUserManagement = () => {
   return (
     <div className="space-y-6">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/80 dark:bg-slate-900/60 backdrop-blur-xl p-6 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-[#0A0A0A] p-6 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
             <Users className="text-blue-600" size={28} />
             {t('title')}
           </h1>
@@ -178,30 +178,30 @@ const AdminUserManagement = () => {
       </div>
 
       {/* Tabs & Filters */}
-      <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl overflow-hidden">
+      <div className="bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 shadow-sm overflow-hidden">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between border-b border-slate-100 dark:border-white/5 p-6 gap-4">
           {/* Tabs */}
-          <div className="flex p-1.5 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit">
+          <div className="flex p-1 bg-slate-100 dark:bg-white/5 rounded-xl w-fit border border-slate-200 dark:border-white/10">
             <button
               onClick={() => setActiveTab('clients')}
-              className={`px-6 py-2.5 rounded-xl font-bold transition-all text-sm flex items-center gap-2 ${
+              className={`px-5 py-2 rounded-lg font-bold transition-all text-sm flex items-center gap-2 ${
                 activeTab === 'clients' 
-                  ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'
+                  ? 'bg-white dark:bg-[#1A1A1A] text-blue-600 shadow-sm border border-slate-200/50 dark:border-white/10' 
+                  : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 border border-transparent'
               }`}
             >
-              <Users size={18} />
+              <Users size={16} />
               {t('tabs.clients')}
             </button>
             <button
               onClick={() => setActiveTab('artisans')}
-              className={`px-6 py-2.5 rounded-xl font-bold transition-all text-sm flex items-center gap-2 ${
+              className={`px-5 py-2 rounded-lg font-bold transition-all text-sm flex items-center gap-2 ${
                 activeTab === 'artisans' 
-                  ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-700'
+                  ? 'bg-white dark:bg-[#1A1A1A] text-blue-600 shadow-sm border border-slate-200/50 dark:border-white/10' 
+                  : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 border border-transparent'
               }`}
             >
-              <ShieldCheck size={18} />
+              <ShieldCheck size={16} />
               {t('tabs.artisans')}
             </button>
           </div>
@@ -209,20 +209,20 @@ const AdminUserManagement = () => {
           {/* Search & Filters */}
           <div className="flex flex-wrap items-center gap-3">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
               <input
                 type="text"
                 placeholder={t('filters.search_placeholder')}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-10 pr-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-2xl text-sm focus:ring-2 focus:ring-blue-500 outline-none w-full sm:w-64 transition-all"
+                className="pl-9 pr-4 py-2 bg-slate-50 dark:bg-[#141414] border border-slate-200 dark:border-white/10 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none w-full sm:w-64 transition-all text-slate-900 dark:text-white"
               />
             </div>
             
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/10 rounded-2xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+              className="px-3 py-2 bg-slate-50 dark:bg-[#141414] border border-slate-200 dark:border-white/10 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-none transition-all text-slate-700 dark:text-slate-200"
             >
               <option value="">{t('filters.all_statuses')}</option>
               <option value="actif">{t('filters.status_active')}</option>
@@ -231,9 +231,10 @@ const AdminUserManagement = () => {
 
             <button 
               onClick={() => fetchUsers(1)}
-              className="p-2.5 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 hover:bg-blue-100 transition-colors border border-blue-100 dark:border-blue-900/30"
+              className="p-2 rounded-lg bg-slate-50 dark:bg-white/5 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors border border-slate-200 dark:border-white/10"
+              title="Actualiser la liste"
             >
-              <RefreshCcw size={20} className={loading ? 'animate-spin' : ''} />
+              <RefreshCcw size={18} className={loading ? 'animate-spin' : ''} />
             </button>
           </div>
         </div>
@@ -243,11 +244,11 @@ const AdminUserManagement = () => {
           <motion.div 
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
-            className="px-6 py-3 bg-blue-600 text-white flex items-center justify-between"
+            className="px-6 py-3 bg-slate-900 dark:bg-blue-600/20 border-b border-slate-800 dark:border-blue-500/30 text-white flex items-center justify-between shadow-inner"
           >
-            <div className="flex items-center gap-3 font-bold text-sm">
-              <CheckCircle2 size={18} />
-              {selectedUsers.length} utilisateurs sélectionnés
+            <div className="flex items-center gap-3 font-semibold text-sm">
+              <CheckCircle2 size={18} className="text-blue-400 dark:text-blue-400" />
+              <span className="dark:text-blue-100 font-bold">{selectedUsers.length} utilisateurs sélectionnés</span>
             </div>
             <div className="flex items-center gap-3">
               <button 
@@ -298,10 +299,10 @@ const AdminUserManagement = () => {
               <button
                 key={i}
                 onClick={() => fetchUsers(i + 1)}
-                className={`w-10 h-10 rounded-xl font-bold transition-all ${
+                className={`w-9 h-9 flex items-center justify-center rounded-lg font-bold text-sm transition-all border ${
                   pagination.current === i + 1 
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 dark:shadow-none' 
-                    : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100'
+                    ? 'bg-blue-600 border-blue-600 text-white shadow-sm' 
+                    : 'bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/10'
                 }`}
               >
                 {i + 1}

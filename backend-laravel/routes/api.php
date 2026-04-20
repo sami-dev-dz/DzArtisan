@@ -129,7 +129,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/subscriptions/pending', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'pending']);
             Route::post('/subscriptions/confirm/{id}', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'confirm']);
             Route::post('/subscriptions/reject/{id}', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'reject']);
-            Route::get('/subscriptions/manual', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'manualActivate']);
+            Route::post('/subscriptions/manual-activate', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'manualActivate']);
             Route::get('/artisans/{id}/subscriptions', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'artisanHistory']);
 
             // Complaints Management
@@ -139,6 +139,9 @@ Route::prefix('v1')->group(function () {
             Route::post('/complaints/{reclamation}/note', [\App\Http\Controllers\Admin\AdminComplaintController::class, 'addNote']);
             Route::post('/complaints/{reclamation}/warn', [\App\Http\Controllers\Admin\AdminComplaintController::class, 'warn']);
             Route::post('/complaints/{reclamation}/suspend', [\App\Http\Controllers\Admin\AdminComplaintController::class, 'suspend']);
+
+            // Interventions Management (Admin)
+            Route::get('/interventions', [\App\Http\Controllers\Admin\AdminInterventionController::class, 'index']);
         });
 
     });

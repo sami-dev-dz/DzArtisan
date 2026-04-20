@@ -24,23 +24,23 @@ export function KpiCard({ label, value, trend, icon: Icon, color = "blue", delay
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
       className={cn(
-        "bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] p-6 border border-slate-100 dark:border-white/5 shadow-xl",
+        "bg-white dark:bg-[#0A0A0A] rounded-xl p-6 border border-slate-200 dark:border-white/10 shadow-sm transition-all hover:shadow-md",
         cfg.glow
       )}
     >
       <div className="flex items-start justify-between mb-4">
-        <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center", cfg.bg)}>
-          {Icon && <Icon className={cn("w-6 h-6", cfg.icon)} />}
+        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center", cfg.bg)}>
+          {Icon && <Icon className={cn("w-5 h-5", cfg.icon)} />}
         </div>
 
         {/* Trend badge */}
         <div className={cn(
-          "flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest",
+          "flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider",
           isNeutral
-            ? "bg-slate-100 dark:bg-white/5 text-slate-400"
+            ? "bg-slate-100 dark:bg-white/5 text-slate-500"
             : isPositive
             ? "bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600"
-            : "bg-red-50 dark:bg-red-500/10 text-red-500"
+            : "bg-red-50 dark:bg-red-500/10 text-red-600"
         )}>
           {isNeutral
             ? <Minus className="w-3 h-3" />
@@ -53,11 +53,8 @@ export function KpiCard({ label, value, trend, icon: Icon, color = "blue", delay
       </div>
 
       <div className="space-y-1">
-        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{label}</p>
-        <p className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{value}</p>
-        <p className="text-[10px] font-bold text-slate-400">
-          {isNeutral ? "Stable vs mois dernier" : isPositive ? "↑ vs mois dernier" : "↓ vs mois dernier"}
-        </p>
+        <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">{label}</p>
+        <p className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{value}</p>
       </div>
     </motion.div>
   )

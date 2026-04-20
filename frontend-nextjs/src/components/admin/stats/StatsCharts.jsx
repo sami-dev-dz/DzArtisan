@@ -32,13 +32,13 @@ export const StatsCharts = ({ topWilayas, categoryDistribution, satisfactionTren
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
       {/* Top Wilayas - Bar Chart */}
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm transition-all hover:shadow-md">
+      <div className="bg-white dark:bg-[#0A0A0A] p-6 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm transition-all hover:shadow-md">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
           <span className="w-1.5 h-6 bg-primary-500 rounded-full"></span>
           {t('charts.top_wilayas')}
         </h3>
-        <div className="h-[300px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-[300px] w-full min-w-0">
+          <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
             <BarChart data={topWilayas} layout="vertical" margin={{ left: 20, right: 30 }}>
               <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#e2e8f0" opacity={0.5} />
               <XAxis type="number" hide />
@@ -58,13 +58,13 @@ export const StatsCharts = ({ topWilayas, categoryDistribution, satisfactionTren
       </div>
 
       {/* Category Distribution - Pie/Donut Chart */}
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm transition-all hover:shadow-md">
+      <div className="bg-white dark:bg-[#0A0A0A] p-6 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm transition-all hover:shadow-md">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
           <span className="w-1.5 h-6 bg-secondary-500 rounded-full"></span>
           {t('charts.requests_by_category')}
         </h3>
-        <div className="h-[300px] w-full flex flex-col md:flex-row items-center">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-[300px] w-full flex flex-col md:flex-row items-center min-w-0">
+          <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
             <PieChart>
               <Pie
                 data={categoryDistribution}
@@ -87,13 +87,13 @@ export const StatsCharts = ({ topWilayas, categoryDistribution, satisfactionTren
       </div>
 
       {/* Satisfaction Trend - Line Chart */}
-      <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm transition-all hover:shadow-md lg:col-span-2">
+      <div className="bg-white dark:bg-[#0A0A0A] p-6 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm transition-all hover:shadow-md lg:col-span-2">
         <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
           <span className="w-1.5 h-6 bg-yellow-500 rounded-full"></span>
           {t('charts.satisfaction_trends')}
         </h3>
-        <div className="h-[350px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="h-[350px] w-full min-w-0">
+          <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
             <LineChart data={satisfactionTrends} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorRating" x1="0" y1="0" x2="0" y2="1">

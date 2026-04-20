@@ -21,7 +21,9 @@ class ArtisanStatusNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        // Only use database for now — mail is not configured in .env
+        // Add 'mail' here once MAIL_MAILER is set up in production
+        return ['database'];
     }
 
     public function toMail($notifiable)

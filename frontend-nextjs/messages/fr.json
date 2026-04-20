@@ -367,6 +367,11 @@
     "complaints_management": {
       "title": "Gestion des Plaintes",
       "subtitle": "Gérez les litiges entre clients et artisans, enquêtez et prenez des mesures de modération.",
+      "tabs": {
+        "new": "Nouvelles",
+        "investigating": "En enquête",
+        "all": "Toutes"
+      },
       "table": {
         "complainant": "Plaignant",
         "accused": "Accusé"
@@ -480,6 +485,8 @@
       "subtitle": "Suivez l'activité de la plateforme, la satisfaction client et la performance des artisans.",
       "map_title": "Activité par Wilaya",
       "map_activity": "Niveau d'activité",
+      "map_requests": "{count} demandes",
+      "map_artisans": "{count} artisans",
       "map_top_category": "Top catégorie : {name}",
       "charts": {
         "top_wilayas": "Top 10 Wilayas par activité",

@@ -367,6 +367,11 @@
     "complaints_management": {
       "title": "Complaints Management",
       "subtitle": "Manage disputes between clients and artisans, investigate cases and take moderation measures.",
+      "tabs": {
+        "new": "New",
+        "investigating": "Investigating",
+        "all": "All"
+      },
       "table": {
         "complainant": "Complainant",
         "accused": "Accused"
@@ -480,6 +485,8 @@
       "subtitle": "Track platform activity, client satisfaction, and artisan performance.",
       "map_title": "Activity by Wilaya",
       "map_activity": "Activity Level",
+      "map_requests": "{count} requests",
+      "map_artisans": "{count} artisans",
       "map_top_category": "Top category: {name}",
       "charts": {
         "top_wilayas": "Top 10 Wilayas by activity",

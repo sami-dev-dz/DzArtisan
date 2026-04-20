@@ -25,7 +25,7 @@ export function PendingPayments({ payments, onConfirm, onReject }) {
 
   if (!payments || payments.length === 0) {
     return (
-      <div className="mb-12 p-8 rounded-[32px] bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-md border-2 border-dashed border-slate-200 dark:border-white/5 flex flex-col items-center justify-center text-center">
+      <div className="mb-12 p-8 rounded-xl bg-slate-50 dark:bg-white/2 border border-dashed border-slate-200 dark:border-white/10 flex flex-col items-center justify-center text-center shadow-sm">
         <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5 flex items-center justify-center mb-4">
           <Check className="w-6 h-6 text-slate-400" />
         </div>
@@ -53,12 +53,12 @@ export function PendingPayments({ payments, onConfirm, onReject }) {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="group relative p-5 rounded-[32px] bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-blue-100 dark:border-white/5 shadow-sm hover:shadow-md transition-all"
+            className="group relative p-5 rounded-xl bg-white dark:bg-[#141414] border border-slate-200 dark:border-white/10 shadow-sm hover:border-slate-300 dark:hover:border-white/20 transition-all"
           >
             <div className="flex items-start gap-4">
                <Avatar 
                  src={payment.abonnement?.artisan?.photo} 
-                 initials={payment.abonnement?.artisan?.user?.nomComplet?.charAt(0)}
+                 initials={payment.abonnement?.artisan?.user?.nomComplet ? String(payment.abonnement.artisan.user.nomComplet).charAt(0) : 'A'}
                  className="w-12 h-12 rounded-2xl"
                />
                <div className="flex-1 min-w-0">

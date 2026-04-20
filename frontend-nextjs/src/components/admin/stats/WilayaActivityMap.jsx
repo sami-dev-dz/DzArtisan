@@ -107,14 +107,14 @@ export const WilayaActivityMap = ({ data }) => {
 
   if (!geoData) {
     return (
-      <div className="w-full h-[500px] flex items-center justify-center bg-gray-100 dark:bg-slate-800 rounded-2xl animate-pulse">
-        <span className="text-gray-400">Chargement de la carte...</span>
+      <div className="w-full h-[500px] flex items-center justify-center bg-slate-50 dark:bg-[#0A0A0A] rounded-xl animate-pulse">
+        <span className="text-slate-500 text-sm font-medium">Chargement de la carte...</span>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-[500px] rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-lg relative z-0">
+    <div className="w-full h-[500px] rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-sm relative z-0">
       <MapContainer
         center={[28.0339, 1.6596]}
         zoom={5}

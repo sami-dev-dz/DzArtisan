@@ -83,12 +83,12 @@ export const AdminStatistics = () => {
       <div className="space-y-8 animate-pulse">
         <div className="h-10 w-64 bg-slate-100 dark:bg-white/5 rounded-2xl"></div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-slate-100 dark:bg-white/5 rounded-[32px]"></div>)}
+          {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-slate-100 dark:bg-white/5 rounded-xl"></div>)}
         </div>
-        <div className="h-[500px] bg-slate-100 dark:bg-white/5 rounded-[32px]"></div>
+        <div className="h-[500px] bg-slate-100 dark:bg-white/5 rounded-xl"></div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="h-[400px] bg-slate-100 dark:bg-white/5 rounded-[32px]"></div>
-          <div className="h-[400px] bg-slate-100 dark:bg-white/5 rounded-[32px]"></div>
+          <div className="h-[400px] bg-slate-100 dark:bg-white/5 rounded-xl"></div>
+          <div className="h-[400px] bg-slate-100 dark:bg-white/5 rounded-xl"></div>
         </div>
       </div>
     );
@@ -109,7 +109,7 @@ export const AdminStatistics = () => {
         <div className="flex items-center gap-3">
           <button 
             onClick={fetchStats}
-            className="p-2.5 rounded-2xl bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-100 dark:border-white/5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-all shadow-sm"
+            className="p-2.5 rounded-lg bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-all shadow-sm"
           >
             <RefreshCcw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
           </button>
@@ -177,8 +177,8 @@ export const AdminStatistics = () => {
       />
 
       {/* Rankings Table */}
-      <section className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl overflow-hidden">
-        <div className="p-6 border-b border-slate-100 dark:border-white/5 flex justify-between items-center bg-slate-50/30 dark:bg-white/2">
+      <section className="bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-slate-200 dark:border-white/10 flex justify-between items-center bg-slate-50 dark:bg-[#141414]">
           <div>
             <h2 className="text-xl font-black text-slate-900 dark:text-white">
               {t('ranking.title')}
@@ -195,7 +195,7 @@ export const AdminStatistics = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse" dir={isRTL ? 'rtl' : 'ltr'}>
             <thead>
-              <tr className="bg-slate-50/50 dark:bg-white/5 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">
+              <tr className="bg-slate-50 dark:bg-[#1A1A1A] text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider border-b border-white/5">
                 <th className={`px-6 py-4 ${isRTL ? 'text-right' : 'text-left'}`}>{t('ranking.artisan')}</th>
                 <th className="px-6 py-4 text-center">{t('ranking.category')}</th>
                 <th className="px-6 py-4 text-center">{t('ranking.views')}</th>
@@ -205,7 +205,7 @@ export const AdminStatistics = () => {
                 <th className="px-6 py-4 text-center">{t('ranking.requests_responded')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+            <tbody className="divide-y divide-slate-200 dark:divide-white/10">
               <AnimatePresence mode="popLayout">
                 {rankings.map((artisan, idx) => (
                   <motion.tr 
@@ -218,7 +218,7 @@ export const AdminStatistics = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-[14px] bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 font-black border border-blue-100 dark:border-blue-800/50">
-                          {artisan.user?.nomComplet?.charAt(0) || 'A'}
+                          {artisan.user?.nomComplet ? String(artisan.user.nomComplet).charAt(0) : 'A'}
                         </div>
                         <div>
                           <p className="font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
@@ -229,8 +229,8 @@ export const AdminStatistics = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className="px-3 py-1 bg-gray-100 dark:bg-slate-800 rounded-full text-xs text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
-                        {artisan.primary_categorie?.nom}
+                      <span className="px-3 py-1 bg-gray-100 dark:bg-[#141414] rounded-full text-xs text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-white/10">
+                        {artisan.primaryCategorie?.nom || artisan.primary_categorie?.nom || 'Inconnu'}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-center font-medium text-gray-700 dark:text-gray-300">
@@ -246,7 +246,7 @@ export const AdminStatistics = () => {
                             ? ((artisan.contacts_count / artisan.profile_views_count) * 100).toFixed(1) 
                             : '0'}%
                         </span>
-                        <div className="w-16 h-1 bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                        <div className="w-16 h-1 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden">
                           <div 
                             className="h-full bg-primary-500" 
                             style={{ width: `${Math.min(100, (artisan.contacts_count / (artisan.profile_views_count || 1)) * 100)}%` }}
@@ -275,7 +275,7 @@ export const AdminStatistics = () => {
 };
 
 const KPICard = ({ title, value, icon, trend, trendUp, color }) => (
-  <div className="bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl p-6 rounded-[32px] border border-slate-100 dark:border-white/5 shadow-xl relative overflow-hidden group">
+  <div className="bg-white dark:bg-[#0A0A0A] p-6 rounded-xl border border-slate-200 dark:border-white/10 shadow-sm relative overflow-hidden group">
     <div className={`absolute top-0 right-0 w-24 h-24 bg-${color}-500 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity rounded-bl-full`}></div>
     <div className="flex justify-between items-start mb-4">
       <div className="p-3 bg-slate-50/50 dark:bg-white/5 rounded-2xl group-hover:scale-110 transition-transform duration-300">
@@ -287,8 +287,8 @@ const KPICard = ({ title, value, icon, trend, trendUp, color }) => (
       </div>
     </div>
     <div className="space-y-1">
-      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{title}</p>
-      <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter">{value}</h3>
+      <p className="text-xs font-semibold text-slate-500">{title}</p>
+      <h3 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">{value}</h3>
     </div>
   </div>
 );
