@@ -70,8 +70,8 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handler);
   }, []);
 
-  // Don't render the Navbar on dashboard pages (must be placed after all hooks)
-  if (pathname.startsWith("/dashboard")) return null;
+  // Don't render the Navbar on admin dashboard pages
+  if (pathname.startsWith("/dashboard/admin")) return null;
 
   const isDark = theme === "dark";
 
