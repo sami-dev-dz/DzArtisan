@@ -107,17 +107,9 @@ export default function ArtisanDashboard() {
 
   if (loading) return <DashboardSkeleton />
 
-  // If NO subscription at all → show plan selection fullscreen
-  const hasPlan = subscriptionStatus && subscriptionStatus.plan && subscriptionStatus.plan !== "none"
   const isPremium = subscriptionStatus?.is_premium ?? false
-
-  if (!hasPlan) {
-    return (
-      <div className="py-8 px-2">
-        <PlanSelection onSuccess={handlePlanSelected} />
-      </div>
-    )
-  }
+  const hasPlan = subscriptionStatus && subscriptionStatus.plan && subscriptionStatus.plan !== 'none'
+  const isFreePlan = subscriptionStatus?.plan === 'gratuit'
 
   // Map icons for profile completeness widget
   const getIcon = (id) => {
@@ -131,6 +123,21 @@ export default function ArtisanDashboard() {
 
   return (
     <div className="space-y-8">
+
+      {/* ── Plan Selection Banner (no plan chosen yet) ──────── */}
+      {!hasPlan && (
+        <div className="rounded-3xl border-2 border-dashed border-blue-200 dark:border-blue-500/20 bg-blue-50/50 dark:bg-blue-900/10 p-8">
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-white/5 border border-blue-200 dark:border-blue-500/20 mb-3">
+              <Sparkles className="w-4 h-4 text-blue-600" />
+              <span className="text-xs font-black text-blue-600 uppercase tracking-widest">Première étape</span>
+            </div>
+            <h2 className="text-xl font-black text-slate-900 dark:text-white">Choisissez votre plan pour commencer</h2>
+            <p className="text-sm text-slate-500 mt-1">Sélectionnez un plan pour débloquer les fonctionnalités.</p>
+          </div>
+          <PlanSelection onSuccess={handlePlanSelected} compact />
+        </div>
+      )}
 
       {/* ── Welcome Header ────────────────────────────────────────── */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -162,8 +169,8 @@ export default function ArtisanDashboard() {
         </div>
       </div>
 
-      {/* ── Free Plan Warning Banner ────────────────────────────────── */}
-      {!isPremium && (
+      {/* ── Free Plan Warning Banner (only when plan = gratuit) ─── */}
+      {isFreePlan && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}

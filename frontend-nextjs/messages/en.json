@@ -307,7 +307,11 @@
         "experience": "{years} years of experience"
       },
       "notifications": {
-        "promoted": "Promotion status updated."
+        "promoted": "Promotion status updated.",
+        "approved": "Artisan approved successfully.",
+        "rejected": "Artisan application rejected.",
+        "suspended": "Artisan account suspended.",
+        "unsuspended": "Artisan account reactivated."
       }
     },
     "subscription_management": {
