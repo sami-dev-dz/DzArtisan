@@ -93,7 +93,7 @@ export function ActionReasonModal({
             <Button 
                className={`flex-1 rounded-2xl h-12 ${current.buttonClass} text-white font-black shadow-xl shadow-transparent hover:shadow-${current.accentColor}-500/20 transition-all`}
                onClick={handleConfirm}
-               loading={loading}
+               isLoading={loading}
             >
                Confirmer
             </Button>

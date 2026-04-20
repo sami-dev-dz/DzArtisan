@@ -390,7 +390,7 @@ class AdminController extends Controller
 
         $request->validate([
             'action' => 'required|in:approve,reject,suspend,unsuspend',
-            'reason' => 'required_if:action,reject,suspend|string|max:1000'
+            'reason' => 'nullable|required_if:action,reject,suspend|string|max:1000'
         ]);
 
         $artisan = Artisan::with('user')->findOrFail($id);
