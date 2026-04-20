@@ -26,6 +26,7 @@ import { Modal } from "@/components/ui/Modal"
 import { Input } from "@/components/ui/Input"
 import { useToastStore } from "@/store/toastStore"
 import { uploadToCloudinary } from "@/lib/cloudinary"
+import { PlanSelection } from "@/components/subscription/PlanSelection"
 import api from "@/lib/api-client"
 import { cn } from "@/lib/utils"
 
@@ -143,9 +144,18 @@ export default function SubscriptionPage() {
   }
 
   if (loading) {
-
-    return <div className="flex items-center justify-center min-h-[60vh] animate-pulse text-slate-400 font-bold uppercase tracking-widest text-xs">Chargement...</div>
+    return (
+      <div className="space-y-8 animate-pulse">
+        <div className="h-48 rounded-3xl bg-slate-100 dark:bg-slate-800/50" />
+        <div className="grid grid-cols-4 gap-6">
+          {[1,2,3,4].map(i => <div key={i} className="h-72 rounded-3xl bg-slate-100 dark:bg-slate-800/50" />)}
+        </div>
+      </div>
+    )
   }
+
+  const isPremium = subStatus?.plan && subStatus.plan !== 'none' && subStatus.plan !== 'gratuit' && subStatus.statut === 'actif'
+  const isFreePlan = subStatus?.plan === 'gratuit'
 
   return (
     <div className="max-w-6xl mx-auto space-y-12 pb-20">
@@ -156,15 +166,32 @@ export default function SubscriptionPage() {
         <p className="text-slate-500 font-bold">{t("subtitle")}</p>
       </header>
 
-      {/* Current Status Card */}
+      {/* FREE PLAN - Show plan selection to encourage upgrade */}
+      {!isPremium && (
+        <div className="space-y-4">
+          {isFreePlan && (
+            <div className="flex items-start gap-4 px-6 py-5 rounded-2xl bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-500/20">
+              <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+              <div>
+                <p className="font-black text-slate-900 dark:text-white text-sm">Vous êtes actuellement sur le Plan Gratuit</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">Choisissez un plan payant ci-dessous pour accéder à toutes les fonctionnalités Premium.</p>
+              </div>
+            </div>
+          )}
+          <PlanSelection onSuccess={() => fetchData()} />
+        </div>
+      )}
+
+      {/* Current Status Card — only when premium */}
+      {isPremium && (
       <section className={cn(
-        "relative rounded-[40px] p-8 md:p-12 overflow-hidden shadow-2xl border transition-all duration-500",
-        subStatus?.statut === 'actif' 
-          ? "bg-linear-to-br from-emerald-500 to-teal-600 border-emerald-400 text-white shadow-emerald-500/20"
+        "relative rounded-3xl p-8 md:p-12 overflow-hidden shadow-xl border transition-all duration-500",
+        subStatus?.statut === 'actif'
+          ? "bg-gradient-to-br from-emerald-500 to-teal-600 border-emerald-400 text-white shadow-emerald-500/20"
           : subStatus?.expiring_soon
-          ? "bg-linear-to-br from-amber-400 to-orange-500 border-amber-300 text-white shadow-amber-500/20"
+          ? "bg-gradient-to-br from-amber-400 to-orange-500 border-amber-300 text-white shadow-amber-500/20"
           : "bg-white dark:bg-slate-900 border-slate-100 dark:border-white/5 text-slate-900 dark:text-white"
-      )}>
+      )}>>
         {/* Background Patterns */}
         <div className="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-[-10%] left-[-5%] w-48 h-48 bg-black/5 rounded-full blur-2xl pointer-events-none" />
@@ -202,27 +229,29 @@ export default function SubscriptionPage() {
            </div>
         </div>
 
-        {/* Status Badges */}
-        <div className="mt-8 flex gap-3">
-           {subStatus?.statut === 'actif' && (
-             <Badge className="bg-white text-emerald-600 rounded-full px-4 py-1.5 font-black uppercase tracking-widest text-[10px]">
+          {/* Status Badges */}
+          <div className="mt-8 flex gap-3">
+            {subStatus?.statut === 'actif' && (
+              <Badge className="bg-white text-emerald-600 rounded-full px-4 py-1.5 font-black uppercase tracking-widest text-[10px]">
                 <Check className="w-3 h-3 mr-1" /> {t("active")}
-             </Badge>
-           )}
-           {subStatus?.expiring_soon && (
-             <Badge className="bg-white text-orange-600 rounded-full px-4 py-1.5 font-black uppercase tracking-widest text-[10px]">
+              </Badge>
+            )}
+            {subStatus?.expiring_soon && (
+              <Badge className="bg-white text-orange-600 rounded-full px-4 py-1.5 font-black uppercase tracking-widest text-[10px]">
                 <Clock className="w-3 h-3 mr-1" /> {t("expiring_soon")}
-             </Badge>
-           )}
-           {subStatus?.statut === 'expire' && (
-             <Badge className="bg-red-500 text-white rounded-full px-4 py-1.5 font-black uppercase tracking-widest text-[10px]">
+              </Badge>
+            )}
+            {subStatus?.statut === 'expire' && (
+              <Badge className="bg-red-500 text-white rounded-full px-4 py-1.5 font-black uppercase tracking-widest text-[10px]">
                 <AlertCircle className="w-3 h-3 mr-1" /> {t("expired")}
-             </Badge>
-           )}
-        </div>
-      </section>
+              </Badge>
+            )}
+          </div>
+        </section>
+      )}
 
-      {/* Plans Section */}
+      {/* Plans Section - Upgrade options when premium */}
+      {isPremium && (
       <section className="space-y-8">
         <div className="flex items-center gap-3">
            <Zap className="w-6 h-6 text-blue-600 fill-current" />
@@ -230,46 +259,46 @@ export default function SubscriptionPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-           {plans.map((plan) => (
-              <motion.div 
+           {plans.filter(p => p.id !== 'gratuit').map((plan) => (
+              <motion.div
                 key={plan.id}
-                whileHover={{ y: -10 }}
+                whileHover={{ y: -6 }}
                 className={cn(
-                  "relative bg-white dark:bg-slate-900 rounded-[40px] p-8 border-2 transition-all group overflow-hidden",
-                  plan.best_value ? "border-blue-600 shadow-2xl shadow-blue-600/10" : "border-slate-100 dark:border-white/5",
+                  "relative bg-white dark:bg-slate-900 rounded-3xl p-7 border-2 transition-all group overflow-hidden",
+                  plan.best_value ? "border-indigo-500 shadow-2xl shadow-indigo-500/10" : "border-slate-100 dark:border-white/5",
                   !plan.available && "opacity-60 saturate-0"
                 )}
               >
                  {plan.best_value && (
-                    <div className="absolute top-6 right-[-35px] rotate-45 bg-blue-600 text-white text-[10px] font-black uppercase py-1 px-10 tracking-widest shadow-xl">
-                       {t("best_value")}
+                    <div className="absolute top-5 right-[-30px] rotate-45 bg-indigo-600 text-white text-[9px] font-black uppercase py-1 px-8 tracking-widest shadow-xl">
+                       Populaire
                     </div>
                  )}
 
-                 <div className="mb-8">
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight mb-1">{plan.name}</h3>
+                 <div className="mb-6">
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white tracking-tight mb-1">{plan.name}</h3>
                     <div className="flex items-baseline gap-1">
-                       <span className="text-4xl font-black text-slate-900 dark:text-white">{plan.price}</span>
-                       <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">DA</span>
+                       <span className="text-3xl font-black text-slate-900 dark:text-white">{plan.price.toLocaleString()}</span>
+                       <span className="text-sm font-bold text-slate-400">DA</span>
                     </div>
-                    <p className="text-xs text-slate-500 font-bold mt-2">{plan.description}</p>
+                    <p className="text-xs text-slate-500 font-medium mt-1.5">{plan.description}</p>
                  </div>
 
-                 <div className="space-y-4 mb-8">
+                 <div className="space-y-3 mb-6">
                     {plan.features.map((feat, i) => (
                        <div key={i} className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                          <span className="text-xs font-bold text-slate-600 dark:text-slate-400 leading-tight">{feat}</span>
+                          <span className="text-xs font-medium text-slate-600 dark:text-slate-400 leading-tight">{feat}</span>
                        </div>
                     ))}
                  </div>
 
-                 <Button 
+                 <Button
                    onClick={() => handleSubscribe(plan)}
                    disabled={!plan.available}
                    className={cn(
-                     "w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest transition-all",
-                     plan.best_value ? "bg-blue-600 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-blue-600 hover:text-white"
+                     "w-full h-12 rounded-2xl font-black text-xs uppercase tracking-wide transition-all",
+                     plan.best_value ? "bg-indigo-600 text-white hover:bg-indigo-700" : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-blue-600 hover:text-white"
                    )}
                  >
                     {plan.available ? t("select_plan") : t("trial_used_note")}
@@ -278,6 +307,7 @@ export default function SubscriptionPage() {
            ))}
         </div>
       </section>
+      )}
 
       {/* Payment History Table */}
       <section className="space-y-8">

@@ -108,15 +108,23 @@ class DashboardController extends Controller
 
     private function getSubscriptionSummary($user)
     {
-        $sub = $user->abonnement;
-        if (!$sub) return ['status' => 'expired', 'days_left' => 0];
+        $artisan = $user->artisan;
+        if (!$artisan) return ['status' => 'none', 'plan' => 'none', 'days_left' => 0, 'is_premium' => false];
         
-        $days = (int) now()->diffInDays($sub->ends_at, false);
+        $sub = $artisan->abonnement;
+        if (!$sub) return ['status' => 'none', 'plan' => 'none', 'days_left' => 0, 'is_premium' => false];
+        
+        $expired = $sub->date_fin && $sub->date_fin->isPast();
+        if ($expired) return ['status' => 'expired', 'plan' => $sub->plan, 'days_left' => 0, 'is_premium' => false];
+        
+        $days = (int) now()->diffInDays($sub->date_fin, false);
         
         return [
             'status' => $days <= 0 ? 'expired' : ($days <= 7 ? 'warning' : 'active'),
-            'days_left' => $days,
-            'ends_at' => $sub->ends_at
+            'plan' => $sub->plan,
+            'days_left' => max(0, $days),
+            'is_premium' => $sub->is_premium,
+            'date_fin' => $sub->date_fin,
         ];
     }
 }

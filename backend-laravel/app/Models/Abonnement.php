@@ -24,7 +24,7 @@ class Abonnement extends Model
         'trial_ends_at' => 'datetime',
     ];
 
-    protected $appends = ['is_active', 'is_expiring', 'is_expired'];
+    protected $appends = ['is_active', 'is_expiring', 'is_expired', 'is_premium'];
 
     public function artisan()
     {
@@ -49,5 +49,10 @@ class Abonnement extends Model
     public function getIsExpiredAttribute()
     {
         return $this->date_fin && $this->date_fin->isPast();
+    }
+
+    public function getIsPremiumAttribute()
+    {
+        return $this->is_active && $this->plan !== 'gratuit';
     }
 }

@@ -28,41 +28,41 @@ class SubscriptionController extends Controller
         $plans = [
             [
                 'id' => 'gratuit',
-                'name' => 'Découverte (Trial)',
+                'name' => 'Plan Free',
                 'price' => 0,
-                'duration_months' => 3,
-                'description' => 'Idéal pour découvrir la plateforme',
-                'features' => ['Badge Découverte', 'Visibilité standard', 'Limité à 3 mois'],
-                'available' => !$trial_used,
-                'reason' => $trial_used ? 'DEJA_UTILISE' : null
+                'duration_months' => 0,
+                'description' => 'Accès limité au tableau de bord',
+                'features' => ['Visibilité basique', 'Accès restreint aux annonces', 'Fonctionnalités avancées bloquées'],
+                'available' => true,
+                'reason' => null
             ],
             [
                 'id' => 'mensuel',
-                'name' => 'Pro Mensuel',
-                'price' => 1000,
+                'name' => 'Abonnement 1 Mois',
+                'price' => 500,
                 'duration_months' => 1,
-                'description' => 'Flexibilité maximale',
-                'features' => ['Badge Artisan Vérifié', 'Visibilité prioritaire', 'Support 24/7'],
+                'description' => 'Idéal pour tester les fonctionnalités Premium',
+                'features' => ['Accès illimité aux jobs', 'Interaction directe avec les clients', 'Badge Artisan Pro'],
                 'available' => true
             ],
             [
                 'id' => 'trimestriel',
-                'name' => 'Pro Trimestriel',
-                'price' => 3000,
+                'name' => 'Abonnement 3 Mois',
+                'price' => 1500,
                 'duration_months' => 3,
-                'description' => 'Engagement serein',
-                'features' => ['Tout du plan Pro', 'Economie mensuelle', 'Badge Or'],
-                'available' => true
+                'description' => 'Le choix le plus populaire',
+                'features' => ['Toutes les fonctionnalités 1 Mois', 'Meilleur taux de conversion', 'Support prioritaire'],
+                'available' => true,
+                'best_value' => true
             ],
             [
                 'id' => 'annuel',
-                'name' => 'Elite Annuel',
-                'price' => 10000,
+                'name' => 'Abonnement 1 An',
+                'price' => 4000,
                 'duration_months' => 12,
                 'description' => 'Maximisez vos revenus',
-                'features' => ['Visibilité maximum 58 Wilayas', 'Badge Elite', 'Assistance premium', 'Economisez 20%'],
-                'available' => true,
-                'best_value' => true
+                'features' => ['Visibilité maximum 58 Wilayas', 'Badge Elite', 'Assistance premium', 'Economie massive'],
+                'available' => true
             ],
         ];
 
@@ -131,22 +131,22 @@ class SubscriptionController extends Controller
                 ], 403);
             }
 
-            // Create trial subscription immediately
+            // Create indefinite free subscription
             $subscription = Abonnement::updateOrCreate(
                 ['artisan_id' => $artisan->id],
                 [
                     'plan' => 'gratuit',
                     'statut' => 'actif',
                     'date_debut' => now(),
-                    'date_fin' => now()->addMonths(3),
+                    'date_fin' => now()->addYears(10),
                 ]
             );
 
-            return response()->json(['message' => 'Offre découverte activée !', 'subscription' => $subscription]);
+            return response()->json(['message' => 'Plan gratuit sélectionné', 'subscription' => $subscription]);
         }
 
         // For paid plans, create a pending subscription
-        $priceMap = ['mensuel' => 1000, 'trimestriel' => 3000, 'annuel' => 10000];
+        $priceMap = ['mensuel' => 500, 'trimestriel' => 1500, 'annuel' => 4000];
         
         $subscription = Abonnement::updateOrCreate(
             ['artisan_id' => $artisan->id],

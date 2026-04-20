@@ -123,10 +123,10 @@ class ArtisanJobController extends Controller
             return response()->json(['message' => 'Profil artisan introuvable.'], 404);
         }
 
-        // Artisan must have an active subscription to apply
-        if (!$artisan->abonnement?->isActive()) {
+        // Artisan must have a premium active subscription to apply
+        if (!$artisan->abonnement?->is_premium) {
             return response()->json([
-                'message' => 'Vous devez avoir un abonnement actif pour soumettre une proposition.',
+                'message' => 'L\'accès aux propositions nécessite un Abonnement Premium. Veuillez mettre à niveau votre plan.',
             ], 403);
         }
 
