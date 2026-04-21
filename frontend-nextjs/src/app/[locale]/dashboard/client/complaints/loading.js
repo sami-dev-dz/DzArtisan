@@ -1,0 +1,17 @@
+import { TableSkeleton } from "@/components/ui/SkeletonLayouts"
+import { Skeleton } from "@/components/ui/Skeleton"
+
+export default function ClientComplaintsLoading() {
+  return (
+    <div className="px-4 py-6 md:px-8 space-y-6">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="space-y-2">
+          <Skeleton className="h-7 w-44 rounded-xl" />
+          <Skeleton className="h-4 w-64 rounded-md" />
+        </div>
+        <Skeleton className="h-10 w-44 rounded-xl" />
+      </div>
+      <TableSkeleton rows={7} cols={5} title={false} />
+    </div>
+  )
+}

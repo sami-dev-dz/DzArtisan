@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientRequestController extends Controller
 {
-    /**
-     * Display a listing of the client's requests.
-     */
+
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -46,9 +44,6 @@ class ClientRequestController extends Controller
         return response()->json($requests);
     }
 
-    /**
-     * Display the specified request with its proposals.
-     */
     public function show($id)
     {
         $user = Auth::user();
@@ -79,9 +74,6 @@ class ClientRequestController extends Controller
         return response()->json($demande);
     }
 
-    /**
-     * Update a pending request.
-     */
     public function update(Request $request, $id)
     {
         $user = Auth::user();
@@ -116,9 +108,6 @@ class ClientRequestController extends Controller
         ]);
     }
 
-    /**
-     * Cancel a pending request.
-     */
     public function cancel($id)
     {
         $user = Auth::user();
@@ -140,9 +129,6 @@ class ClientRequestController extends Controller
         return response()->json(['message' => 'Request cancelled successfully']);
     }
 
-    /**
-     * Accept an artisan's proposal.
-     */
     public function acceptProposal(Request $request, $id, $proposalId)
     {
         $user = Auth::user();
@@ -163,7 +149,6 @@ class ClientRequestController extends Controller
             ->where('demande_id', $id)
             ->firstOrFail();
 
-        // Transaction to ensure atomicity
         \DB::transaction(function () use ($demande, $proposal) {
             $demande->update([
                 'statut' => 'acceptee',
@@ -171,8 +156,7 @@ class ClientRequestController extends Controller
             ]);
 
             $proposal->update(['statut' => 'acceptee']);
-            
-            // Reject other proposals
+
             DemandeProposition::where('demande_id', $demande->id)
                 ->where('id', '!=', $proposal->id)
                 ->update(['statut' => 'rejetee']);

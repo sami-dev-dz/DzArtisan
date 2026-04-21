@@ -580,6 +580,7 @@
     "btn_edit": "Modifier mon profil"
   },
   "dashboard": {
+    "profile": "Mon Profil",
     "completeness_title": "Profil",
     "suggested_actions": "Actions suggérées",
     "completeness_tip": "Un profil complet reçoit 3x plus de contacts."
@@ -633,7 +634,8 @@
     "no_results": "Aucun artisan trouvé pour votre recherche.",
     "no_results_hint": "Essayez d'élargir vos filtres ou de réinitialiser la recherche.",
     "contact_whatsapp": "WhatsApp",
-    "contact_call": "Appeler"
+    "contact_call": "Appeler",
+    "currently_available": "{count} artisans sont actuellement disponibles"
   },
   "artisan_card": {
     "verified_profile": "Profil Officiel",

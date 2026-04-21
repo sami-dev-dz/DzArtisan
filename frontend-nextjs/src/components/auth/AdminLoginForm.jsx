@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -59,30 +60,8 @@ export default function AdminLoginForm() {
       >
         {/* Brand / Logo area */}
         <div className="flex flex-col items-center mb-8">
-          {/* Replace with your actual logo */}
-          <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center mb-4 shadow-sm">
-            <svg viewBox="0 0 20 20" fill="none" className="w-5 h-5">
-              <rect x="3" y="3" width="6" height="6" rx="1.5" fill="white" />
-              <rect
-                x="11"
-                y="3"
-                width="6"
-                height="6"
-                rx="1.5"
-                fill="white"
-                fillOpacity="0.6"
-              />
-              <rect
-                x="3"
-                y="11"
-                width="6"
-                height="6"
-                rx="1.5"
-                fill="white"
-                fillOpacity="0.6"
-              />
-              <rect x="11" y="11" width="6" height="6" rx="1.5" fill="white" />
-            </svg>
+          <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center mb-4 shadow-md ring-1 ring-slate-200/80 overflow-hidden transition-transform hover:scale-105">
+            <Image src="/logo.png" alt="DzArtisan" width={40} height={40} className="w-auto h-auto object-contain" priority />
           </div>
           <h1 className="text-[15px] font-semibold text-[#0f172a] tracking-tight">
             Administration

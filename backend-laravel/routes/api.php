@@ -18,20 +18,12 @@ use App\Http\Controllers\Api\ArtisanJobController;
 use App\Http\Controllers\Api\ArtisanStatsController;
 use App\Http\Controllers\Api\CloudinaryController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-*/
-
 Route::prefix('v1')->group(function () {
-    
-    // Auth Group
+
     Route::prefix('auth')->group(function () {
         Route::post('/register', [AuthController::class, 'register']);
         Route::post('/login', [AuthController::class, 'login']);
 
-        // Google OAuth Routes
         Route::get('/google/redirect', [\App\Http\Controllers\Api\OAuthController::class, 'redirectToGoogle']);
         Route::get('/google/callback', [\App\Http\Controllers\Api\OAuthController::class, 'handleGoogleCallback']);
         Route::get('/google/sync-session', [\App\Http\Controllers\Api\OAuthController::class, 'syncSession']);
@@ -40,7 +32,6 @@ Route::prefix('v1')->group(function () {
         Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
     });
 
-    // Données publiques
     Route::get('/wilayas', [PublicController::class, 'getWilayas']);
     Route::get('/communes/{wilayaId}', [PublicController::class, 'getCommunes']);
     Route::get('/categories', [PublicController::class, 'getMetiers']);
@@ -49,23 +40,21 @@ Route::prefix('v1')->group(function () {
     Route::post('/artisans/{id}/log-contact', [ArtisanStatsController::class, 'logContact']);
     Route::get('/artisans/{id}/response-rate', [ArtisanStatsController::class, 'getResponseRate']);
 
-
-    // Routes protégées
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/uploads/cloudinary/signature', [CloudinaryController::class, 'signUpload']);
 
-        // Notifications
         Route::get('/notifications', [NotificationController::class, 'index']);
         Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
         Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
 
-        // Profile
         Route::get('/profile', [ProfileController::class, 'index']);
         Route::post('/profile', [ProfileController::class, 'update']);
         Route::post('/profile/toggle-availability', [ProfileController::class, 'toggleAvailability'])
             ->middleware('role:artisan');
 
-        // Dashboard
+        Route::get('/complaints', [\App\Http\Controllers\Api\ComplaintController::class, 'index']);
+        Route::post('/complaints', [\App\Http\Controllers\Api\ComplaintController::class, 'store']);
+
         Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
         Route::get('/dashboard/matching-requests', [DashboardController::class, 'matchingRequests'])
             ->middleware('role:artisan');
@@ -86,19 +75,17 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::middleware('role:artisan')->group(function () {
-            // Subscription & Payments
+
             Route::get('/subscription/status', [SubscriptionController::class, 'status']);
             Route::get('/subscription/plans', [SubscriptionController::class, 'index']);
             Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
             Route::post('/payments/proof', [SubscriptionController::class, 'uploadProof']);
             Route::get('/payments/history', [SubscriptionController::class, 'history']);
 
-            // Artisan Dashboard: Jobs
             Route::get('/artisan/jobs', [ArtisanJobController::class, 'index']);
             Route::get('/artisan/jobs/applied', [ArtisanJobController::class, 'applied']);
             Route::post('/artisan/jobs/proposal', [ArtisanJobController::class, 'store']);
 
-            // Artisan Dashboard: Interventions (Active Projects)
             Route::get('/artisan/interventions', [InterventionController::class, 'index']);
             Route::get('/artisan/interventions/{id}', [InterventionController::class, 'show']);
             Route::post('/artisan/interventions/{id}/progress', [InterventionController::class, 'updateProgress']);
@@ -106,25 +93,22 @@ Route::prefix('v1')->group(function () {
             Route::delete('/artisan/interventions/{id}/photo/{photoId}', [InterventionController::class, 'deletePhoto']);
         });
 
-        // Admin Dashboard
         Route::prefix('admin')->middleware('role:admin')->group(function () {
             Route::get('/overview', [AdminController::class, 'overview']);
-            // Stats Overview (New)
+
             Route::get('/stats/overview', [AdminStatsController::class, 'index']);
             Route::get('/stats/rankings', [AdminStatsController::class, 'artisanRanking']);
             Route::get('/stats/export', [AdminStatsController::class, 'exportCSV']);
 
-            // Artisan & User Management
             Route::get('/users/clients', [AdminController::class, 'indexClients']);
             Route::get('/users/artisans', [AdminController::class, 'indexArtisans']);
-            Route::get('/artisans', [AdminController::class, 'indexArtisans']); // Legacy route
+            Route::get('/artisans', [AdminController::class, 'indexArtisans']); 
             Route::post('/artisans/{id}/status', [AdminController::class, 'updateArtisanStatus']);
             Route::post('/artisans/{id}/promote', [AdminController::class, 'promoteArtisan']);
             Route::delete('/users/{id}', [AdminController::class, 'deleteUser']);
             Route::post('/users/{id}/delete', [AdminController::class, 'deleteUser']);
             Route::post('/users/bulk', [AdminController::class, 'bulkAction']);
 
-            // Subscription Management
             Route::get('/subscriptions', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'index']);
             Route::get('/subscriptions/pending', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'pending']);
             Route::post('/subscriptions/confirm/{id}', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'confirm']);
@@ -132,7 +116,6 @@ Route::prefix('v1')->group(function () {
             Route::post('/subscriptions/manual-activate', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'manualActivate']);
             Route::get('/artisans/{id}/subscriptions', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'artisanHistory']);
 
-            // Complaints Management
             Route::get('/complaints', [\App\Http\Controllers\Admin\AdminComplaintController::class, 'index']);
             Route::get('/complaints/{reclamation}', [\App\Http\Controllers\Admin\AdminComplaintController::class, 'show']);
             Route::post('/complaints/{reclamation}/status', [\App\Http\Controllers\Admin\AdminComplaintController::class, 'updateStatus']);
@@ -140,11 +123,9 @@ Route::prefix('v1')->group(function () {
             Route::post('/complaints/{reclamation}/warn', [\App\Http\Controllers\Admin\AdminComplaintController::class, 'warn']);
             Route::post('/complaints/{reclamation}/suspend', [\App\Http\Controllers\Admin\AdminComplaintController::class, 'suspend']);
 
-            // Interventions Management (Admin)
             Route::get('/interventions', [\App\Http\Controllers\Admin\AdminInterventionController::class, 'index']);
         });
 
     });
 });
-
 

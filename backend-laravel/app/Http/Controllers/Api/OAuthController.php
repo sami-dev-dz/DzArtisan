@@ -26,16 +26,15 @@ class OAuthController extends Controller
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if (!$user) {
-                // Registering Client via Google
+
                 $user = User::create([
                     'nomComplet' => $googleUser->getName(),
                     'email'      => $googleUser->getEmail(),
-                    'password'   => bcrypt(Str::random(16)), // Dummy password
+                    'password'   => bcrypt(Str::random(16)), 
                     'type'       => 'client',
                     'statut'     => 'actif',
                 ]);
 
-                // Create client profile
                 Client::create([
                     'user_id' => $user->id,
                     'typeAuth' => 'google',
@@ -45,13 +44,10 @@ class OAuthController extends Controller
                 ]);
             }
 
-            // Create a temporary Sanctum token for the frontend to use
             $token = $user->createToken('google_token')->plainTextToken;
 
             Log::info('Google OAuth success for user: ' . $user->email . ', token prefix: ' . substr($token, 0, 10));
 
-            // Redirect to the dedicated callback page on the frontend
-            // Do NOT urlencode — URLSearchParams handles decoding automatically
             return redirect(env('FRONTEND_URL') . '/google/callback?token=' . urlencode($token));
         } catch (\Exception $e) {
             Log::error('Google OAuth Error: ' . $e->getMessage() . "\n" . $e->getTraceAsString());
@@ -64,24 +60,21 @@ class OAuthController extends Controller
         try {
             $tokenRaw = $request->query('token');
             Log::info('sync-session called, token prefix: ' . substr($tokenRaw ?? '', 0, 10) . '...');
-            
-            // On cherche le token dans la DB
+
             $token = \Laravel\Sanctum\PersonalAccessToken::findToken($tokenRaw);
-            
+
             if (!$token || !$token->tokenable) {
                 Log::warning('Token invalide ou déjà consommé');
                 return response()->json(['success' => false, 'message' => 'Token invalid or expired'], 401);
             }
 
             $user = $token->tokenable;
-            
-            // Establish a proper web session (cookie-based)
+
             Auth::guard('web')->login($user);
             $request->session()->regenerate();
-            
+
             Log::info('sync-session success for user: ' . $user->email);
 
-            // Suppress deleting the token for now — it will expire naturally
             $token->delete();
 
             $user->load(['client', 'artisan.categories', 'artisan.wilayas']);

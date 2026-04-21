@@ -21,49 +21,31 @@ class Reclamation extends Model
         'notes_admin'
     ];
 
-    /**
-     * The complainant (User).
-     */
     public function demandeur(): BelongsTo
     {
         return $this->belongsTo(User::class, 'demandeur_id');
     }
 
-    /**
-     * The accused party (User).
-     */
     public function accuse(): BelongsTo
     {
         return $this->belongsTo(User::class, 'accuse_id');
     }
 
-    /**
-     * The associated intervention request (if any).
-     */
     public function intervention(): BelongsTo
     {
         return $this->belongsTo(DemandeIntervention::class, 'intervention_id');
     }
 
-    /**
-     * Attached evidence photos.
-     */
     public function photos(): HasMany
     {
         return $this->hasMany(ReclamationPhoto::class);
     }
 
-    /**
-     * Audit trail of administrative actions.
-     */
     public function actions(): HasMany
     {
         return $this->hasMany(ReclamationAction::class)->orderBy('created_at', 'desc');
     }
 
-    /**
-     * Scope for filtering by status.
-     */
     public function scopeFilterByStatus($query, $status)
     {
         if ($status && $status !== 'tous') {

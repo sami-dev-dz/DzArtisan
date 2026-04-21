@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/Button"
 import { Badge } from "@/components/ui/Badge"
 import { Avatar } from "@/components/ui/Avatar"
 import { cn } from "@/lib/utils"
+import { TableSkeleton } from "@/components/ui/SkeletonLayouts"
 
 export function SubscriptionTable({ 
   subscriptions = [], 
@@ -111,16 +112,11 @@ export function SubscriptionTable({
           </thead>
           <tbody className="divide-y divide-slate-200 dark:divide-white/10">
             {loading ? (
-              [...Array(5)].map((_, i) => (
-                <tr key={i} className="animate-pulse">
-                   <td className="px-6 py-4"><div className="h-10 w-40 bg-slate-100 dark:bg-slate-800 rounded-lg"></div></td>
-                   <td className="px-6 py-4"><div className="h-6 w-20 bg-slate-100 dark:bg-slate-800 rounded-lg mx-auto"></div></td>
-                   <td className="px-6 py-4"><div className="h-10 w-32 bg-slate-100 dark:bg-slate-800 rounded-lg"></div></td>
-                   <td className="px-6 py-4"><div className="h-6 w-24 bg-slate-100 dark:bg-slate-800 rounded-lg mx-auto"></div></td>
-                   <td className="px-6 py-4"><div className="h-6 w-16 bg-slate-100 dark:bg-slate-800 rounded-lg mx-auto"></div></td>
-                   <td className="px-6 py-4"></td>
-                </tr>
-              ))
+              <tr className="border-0">
+                <td colSpan="6" className="p-0">
+                   <TableSkeleton rows={8} cols={6} title={false} />
+                </td>
+              </tr>
             ) : !subscriptions || subscriptions.length === 0 ? (
               <tr>
                 <td colSpan="6" className="px-6 py-12 text-center text-slate-500 dark:text-slate-400">

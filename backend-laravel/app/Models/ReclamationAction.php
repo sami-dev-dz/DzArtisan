@@ -17,17 +17,11 @@ class ReclamationAction extends Model
         'notes'
     ];
 
-    /**
-     * Parent complaint.
-     */
     public function reclamation(): BelongsTo
     {
         return $this->belongsTo(Reclamation::class);
     }
 
-    /**
-     * Admin who performed the action.
-     */
     public function admin(): BelongsTo
     {
         return $this->belongsTo(User::class, 'admin_id');

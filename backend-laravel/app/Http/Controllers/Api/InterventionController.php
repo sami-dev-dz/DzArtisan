@@ -18,9 +18,7 @@ use App\Http\Requests\Intervention\UploadPhotoRequest;
 
 class InterventionController extends Controller
 {
-    /**
-     * Store a new intervention request from a client.
-     */
+
     public function store(StoreInterventionRequest $request)
     {
         $user = Auth::user();
@@ -38,7 +36,6 @@ class InterventionController extends Controller
                 'statut'       => 'en_attente'
             ]);
 
-            // Handle photos if any
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $file) {
                     $path = $file->store('demandes', 'public');
@@ -53,15 +50,12 @@ class InterventionController extends Controller
             return $demande;
         });
 
-        // ── Notify Matching Artisans ─────────────────────────────────────
-        // 1. Get artisans in same category and wilaya
         $artisans = Artisan::where('categorie_id', $demande->categorie_id)
             ->where('wilaya_id', $demande->wilaya_id)
             ->where('statutValidation', 'valide')
             ->whereHas('user', fn($q) => $q->where('statut', 'actif'))
             ->get();
 
-        // 2. Dispatch notifications
         if ($artisans->isNotEmpty()) {
             Notification::send($artisans->pluck('user'), new NewJobNotification($demande));
         }
@@ -73,9 +67,6 @@ class InterventionController extends Controller
         ], 201);
     }
 
-    /**
-     * List assigned interventions for the artisan.
-     */
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -104,9 +95,6 @@ class InterventionController extends Controller
         ]);
     }
 
-    /**
-     * Show intervention detail.
-     */
     public function show($id)
     {
         $user = Auth::user();
@@ -123,9 +111,6 @@ class InterventionController extends Controller
         ]);
     }
 
-    /**
-     * Update intervention progress.
-     */
     public function updateProgress(UpdateProgressRequest $request, $id)
     {
         $user = Auth::user();
@@ -136,7 +121,6 @@ class InterventionController extends Controller
             ->where('artisan_id', $artisan->id)
             ->firstOrFail();
 
-        // Prevent invalid transitions
         if ($intervention->statut === 'terminee' || $intervention->statut === 'annulee') {
             return response()->json([
                 'success' => false,
@@ -153,9 +137,6 @@ class InterventionController extends Controller
         ]);
     }
 
-    /**
-     * Upload intervention photos (Before/After).
-     */
     public function uploadPhoto(UploadPhotoRequest $request, $id)
     {
         $user = Auth::user();
@@ -185,9 +166,6 @@ class InterventionController extends Controller
         return response()->json(['success' => false, 'message' => 'No photo provided'], 400);
     }
 
-    /**
-     * Delete a photo.
-     */
     public function deletePhoto($id, $photoId)
     {
         $user = Auth::user();
@@ -201,7 +179,6 @@ class InterventionController extends Controller
             ->where('demande_id', $intervention->id)
             ->firstOrFail();
 
-        // Delete from storage if not a placeholder
         if (str_contains($photo->url, '/storage/')) {
             $path = str_replace('/storage/', 'public/', $photo->url);
             Storage::delete($path);

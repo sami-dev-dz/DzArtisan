@@ -12,14 +12,13 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    // Colonnes réelles dans la migration
     protected $fillable = [
         'nomComplet',
         'email',
         'password',
         'telephone',
-        'type',    // 'client', 'artisan', 'admin'
-        'statut',  // 'actif', 'suspendu', 'supprime'
+        'type',    
+        'statut',  
     ];
 
     protected $hidden = [

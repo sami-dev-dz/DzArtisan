@@ -20,9 +20,7 @@ use Throwable;
 
 class AuthController extends Controller
 {
-    /**
-     * Inscription
-     */
+
     public function register(RegisterRequest $request)
     {
         try {
@@ -88,9 +86,8 @@ class AuthController extends Controller
                 return $createdUser;
             });
 
-            // Connexion automatique après inscription
             Auth::login($user);
-            $user->load(['client', 'artisan.categories', 'artisan.wilayas']);
+            $user->load(['client', 'artisan.categories', 'artisan.wilayas', 'artisan.abonnement']);
             $user->needs_artisan_onboarding = $this->needsArtisanOnboarding($user);
 
             return response()->json([
@@ -99,7 +96,7 @@ class AuthController extends Controller
                 'data'    => ['user' => $user]
             ], 201);
         } catch (QueryException $e) {
-            // Race condition safe-guard on DB unique constraints.
+
             if ((string) $e->getCode() === '23000') {
                 return response()->json([
                     'success' => false,
@@ -122,9 +119,6 @@ class AuthController extends Controller
         }
     }
 
-    /**
-     * Connexion
-     */
     public function login(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
@@ -142,7 +136,7 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
-        $user->load(['client', 'artisan.categories', 'artisan.wilayas']);
+        $user->load(['client', 'artisan.categories', 'artisan.wilayas', 'artisan.abonnement']);
         $user->needs_artisan_onboarding = $this->needsArtisanOnboarding($user);
 
         return response()->json([
@@ -152,9 +146,6 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Déconnexion
-     */
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
@@ -168,12 +159,9 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * Utilisateur actuel
-     */
     public function me(Request $request)
     {
-        $user = $request->user()->load(['client', 'artisan.categories', 'artisan.wilayas']);
+        $user = $request->user()->load(['client', 'artisan.categories', 'artisan.wilayas', 'artisan.abonnement']);
         $user->needs_artisan_onboarding = $this->needsArtisanOnboarding($user);
 
         return response()->json([

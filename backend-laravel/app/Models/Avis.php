@@ -34,9 +34,6 @@ class Avis extends Model
         return $this->belongsTo(DemandeIntervention::class, 'demande_id');
     }
 
-    /**
-     * Helper to get direct user through client
-     */
     public function user()
     {
         return $this->hasOneThrough(User::class, Client::class, 'id', 'id', 'client_id', 'user_id');

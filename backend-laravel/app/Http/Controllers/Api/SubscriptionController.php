@@ -15,7 +15,7 @@ class SubscriptionController extends Controller
     {
         $user = Auth::user();
         $artisan = $user->artisan;
-        
+
         $user = Auth::user();
         $email = $user->email;
         $phone = $user->telephone;
@@ -76,13 +76,24 @@ class SubscriptionController extends Controller
     {
         $user = Auth::user();
         $artisan = $user->artisan;
+
+        if (!$artisan) {
+            return response()->json([
+                'statut' => 'aucun',
+                'plan' => 'none',
+                'days_left' => 0,
+                'is_premium' => false,
+            ]);
+        }
+
         $subscription = $artisan->abonnement;
 
         if (!$subscription) {
             return response()->json([
                 'statut' => 'aucun',
                 'plan' => 'none',
-                'days_left' => 0
+                'days_left' => 0,
+                'is_premium' => false,
             ]);
         }
 
@@ -98,6 +109,7 @@ class SubscriptionController extends Controller
             'date_fin' => $subscription->date_fin,
             'expired' => $expired,
             'expiring_soon' => $expiring_soon,
+            'is_premium' => $subscription->is_premium,
             'days_left' => $subscription->date_fin ? max(0, $subscription->date_fin->diffInDays($now, false)) : 0,
             'history' => $subscription->paiements()->latest()->get()
         ]);
@@ -112,8 +124,6 @@ class SubscriptionController extends Controller
         $user = Auth::user();
         $artisan = $user->artisan;
 
-        // One trial per account
-        // One trial per email OR phone number across all accounts
         if ($request->plan_id === 'gratuit') {
             $user = Auth::user();
             $email = $user->email;
@@ -131,7 +141,6 @@ class SubscriptionController extends Controller
                 ], 403);
             }
 
-            // Create indefinite free subscription
             $subscription = Abonnement::updateOrCreate(
                 ['artisan_id' => $artisan->id],
                 [
@@ -145,15 +154,14 @@ class SubscriptionController extends Controller
             return response()->json(['message' => 'Plan gratuit sélectionné', 'subscription' => $subscription]);
         }
 
-        // For paid plans, create a pending subscription
         $priceMap = ['mensuel' => 500, 'trimestriel' => 1500, 'annuel' => 4000];
-        
+
         $subscription = Abonnement::updateOrCreate(
             ['artisan_id' => $artisan->id],
             [
                 'plan' => $request->plan_id,
                 'statut' => 'en_attente',
-                // Dates will be set upon payment confirmation
+
             ]
         );
 
@@ -175,12 +183,11 @@ class SubscriptionController extends Controller
     {
         $request->validate([
             'paiement_id' => 'required|exists:paiements,id',
-            'preuve_paiement' => 'required|string', // Cloudinary URL
+            'preuve_paiement' => 'required|string', 
         ]);
 
         $paiement = Paiement::findOrFail($request->paiement_id);
-        
-        // Ensure this payment belongs to the user
+
         if ($paiement->abonnement->artisan_id !== Auth::user()->artisan->id) {
             abort(403);
         }
@@ -198,7 +205,7 @@ class SubscriptionController extends Controller
     {
         $artisan = Auth::user()->artisan;
         $abonnement = $artisan->abonnement;
-        
+
         if (!$abonnement) return response()->json([]);
 
         $history = Paiement::where('abonnement_id', $abonnement->id)

@@ -18,6 +18,7 @@ import { format } from "date-fns"
 import { fr, arDZ, enUS } from "date-fns/locale"
 import { useLocale } from "next-intl"
 import axios from "@/lib/axios"
+import { Skeleton } from "@/components/ui/Skeleton"
 
 export default function ComplaintManagement() {
   const t = useTranslations("admin.complaints_management")
@@ -169,7 +170,9 @@ export default function ComplaintManagement() {
           {loading ? (
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
-                <Card key={i} className="p-4 bg-slate-50 dark:bg-white/5 border-none h-24 animate-pulse rounded-2xl" />
+                <div key={i} className="bg-white dark:bg-[#0a0f1e] overflow-hidden rounded-2xl h-24 border border-slate-100 dark:border-white/5">
+                   <Skeleton className="w-full h-full" />
+                </div>
               ))}
             </div>
           ) : complaints.length === 0 ? (

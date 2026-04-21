@@ -61,6 +61,11 @@ export function AuthProvider({ children }) {
     if (u.type === "artisan") {
       if (u.needs_artisan_onboarding) return router.push("/onboarding/artisan/profile");
       if (u.artisan?.statutValidation === "en_attente") return router.push("/onboarding/artisan/waiting");
+      
+      // Check if artisan lacks an active subscription
+      const hasPlan = u.artisan?.abonnement && u.artisan?.abonnement?.plan !== 'none';
+      if (!hasPlan) return router.push("/onboarding/artisan/subscription");
+
       return router.push("/dashboard/artisan");
     }
     if (u.type === "client") {
@@ -111,7 +116,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, loginWithGoogle, logout, redirectAfterLogin }}>
+    <AuthContext.Provider value={{ user, setUser, loading, login, register, loginWithGoogle, logout, redirectAfterLogin }}>
       {children}
     </AuthContext.Provider>
   )

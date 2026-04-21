@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminComplaintController extends Controller
 {
-    /**
-     * Display a listing of complaints with advanced filtering and search.
-     */
+
     public function index(Request $request)
     {
         $status = $request->query('status', 'tous');
@@ -41,7 +39,6 @@ class AdminComplaintController extends Controller
 
         $complaints = $query->paginate(15);
 
-        // Stats for the dashboard
         $stats = [
             'nouveau' => Reclamation::where('statut', 'nouveau')->count(),
             'en_cours' => Reclamation::where('statut', 'en_cours')->count(),
@@ -55,18 +52,14 @@ class AdminComplaintController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified complaint with full history.
-     */
     public function show(Reclamation $reclamation)
     {
         $reclamation->load(['demandeur', 'accuse', 'photos', 'intervention', 'actions.admin']);
 
-        // Check if the accused (if artisan) has multiple validated complaints
         $accusedStrikes = 0;
         if ($reclamation->accuse->role === 'artisan') {
             $accusedStrikes = Reclamation::where('accuse_id', $reclamation->accuse_id)
-                ->where('statut', 'resolu') // We consider resolved = complaint was valid/action taken
+                ->where('statut', 'resolu') 
                 ->count();
         }
 
@@ -76,9 +69,6 @@ class AdminComplaintController extends Controller
         ]);
     }
 
-    /**
-     * Update the status of a complaint and log the action.
-     */
     public function updateStatus(Request $request, Reclamation $reclamation)
     {
         $validated = $request->validate([
@@ -90,7 +80,6 @@ class AdminComplaintController extends Controller
         $reclamation->statut = $validated['status'];
         $reclamation->save();
 
-        // Create audit log
         ReclamationAction::create([
             'reclamation_id' => $reclamation->id,
             'admin_id' => Auth::id(),
@@ -98,7 +87,6 @@ class AdminComplaintController extends Controller
             'notes' => $validated['notes'] ?? null
         ]);
 
-        // Notify User
         $statusMap = [
             'en_cours' => 'in_progress',
             'resolu'   => 'resolved',
@@ -115,9 +103,6 @@ class AdminComplaintController extends Controller
         ]);
     }
 
-    /**
-     * Add an internal note to the complaint audit trail.
-     */
     public function addNote(Request $request, Reclamation $reclamation)
     {
         $validated = $request->validate([
@@ -136,19 +121,12 @@ class AdminComplaintController extends Controller
         ]);
     }
 
-    /**
-     * Send a warning to the accused party.
-     */
     public function warn(Request $request, Reclamation $reclamation)
     {
         $validated = $request->validate([
             'message' => 'required|string'
         ]);
 
-        // In a real app, send email:
-        // Mail::to($reclamation->accuse->email)->send(new ComplaintWarning($reclamation, $validated['message']));
-
-        // Notify User
         $reclamation->accuse->notify(new ComplaintNotification('warning', $reclamation->id));
 
         ReclamationAction::create([
@@ -163,9 +141,6 @@ class AdminComplaintController extends Controller
         ]);
     }
 
-    /**
-     * Suspend the accused user's account.
-     */
     public function suspend(Request $request, Reclamation $reclamation)
     {
         $validated = $request->validate([
@@ -173,11 +148,10 @@ class AdminComplaintController extends Controller
         ]);
 
         $accused = $reclamation->accuse;
-        $accused->account_status = 'suspended'; // Assuming this field exists
+        $accused->account_status = 'suspended'; 
         $accused->save();
 
-        // Notify User
-        $accused->notify(new ComplaintNotification('warning', $reclamation->id)); // Using warning/suspended context
+        $accused->notify(new ComplaintNotification('warning', $reclamation->id)); 
 
         ReclamationAction::create([
             'reclamation_id' => $reclamation->id,

@@ -15,9 +15,6 @@ class ReclamationPhoto extends Model
         'url'
     ];
 
-    /**
-     * Parent complaint.
-     */
     public function reclamation(): BelongsTo
     {
         return $this->belongsTo(Reclamation::class);

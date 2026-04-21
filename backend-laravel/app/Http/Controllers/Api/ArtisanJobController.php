@@ -12,9 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class ArtisanJobController extends Controller
 {
-    /**
-     * List opportunities matching the artisan's skills and location.
-     */
+
     public function index(Request $request)
     {
         $user    = Auth::user();
@@ -24,7 +22,6 @@ class ArtisanJobController extends Controller
             return response()->json(['message' => 'Profil artisan introuvable.'], 404);
         }
 
-        // Collect all category & wilaya IDs the artisan covers
         $categoryIds = $artisan->categories()->pluck('categorie_metiers.id')->toArray();
         if ($artisan->categorie_id) {
             $categoryIds[] = $artisan->categorie_id;
@@ -46,7 +43,7 @@ class ArtisanJobController extends Controller
             ->where('statut', 'en_attente')
             ->with(['categorie:id,nom,icone', 'wilaya:id,nom', 'commune:id,nom', 'photos'])
             ->withCount('propositions')
-            // Exclude requests where the artisan already applied
+
             ->whereDoesntHave('propositions', function ($q) use ($artisan) {
                 $q->where('artisan_id', $artisan->id);
             })
@@ -56,9 +53,6 @@ class ArtisanJobController extends Controller
         return response()->json($jobs);
     }
 
-    /**
-     * Show a single job opportunity detail.
-     */
     public function show($id)
     {
         $artisan = Auth::user()->artisan;
@@ -76,7 +70,6 @@ class ArtisanJobController extends Controller
         ->withCount('propositions')
         ->findOrFail($id);
 
-        // Check if already applied
         $hasApplied = DemandeProposition::where('demande_id', $id)
             ->where('artisan_id', $artisan->id)
             ->exists();
@@ -87,9 +80,6 @@ class ArtisanJobController extends Controller
         ]);
     }
 
-    /**
-     * List proposals already submitted by the artisan.
-     */
     public function applied()
     {
         $user    = Auth::user();
@@ -111,9 +101,6 @@ class ArtisanJobController extends Controller
         return response()->json($proposals);
     }
 
-    /**
-     * Submit a proposal for a request.
-     */
     public function store(Request $request)
     {
         $user    = Auth::user();
@@ -123,7 +110,6 @@ class ArtisanJobController extends Controller
             return response()->json(['message' => 'Profil artisan introuvable.'], 404);
         }
 
-        // Artisan must have a premium active subscription to apply
         if (!$artisan->abonnement?->is_premium) {
             return response()->json([
                 'message' => 'L\'accès aux propositions nécessite un Abonnement Premium. Veuillez mettre à niveau votre plan.',
@@ -138,14 +124,12 @@ class ArtisanJobController extends Controller
 
         $demande = DemandeIntervention::with('client.user')->findOrFail($validated['demande_id']);
 
-        // Prevent applying to non-pending requests
         if ($demande->statut !== 'en_attente') {
             return response()->json([
                 'message' => 'Cette demande n\'accepte plus de propositions.',
             ], 422);
         }
 
-        // Prevent duplicate applications
         if (DemandeProposition::where('demande_id', $demande->id)->where('artisan_id', $artisan->id)->exists()) {
             return response()->json([
                 'message' => 'Vous avez déjà soumis une proposition pour cette demande.',
@@ -161,12 +145,11 @@ class ArtisanJobController extends Controller
                 'statut'        => 'en_attente',
             ]);
 
-            // Notify the client that a new proposal has arrived
             if ($demande->client?->user) {
                 try {
                     $demande->client->user->notify(new NewProposalNotification($demande, $artisan));
                 } catch (\Exception $e) {
-                    // Non-fatal — log for debugging but don't fail the request
+
                     \Log::warning('Proposal notification failed: ' . $e->getMessage());
                 }
             }
@@ -177,9 +160,6 @@ class ArtisanJobController extends Controller
         return response()->json($proposal->load(['artisan.user', 'demande']), 201);
     }
 
-    /**
-     * Withdraw (delete) an artisan's own pending proposal.
-     */
     public function withdraw($id)
     {
         $user    = Auth::user();

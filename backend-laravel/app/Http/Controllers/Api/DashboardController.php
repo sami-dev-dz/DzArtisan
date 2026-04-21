@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function stats()
     {
         $user = Auth::user();
-        
+
         if ($user->type === 'client') {
             return response()->json([
                 [
@@ -37,7 +37,6 @@ class DashboardController extends Controller
             ]);
         }
 
-        // Artisan Stats
         $artisan = $user->artisan;
         if (!$artisan) {
             return response()->json([
@@ -49,31 +48,35 @@ class DashboardController extends Controller
         }
         $artisan->load(['categories', 'wilayas']);
 
+        $opportunitesCount = $artisan->matchingRequests()->count();
+        $propositionsCount = \App\Models\DemandeProposition::where('artisan_id', $artisan->id)->count();
+        $interventionsTermineesCount = \App\Models\DemandeIntervention::where('artisan_id', $artisan->id)->whereIn('statut', ['completed', 'terminee'])->count();
+
         return response()->json([
             'stats' => [
                 [
-                    'label' => 'Vues du profil',
-                    'value' => '1,245', // In a real app, this would be from a views table
-                    'icon' => 'Eye',
-                    'trend' => '+12%'
+                    'label' => 'Missions Dispos',
+                    'value' => number_format($opportunitesCount), 
+                    'icon' => 'Zap',
+                    'trend' => '+N/A' 
                 ],
                 [
-                    'label' => 'Contacts reçus',
-                    'value' => '28', 
-                    'icon' => 'PhoneCall',
-                    'trend' => '+5'
+                    'label' => 'Devis Soumis',
+                    'value' => number_format($propositionsCount), 
+                    'icon' => 'Send',
+                    'trend' => '+N/A'
                 ],
                 [
-                    'label' => 'Note Moyenne',
-                    'value' => '4.8/5',
+                    'label' => 'Missions Terminées',
+                    'value' => number_format($interventionsTermineesCount),
+                    'icon' => 'ShieldCheck',
+                    'trend' => '+N/A'
+                ],
+                [
+                    'label' => 'Note Globale',
+                    'value' => number_format($artisan->average_rating, 1) . '/5',
                     'icon' => 'Star',
-                    'trend' => '+0.2'
-                ],
-                [
-                    'label' => 'Total Avis',
-                    'value' => '14',
-                    'icon' => 'MessagesSquare',
-                    'trend' => '+2'
+                    'trend' => $artisan->reviews_count . ' avis'
                 ]
             ],
             'completeness' => $artisan->completeness,
@@ -86,13 +89,13 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         if ($user->type !== 'artisan') return response()->json(['error' => 'Non autorisé'], 403);
-        
+
         $artisan = $user->artisan;
         if (!$artisan) {
             return response()->json([]);
         }
         $requests = $artisan->scopeMatchingRequests(DemandeIntervention::query())->limit(5)->get();
-        
+
         return response()->json($requests);
     }
 
@@ -110,15 +113,15 @@ class DashboardController extends Controller
     {
         $artisan = $user->artisan;
         if (!$artisan) return ['status' => 'none', 'plan' => 'none', 'days_left' => 0, 'is_premium' => false];
-        
+
         $sub = $artisan->abonnement;
         if (!$sub) return ['status' => 'none', 'plan' => 'none', 'days_left' => 0, 'is_premium' => false];
-        
+
         $expired = $sub->date_fin && $sub->date_fin->isPast();
         if ($expired) return ['status' => 'expired', 'plan' => $sub->plan, 'days_left' => 0, 'is_premium' => false];
-        
+
         $days = (int) now()->diffInDays($sub->date_fin, false);
-        
+
         return [
             'status' => $days <= 0 ? 'expired' : ($days <= 7 ? 'warning' : 'active'),
             'plan' => $sub->plan,
@@ -128,5 +131,4 @@ class DashboardController extends Controller
         ];
     }
 }
-
 

@@ -239,24 +239,28 @@ export function Hero() {
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&display=swap');
 
         :root {
-          --card-bg:        rgba(255,255,255,0.82);
-          --card-border:    rgba(15,23,42,0.07);
-          --text-primary:   #0c1428;
-          --text-secondary: #3d5080;
-          --text-muted:     #8898b8;
-          --hero-bg:        #f0f4ff;
-          --accent:         #3b82f6;
+          --card-bg:        rgba(255, 255, 255, 0.9);
+          --card-border:    rgba(0, 0, 0, 0.08);
+          --text-primary:   #0f172a;
+          --text-secondary: #475569;
+          --text-muted:     #94a3b8;
+          --hero-bg:        #ffffff;
+          --accent:         #2563eb;
           --font-serif:     'Instrument Serif', Georgia, serif;
           --font-sans:      'Geist', system-ui, sans-serif;
+          --grid-opacity:   0.04;
+          --grid-color:     #000000;
         }
 
         html.dark {
-          --card-bg:        rgba(255,255,255,0.032);
-          --card-border:    rgba(255,255,255,0.07);
-          --text-primary:   #eef2ff;
-          --text-secondary: #8da0c4;
-          --text-muted:     #4d5f80;
-          --hero-bg:        #060a14;
+          --card-bg:        rgba(15, 23, 42, 0.6);
+          --card-border:    rgba(255, 255, 255, 0.08);
+          --text-primary:   #f8fafc;
+          --text-secondary: #94a3b8;
+          --text-muted:     #475569;
+          --hero-bg:        #0f172a;
+          --grid-opacity:   0.04;
+          --grid-color:     #ffffff;
         }
 
         .hero-root {
@@ -418,10 +422,10 @@ export function Hero() {
           <div className="blob" style={{ width: 800, height: 700, background: "radial-gradient(circle, rgba(29,78,216,0.11) 0%, transparent 70%)", top: "-20%", left: "-12%" }} />
           <div className="blob" style={{ width: 500, height: 500, background: "radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%)", bottom: "5%", right: "-5%" }} />
           <div className="blob" style={{ width: 600, height: 300, background: "radial-gradient(ellipse, rgba(139,92,246,0.04) 0%, transparent 70%)", top: "30%", left: "35%" }} />
-          <svg width="100%" height="100%" style={{ position: "absolute", inset: 0, opacity: 0.022 }}>
+          <svg width="100%" height="100%" style={{ position: "absolute", inset: 0, opacity: "var(--grid-opacity)" }}>
             <defs>
               <pattern id="hero-grid" width="52" height="52" patternUnits="userSpaceOnUse">
-                <path d="M 52 0 L 0 0 0 52" fill="none" stroke="white" strokeWidth="1" />
+                <path d="M 52 0 L 0 0 0 52" fill="none" stroke="var(--grid-color)" strokeWidth="1" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#hero-grid)" />

@@ -46,10 +46,9 @@ export default function ClientComplaintsPage() {
     setLoading(true)
     setError(null)
     try {
-      // Fetch interventions to find ones we can complain about
-      const res = await api.get("/interventions")
-      const interventions = res.data?.data || res.data || []
-      setComplaints(Array.isArray(interventions) ? interventions : [])
+      const res = await api.get("/complaints")
+      const data = res.data?.data || res.data || []
+      setComplaints(Array.isArray(data) ? data : [])
     } catch (err) {
       setError(err.response?.data?.error || "Erreur de chargement")
     } finally {
@@ -147,6 +146,45 @@ export default function ClientComplaintsPage() {
         </motion.div>
       )}
 
+      {/* Complaint List */}
+      {!loading && !error && complaints.length > 0 && !showForm && (
+        <div className="space-y-4">
+          <AnimatePresence>
+            {complaints.map(complaint => (
+              <motion.div
+                key={complaint.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-100 dark:border-white/5 shadow-sm space-y-4"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="space-y-1">
+                    <h3 className="font-black text-lg text-slate-900 dark:text-white">
+                      {complaint.description.split('\n')[0].replace('Sujet: ', '')}
+                    </h3>
+                    <p className="text-xs font-bold text-slate-400">
+                      Lié à l'intervention #{complaint.intervention_id}
+                    </p>
+                  </div>
+                  <div className={cn("px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-widest", STATUS_CONFIG[complaint.statut]?.color)}>
+                    {STATUS_CONFIG[complaint.statut]?.label || complaint.statut}
+                  </div>
+                </div>
+                <p className="text-sm font-medium text-slate-600 dark:text-slate-300">
+                  {complaint.description}
+                </p>
+                {complaint.notes_admin && (
+                  <div className="p-4 bg-blue-50 dark:bg-blue-500/10 rounded-2xl border border-blue-100 dark:border-blue-500/20">
+                    <p className="text-xs font-bold text-blue-700 dark:text-blue-400">Réponse de l'administration :</p>
+                    <p className="text-sm font-medium text-blue-600 dark:text-blue-300 mt-1">{complaint.notes_admin}</p>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+      )}
+
       {/* Info Note */}
       {!loading && (
         <div className="bg-blue-50 dark:bg-blue-500/10 rounded-[24px] p-5 border border-blue-100 dark:border-blue-500/20">
@@ -162,12 +200,21 @@ export default function ClientComplaintsPage() {
 function NewComplaintForm({ onSuccess, onCancel }) {
   const [subject, setSubject] = React.useState("")
   const [description, setDescription] = React.useState("")
+  const [interventionId, setInterventionId] = React.useState("")
+  const [interventions, setInterventions] = React.useState([])
   const [submitting, setSubmitting] = React.useState(false)
   const [error, setError] = React.useState(null)
 
+  React.useEffect(() => {
+    api.get("/interventions").then(res => {
+      const data = res.data?.data || res.data || []
+      setInterventions(Array.isArray(data) ? data : [])
+    })
+  }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!subject.trim() || !description.trim()) {
+    if (!subject.trim() || !description.trim() || !interventionId) {
       setError("Veuillez remplir tous les champs.")
       return
     }
@@ -179,11 +226,10 @@ function NewComplaintForm({ onSuccess, onCancel }) {
     setSubmitting(true)
     setError(null)
     try {
-      // POST to a generic complaints endpoint - the backend will handle it
-      await api.post("/interventions", {
+      await api.post("/complaints", {
+        intervention_id: interventionId,
         titre: subject,
         description: description,
-        type: "reclamation"
       })
       onSuccess()
     } catch (err) {
@@ -210,6 +256,24 @@ function NewComplaintForm({ onSuccess, onCancel }) {
           {error}
         </div>
       )}
+
+      <div className="space-y-2">
+        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+          Sélectionner l'intervention concernée
+        </label>
+        <select
+          value={interventionId}
+          onChange={(e) => setInterventionId(e.target.value)}
+          className="w-full h-14 rounded-2xl bg-slate-50 dark:bg-white/5 border-2 border-transparent focus:border-red-500 px-5 font-bold text-slate-900 dark:text-white outline-none transition-all"
+        >
+          <option value="">Sélectionnez une intervention</option>
+          {interventions.map(int => (
+            <option key={int.id} value={int.id}>
+              {int.titre} ({int.statut})
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className="space-y-2">
         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">

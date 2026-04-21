@@ -23,22 +23,23 @@ export function AvailabilityToggle({ compact = false }) {
     try {
       const { data } = await api.post("/profile/toggle-availability")
       
-      // Update local user state
+      // Update local user state properly reading data.data.status
       setUser(prev => ({
         ...prev,
         artisan: {
-          ...prev.artisan,
-          disponibilite: data.status
+          ...prev?.artisan,
+          disponibilite: data.data?.status || (prev?.artisan?.disponibilite === "disponible" ? "indisponible" : "disponible")
         }
       }))
 
       addToast({
-        title: data.message,
+        title: data.message || "Mis à jour",
         type: "success"
       })
     } catch (err) {
+      const msg = err.response?.data?.message || err.message || common("error");
       addToast({
-        title: common("error"),
+        title: msg,
         type: "error"
       })
     } finally {
@@ -118,7 +119,7 @@ export function AvailabilityToggle({ compact = false }) {
              layoutId="check"
              className="w-5 h-5 bg-white text-emerald-600 rounded-full flex items-center justify-center shadow-lg"
            >
-              <Check className="w-3.5 h-3.5 stroke-[4]" />
+              <Check className="w-3.5 h-3.5 stroke-4" />
            </motion.div>
         )}
       </button>

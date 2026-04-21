@@ -34,6 +34,7 @@
   --font-arabic: var(--font-arabic);
 
   --animate-blob: blob 7s infinite;
+  --animate-blob: blob 7s infinite;
 }
 
 /* Light mode defaults */
@@ -101,3 +102,5 @@ html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] h4, 
 body {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+

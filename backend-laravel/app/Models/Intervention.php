@@ -14,7 +14,7 @@ class Intervention extends Model
         'client_id',
         'description',
         'date_intervention',
-        'statut', // 'programmee', 'terminee', 'annulee'
+        'statut', 
         'prix_estime'
     ];
 

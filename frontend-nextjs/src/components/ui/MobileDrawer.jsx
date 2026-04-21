@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { X, LogOut, LayoutDashboard, User, ShieldCheck } from "lucide-react"
 import { useUIStore } from "@/store/uiStore"
@@ -58,7 +59,7 @@ export function MobileDrawer({ isOpen, onClose, links = [] }) {
             exit="closed"
             variants={backdropVariants}
             onClick={onClose}
-            className="fixed inset-0 z-[60] bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/60"
+            className="fixed inset-0 z-60 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/60"
           />
 
           {/* Drawer */}
@@ -68,13 +69,18 @@ export function MobileDrawer({ isOpen, onClose, links = [] }) {
             exit="closed"
             variants={drawerVariants}
             className={cn(
-              "fixed inset-y-0 z-[70] flex w-4/5 max-w-sm flex-col bg-white shadow-2xl dark:bg-slate-950",
+              "fixed inset-y-0 z-70 flex w-4/5 max-w-sm flex-col bg-white shadow-2xl dark:bg-slate-950",
               isRTL ? "left-0 border-r border-slate-200 dark:border-slate-800" : "right-0 border-l border-slate-200 dark:border-slate-800"
             )}
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-100 p-4 dark:border-slate-800/60">
-              <span className="text-lg font-bold text-blue-600">DzArtisan</span>
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-slate-700 flex items-center justify-center overflow-hidden">
+                  <Image src="/logo.png" alt="DzArtisan" width={24} height={24} className="w-auto h-auto object-contain" />
+                </div>
+                <span className="text-lg font-bold text-blue-600">DzArtisan</span>
+              </div>
               <button
                 onClick={onClose}
                 className="rounded-md p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"

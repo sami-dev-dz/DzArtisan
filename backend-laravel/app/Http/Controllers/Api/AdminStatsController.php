@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Response;
 
 class AdminStatsController extends Controller
 {
-    /**
-     * Ensure caller is admin
-     */
+
     private function guardAdmin()
     {
         if (Auth::user()?->type !== 'admin') {
@@ -25,9 +23,6 @@ class AdminStatsController extends Controller
         }
     }
 
-    /**
-     * Get all aggregated data for the statistics dashboard
-     */
     public function index()
     {
         $this->guardAdmin();
@@ -42,7 +37,6 @@ class AdminStatsController extends Controller
             ];
         }
 
-        // 1. Wilaya Activity (Map Data)
         $wilayaActivity = Wilaya::select('id', 'nom')
             ->withCount('communes')
             ->get()
@@ -50,7 +44,6 @@ class AdminStatsController extends Controller
                 $requestCount = DemandeIntervention::where('wilaya_id', $w->id)->count();
                 $artisanCount = Artisan::where('wilaya_id', $w->id)->count();
 
-                // Get most requested category in this wilaya
                 $topCategory = DemandeIntervention::where('wilaya_id', $w->id)
                     ->select('categorie_id', DB::raw('count(*) as total'))
                     ->groupBy('categorie_id')
@@ -68,7 +61,6 @@ class AdminStatsController extends Controller
                 ];
             });
 
-        // 2. Top 10 Wilayas (Bar Chart)
         $topWilayas = DemandeIntervention::select('wilaya_id', DB::raw('count(*) as total'))
             ->groupBy('wilaya_id')
             ->orderByDesc('total')
@@ -80,11 +72,10 @@ class AdminStatsController extends Controller
                 'requests' => $r->total
             ]);
 
-        // 3. Category Distribution (Donut Chart)
         $categoryDistribution = DemandeIntervention::select('categorie_id', DB::raw('count(*) as total'))
             ->groupBy('categorie_id')
             ->orderByDesc('total')
-            ->limit(8) // Top 8 + others
+            ->limit(8) 
             ->with('categorie:id,nom')
             ->get()
             ->map(fn($r) => [
@@ -92,7 +83,6 @@ class AdminStatsController extends Controller
                 'value' => $r->total
             ]);
 
-        // 4. Satisfaction Trends (Line Chart)
         $satisfactionTrends = [];
         foreach($last12Months as $m) {
             $avg = Avis::whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$m['month']])->avg('note');
@@ -102,7 +92,6 @@ class AdminStatsController extends Controller
             ];
         }
 
-        // 5. Conversion Metrics
         $globalViews = Artisan::sum('profile_views_count');
         $globalContacts = Artisan::sum('contacts_count');
         $globalRequests = DemandeIntervention::count();
@@ -122,23 +111,17 @@ class AdminStatsController extends Controller
         ]);
     }
 
-    /**
-     * Get artisan ranking by response rate
-     */
     public function artisanRanking(Request $request)
     {
         $this->guardAdmin();
 
         $artisans = Artisan::with(['user:id,nomComplet', 'primaryCategorie:id,nom'])
-            ->orderBy('avg_response_time_minutes', 'asc') // Faster is better
+            ->orderBy('avg_response_time_minutes', 'asc') 
             ->paginate(20);
 
         return response()->json($artisans);
     }
 
-    /**
-     * Export all artisan performance data as CSV
-     */
     public function exportCSV()
     {
         $this->guardAdmin();
@@ -156,7 +139,7 @@ class AdminStatsController extends Controller
 
         $callback = function() use ($columns) {
             $file = fopen('php://output', 'w');
-            // Fix for Excel UTF-8
+
             fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
             fputcsv($file, $columns, ';');
 
@@ -186,15 +169,12 @@ class AdminStatsController extends Controller
         return Response::stream($callback, 200, $headers);
     }
 
-    /**
-     * Simple activity level calculation for choropleth colors
-     */
     private function calculateActivityLevel($count)
     {
-        if ($count > 100) return 4; // High
+        if ($count > 100) return 4; 
         if ($count > 50)  return 3;
         if ($count > 10)  return 2;
         if ($count > 0)   return 1;
-        return 0; // None
+        return 0; 
     }
 }

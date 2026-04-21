@@ -73,7 +73,7 @@ function InputField({
         <span
           className={cn(
             "pointer-events-none absolute top-1/2 -translate-y-1/2 transition-colors duration-200",
-            "text-slate-350 group-focus-within:text-blue-500 dark:text-slate-500 dark:group-focus-within:text-blue-400",
+            "text-slate-400 group-focus-within:text-blue-500 dark:text-slate-500 dark:group-focus-within:text-blue-400",
             isRTL ? "right-4" : "left-4",
           )}
         >
@@ -92,7 +92,7 @@ function InputField({
             isRTL ? "pr-11 pl-12" : "pl-11 pr-12",
             error
               ? "border border-red-400 dark:border-red-500 focus:border-red-400 focus:ring-red-500/20"
-              : "border border-slate-200 dark:border-white/8 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20 dark:focus:ring-blue-400/20",
+              : "border border-slate-200 dark:border-slate-800 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20 dark:focus:ring-blue-400/20",
           )}
         />
 
@@ -233,8 +233,8 @@ export function LoginForm() {
       <div
         className={cn(
           "relative z-10 w-full lg:max-w-[420px] mx-auto",
-          "bg-white dark:bg-[#111827]",
-          "border border-slate-150 dark:border-white/6",
+          "bg-white dark:bg-slate-900",
+          "border border-slate-200 dark:border-slate-800",
           "rounded-2xl overflow-hidden",
           "shadow-[0_8px_40px_rgba(0,0,0,0.07)] dark:shadow-[0_8px_60px_rgba(0,0,0,0.5)]",
         )}
@@ -274,7 +274,7 @@ export function LoginForm() {
           </AnimatePresence>
 
           {/* ── Tab toggle ── */}
-          <div className="flex gap-1 p-1 bg-slate-100 dark:bg-[#0d1326] border border-slate-200 dark:border-white/5 rounded-xl mb-7">
+          <div className="flex gap-1 p-1 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl mb-7">
             <Tab
               active={activeTab === "client"}
               onClick={() => {
@@ -296,7 +296,7 @@ export function LoginForm() {
           </div>
 
           {/* ── Form ── */}
-          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate autoComplete="off">
             {/* Email */}
             <InputField
               id="login-email"
@@ -311,7 +311,7 @@ export function LoginForm() {
                 type: "email",
                 required: true,
                 value: email,
-                autoComplete: "email",
+                autoComplete: "off",
                 placeholder: t("email_placeholder"),
                 dir: "ltr",
                 onChange: (e) => {
@@ -335,7 +335,7 @@ export function LoginForm() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="p-2 text-slate-350 hover:text-slate-500 dark:text-slate-600 dark:hover:text-slate-300 transition-colors rounded-lg"
+                  className="p-2 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors rounded-lg"
                   aria-label={
                     showPassword
                       ? t("hide_password")
@@ -353,7 +353,7 @@ export function LoginForm() {
                 type: showPassword ? "text" : "password",
                 required: true,
                 value: password,
-                autoComplete: "current-password",
+                autoComplete: "new-password",
                 placeholder: t("password_placeholder"),
                 dir: "ltr",
                 onChange: (e) => setPassword(e.target.value),
@@ -434,11 +434,11 @@ export function LoginForm() {
                 className="mt-6"
               >
                 <div className="relative flex items-center my-5">
-                  <div className="grow border-t border-slate-100 dark:border-white/6" />
-                  <span className="shrink-0 mx-4 text-[11px] font-semibold uppercase tracking-widest text-slate-300 dark:text-slate-600">
+                  <div className="grow border-t border-slate-100 dark:border-slate-800" />
+                  <span className="shrink-0 mx-4 text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
                     {t("or_continue_with")}
                   </span>
-                  <div className="grow border-t border-slate-100 dark:border-white/6" />
+                  <div className="grow border-t border-slate-100 dark:border-slate-800" />
                 </div>
 
                 <button
@@ -446,10 +446,10 @@ export function LoginForm() {
                   onClick={handleGoogleLogin}
                   className={cn(
                     "w-full flex items-center justify-center gap-2.5 h-11 rounded-xl",
-                    "border border-slate-200 dark:border-white/7",
-                    "bg-white dark:bg-[#0d1326]",
+                    "border border-slate-200 dark:border-slate-800",
+                    "bg-white dark:bg-slate-900",
                     "text-slate-700 dark:text-slate-300 text-[13px] font-semibold",
-                    "hover:bg-slate-50 dark:hover:bg-[#161c2e] transition-colors duration-200",
+                    "hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors duration-200",
                     "focus:outline-none focus:ring-2 focus:ring-slate-300 dark:focus:ring-slate-700",
                   )}
                 >
@@ -461,7 +461,7 @@ export function LoginForm() {
           </AnimatePresence>
 
           {/* ── Footer ── */}
-          <div className="mt-7 pt-6 border-t border-slate-100 dark:border-white/5 flex flex-col items-center gap-3">
+          <div className="mt-7 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col items-center gap-3">
             <p className="text-[13px] text-slate-400 dark:text-slate-500 font-medium">
               {t("no_account_prefix")}{" "}
               <Link
@@ -474,13 +474,13 @@ export function LoginForm() {
 
             <Link
               href="/admin/login"
-              className="mt-2 text-[11px] font-bold uppercase tracking-wider text-slate-300 hover:text-blue-500 transition-colors"
+              className="mt-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
             >
               Accès Administration
             </Link>
 
             {/* Trust signal */}
-            <span className="flex items-center gap-1.5 text-[11px] text-slate-300 dark:text-slate-700 font-medium select-none">
+            <span className="flex items-center gap-1.5 text-[11px] text-slate-400 dark:text-slate-600 font-medium select-none">
               <ShieldCheck className="w-3 h-3" />
               {t("trust_signal")}
             </span>

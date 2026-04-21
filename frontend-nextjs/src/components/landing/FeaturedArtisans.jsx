@@ -18,7 +18,7 @@ export function FeaturedArtisans() {
   const isRTL = locale === "ar"
 
   return (
-    <section className="py-24 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900">
+    <section className="py-24 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800/60">
       <div className="container mx-auto px-4 md:px-6">
 
         {/* Global Header */}

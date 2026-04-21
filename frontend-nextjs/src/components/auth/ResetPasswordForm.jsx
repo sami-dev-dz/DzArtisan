@@ -405,7 +405,7 @@ export function ResetPasswordForm() {
             "relative z-10 w-full lg:max-w-md mx-auto",
             "bg-white/80 dark:bg-[#0a0f1e]/90 backdrop-blur-xl",
             "rounded-[28px] overflow-hidden",
-            "border border-slate-200/80 dark:border-white/6",
+            "border border-slate-200/80 dark:border-slate-800",
             "shadow-[0_8px_40px_-8px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.04)]",
             "dark:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.03)]",
           )}
@@ -568,7 +568,7 @@ export function ResetPasswordForm() {
                   </div>
 
                   {/* Divider */}
-                  <div className="h-px bg-slate-100 dark:bg-white/5" />
+                  <div className="h-px bg-slate-100 dark:bg-slate-800" />
 
                   {/* Confirm password */}
                   <div className="space-y-2">

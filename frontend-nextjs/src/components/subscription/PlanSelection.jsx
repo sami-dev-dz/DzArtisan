@@ -166,16 +166,6 @@ export function PlanSelection({ onSuccess, compact = false }) {
                 </div>
               </div>
 
-              {/* Features */}
-              <ul className="space-y-2.5 flex-1 mb-6">
-                {Array.isArray(plan.features) && plan.features.map((f, fi) => (
-                  <li key={fi} className="flex items-start gap-2.5">
-                    <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${c.check}`} />
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{f}</span>
-                  </li>
-                ))}
-              </ul>
-
               {/* CTA */}
               <button
                 onClick={() => selectPlan(plan.id)}

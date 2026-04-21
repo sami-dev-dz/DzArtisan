@@ -24,9 +24,7 @@ use App\Notifications\ArtisanStatusNotification;
 
 class AdminController extends Controller
 {
-    /**
-     * Middleware-style guard: ensure caller is admin
-     */
+
     private function guardAdmin()
     {
         if (Auth::user()?->type !== 'admin') {
@@ -34,9 +32,6 @@ class AdminController extends Controller
         }
     }
 
-    /**
-     * Main KPIs for the overview page
-     */
     public function overview()
     {
         $this->guardAdmin();
@@ -46,7 +41,6 @@ class AdminController extends Controller
         $startPrev  = $now->copy()->subMonth()->startOfMonth();
         $endPrev    = $now->copy()->subMonth()->endOfMonth();
 
-        // ── 1. Total Registered Users ──────────────────────────────────────
         $totalUsers     = User::count();
         $usersThisMonth = User::whereBetween('created_at', [$startMonth, $now])->count();
         $usersPrevMonth = User::whereBetween('created_at', [$startPrev, $endPrev])->count();
@@ -54,7 +48,6 @@ class AdminController extends Controller
             ? round((($usersThisMonth - $usersPrevMonth) / $usersPrevMonth) * 100, 1)
             : 0;
 
-        // ── 2. Active Artisans ─────────────────────────────────────────────
         $activeArtisans     = Artisan::where('statutValidation', 'valide')->count();
         $artisansThisMonth  = Artisan::where('statutValidation', 'valide')
             ->whereBetween('updated_at', [$startMonth, $now])->count();
@@ -64,14 +57,12 @@ class AdminController extends Controller
             ? round((($artisansThisMonth - $artisansPrevMonth) / $artisansPrevMonth) * 100, 1)
             : 0;
 
-        // ── 3. Intervention requests this month ───────────────────────────
         $requestsThisMonth = DemandeIntervention::whereBetween('created_at', [$startMonth, $now])->count();
         $requestsPrevMonth = DemandeIntervention::whereBetween('created_at', [$startPrev, $endPrev])->count();
         $requestsTrend = $requestsPrevMonth > 0
             ? round((($requestsThisMonth - $requestsPrevMonth) / $requestsPrevMonth) * 100, 1)
             : 0;
 
-        // ── 4. Subscription Revenue this month (from paiements table) ─────
         $revenueThisMonth = DB::table('paiements')
             ->join('abonnements', 'paiements.abonnement_id', '=', 'abonnements.id')
             ->where('paiements.statut', 'succes')
@@ -86,13 +77,11 @@ class AdminController extends Controller
             ? round((($revenueThisMonth - $revenuePrevMonth) / $revenuePrevMonth) * 100, 1)
             : 0;
 
-        // ── Alerts ────────────────────────────────────────────────────────
         $pendingArtisans    = Artisan::where('statutValidation', 'en_attente')->count();
         $expiringIn7Days    = Abonnement::where('statut', 'actif')
             ->whereBetween('date_fin', [$now, $now->copy()->addDays(7)])
             ->count();
 
-        // Unread complaints – graceful fallback if table doesn't exist yet
         try {
             $unreadComplaints = DB::table('reclamations')
                 ->where('statut', 'nouveau')
@@ -101,7 +90,6 @@ class AdminController extends Controller
             $unreadComplaints = 0;
         }
 
-        // ── Registration trend (weekly, last 8 weeks) ─────────────────────
         $weeklyReg = [];
         for ($i = 7; $i >= 0; $i--) {
             $weekStart = $now->copy()->subWeeks($i)->startOfWeek();
@@ -115,7 +103,6 @@ class AdminController extends Controller
             ];
         }
 
-        // ── Top 10 Wilayas by intervention count ─────────────────────────
         $topWilayas = DemandeIntervention::select('wilaya_id', DB::raw('count(*) as total'))
             ->with('wilaya:id,nom')
             ->groupBy('wilaya_id')
@@ -127,7 +114,6 @@ class AdminController extends Controller
                 'count'  => $r->total,
             ]);
 
-        // ── Recent Activity Feed ──────────────────────────────────────────
         $recentArtisans = Artisan::with('user:id,nomComplet')
             ->latest()->limit(5)
             ->get()
@@ -213,14 +199,11 @@ class AdminController extends Controller
         ]);
     }
 
-    /**
-     * List artisans with filtering and pagination
-     */
     public function indexArtisans(Request $request)
     {
         $this->guardAdmin();
 
-        $status = $request->query('status', 'pending'); // pending, approved, rejected, suspended
+        $status = $request->query('status', 'pending'); 
         $search = $request->query('search');
         $wilayaId = $request->query('wilaya_id');
 
@@ -248,16 +231,13 @@ class AdminController extends Controller
         return response()->json($artisans);
     }
 
-    /**
-     * List clients with filtering and stats
-     */
     public function indexClients(Request $request)
     {
         $this->guardAdmin();
 
         $search = $request->query('search');
         $wilayaId = $request->query('wilaya_id');
-        $status = $request->query('status'); // actif, suspendu
+        $status = $request->query('status'); 
 
         $query = Client::with(['user:id,nomComplet,email,telephone,statut,created_at', 'wilaya:id,nom'])
             ->withCount('demandesInterventions as requests_count');
@@ -282,9 +262,6 @@ class AdminController extends Controller
         return response()->json($clients);
     }
 
-    /**
-     * Send direct email to a user
-     */
     public function sendDirectEmail(Request $request)
     {
         $this->guardAdmin();
@@ -302,9 +279,6 @@ class AdminController extends Controller
         return response()->json(['message' => 'E-mail envoyé avec succès.']);
     }
 
-    /**
-     * Delete user permanently (Law 18-07 compliance)
-     */
     public function deleteUser(Request $request, $id)
     {
         $this->guardAdmin();
@@ -317,10 +291,8 @@ class AdminController extends Controller
         $userName = $user->nomComplet;
         $userEmail = $user->email;
 
-        // 1. Notify user
         Mail::to($userEmail)->send(new UserDeletionMail($userName, $request->reason));
 
-        // 2. Scrub PII and set status to 'supprime'
         $user->update([
             'nomComplet' => 'Utilisateur Supprimé',
             'email'      => 'deleted_' . $user->id . '@dzartisan.dz',
@@ -329,7 +301,6 @@ class AdminController extends Controller
             'statut'     => 'supprime'
         ]);
 
-        // 3. Delete related artisan/client profile sensitive info if exists
         if ($user->artisan) {
             $user->artisan->update([
                 'description' => 'Compte supprimé',
@@ -349,9 +320,6 @@ class AdminController extends Controller
         return response()->json(['message' => 'Le compte a été supprimé définitivement et les données personnelles ont été anonymisées.']);
     }
 
-    /**
-     * Bulk actions (Email, Suspension)
-     */
     public function bulkAction(Request $request)
     {
         $this->guardAdmin();
@@ -361,29 +329,26 @@ class AdminController extends Controller
             'user_ids.*' => 'exists:users,id',
             'type' => 'required|in:email,suspend',
             'subject' => 'required_if:type,email|string|max:255',
-            'message' => 'required|string', // Used for both email body and suspension reason
+            'message' => 'required|string', 
         ]);
 
         $users = User::whereIn('id', $validated['user_ids'])->get();
 
         if ($validated['type'] === 'email') {
             foreach ($users as $user) {
-                /** @var \App\Models\User $user */
+
                 Mail::to($user->email)->queue(new AdminDirectMail($user, $validated['subject'], $validated['message']));
             }
             $msg = count($users) . " e-mails ont été mis en file d'attente.";
         } else {
             User::whereIn('id', $validated['user_ids'])->update(['statut' => 'suspendu']);
-            // Logically we should notify them but for bulk we might skip or use a generic mailable
+
             $msg = count($users) . " comptes ont été suspendus.";
         }
 
         return response()->json(['message' => $msg]);
     }
 
-    /**
-     * Update artisan validation or account status
-     */
     public function updateArtisanStatus(Request $request, $id)
     {
         $this->guardAdmin();
@@ -427,7 +392,7 @@ class AdminController extends Controller
             case 'unsuspend':
                 $user->update(['statut' => 'actif']);
                 $artisan->update(['suspension_reason' => null]);
-                // Re-using 'approved' logic for lifting suspension as a status update
+
                 $user->notify(new ArtisanStatusNotification('approved')); 
                 $message = "La suspension a été levée.";
                 break;
@@ -439,9 +404,6 @@ class AdminController extends Controller
         ]);
     }
 
-    /**
-     * Promote artisan (Featured / Recommended)
-     */
     public function promoteArtisan(Request $request, $id)
     {
         $this->guardAdmin();
@@ -452,7 +414,7 @@ class AdminController extends Controller
         ]);
 
         $artisan = Artisan::findOrFail($id);
-        
+
         if ($request->type === 'featured') {
             $artisan->is_featured = $request->value;
         } else {

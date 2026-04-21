@@ -15,12 +15,10 @@ use Carbon\Carbon;
 
 class AdminSubscriptionController extends Controller
 {
-    /**
-     * List all subscriptions with advanced filters.
-     */
+
     public function index(Request $request)
     {
-        // 1. Calculate Stats
+
         $now = now();
         $stats = [
             'active' => Abonnement::where('statut', 'actif')->where('date_fin', '>', $now)->count(),
@@ -31,7 +29,6 @@ class AdminSubscriptionController extends Controller
             'expired' => Abonnement::where('date_fin', '<=', $now)->count(),
         ];
 
-        // 2. Pending Payments (Top 5 for overview)
         $pending_payments = Paiement::with(['abonnement.artisan.user'])
             ->where('statut', 'en_attente')
             ->whereNotNull('preuve_paiement')
@@ -39,12 +36,10 @@ class AdminSubscriptionController extends Controller
             ->take(5)
             ->get();
 
-        // 3. Paginated Subscriptions
         $query = Abonnement::with(['artisan.user', 'paiements' => function ($q) {
             $q->latest();
         }]);
 
-        // Filter by tab/status
         if ($request->tab && $request->tab !== 'all') {
             switch ($request->tab) {
                 case 'active':
@@ -66,7 +61,6 @@ class AdminSubscriptionController extends Controller
             }
         }
 
-        // Search by artisan name
         if ($request->search) {
             $query->whereHas('artisan.user', function($q) use ($request) {
                 $q->where('nomComplet', 'like', '%' . $request->search . '%');
@@ -75,7 +69,6 @@ class AdminSubscriptionController extends Controller
 
         $subscriptions = $query->latest()->paginate(15);
 
-        // 4. All active artisans for manual activation dropdown
         $all_artisans = Artisan::with('user:id,nomComplet')
             ->where('statutValidation', 'valide')
             ->get(['id', 'user_id']);
@@ -83,7 +76,7 @@ class AdminSubscriptionController extends Controller
         return response()->json([
             'stats' => $stats,
             'pending_payments' => $pending_payments,
-            'subscriptions' => $subscriptions->items(), // Return items array directly to match React expectation
+            'subscriptions' => $subscriptions->items(), 
             'pagination' => [
                 'current_page' => $subscriptions->currentPage(),
                 'last_page' => $subscriptions->lastPage(),
@@ -93,9 +86,6 @@ class AdminSubscriptionController extends Controller
         ]);
     }
 
-    /**
-     * Get pending payment confirmation requests.
-     */
     public function pending()
     {
         $pending = Paiement::with(['abonnement.artisan.user'])
@@ -107,15 +97,11 @@ class AdminSubscriptionController extends Controller
         return response()->json($pending);
     }
 
-    /**
-     * Confirm a payment and activate subscription.
-     */
     public function confirm($id)
     {
         $paiement = Paiement::with('abonnement.artisan.user')->findOrFail($id);
         $abonnement = $paiement->abonnement;
 
-        // Set activation and expiration dates
         $durationMonths = match($abonnement->plan) {
             'mensuel' => 1,
             'trimestriel' => 3,
@@ -127,14 +113,13 @@ class AdminSubscriptionController extends Controller
         $endDate = $startDate->copy()->addMonths($durationMonths);
 
         $paiement->update(['statut' => 'succes']);
-        
+
         $abonnement->update([
             'statut' => 'actif',
             'date_debut' => $startDate,
             'date_fin' => $endDate
         ]);
 
-        // Notify artisan
         $artisan = $abonnement->artisan;
         $artisan->user->notify(new SubscriptionAlertNotification($abonnement, 'active'));
 
@@ -144,9 +129,6 @@ class AdminSubscriptionController extends Controller
         ]);
     }
 
-    /**
-     * Reject a payment.
-     */
     public function reject(Request $request, $id)
     {
         $request->validate([
@@ -160,16 +142,12 @@ class AdminSubscriptionController extends Controller
             'notes' => $request->motif
         ]);
 
-        // Notify artisan
         $artisan = $paiement->abonnement->artisan;
         $artisan->user->notify(new SubscriptionAlertNotification($paiement->abonnement, 'expired'));
 
         return response()->json(['message' => 'Paiement rejeté et artisan notifié.']);
     }
 
-    /**
-     * Manually activate a subscription for an artisan.
-     */
     public function manualActivate(Request $request)
     {
         $request->validate([
@@ -180,7 +158,7 @@ class AdminSubscriptionController extends Controller
         ]);
 
         $artisan = Artisan::findOrFail($request->artisan_id);
-        
+
         $durationMonths = match($request->plan) {
             'mensuel' => 1,
             'trimestriel' => 3,
@@ -212,13 +190,10 @@ class AdminSubscriptionController extends Controller
         ]);
     }
 
-    /**
-     * Get subscription history for an artisan.
-     */
     public function artisanHistory($artisanId)
     {
         $abonnement = Abonnement::where('artisan_id', $artisanId)->first();
-        
+
         if (!$abonnement) {
             return response()->json(['message' => 'Aucun abonnement trouvé pour cet artisan.'], 404);
         }

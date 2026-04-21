@@ -11,7 +11,7 @@ import {
 import { useTranslations, useLocale } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from '@/lib/axios';
+import api from '@/lib/api-client';
 import { cn } from '@/lib/utils';
 
 export const InterventionDetail = ({ isOpen, onClose, intervention, onPhotoUpdate }) => {
@@ -32,7 +32,7 @@ export const InterventionDetail = ({ isOpen, onClose, intervention, onPhotoUpdat
 
     try {
       setUploading(true);
-      const res = await axios.post(`/api/artisan/interventions/${intervention.id}/photo`, formData, {
+      const res = await api.post(`/artisan/interventions/${intervention.id}/photo`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       onPhotoUpdate(res.data);
@@ -46,7 +46,7 @@ export const InterventionDetail = ({ isOpen, onClose, intervention, onPhotoUpdat
   const handleDeletePhoto = async (photoId) => {
     try {
       setDeleting(photoId);
-      await axios.delete(`/api/artisan/interventions/${intervention.id}/photo/${photoId}`);
+      await api.delete(`/artisan/interventions/${intervention.id}/photo/${photoId}`);
       onPhotoUpdate({ id: photoId, deleted: true });
     } catch (err) {
       console.error('Delete error:', err);
@@ -62,7 +62,7 @@ export const InterventionDetail = ({ isOpen, onClose, intervention, onPhotoUpdat
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[110] flex items-center justify-center p-0 md:p-4">
+      <div className="fixed inset-0 z-110 flex items-center justify-center p-0 md:p-4">
         {/* Backdrop */}
         <motion.div 
           initial={{ opacity: 0 }}

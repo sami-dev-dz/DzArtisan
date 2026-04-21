@@ -19,6 +19,7 @@ import axios from '@/lib/axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { WilayaActivityMap } from './WilayaActivityMap';
 import { StatsCharts } from './StatsCharts';
+import { DashboardAdminSkeleton } from "@/components/ui/SkeletonLayouts"
 
 export const AdminStatistics = () => {
   const t = useTranslations('admin.statistics');
@@ -79,19 +80,7 @@ export const AdminStatistics = () => {
   };
 
   if (loading || !stats) {
-    return (
-      <div className="space-y-8 animate-pulse">
-        <div className="h-10 w-64 bg-slate-100 dark:bg-white/5 rounded-2xl"></div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map(i => <div key={i} className="h-32 bg-slate-100 dark:bg-white/5 rounded-xl"></div>)}
-        </div>
-        <div className="h-[500px] bg-slate-100 dark:bg-white/5 rounded-xl"></div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="h-[400px] bg-slate-100 dark:bg-white/5 rounded-xl"></div>
-          <div className="h-[400px] bg-slate-100 dark:bg-white/5 rounded-xl"></div>
-        </div>
-      </div>
-    );
+    return <DashboardAdminSkeleton />;
   }
 
   return (

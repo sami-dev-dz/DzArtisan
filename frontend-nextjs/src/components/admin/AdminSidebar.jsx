@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   LayoutDashboard, Users, Briefcase, CreditCard, ClipboardList,
@@ -90,10 +91,8 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
               transition={{ duration: 0.2 }}
               className="flex items-center gap-2.5"
             >
-              <div className="relative w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/30">
-                <ShieldCheck className="w-4 h-4 text-white" />
-                {/* Glow ring */}
-                <div className="absolute inset-0 rounded-xl ring-2 ring-blue-500/30" />
+              <div className="relative w-8 h-8 rounded-xl bg-linear-to-br from-blue-50 to-white dark:from-slate-800 dark:to-slate-900 flex items-center justify-center shadow-lg shadow-blue-500/10 ring-1 ring-blue-100/60 dark:ring-blue-800/30 overflow-hidden">
+                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="w-auto h-auto object-contain" />
               </div>
               <div>
                 <p className="font-black text-slate-900 dark:text-white text-sm leading-none tracking-tight">DzArtisan</p>
@@ -109,8 +108,8 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
               exit={{ opacity: 0 }}
               className="mx-auto"
             >
-              <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/30">
-                <ShieldCheck className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 rounded-xl bg-linear-to-br from-blue-50 to-white dark:from-slate-800 dark:to-slate-900 flex items-center justify-center shadow-lg shadow-blue-500/10 ring-1 ring-blue-100/60 dark:ring-blue-800/30 overflow-hidden">
+                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="object-contain" />
               </div>
             </motion.div>
           )}

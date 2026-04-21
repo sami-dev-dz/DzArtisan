@@ -19,15 +19,22 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $user->load(['client', 'artisan.categories', 'artisan.wilayas', 'artisan.commune']);
-        
+        $user->load([
+            'client',
+            'artisan.categories',
+            'artisan.wilayas',
+            'artisan.commune',
+            'artisan.primaryWilaya',
+            'artisan.primaryCategorie',
+            'artisan.abonnement',
+        ]);
+
         return response()->json([
             'success' => true,
             'message' => 'Profil récupéré avec succès',
             'data' => $user
         ]);
     }
-
 
     public function update(UpdateProfileRequest $request)
     {
@@ -130,10 +137,10 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $artisan = $user->artisan;
-        
+
         $newStatut = $artisan->disponibilite === 'disponible' ? 'indisponible' : 'disponible';
         $artisan->update(['disponibilite' => $newStatut]);
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Statut mis à jour avec succès',

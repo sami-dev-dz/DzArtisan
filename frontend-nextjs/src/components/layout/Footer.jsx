@@ -1,14 +1,13 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { useTranslations, useLocale } from "next-intl"
 import { 
   Phone, 
   Mail, 
   MapPin, 
-  ShieldCheck,
-  Home,
-  Wrench
+  ShieldCheck
 } from "lucide-react"
 import { Link, usePathname } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
@@ -43,9 +42,14 @@ const TwitterIcon = (props) => (
 
 const Logo = ({ isRTL }) => (
   <Link href="/" className="flex items-center gap-3 group mb-8">
-    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-sm overflow-hidden transition-transform group-hover:scale-105">
-      <Home className="h-5 w-5 absolute -translate-y-1 group-hover:translate-y-0 transition-transform duration-300" />
-      <Wrench className="h-4 w-4 absolute translate-y-3 group-hover:translate-y-0.5 transition-transform duration-300 rotate-12" />
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 shadow-sm overflow-hidden transition-transform group-hover:scale-105 ring-1 ring-slate-200 dark:ring-slate-700">
+      <Image 
+        src="/logo.png" 
+        alt="DzArtisan" 
+        width={32} 
+        height={32} 
+        className="w-auto h-auto object-contain" 
+      />
     </div>
     <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
       DzArtisan

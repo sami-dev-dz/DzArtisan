@@ -220,6 +220,7 @@ export default function ArtisanProfileSetupPage() {
       category_id: null,
       wilayas: [],
       experience_level: "beginner",
+      anneesExp: "",
       about: "",
       disponibilite: "disponible",
       doc_diploma: null,
@@ -272,6 +273,7 @@ export default function ArtisanProfileSetupPage() {
                category_id: artisan?.categorie_id || existingCategoryIds[0] || prev.category_id,
                wilayas: existingWilayas.length ? existingWilayas : prev.wilayas,
                experience_level: artisan?.experience_level || prev.experience_level,
+               anneesExp: artisan?.anneesExp ?? prev.anneesExp,
                about: artisan?.description || prev.about,
                disponibilite: artisan?.disponibilite || prev.disponibilite,
                doc_diploma: artisan?.diploma_url || prev.doc_diploma,
@@ -293,7 +295,7 @@ export default function ArtisanProfileSetupPage() {
          formData.telephone.match(/^0(5|6|7)\d{8}$/),
          !!formData.category_id,
          formData.wilayas.length > 0,
-         formData.experience_level,
+         formData.anneesExp !== "",
          formData.about.length >= 20,
       ]
       return Math.round((fields.filter(Boolean).length / fields.length) * 100)
@@ -409,6 +411,7 @@ export default function ArtisanProfileSetupPage() {
             photo: formData.photo,
             description: formData.about,
             about: formData.about,
+            anneesExp: formData.anneesExp !== "" ? parseInt(formData.anneesExp) : null,
             experience_level: formData.experience_level,
             disponibilite: formData.disponibilite,
             lienWhatsApp: formData.whatsapp,
@@ -691,46 +694,25 @@ export default function ArtisanProfileSetupPage() {
                         {/* FIX #4 & #5: Experience redesign + improved Wilaya search */}
                         <div className="grid grid-cols-1 gap-4">
 
-                           {/* FIX #4: Experience — visual card with prominent label */}
+                           {/* Années d'expérience */}
                            <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-5 shadow-sm">
                               <div className="flex items-center gap-2 mb-4">
-                                 <TrendingUp className="w-4 h-4 text-blue-600" />
-                                 <span className="text-sm font-bold text-slate-900 dark:text-white">{ft.experience}</span>
+                                 <Award className="w-4 h-4 text-blue-600" />
+                                 <span className="text-sm font-bold text-slate-900 dark:text-white">Années d'expérience</span>
                               </div>
-                              <div className="grid grid-cols-3 gap-2.5">
-                                 {[
-                                    { id: "beginner", label: ft.beginner, sub: "< 2 ans", dot: "bg-slate-400" },
-                                    { id: "intermediate", label: ft.confirmed, sub: "2 – 5 ans", dot: "bg-blue-500" },
-                                    { id: "expert", label: ft.expert, sub: "> 5 ans", dot: "bg-amber-500" },
-                                 ].map(level => {
-                                    const isSelected = formData.experience_level === level.id
-                                    return (
-                                       <button
-                                          key={level.id}
-                                          type="button"
-                                          onClick={() => setFormData(p => ({ ...p, experience_level: level.id }))}
-                                          className={cn(
-                                             "flex flex-col items-start gap-1.5 p-4 rounded-xl border-2 transition-all duration-200 text-left",
-                                             isSelected
-                                                ? "border-blue-600 bg-blue-600/5 dark:bg-blue-600/10"
-                                                : "border-slate-100 dark:border-white/7 hover:border-slate-300 dark:hover:border-white/[0.14]"
-                                          )}
-                                       >
-                                          <div className={cn(
-                                             "w-2.5 h-2.5 rounded-full transition-all",
-                                             isSelected ? "scale-125 " + level.dot : level.dot + " opacity-40"
-                                          )} />
-                                          <span className={cn(
-                                             "text-sm font-bold",
-                                             isSelected ? "text-blue-700 dark:text-blue-400" : "text-slate-700 dark:text-slate-300"
-                                          )}>
-                                             {level.label}
-                                          </span>
-                                          <span className="text-[11px] text-slate-400 font-medium">{level.sub}</span>
-                                       </button>
-                                    )
-                                 })}
+                              <div className="relative">
+                                 <Award className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                 <input
+                                    type="number"
+                                    min="0"
+                                    max="60"
+                                    value={formData.anneesExp}
+                                    onChange={e => setFormData(prev => ({ ...prev, anneesExp: e.target.value }))}
+                                    className="w-full h-14 pl-12 pr-4 rounded-2xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                                    placeholder="Ex: 7"
+                                 />
                               </div>
+                              <p className="mt-2 text-[11px] text-slate-400">Si vous débutez, mettez 0.</p>
                            </div>
 
                            {/* FIX #5: Wilaya search — accent-insensitive */}

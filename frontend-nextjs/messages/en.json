@@ -584,6 +584,7 @@
     "btn_edit": "Edit Profile"
   },
   "dashboard": {
+    "profile": "My Profile",
     "completeness_title": "Profile",
     "suggested_actions": "Suggested actions",
     "completeness_tip": "A complete profile receives 3x more contacts."
@@ -637,7 +638,8 @@
     "no_results": "No artisans found for your search.",
     "no_results_hint": "Try broadening your filters or reset the search.",
     "contact_whatsapp": "WhatsApp",
-    "contact_call": "Call"
+    "contact_call": "Call",
+    "currently_available": "{count} artisans are currently available"
   },
   "artisan_card": {
     "verified_profile": "Official Profile",

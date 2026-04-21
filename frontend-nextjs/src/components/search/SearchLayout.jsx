@@ -31,7 +31,9 @@ const ArtisanMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="w-full h-full bg-slate-100 dark:bg-slate-800/50 animate-pulse rounded-[32px]" />
+      <div className="w-full h-full bg-slate-100 dark:bg-slate-800/50 rounded-[32px] overflow-hidden">
+        <Skeleton className="w-full h-full" />
+      </div>
     ),
   },
 );
@@ -41,9 +43,7 @@ function SkeletonCard({ view }) {
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[28px] border border-slate-100 dark:border-white/6 bg-white dark:bg-slate-900",
-        "before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_1.6s_infinite]",
-        "before:bg-linear-to-r before:from-transparent before:via-white/60 dark:before:via-white/5 before:to-transparent",
+        "relative overflow-hidden rounded-[28px] border border-slate-100 dark:border-white/6 bg-slate-100/50 dark:bg-slate-800/40 animate-pulse",
         view === "list" ? "h-28 flex gap-5 p-5" : "h-[380px]",
       )}
     >
@@ -254,14 +254,14 @@ function MobileFilterDrawer({ open, onClose, children, t }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-[90] bg-black/40 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-90 bg-black/40 backdrop-blur-sm lg:hidden"
           />
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 28, stiffness: 280 }}
-            className="fixed right-0 top-0 bottom-0 z-[100] w-[340px] max-w-[95vw] bg-white dark:bg-slate-950 shadow-2xl lg:hidden flex flex-col"
+            className="fixed right-0 top-0 bottom-0 z-100 w-[340px] max-w-[95vw] bg-white dark:bg-slate-950 shadow-2xl lg:hidden flex flex-col"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100 dark:border-white/6">

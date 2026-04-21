@@ -53,9 +53,6 @@ class Artisan extends Model
         return $this->belongsToMany(Wilaya::class, 'artisan_wilaya', 'artisan_id', 'wilaya_id');
     }
 
-    /**
-     * Get requests that match the artisan's category and wilayas
-     */
     public function matchingRequests()
     {
         return DemandeIntervention::where('categorie_id', $this->categorie_id)
@@ -87,25 +84,16 @@ class Artisan extends Model
         return $this->hasOne(Abonnement::class);
     }
 
-    /**
-     * Average Rating Accessor
-     */
     public function getAverageRatingAttribute()
     {
         return round($this->avis()->avg('note') ?? 0, 1);
     }
 
-    /**
-     * Reviews Count Accessor
-     */
     public function getReviewsCountAttribute()
     {
         return $this->avis()->count();
     }
 
-    /**
-     * Slug logic
-     */
     protected static function boot()
     {
         parent::boot();
@@ -119,12 +107,9 @@ class Artisan extends Model
         });
     }
 
-    /**
-     * Advanced Search Filter Scope
-     */
     public function scopeFilter($query, array $filters)
     {
-        // Search Name or Category (q)
+
         $query->when($filters['q'] ?? null, function ($query, $search) {
             $query->whereHas('user', function ($q) use ($search) {
                 $q->where('nomComplet', 'like', '%' . $search . '%');
@@ -133,22 +118,18 @@ class Artisan extends Model
             });
         });
 
-        // Categories (array)
         $query->when($filters['categories'] ?? null, function ($query, $categories) {
             $query->whereIn('categorie_id', $categories);
         });
 
-        // Wilaya
         $query->when($filters['wilaya_id'] ?? null, function ($query, $wilayaId) {
             $query->where('wilaya_id', $wilayaId);
         });
 
-        // Availability
         $query->when($filters['available_only'] ?? null, function ($query) {
             $query->where('disponibilite', 'disponible');
         });
 
-        // Min Rating
         $query->when($filters['min_rating'] ?? null, function ($query, $rating) {
             $query->where(function($q) use ($rating) {
                 $q->selectRaw('avg(note)')
@@ -157,7 +138,6 @@ class Artisan extends Model
             }, '>=', $rating);
         });
 
-        // Experience Ranges
         $query->when($filters['experience'] ?? null, function ($query, $exp) {
             match($exp) {
                 'beginner' => $query->where('anneesExp', '<', 1),
@@ -172,49 +152,37 @@ class Artisan extends Model
         return $query;
     }
 
-    /**
-     * Distance Scope (Haversine)
-     */
     public function scopeOrderByDistance($query, $lat, $lng)
     {
         $haversine = "(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lng)) + sin(radians($lat)) * sin(radians(latitude))))";
-        
+
         return $query->select('artisans.*')
             ->selectRaw("$haversine AS distance")
             ->orderBy('distance');
     }
 
-    /**
-     * Logic for profile completeness %
-     */
     public function getCompletenessAttribute()
     {
         $score = 0;
 
-        // 1. Photo (20%)
         if ($this->photo) $score += 20;
 
-        // 2. WhatsApp (10%)
         if ($this->lienWhatsApp) $score += 10;
 
-        // 3. Description > 150 chars (20%)
         if ($this->description && strlen($this->description) >= 150) {
             $score += 20;
         }
 
-        // 4. At least one document (20%)
         if ($this->diploma_url || $this->artisan_card_url) {
             $score += 20;
         }
 
-        // 5. Multiple Wilayas (20%)
         if ($this->wilayas()->count() > 1) {
             $score += 20;
         }
 
-        // 6. Experience Level (10%)
         if ($this->experience_level) $score += 10;
-        
+
         return min(100, $score);
     }
 
@@ -229,9 +197,6 @@ class Artisan extends Model
             ->latest();
     }
 
-    /**
-     * Admin status filtering scope
-     */
     public function scopeWithAdminStatus($query, $status)
     {
         return match($status) {
@@ -244,9 +209,6 @@ class Artisan extends Model
         };
     }
 
-    /**
-     * Document count accessor
-     */
     public function getDocumentsCountAttribute()
     {
         $count = 0;

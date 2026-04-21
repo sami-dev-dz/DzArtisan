@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Hammer, Menu, X, Sun, Moon, Globe, ChevronDown, ChevronRight, User, LogOut } from "lucide-react";
+import Image from "next/image";
+import { Menu, X, Sun, Moon, Globe, ChevronDown, ChevronRight, User, LogOut } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
+import { NotificationBell } from "./NotificationBell";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -91,27 +93,31 @@ export default function Navbar() {
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap');
 
         :root {
-          --nav-bg: #f8fafc;
-          --nav-border: rgba(0,0,0,0.07);
-          --nav-text: rgba(15,23,42,0.55);
+          --nav-bg: rgba(255, 255, 255, 0.85);
+          --nav-solid-bg: #ffffff;
+          --nav-border: rgba(0, 0, 0, 0.08);
+          --nav-text: #64748b;
           --nav-text-active: #0f172a;
           --nav-accent: #2563eb;
-          --nav-surface: rgba(0,0,0,0.03);
-          --nav-surface-hover: rgba(0,0,0,0.06);
-          --nav-btn-bg: #f1f5f9;
-          --nav-btn-border: rgba(0,0,0,0.08);
+          --nav-surface: #f1f5f9;
+          --nav-surface-hover: #e2e8f0;
+          --nav-btn-bg: #ffffff;
+          --nav-btn-border: #e2e8f0;
+          --nav-shadow: rgba(0, 0, 0, 0.05);
         }
         
         html.dark {
-          --nav-bg: #07090f;
-          --nav-border: rgba(255,255,255,0.06);
-          --nav-text: rgba(255,255,255,0.55);
-          --nav-text-active: #ffffff;
+          --nav-bg: rgba(15, 23, 42, 0.85);
+          --nav-solid-bg: #0f172a;
+          --nav-border: rgba(255, 255, 255, 0.08);
+          --nav-text: #94a3b8;
+          --nav-text-active: #f8fafc;
           --nav-accent: #3b82f6;
-          --nav-surface: rgba(255,255,255,0.04);
-          --nav-surface-hover: rgba(255,255,255,0.08);
-          --nav-btn-bg: #1e293b;
-          --nav-btn-border: rgba(255,255,255,0.08);
+          --nav-surface: rgba(255, 255, 255, 0.05);
+          --nav-surface-hover: rgba(255, 255, 255, 0.1);
+          --nav-btn-bg: rgba(255, 255, 255, 0.03);
+          --nav-btn-border: rgba(255, 255, 255, 0.08);
+          --nav-shadow: rgba(0, 0, 0, 0.3);
         }
         
         .dza-nav-font {
@@ -193,7 +199,7 @@ export default function Navbar() {
           top: calc(100% + 10px);
           right: 0;
           min-width: 140px;
-          background: var(--nav-bg);
+          background: var(--nav-solid-bg);
           border: 1px solid var(--nav-border);
           border-radius: 12px;
           padding: 6px;
@@ -300,11 +306,12 @@ export default function Navbar() {
           right: 0,
           zIndex: 999,
           transition: "all 0.4s cubic-bezier(0.4,0,0.2,1)",
-          padding: scrolled ? "12px 0" : "20px 0",
-          background: scrolled ? "var(--nav-bg)" : "transparent",
-          borderBottom: scrolled ? "1px solid var(--nav-border)" : "1px solid transparent",
-          backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
+          padding: "16px 0",
+          background: "var(--nav-bg)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          borderBottom: "1px solid var(--nav-border)",
+          boxShadow: scrolled ? "0 4px 24px -8px var(--nav-shadow)" : "none",
         }}
       >
         <div
@@ -328,32 +335,38 @@ export default function Navbar() {
               textDecoration: "none",
               flexShrink: 0,
             }}
+            className="group"
           >
             <div
               style={{
-                width: 36,
-                height: 36,
-                borderRadius: 10,
-                background: "linear-gradient(135deg, #2563eb, #3b82f6)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: "0 4px 16px rgba(59,130,246,0.4)",
                 flexShrink: 0,
               }}
+              className="transition-transform duration-300 group-hover:scale-105"
             >
-              <Hammer size={18} color="#fff" strokeWidth={2.5} />
+              <Image 
+                src="/logo.png" 
+                alt="DzArtisan Logo" 
+                width={48} 
+                height={48} 
+                className="w-auto h-10 object-contain"
+                priority
+              />
             </div>
             <span
               style={{
-                fontSize: "1.0625rem",
+                fontSize: "1.6rem",
                 fontWeight: 800,
                 color: "var(--nav-text-active)",
-                letterSpacing: "-0.03em",
-                fontFamily: "'Syne', sans-serif"
+                letterSpacing: "-0.04em",
+                fontFamily: "'Outfit', sans-serif",
+                textTransform: "capitalize"
               }}
+              className="transition-opacity duration-300 group-hover:opacity-80"
             >
-              Dz<span style={{ color: "var(--nav-accent)" }}>Artisan</span>
+              DzArtisan
             </span>
           </Link>
 
@@ -462,6 +475,7 @@ export default function Navbar() {
             {/* Auth */}
             {user ? (
                <>
+                 <NotificationBell />
                  {artisanConfirmed && (
                    <Link href={dashboardUrl} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <User size={14} />
@@ -494,6 +508,7 @@ export default function Navbar() {
               gap: "8px",
             }}
           >
+            {user && <NotificationBell />}
             <button
               className="icon-btn"
               aria-label="Toggle theme"
@@ -544,7 +559,7 @@ export default function Navbar() {
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
               style={{
                 overflow: "hidden",
-                background: "var(--nav-bg)",
+                background: "var(--nav-solid-bg)",
                 borderTop: "1px solid var(--nav-border)",
               }}
             >

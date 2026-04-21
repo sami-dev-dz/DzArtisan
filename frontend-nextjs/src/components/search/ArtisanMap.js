@@ -36,10 +36,11 @@ function MapBoundsSetter({ artisans, userCoords }) {
   const map = useMap()
   
   React.useEffect(() => {
-    if (!artisans || artisans.length === 0) return
+    const valid = artisans?.filter(a => a.latitude != null && a.longitude != null)
+    if (!valid || valid.length === 0) return
 
     const bounds = L.latLngBounds(
-      artisans.map(a => [a.latitude, a.longitude])
+      valid.map(a => [a.latitude, a.longitude])
     )
 
     if (userCoords) {
@@ -86,7 +87,9 @@ export function ArtisanMap({ artisans, userCoords }) {
         )}
 
         {/* Artisan Markers */}
-        {artisans.map((artisan) => (
+        {artisans
+          .filter((artisan) => artisan.latitude != null && artisan.longitude != null)
+          .map((artisan) => (
           <Marker 
             key={artisan.id} 
             position={[artisan.latitude, artisan.longitude]}
@@ -139,7 +142,7 @@ export function ArtisanMap({ artisans, userCoords }) {
       </MapContainer>
 
       {/* Map Overlay info */}
-      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-[1000] bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 py-2 rounded-full border border-white dark:border-white/10 shadow-2xl flex items-center gap-2 pointer-events-none">
+      <div className="absolute top-6 left-1/2 -translate-x-1/2 z-1000 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 py-2 rounded-full border border-white dark:border-white/10 shadow-2xl flex items-center gap-2 pointer-events-none">
          <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
          <span className="text-[10px] font-black uppercase tracking-widest text-slate-900 dark:text-white">Live Search Map</span>
       </div>

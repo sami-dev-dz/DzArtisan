@@ -1,9 +1,10 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { useTranslations, useLocale } from "next-intl"
 import { motion } from "framer-motion"
-import { ShieldCheck, Zap, Users, Star } from "lucide-react"
+import { ShieldCheck, Zap, Users } from "lucide-react"
 import { Link } from "@/i18n/routing"
 
 export default function AuthLayout({ children }) {
@@ -19,8 +20,7 @@ export default function AuthLayout({ children }) {
   return (
     <div className="min-h-screen flex w-full overflow-hidden">
       {/* ── Left branding panel (desktop only) ── */}
-      <div className="hidden lg:flex lg:w-[45%] xl:w-[42%] relative flex-col justify-between p-14 overflow-hidden"
-        style={{ background: "linear-gradient(145deg, #1d4ed8 0%, #1e3a8a 55%, #0f1f55 100%)" }}>
+      <div className="hidden lg:flex lg:w-[45%] xl:w-[42%] relative flex-col justify-between p-14 overflow-hidden bg-linear-to-br from-blue-700 via-blue-900 to-[#0f1f55] dark:from-slate-900 dark:via-[#090b14] dark:to-slate-950">
         
         {/* BG decoration */}
         <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full pointer-events-none"
@@ -35,14 +35,7 @@ export default function AuthLayout({ children }) {
           <rect width="100%" height="100%" fill="url(#auth-grid)" />
         </svg>
 
-        {/* Logo */}
-        <Link href="/" className="relative z-10 flex items-center gap-3 w-fit group">
-          <div className="w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg"
-            style={{ background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.25)" }}>
-            <Star size={18} className="text-white" strokeWidth={2} />
-          </div>
-          <span className="text-2xl font-black text-white tracking-tight">DzArtisan</span>
-        </Link>
+        {/* Logo removed as requested */}
 
         {/* Center content */}
         <div className="relative z-10 flex-1 flex flex-col justify-center">
@@ -92,7 +85,7 @@ export default function AuthLayout({ children }) {
       </div>
 
       {/* ── Right form panel ── */}
-      <div className="flex-1 bg-[#F7F3EE] flex items-center justify-center min-h-screen p-4 sm:p-8 relative overflow-auto">
+      <div className="flex-1 bg-slate-50 dark:bg-slate-900 flex items-center justify-center min-h-screen p-4 sm:p-8 relative overflow-auto">
         {/* Soft light decoration for mobile */}
         <div className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none lg:hidden opacity-50"
           style={{ background: "radial-gradient(circle, rgba(196,121,58,0.08) 0%, transparent 70%)", filter: "blur(60px)" }} />

@@ -8,13 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
-    /**
-     * Get user's notifications.
-     */
+
     public function index(Request $request)
     {
         $user = Auth::user();
-        
+
         $limit = $request->query('limit', 10);
         $paginated = $request->query('paginated', false);
 
@@ -30,9 +28,6 @@ class NotificationController extends Controller
         ]);
     }
 
-    /**
-     * Mark a single notification as read.
-     */
     public function markAsRead($id)
     {
         $notification = Auth::user()
@@ -45,9 +40,6 @@ class NotificationController extends Controller
         return response()->json(['message' => 'Notification marked as read']);
     }
 
-    /**
-     * Mark all user notifications as read.
-     */
     public function markAllAsRead()
     {
         Auth::user()->unreadNotifications->markAsRead();

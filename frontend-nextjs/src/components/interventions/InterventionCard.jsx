@@ -9,11 +9,12 @@ import {
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
+import { Skeleton } from "@/components/ui/skeleton"
 
 // Lazy-load map to avoid SSR and 3G overhead
 const MiniMap = dynamic(() => import("./MiniMap").then(m => m.MiniMap), {
   ssr: false,
-  loading: () => <div className="h-48 rounded-[24px] bg-slate-100 dark:bg-white/5 animate-pulse" />
+  loading: () => <div className="h-48 rounded-[24px] overflow-hidden"><Skeleton className="w-full h-full" /></div>
 })
 
 const STATUS_CONFIG = {
@@ -49,7 +50,7 @@ export function InterventionCard({ intervention, onReview, onCancel }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setLightbox(null)}
-            className="fixed inset-0 z-[300] flex items-center justify-center bg-black/90 p-4"
+            className="fixed inset-0 z-300 flex items-center justify-center bg-black/90 p-4"
           >
             <button className="absolute top-6 right-6 text-white/70 hover:text-white">
               <X className="w-8 h-8" />

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import axios from '@/lib/axios';
+import api from '@/lib/api-client';
 import { OpportunityCard } from './OpportunityCard';
 import { ProposalModal } from './ProposalModal';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,6 +17,7 @@ import {
   Bell
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 export const JobOpportunities = () => {
   const t = useTranslations('artisan.jobs');
@@ -37,10 +38,10 @@ export const JobOpportunities = () => {
     try {
       setLoading(true);
       if (activeTab === 'new') {
-        const res = await axios.get('/api/artisan/jobs');
+        const res = await api.get('/artisan/jobs');
         setOpportunities(res.data.data || res.data);
       } else {
-        const res = await axios.get('/api/artisan/jobs/applied');
+        const res = await api.get('/artisan/jobs/applied');
         setProposals(res.data);
       }
     } catch (err) {
@@ -60,7 +61,12 @@ export const JobOpportunities = () => {
   };
 
   return (
-    <div className="p-4 md:p-8 space-y-8 min-h-screen bg-slate-50/30 dark:bg-transparent" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="relative p-4 md:p-8 space-y-8 min-h-screen bg-slate-50/30 dark:bg-transparent" dir={isRTL ? 'rtl' : 'ltr'}>
+      {/* ── Premium Ambient Background ────────────────────────────── */}
+      <div className="absolute top-0 left-0 w-full h-[400px] bg-linear-to-b from-indigo-600/5 to-transparent dark:from-indigo-600/10 pointer-events-none rounded-t-[3rem] -z-10" />
+      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/10 dark:bg-blue-600/20 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute top-40 -right-20 w-[400px] h-[400px] bg-purple-600/5 dark:bg-purple-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-7xl mx-auto">
         <div className="space-y-1">
@@ -124,7 +130,9 @@ export const JobOpportunities = () => {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map(i => (
-              <div key={i} className="h-48 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-gray-800 animate-pulse"></div>
+              <div key={i} className="h-48 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+                <Skeleton className="w-full h-full" />
+              </div>
             ))}
           </div>
         ) : (

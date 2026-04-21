@@ -183,7 +183,7 @@ export function HowItWorks() {
           --text-primary:   #0c1428;
           --text-secondary: #3d5080;
           --text-muted:     #6b7fa6;
-          --section-bg:     #f0f4ff;
+          --section-bg:     #ffffff;
           --toggle-bg:      rgba(15,23,42,0.04);
           --toggle-border:  rgba(15,23,42,0.10);
           --font-serif:     'Instrument Serif', Georgia, serif;
@@ -196,7 +196,7 @@ export function HowItWorks() {
           --text-primary:   #eef2ff;
           --text-secondary: #8da0c4;
           --text-muted:     #556080;
-          --section-bg:     #07090f;
+          --section-bg:     #0f172a;
           --toggle-bg:      rgba(255,255,255,0.04);
           --toggle-border:  rgba(255,255,255,0.09);
         }

@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/DropdownMenu"
 import { cn } from "@/lib/utils"
 
+import { TableSkeleton } from "@/components/ui/SkeletonLayouts"
+
 export function ArtisanManagementTable({ 
   artisans, 
   onAction, 
@@ -30,15 +32,7 @@ export function ArtisanManagementTable({
   const t = useTranslations("admin.artisan_management")
   const commonT = useTranslations("common")
 
-  if (loading) {
-    return (
-      <div className="w-full space-y-4">
-        {[1, 2, 3, 4, 5].map(i => (
-          <div key={i} className="h-20 w-full rounded-2xl bg-slate-100 dark:bg-white/5 animate-pulse" />
-        ))}
-      </div>
-    )
-  }
+  if (loading) return <TableSkeleton rows={8} cols={6} />
 
   if (!artisans?.length) {
     return (

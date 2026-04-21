@@ -23,83 +23,12 @@ const ICON_MAP = {
   TrendingUp,
 }
 
-/* ─────────────────────── KPI SKELETON CARD ─────────────────────── */
-function KpiSkeleton() {
-  return (
-    <div className="bg-white dark:bg-[#0A0A0A] rounded-xl p-6 border border-slate-200 dark:border-white/10 shadow-sm animate-pulse">
-      <div className="flex items-start justify-between mb-4">
-        <div className="w-12 h-12 rounded-2xl bg-slate-100/50 dark:bg-white/5" />
-        <div className="w-16 h-6 rounded-full bg-slate-100/50 dark:bg-white/5" />
-      </div>
-      <div className="space-y-2">
-        <div className="h-2 w-24 rounded bg-slate-100/50 dark:bg-white/5" />
-        <div className="h-8 w-32 rounded bg-slate-100/50 dark:bg-white/5" />
-        <div className="h-2 w-20 rounded bg-slate-100/50 dark:bg-white/5" />
-      </div>
-    </div>
-  )
-}
-
-/* ────────────────────── CHART SKELETON ─────────────────────────── */
-function ChartSkeleton({ height = 320 }) {
-  return (
-    <div
-      className="bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 p-6 shadow-sm animate-pulse"
-      style={{ minHeight: height }}
-    >
-      <div className="h-2 w-24 rounded bg-slate-100 dark:bg-white/5 mb-2" />
-      <div className="h-5 w-48 rounded bg-slate-100 dark:bg-white/5 mb-6" />
-      <div className="space-y-3">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="flex items-end gap-2">
-            <div
-              className="w-full rounded bg-slate-100 dark:bg-white/5"
-              style={{ height: `${20 + 40 /* replaced random */}px` }}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ──────────────────────── ALERTS SKELETON ───────────────────────── */
-function AlertsSkeleton() {
-  return (
-    <div className="animate-pulse space-y-3">
-      <div className="h-3 w-32 rounded bg-slate-100 dark:bg-white/5" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        {[1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className="h-20 rounded-xl bg-slate-100 dark:bg-white/5"
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ──────────────────────── ACTIVITY SKELETON ─────────────────────── */
-function ActivitySkeleton() {
-  return (
-    <div className="bg-white dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-white/10 p-6 shadow-sm animate-pulse">
-      <div className="h-2 w-20 rounded bg-slate-100/50 dark:bg-white/5 mb-2" />
-      <div className="h-5 w-40 rounded bg-slate-100/50 dark:bg-white/5 mb-6" />
-      <div className="space-y-5 pl-5">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="flex items-start gap-4">
-            <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-white/5 shrink-0" />
-            <div className="flex-1 space-y-2">
-              <div className="h-3 w-3/4 rounded bg-slate-100 dark:bg-white/5" />
-              <div className="h-2 w-1/3 rounded bg-slate-100 dark:bg-white/5" />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+import { 
+  KpiSkeleton, 
+  ChartSkeleton, 
+  AlertsSkeleton, 
+  ActivitySkeleton 
+} from "@/components/ui/SkeletonLayouts"
 
 /* ──────────────────────── ERROR BANNER ─────────────────────────── */
 function ErrorBanner({ message, onRetry }) {

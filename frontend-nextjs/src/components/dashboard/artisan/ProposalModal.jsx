@@ -5,7 +5,7 @@ import { X, Send, CheckCircle2, MessageSquare, ShieldCheck, Clock } from 'lucide
 import { useTranslations, useLocale } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
-import axios from '@/lib/axios';
+import api from '@/lib/api-client';
 import { cn } from '@/lib/utils';
 
 export const ProposalModal = ({ isOpen, onClose, job, onApplySuccess }) => {
@@ -44,7 +44,7 @@ export const ProposalModal = ({ isOpen, onClose, job, onApplySuccess }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
         {/* Backdrop */}
         <motion.div 
           initial={{ opacity: 0 }}

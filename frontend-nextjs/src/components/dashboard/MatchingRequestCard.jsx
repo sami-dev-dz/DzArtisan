@@ -16,9 +16,9 @@ export function MatchingRequestCard({ request, index }) {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.1 }}
-      className="group bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 p-5 rounded-3xl hover:bg-white dark:hover:bg-slate-900 transition-all duration-300 hover:shadow-2xl hover:translate-y-[-4px] relative overflow-hidden"
+      className="group bg-white dark:bg-slate-900/40 border border-slate-200/60 dark:border-white/5 p-6 rounded-[32px] hover:bg-slate-50/50 dark:hover:bg-slate-800/40 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/5 hover:-translate-y-1.5 relative overflow-hidden backdrop-blur-md"
     >
-      <div className="absolute top-0 right-0 w-24 h-24 bg-blue-600/5 rounded-full blur-[40px] pointer-events-none group-hover:bg-blue-600/10 transition-colors" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-blue-600/10 to-transparent rounded-full blur-2xl pointer-events-none group-hover:from-blue-600/20 transition-all duration-500" />
       
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
         <div className="flex items-center gap-3">

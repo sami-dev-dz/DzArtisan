@@ -180,7 +180,7 @@ export function ForgotPasswordForm() {
             bg-white/80 dark:bg-[#0a0f1e]/90
             backdrop-blur-xl
             rounded-[28px]
-            border border-slate-200/80 dark:border-white/6
+            border border-slate-200/80 dark:border-slate-800
             shadow-[0_8px_40px_-8px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.04)]
             dark:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.03)]
             overflow-hidden
@@ -321,7 +321,7 @@ export function ForgotPasswordForm() {
                       )}
                     >
                       {/* Shimmer on hover */}
-                      <span className="absolute inset-0 translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700 bg-linear-to-r from-transparent via-white/10 to-transparent" />
+                      <span className="absolute inset-0 -translate-x-full hover:translate-x-full transition-transform duration-700 bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
                       <span className="relative flex items-center justify-center gap-2">
                         {loading ? (
@@ -344,9 +344,9 @@ export function ForgotPasswordForm() {
 
                   {/* Divider */}
                   <div className="relative flex items-center gap-4 pt-1">
-                    <div className="flex-1 h-px bg-slate-100 dark:bg-white/6" />
-                    <span className="text-[12px] text-slate-400 dark:text-slate-600 font-medium">or</span>
-                    <div className="flex-1 h-px bg-slate-100 dark:bg-white/6" />
+                    <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800" />
+                    <span className="text-[12px] text-slate-400 dark:text-slate-500 font-medium">or</span>
+                    <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800" />
                   </div>
 
                   {/* Back to login */}

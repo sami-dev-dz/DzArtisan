@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTranslations, useLocale } from 'next-intl';
 import 'leaflet/dist/leaflet.css';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 // Dynamic import for MapContainer and other Leaflet components to avoid SSR issues
 const MapContainer = dynamic(
@@ -107,8 +108,8 @@ export const WilayaActivityMap = ({ data }) => {
 
   if (!geoData) {
     return (
-      <div className="w-full h-[500px] flex items-center justify-center bg-slate-50 dark:bg-[#0A0A0A] rounded-xl animate-pulse">
-        <span className="text-slate-500 text-sm font-medium">Chargement de la carte...</span>
+      <div className="w-full h-[500px] flex items-center justify-center bg-slate-50 dark:bg-[#0A0A0A] rounded-xl overflow-hidden">
+        <Skeleton className="w-full h-full" />
       </div>
     );
   }

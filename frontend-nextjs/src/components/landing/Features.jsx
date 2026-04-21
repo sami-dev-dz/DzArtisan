@@ -69,7 +69,7 @@ export function Features() {
   }
 
   return (
-    <section id="features" className="py-24 bg-white dark:bg-slate-950">
+    <section id="features" className="py-24 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800/60">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.h2 
@@ -102,7 +102,7 @@ export function Features() {
             <motion.div 
               key={feature.key}
               variants={itemVariants}
-              className="group p-8 rounded-[2rem] bg-slate-50 dark:bg-slate-900 border border-transparent hover:border-blue-500/20 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 relative overflow-hidden"
+              className="group p-8 rounded-4xl bg-slate-50 dark:bg-slate-900 border border-transparent hover:border-blue-500/20 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 relative overflow-hidden"
             >
               {/* Background Abstract */}
               <div className="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-full transition-transform duration-500 group-hover:scale-[2]" />

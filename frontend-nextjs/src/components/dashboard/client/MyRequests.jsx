@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ClipboardList, Search, Loader2, PlusCircle } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 export const MyRequests = () => {
   const t = useTranslations('client.requests');
@@ -125,9 +126,12 @@ export const MyRequests = () => {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[1, 2, 3, 4].map(i => (
-              <div key={i} className="h-32 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-gray-800 animate-pulse"></div>
+              <div key={i} className="h-32 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+                <Skeleton className="w-full h-full" />
+              </div>
             ))}
           </div>
+
         ) : filteredRequests.length > 0 ? (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

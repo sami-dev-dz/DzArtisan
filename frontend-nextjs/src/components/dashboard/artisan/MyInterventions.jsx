@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import axios from '@/lib/axios';
+import api from '@/lib/api-client';
 import { InterventionCard } from './InterventionCard';
 import { InterventionDetail } from './InterventionDetail';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -18,6 +18,7 @@ import {
   LayoutGrid
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 export const MyInterventions = () => {
   const t = useTranslations('artisan.interventions');
@@ -36,7 +37,7 @@ export const MyInterventions = () => {
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get('/api/artisan/interventions', {
+      const res = await api.get('/artisan/interventions', {
         params: { status: activeTab }
       });
       setInterventions(res.data);
@@ -53,7 +54,7 @@ export const MyInterventions = () => {
 
   const handleUpdateStatus = async (id, newStatus) => {
     try {
-      await axios.post(`/api/artisan/interventions/${id}/progress`, { statut: newStatus });
+      await api.post(`/artisan/interventions/${id}/progress`, { statut: newStatus });
       fetchData();
     } catch (err) {
       console.error('Status update error:', err);
@@ -84,7 +85,12 @@ export const MyInterventions = () => {
   };
 
   return (
-    <div className="p-4 md:p-8 space-y-8 min-h-screen bg-slate-50/20 dark:bg-transparent" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="relative p-4 md:p-8 space-y-8 min-h-screen bg-slate-50/20 dark:bg-transparent" dir={isRTL ? 'rtl' : 'ltr'}>
+      {/* ── Premium Ambient Background ────────────────────────────── */}
+      <div className="absolute top-0 left-0 w-full h-[400px] bg-linear-to-b from-indigo-600/5 to-transparent dark:from-indigo-600/10 pointer-events-none rounded-t-[3rem] -z-10" />
+      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/10 dark:bg-blue-600/20 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute top-40 -right-20 w-[400px] h-[400px] bg-purple-600/5 dark:bg-purple-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 max-w-7xl mx-auto">
         <div className="space-y-1">
@@ -160,8 +166,10 @@ export const MyInterventions = () => {
       <div className="max-w-7xl mx-auto">
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="h-64 bg-white dark:bg-slate-900 rounded-[2rem] border border-gray-50 dark:border-gray-800 animate-pulse"></div>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="h-64 bg-white dark:bg-slate-900 rounded-4xl border border-gray-50 dark:border-gray-800 overflow-hidden">
+                <Skeleton className="w-full h-full" />
+              </div>
             ))}
           </div>
         ) : (

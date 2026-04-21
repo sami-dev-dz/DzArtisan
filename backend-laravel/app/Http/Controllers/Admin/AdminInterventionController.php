@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class AdminInterventionController extends Controller
 {
-    /**
-     * Display a listing of interventions for admin dashboard.
-     */
+
     public function index(Request $request)
     {
         $stats = [
@@ -26,12 +24,10 @@ class AdminInterventionController extends Controller
             'categorie'
         ]);
 
-        // Filter by status
         if ($request->has('status') && $request->status !== 'all') {
             $query->where('statut', $request->status);
         }
 
-        // Search by title or description
         if ($request->has('search') && !empty($request->search)) {
             $search = strtolower($request->search);
             $query->where(function($q) use ($search) {
@@ -40,7 +36,6 @@ class AdminInterventionController extends Controller
             });
         }
 
-        // Order by latest first
         $query->orderBy('created_at', 'desc');
 
         $interventions = $query->paginate(15);
