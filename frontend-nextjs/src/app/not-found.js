@@ -31,7 +31,7 @@ export default function GlobalNotFound() {
             Page introuvable
           </h2>
           <p className="text-slate-500 dark:text-slate-400 max-w-lg mx-auto mb-10 text-base md:text-lg leading-relaxed">
-            La page que vous recherchez semble avoir été déplacée, supprimée ou n'a peut-être jamais existé.
+            La page que vous recherchez semble avoir été déplacée, supprimée ou n&apos;a peut-être jamais existé.
           </p>
         </motion.div>
 
@@ -54,7 +54,7 @@ export default function GlobalNotFound() {
             className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg shadow-blue-600/30 transition-all active:scale-95"
           >
             <Home className="w-4 h-4" />
-            Aller à l'accueil
+            Aller à l&apos;accueil
           </Link>
         </motion.div>
 
@@ -67,7 +67,7 @@ export default function GlobalNotFound() {
         >
           <p className="text-sm font-medium text-slate-500 dark:text-slate-400 flex items-center justify-center gap-2">
             <Search className="w-4 h-4" />
-            Besoin d'aide ? Utilisez la barre de recherche ou contactez le support technique.
+            Besoin d&apos;aide ? Utilisez la barre de recherche ou contactez le support technique.
           </p>
         </motion.div>
       </div>

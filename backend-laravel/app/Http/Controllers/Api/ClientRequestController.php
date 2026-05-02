@@ -162,6 +162,15 @@ class ClientRequestController extends Controller
                 ->update(['statut' => 'rejetee']);
         });
 
+        // Load artisan user and send real-time notification
+        $proposal->load('artisan.user');
+        if ($proposal->artisan && $proposal->artisan->user) {
+            \Illuminate\Support\Facades\Notification::send(
+                $proposal->artisan->user,
+                new \App\Notifications\ProposalAcceptedNotification($demande, $user->nomComplet)
+            );
+        }
+
         return response()->json(['message' => 'Proposal accepted successfully']);
     }
 }

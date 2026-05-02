@@ -7,6 +7,7 @@ import { Hero } from "@/components/landing/Hero"
 import { HowItWorks } from "@/components/landing/HowItWorks"
 import { Features } from "@/components/landing/Features"
 import { FeaturedArtisans } from "@/components/landing/FeaturedArtisans"
+import { LandingPageSkeleton } from "@/components/ui/SkeletonLayouts"
 
 export default function LandingPage() {
   const { user, loading, redirectAfterLogin } = useAuth()
@@ -15,11 +16,7 @@ export default function LandingPage() {
   // Allowing users to see the landing page even when authenticated
   
   if (loading) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center bg-white dark:bg-[#0a0f1e]">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#C4793A] border-t-transparent"></div>
-      </div>
-    )
+    return <LandingPageSkeleton />
   }
 
   return (

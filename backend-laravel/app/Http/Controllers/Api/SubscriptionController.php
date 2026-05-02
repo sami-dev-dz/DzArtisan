@@ -8,6 +8,7 @@ use App\Models\Paiement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SubscriptionController extends Controller
 {
@@ -213,5 +214,25 @@ class SubscriptionController extends Controller
             ->get();
 
         return response()->json($history);
+    }
+
+    public function downloadInvoice($id)
+    {
+        $user = Auth::user();
+        if ($user->type !== 'artisan') return response()->json(['message' => 'Accès refusé'], 403);
+
+        $paiement = Paiement::with('abonnement.artisan.user')->findOrFail($id);
+
+        if ($paiement->abonnement->artisan_id !== $user->artisan->id) {
+            return response()->json(['message' => 'Accès refusé'], 403);
+        }
+
+        $pdf = Pdf::loadView('pdf.invoice', [
+            'paiement' => $paiement,
+            'abonnement' => $paiement->abonnement,
+            'artisan' => $paiement->abonnement->artisan
+        ]);
+
+        return $pdf->download('facture-' . $paiement->id . '.pdf');
     }
 }

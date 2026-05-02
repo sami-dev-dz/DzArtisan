@@ -2,29 +2,14 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Plus, Loader2, AlertCircle } from "lucide-react"
+import { Plus, AlertCircle } from "lucide-react"
 import { useTranslations, useLocale } from "next-intl"
 import { Link } from "@/i18n/routing"
 import { Button } from "@/components/ui/Button"
 import { InterventionCard } from "@/components/interventions/InterventionCard"
 import { ReviewModal } from "@/components/interventions/ReviewModal"
-import api from "@/lib/api-client"
-
-function CardSkeleton() {
-  return (
-    <div className="bg-white dark:bg-slate-900 rounded-[32px] border border-slate-100 dark:border-white/5 p-6">
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5 animate-pulse shrink-0" />
-        <div className="flex-1 space-y-3">
-          <div className="h-4 bg-slate-100 dark:bg-white/5 rounded-full w-3/4 animate-pulse" />
-          <div className="h-3 bg-slate-100 dark:bg-white/5 rounded-full w-1/2 animate-pulse" />
-          <div className="h-3 bg-slate-100 dark:bg-white/5 rounded-full w-1/3 animate-pulse" />
-        </div>
-        <div className="w-20 h-6 rounded-full bg-slate-100 dark:bg-white/5 animate-pulse shrink-0" />
-      </div>
-    </div>
-  )
-}
+import api from "@/lib/axios"
+import { InterventionListSkeleton } from "@/components/ui/SkeletonLayouts"
 
 export default function ClientInterventionsPage() {
   const t = useTranslations("interventions")
@@ -106,12 +91,7 @@ export default function ClientInterventionsPage() {
       )}
 
       {/* Loading Skeletons */}
-      {loading && (
-        <div className="space-y-4">
-          {[1, 2, 3].map(i => <CardSkeleton key={i} />)}
-        </div>
-      )}
-
+      {loading && <InterventionListSkeleton />}
       {/* Empty State */}
       {!loading && !error && interventions.length === 0 && (
         <motion.div

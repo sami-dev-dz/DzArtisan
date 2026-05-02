@@ -5,7 +5,7 @@ import { X, Send, CheckCircle2, MessageSquare, ShieldCheck, Clock } from 'lucide
 import { useTranslations, useLocale } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '@/lib/api-client';
+import api from '@/lib/axios';
 import { cn } from '@/lib/utils';
 
 export const ProposalModal = ({ isOpen, onClose, job, onApplySuccess }) => {

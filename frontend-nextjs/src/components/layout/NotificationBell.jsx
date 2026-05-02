@@ -39,10 +39,43 @@ export const NotificationBell = () => {
     useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchNotifications();
-        // Polling every 60 seconds
-        const interval = setInterval(fetchNotifications, 60000);
+        // Polling as a fallback every 3 minutes
+        const interval = setInterval(fetchNotifications, 180000);
         return () => clearInterval(interval);
     }, [fetchNotifications]);
+
+    // WebSocket Listener
+    useEffect(() => {
+        if (!isAuthenticated || !user) return;
+
+        let echoInstance = null;
+        import('@/lib/echo').then(({ initEcho }) => {
+            echoInstance = initEcho();
+            if (echoInstance) {
+                echoInstance.private(`App.Models.User.${user.id}`)
+                    .notification((notification) => {
+                        // Dynamically update the list
+                        setNotifications(prev => [
+                            {
+                                id: notification.id || Date.now(),
+                                type: notification.type,
+                                data: notification,
+                                read_at: null,
+                                created_at: new Date().toISOString()
+                            },
+                            ...prev
+                        ]);
+                        setUnreadCount(prev => prev + 1);
+                    });
+            }
+        });
+
+        return () => {
+            if (echoInstance) {
+                echoInstance.leave(`App.Models.User.${user.id}`);
+            }
+        };
+    }, [isAuthenticated, user]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {

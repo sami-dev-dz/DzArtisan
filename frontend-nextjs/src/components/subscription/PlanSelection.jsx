@@ -6,7 +6,7 @@ import {
   CheckCircle2, X, Zap, Crown, Star, Shield, ArrowRight,
   Sparkles, TrendingUp, AlertTriangle, Loader2
 } from "lucide-react"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 
 // Color config per plan id
 const colorMap = {

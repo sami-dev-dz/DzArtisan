@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button"
 import { Badge } from "@/components/ui/Badge"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 const STATUS_CONFIG = {
   ouvert:    { color: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",   dot: "bg-amber-500", label: "En attente" },
@@ -159,7 +160,7 @@ export function InterventionDetailDrawer({ isOpen, onClose, intervention }) {
                   <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
                     {intervention.photos.map((photo, i) => (
                       <div key={i} className="aspect-square rounded-2xl overflow-hidden bg-slate-100 dark:bg-white/5 relative group cursor-pointer">
-                        <img src={photo.url} alt="Photo intervention" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+                        <Image src={photo.url} alt="Photo intervention" fill unoptimized className="object-cover transition-transform group-hover:scale-110" />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
                           <ZoomIn size={20} />
                         </div>

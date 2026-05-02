@@ -21,7 +21,7 @@ import {
 } from "lucide-react"
 import { Link, useRouter } from "@/i18n/routing"
 import { useAuth } from "@/context/AuthContext"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 import { StatCard } from "@/components/dashboard/StatCard"
 import { SubscriptionBanner } from "@/components/dashboard/SubscriptionBanner"
 import { MatchingRequestCard } from "@/components/dashboard/MatchingRequestCard"
@@ -42,6 +42,11 @@ export default function ArtisanDashboard() {
   const [subscriptionStatus, setSubscriptionStatus] = React.useState(null)
 
   const fetchAll = React.useCallback(async () => {
+    // Ne pas faire de requête si l'utilisateur n'est pas connecté
+    if (!user) {
+      setLoading(false)
+      return
+    }
     try {
       const [statsRes, subRes] = await Promise.all([
         api.get("/dashboard/stats"),
@@ -53,11 +58,13 @@ export default function ArtisanDashboard() {
       const reqRes = await api.get("/dashboard/matching-requests")
       setMatchingRequests(Array.isArray(reqRes.data) ? reqRes.data : reqRes.data?.data ?? [])
     } catch (err) {
-      console.error("Dashboard data fetch error", err)
+      if (err?.response?.status !== 401) {
+        console.error("Dashboard data fetch error", err)
+      }
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [user])
 
   React.useEffect(() => { fetchAll() }, [fetchAll])
 

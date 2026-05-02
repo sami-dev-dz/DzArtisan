@@ -3,7 +3,8 @@
 import * as React from "react"
 import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "@/i18n/routing"
-import { Loader2, ShieldX } from "lucide-react"
+import { ShieldX } from "lucide-react"
+import { ClientLayoutSkeleton } from "@/components/ui/SkeletonLayouts"
 
 export default function ClientLayout({ children }) {
   const { user, loading } = useAuth()
@@ -21,11 +22,7 @@ export default function ClientLayout({ children }) {
   }, [user, loading, router])
 
   if (loading) {
-    return (
-      <div className="flex-1 flex items-center justify-center p-10">
-        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-      </div>
-    )
+    return <ClientLayoutSkeleton />
   }
 
   if (!user || user.type !== "client") {

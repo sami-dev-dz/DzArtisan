@@ -2,10 +2,15 @@
   "common": {
     "save": "Save",
     "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "submit": "Submit",
+    "loading": "Loading...",
     "error": "An error occurred.",
     "success": "Operation successful.",
     "search": "Search",
     "see_more": "See more",
+    "see_all": "View all notifications",
     "all": "All",
     "refresh": "Refresh",
     "all_clear": "No items requiring immediate attention. Everything is in order.",
@@ -14,14 +19,13 @@
       "unread_count": "{count} unread",
       "mark_all_read": "Mark all as read",
       "empty": "You have no notifications yet.",
+      "see_all": "View all notifications",
       "types": {
-        "${notif": {
-          "data?": {
-            "type}": "Type}"
-          }
-        }
-      },
-      "see_all": "Voir toutes les notifications"
+        "artisan_status": "Artisan Profile",
+        "new_job": "New Job Opportunity",
+        "subscription_alert": "Subscription",
+        "complaint_alert": "Complaint"
+      }
     },
     "welcome": "Welcome",
     "next": "Next",
@@ -46,15 +50,16 @@
   "hero": {
     "badge": "THE REFERENCE IN ALGERIA 🇩🇿",
     "title": "Find the perfect expert for all your work",
+    "title_accent": "Artisans",
     "subtitle": "The leading platform connecting customers and qualified artisans in Algeria. Covering all 69 wilayas with verified profiles and guaranteed security.",
     "cta_find": "Find an artisan",
     "trust_verified": "Verified profiles",
     "trust_fast": "Fast response",
     "trust_secure": "Secure platform",
     "trust_wilayas": "69 Wilayas",
-    "trust_verified_desc": "Trust Verified Desc",
-    "trust_fast_desc": "Trust Fast Desc",
-    "trust_wilayas_desc": "Trust Wilayas Desc"
+    "trust_verified_desc": "Every artisan is reviewed before being listed.",
+    "trust_fast_desc": "Get responses in under 24 hours.",
+    "trust_wilayas_desc": "Nationwide coverage across Algeria."
   },
   "how_it_works": {
     "title": "How it works?",
@@ -209,30 +214,54 @@
     "admin_login_title": "Administration",
     "admin_login_subtitle": "DzArtisan secure management area.",
     "admin_login_btn": "Access Administration",
-    "email_hint": "Enter the email associated with your account",
-    "password_hint": "Enter your password (8 characters minimum)",
+    "email_hint": "Enter the email address associated with your account",
+    "password_hint": "Enter your password (minimum 8 characters)",
     "trust_signal": "Secure login · SSL encrypted data",
     "reset_success_title": "Password Updated!",
-    "secure_note": "Secure page encrypted with SSL.",
+    "secure_note": "Secure page — SSL encrypted.",
     "privacy_policy": "Privacy Policy",
-    "error_required_fields": "Error Required Fields",
+    "error_required_fields": "Please fill in all required fields.",
     "account_recovery": "Account Recovery",
-    "no_email_hint": "No Email Hint",
+    "no_email_hint": "No account linked to this email.",
     "try_again": "Try Again",
-    "forgot_hint": "If you forgot your password, we can send you a recovery code.",
+    "forgot_hint": "If you forgot your password, we can send you a recovery link.",
+    "artisan_google_note": "For security and professional reasons, Google sign-in is not available for artisans. Please use email.",
     "success": "Account created successfully!",
     "terms_required": "You must accept the terms of use.",
     "error": "An error occurred. Please try again.",
-    "strength_empty": "Enter password",
+    "strength_empty": "Empty",
     "strength_weak": "Weak",
     "strength_medium": "Medium",
     "strength_strong": "Strong",
     "show_password": "Show password",
     "hide_password": "Hide password"
   },
+  "artisan_profile": {
+    "about": "About",
+    "services_offered": "Services Offered",
+    "reviews": "Customer Reviews",
+    "contact": "Contact",
+    "portfolio": "Portfolio",
+    "availability": "Availability",
+    "available_now": "Available Now",
+    "busy": "Currently Busy"
+  },
+  "client_search": {
+    "search_placeholder": "What are you looking for? (e.g., Plumber, Electrician...)",
+    "filter_by_wilaya": "Filter by Wilaya",
+    "filter_by_category": "Category",
+    "sort_by": "Sort by",
+    "best_rated": "Best Rated",
+    "most_recent": "Most Recent",
+    "no_results": "No artisans found matching these criteria."
+  },
   "interventions": {
+    "my_requests": "My Requests",
     "status": {
-      "${statut}": "${Statut}"
+      "ouvert": "Pending",
+      "en_cours": "Active",
+      "termine": "Completed",
+      "annule": "Cancelled"
     },
     "history": {
       "title": "My Request History",
@@ -240,8 +269,14 @@
       "empty_title": "No requests yet",
       "empty_desc": "You haven't posted any service requests yet. Find a qualified artisan now!",
       "empty_btn": "Post your first request",
+      "details_btn": "Details",
       "cancel_btn": "Cancel Request",
       "review_btn": "Leave a Review",
+      "submitted_on": "Posted on {date}",
+      "preferred_date": "Preferred date: {date}",
+      "no_preferred_date": "Flexible date",
+      "location": "Location: {commune}, {wilaya}",
+      "artisan_assigned": "Artisan: {name}",
       "no_artisan": "Awaiting artisan",
       "description": "Description",
       "photos": "Attached photos",
@@ -258,6 +293,7 @@
     }
   },
   "admin": {
+    "dashboard_title": "DzArtisan Management",
     "overview": "Overview",
     "users": "Clients",
     "artisans": "Artisans",
@@ -266,6 +302,48 @@
     "complaints": "Complaints",
     "statistics_nav": "Statistics",
     "settings": "Settings",
+    "artisans_validation": "Artisan Validation",
+    "categories": "Categories",
+    "reports": "Reports",
+    "welcome": "Welcome",
+    "refresh": "Refresh",
+    "loading_error": "Failed to load dashboard",
+    "retry": "Retry",
+    "all_clear": "No items requiring immediate attention. Everything is in order.",
+    "attention_required": "Attention Required",
+    "kpi": {
+      "total_users": "Registered Users",
+      "active_artisans": "Active Artisans",
+      "requests_month": "Requests this month",
+      "revenue_month": "Revenue this month (DZD)"
+    },
+    "alerts": {
+      "pending_artisans": "Artisans awaiting approval",
+      "unread_complaints": "New unread complaints",
+      "expiring_subs": "Subscriptions expiring in 7 days"
+    },
+    "charts": {
+      "registrations_label": "New registrations",
+      "registrations_title": "Weekly — Last 8 weeks",
+      "wilayas_label": "Intervention requests",
+      "wilayas_title": "Top 10 most active wilayas"
+    },
+    "activity": {
+      "label": "Activity Log",
+      "title": "Recent Events",
+      "empty": "No recent activities.",
+      "view": "View",
+      "artisan_submitted": "New artisan profile submitted",
+      "intervention_created": "New intervention request posted",
+      "subscription_renewed": "Subscription activated",
+      "account_suspended": "Account suspended"
+    },
+    "trend": {
+      "vs_last_month": "vs last month",
+      "stable": "Stable compared to last month",
+      "up": "↑ vs last month",
+      "down": "↓ vs last month"
+    },
     "artisan_management": {
       "title": "Artisan Management",
       "subtitle": "Validate registrations, manage suspensions, and highlight your top experts.",
@@ -289,8 +367,10 @@
         "reject": "Reject",
         "suspend": "Suspend",
         "unsuspend": "Unsuspend",
+        "promote": "Promote",
         "feature": "Feature",
-        "recommend": "Recommend"
+        "recommend": "Recommend",
+        "view_details": "View Details"
       },
       "modals": {
         "rejection_title": "Rejection Reason",
@@ -300,18 +380,20 @@
         "reason_required": "A reason is mandatory."
       },
       "details": {
+        "title": "Profile Details",
         "personal_info": "Personal Information",
         "professional_info": "Professional Path",
         "documents": "Supporting Documents",
         "history": "Account History",
-        "experience": "{years} years of experience"
+        "experience": "{years} years of experience",
+        "member_since": "Member since {date}"
       },
       "notifications": {
-        "promoted": "Promotion status updated.",
-        "approved": "Artisan approved successfully.",
-        "rejected": "Artisan application rejected.",
-        "suspended": "Artisan account suspended.",
-        "unsuspended": "Artisan account reactivated."
+        "approved": "Artisan approved successfully. Congratulatory email sent.",
+        "rejected": "Application rejected. Artisan notified by email.",
+        "suspended": "Account suspended successfully.",
+        "unsuspended": "Account suspension lifted.",
+        "promoted": "Promotion status updated."
       }
     },
     "subscription_management": {
@@ -335,18 +417,16 @@
         "title": "Payments Awaiting Confirmation",
         "confirm_btn": "Confirm Payment",
         "reject_btn": "Reject",
-        "no_pending": "No pending payments.",
-        "pending_label": "Pending Label",
-        "amount_label": "Amount Label",
-        "method_label": "Method Label",
-        "proof_title": "Proof Title",
-        "close_btn": "Close Btn",
-        "open_fullsize": "Open Fullsize"
+        "view_proof": "View Receipt",
+        "expected_amount": "Expected Amount",
+        "artisan_info": "Artisan Info",
+        "no_pending": "No pending payments."
       },
       "table": {
         "artisan": "Artisan",
         "plan": "Selected Plan",
         "dates": "Period",
+        "remaining": "Days Remaining",
         "payment": "Payment",
         "status": "State",
         "history": "History",
@@ -359,13 +439,10 @@
         "btn": "Manual Activation",
         "title": "Manual Activation",
         "search_artisan": "Search Artisan",
+        "select_plan": "Select Plan",
+        "amount_label": "Amount Received (DZD)",
+        "method_label": "Payment Method",
         "success": "Subscription successfully activated."
-      },
-      "refresh": "Refresh",
-      "artisan_management": {
-        "table": {
-          "no_data": "No Data"
-        }
       }
     },
     "complaints_management": {
@@ -377,8 +454,13 @@
         "all": "All"
       },
       "table": {
+        "type": "Type",
         "complainant": "Complainant",
-        "accused": "Accused"
+        "accused": "Accused",
+        "category": "Category",
+        "date": "Date",
+        "photos": "Photos",
+        "status": "Status"
       },
       "status": {
         "new": "New",
@@ -510,18 +592,25 @@
         "response_time": "Resp Time (min)",
         "requests_responded": "Responses",
         "export_btn": "Export to CSV"
-      }
+      },
+      "no_data": "No data available for this period."
     }
   },
   "onboarding": {
     "title": "Set up your profile",
     "subtitle": "Complete this information to become visible to clients in Algeria.",
     "step_info": "Step {current} of {total}",
+    "section_required": "Required",
     "section_optional": "Optional",
+    "photo_title": "Profile Photo",
+    "photo_hint": "A professional photo increases your chances by 80%.",
     "photo_upload": "Upload Photo",
+    "photo_remove": "Remove",
     "name_edit_title": "Edit Name",
     "name_edit_desc": "Your full name is used for billing and client trust. it must match your official documents.",
     "whatsapp_label": "WhatsApp Link",
+    "whatsapp_placeholder": "Link to your WhatsApp chat",
+    "whatsapp_btn": "Generate Link",
     "whatsapp_test": "Test Link",
     "categories_title": "Trades & Services",
     "categories_desc": "Select one or more areas of expertise.",
@@ -529,12 +618,18 @@
     "wilayas_desc": "In which wilayas can you travel?",
     "wilayas_placeholder": "Search a wilaya...",
     "exp_title": "Experience Level",
+    "exp_beginner": "Beginner",
+    "exp_1_3": "1-3 years",
+    "exp_3_5": "3-5 years",
+    "exp_5_10": "5-10 years",
+    "exp_10_plus": "10+ years",
     "about_title": "About You",
     "about_placeholder": "Ex: I am a certified plumber with 5 years of experience. I specialize in boiler installation...",
     "about_min_chars": "{count} minimum characters required.",
     "availability_title": "Current Availability",
     "availability_desc": "Indicate if you are ready to receive requests immediately.",
     "docs_title": "Professional Documents",
+    "docs_desc": "Adding documents greatly increases your contact rate and unlocks the 'Verified' badge.",
     "doc_diploma": "Diploma / Certificate",
     "doc_card": "Artisan Card / Registry",
     "doc_upload_hint": "Click or drag and drop",
@@ -555,16 +650,11 @@
     "invalid_image_format": "Unsupported format (JPG, PNG, WEBP).",
     "invalid_doc_format": "Unsupported format (JPG, PNG, WEBP, PDF).",
     "invalid_phone": "Invalid phone number (Ex: 05xx, 06xx, 07xx).",
-    "invalid_whatsapp": "WhatsApp link is required and must be valid.",
-    "whatsapp_btn": "Generate Link",
-    "exp_beginner": "Beginner",
-    "exp_1_3": "1-3 years",
-    "exp_3_5": "3-5 years",
-    "exp_5_10": "5-10 years",
-    "exp_10_plus": "10+ years"
+    "invalid_whatsapp": "WhatsApp link is required and must be valid."
   },
   "artisan_waiting": {
     "title": "Profile Under Review",
+    "subtitle": "Your profile has been submitted successfully!",
     "explanation": "Our team is currently reviewing your information. We will respond within a maximum of 24 business hours.",
     "status_submitted": "Profile Submitted",
     "status_submitted_desc": "Your data is safe.",
@@ -576,6 +666,7 @@
     "status_activation_desc": "Your profile will be public.",
     "info_email": "Notification sent to",
     "info_spam": "Don't forget to check your spam.",
+    "info_support": "Need help? Contact support",
     "spam_folder": "Spam folder",
     "support_label": "Support",
     "support_email": "support@dzartisan.dz",
@@ -585,9 +676,25 @@
   },
   "dashboard": {
     "profile": "My Profile",
+    "greeting": "Hello",
+    "artisan_verified": "Verified Artisan",
+    "opportunities_title": "Job Opportunities",
+    "opportunities_desc": "Based on your specialties and wilayas.",
+    "growth_title": "Growth",
     "completeness_title": "Profile",
     "suggested_actions": "Suggested actions",
-    "completeness_tip": "A complete profile receives 3x more contacts."
+    "completeness_tip": "A complete profile receives 3x more contacts.",
+    "stats": {
+      "views": "Profile Views",
+      "contacts": "Contacts Received",
+      "rating": "Average Rating",
+      "reviews": "Total Reviews"
+    },
+    "no_requests": "No requests found",
+    "no_requests_hint": "Expand your wilayas or specialties for more visibility.",
+    "support_title": "Premium Support",
+    "support_desc": "Need help improving your profile?",
+    "support_btn": "Contact Support"
   },
   "subscription": {
     "title": "Subscription Management",
@@ -595,7 +702,11 @@
     "current_status": "Subscription Status",
     "plan": "Plan",
     "expires_on": "Expires on",
+    "active": "Active",
+    "expiring_soon": "Expiring Soon",
+    "expired": "Expired",
     "pending": "Pending Validation",
+    "days_left": "{count} days left",
     "manage_plans": "Available Plans",
     "best_value": "Best Value",
     "trial_used_note": "Discovery trial has already been used on this account.",
@@ -604,8 +715,9 @@
     "method_online": "Edahabia / CIB Card",
     "method_manual": "CCP / Baridimob Transfer",
     "ccp_details": "CCP Details",
-    "ccp_account": "CCP: 0021345678 Key 45",
+    "ccp_account": "Account Number: 0021345678 Key 45",
     "ccp_name": "Account Name: SARL DZARTISAN MARKETPLACE",
+    "upload_instruction": "Please upload a photo or scan of your transfer receipt.",
     "upload_btn": "Upload Receipt",
     "confirm_payment": "Confirm Payment",
     "history_title": "Transaction History",
@@ -614,7 +726,7 @@
     "table_amount": "Amount",
     "table_method": "Method",
     "table_status": "Status",
-    "upload_success": "Upload Success"
+    "download_receipt": "Receipt"
   },
   "search": {
     "placeholder": "Search by name or specialty...",
@@ -627,21 +739,25 @@
     "rating_label": "Minimum Rating",
     "exp_label": "Experience",
     "availability_label": "Availability",
+    "show_available": "Show available only",
+    "sort_label": "Sort by",
     "sort_relevance": "Relevance",
     "sort_rating": "Best Rated",
     "sort_exp": "Most Experienced",
     "sort_name": "Name (A-Z)",
     "results_found": "{count} artisans found",
+    "currently_available": "{count} artisans are currently available",
     "view_grid": "Grid",
     "view_list": "List",
     "view_map": "Map",
     "no_results": "No artisans found for your search.",
     "no_results_hint": "Try broadening your filters or reset the search.",
+    "km_away": "{distance} km away",
     "contact_whatsapp": "WhatsApp",
-    "contact_call": "Call",
-    "currently_available": "{count} artisans are currently available"
+    "contact_call": "Call"
   },
   "artisan_card": {
+    "verified_diploma": "Verified Diploma",
     "verified_profile": "Official Profile",
     "exp_years": "{count} years exp."
   },
@@ -649,8 +765,7 @@
     "steps": {
       "details": "Details",
       "location": "Location",
-      "photos": "Photos & Send",
-      "${step}": "${Step}"
+      "photos": "Photos & Send"
     },
     "step1": {
       "title": "Intervention details",
@@ -671,6 +786,8 @@
       "auto_geo_desc": "Fast and 100% accurate",
       "manual_entry": "Manual Entry",
       "manual_entry_desc": "For a different address",
+      "geo_btn": "Allow us to locate you",
+      "geo_denied": "Access denied. Please use manual entry.",
       "wilaya": "Select your Wilaya",
       "commune": "Select your Commune",
       "address": "Address details (Quarter, No, Floor...)",
@@ -685,121 +802,123 @@
       "upload_formats": "Formats: JPG, PNG, WebP (Max 5MB)",
       "summary_title": "Request Summary",
       "edit_step": "Edit step",
-      "submit": "Publish my request"
+      "submit": "Publish my request",
+      "submitting": "Publishing..."
     },
     "success": {
       "title": "Request published!",
       "message": "Your request has been successfully recorded. Artisans in your area can now contact you.",
+      "explanation": "You will receive proposals directly via phone or WhatsApp.",
       "view_requests": "View my requests",
-      "back_home": "Back to Home",
-      "step_1": "Step 1",
-      "step_2": "Step 2",
-      "step_3": "Step 3"
-    }
-  },
-  "cookie_consent": {
-    "title": "We use cookies",
-    "description": "DzArtisan uses cookies to improve your experience, ensure the security of your data, and analyze our traffic, in accordance with Algerian law n° 18-07 on the protection of individuals in the processing of personal data.",
-    "accept_all": "Accept All",
-    "manage_preferences": "Manage Preferences",
-    "decline": "Decline"
-  },
-  "artisan": {
-    "interventions": {
-      "card": {
-        "client": "Client",
-        "start_job": "Start Job",
-        "finalize": "Finalize",
-        "view_details": "View Details",
-        "location": "Location"
-      },
-      "status": {
-        "${intervention": {
-          "statut}": "Statut}"
+      "back_home": "Back to Home"
+    },
+    "client": {
+      "requests": {
+        "title": "My Service Requests",
+        "subtitle": "Follow your requests and consult artisan proposals.",
+        "tabs": {
+          "active": "Active",
+          "archived": "Archived",
+          "all": "All"
+        },
+        "status": {
+          "en_attente": "Waiting for responses",
+          "acceptee": "Accepted",
+          "terminee": "Completed",
+          "annulee": "Canceled"
+        },
+        "card": {
+          "responses": "{count} proposals",
+          "posted_on": "Posted on {date}",
+          "view_details": "View Details",
+          "no_requests": "You have no requests in this category."
+        },
+        "details": {
+          "title": "Request Details",
+          "description": "Description",
+          "location": "Location",
+          "photos": "Attached Photos",
+          "proposals_count": "{count} artisans replied",
+          "no_proposals": "No proposals yet. We have notified artisans in your area.",
+          "cancel_request": "Cancel Request",
+          "cancel_confirm": "Are you sure? This action is irreversible.",
+          "accept_proposal": "Accept this proposal"
+        },
+        "proposal": {
+          "experience": "{years} yrs exp.",
+          "contact_whatsapp": "WhatsApp",
+          "contact_call": "Call",
+          "accept_btn": "Choose this artisan"
         }
-      },
-      "details": {
-        "add_photo": "Add Photo",
-        "client_info": "Client Info",
-        "contact_client": "Contact Client",
-        "photos_title": "Photos Title",
-        "photo_before": "Photo Before",
-        "photo_after": "Photo After"
-      },
-      "tabs": {
-        "active": "Active",
-        "history": "History"
-      },
-      "subtitle": "Subtitle",
-      "empty": {
-        "no_active": "No Active",
-        "no_history": "No History"
       }
     },
-    "jobs": {
-      "empty": {
-        "no_jobs": "No Jobs",
-        "no_applied": "No Applied"
+    "artisan": {
+      "jobs": {
+        "title": "Available Job Opportunities",
+        "subtitle": "Find projects that match your skills in your area.",
+        "tabs": {
+          "new": "New Offers",
+          "applied": "My Applications"
+        },
+        "card": {
+          "distance": "{km} km away",
+          "posted": "Posted {time} ago",
+          "view_request": "Details",
+          "apply_now": "Submit Offer",
+          "applied_on": "Applied on {date}"
+        },
+        "modal": {
+          "title": "Submit Offer",
+          "placeholder": "Briefly describe why you are the best fit for this project (e.g., similar experience, immediate availability...)",
+          "send": "Send Offer",
+          "success": "Your offer was sent successfully!"
+        },
+        "empty": {
+          "no_jobs": "No new opportunities right now. We will notify you when a client posts a project in your specialties.",
+          "no_applied": "You haven't submitted any offers yet."
+        },
+        "status": {
+          "en_attente": "Pending",
+          "acceptee": "Accepted!",
+          "rejetee": "Not Accepted"
+        }
       },
-      "title": "Title",
-      "subtitle": "Subtitle",
-      "tabs": {
-        "new": "New",
-        "applied": "Applied"
-      },
-      "search_placeholder": "Search Placeholder",
-      "status": {
-        "${status}": "${Status}"
-      },
-      "card": {
-        "view_request": "View Request",
-        "apply_now": "Apply Now"
-      },
-      "modal": {
-        "success": "Success",
-        "title": "Title",
-        "placeholder": "Placeholder",
-        "send": "Send"
-      }
-    }
-  },
-  "client": {
-    "requests": {
-      "title": "My Service Requests",
-      "subtitle": "Follow your requests and consult artisan proposals.",
-      "tabs": {
-        "active": "Active",
-        "archived": "Archived",
-        "all": "All"
-      },
-      "status": {
-        "en_attente": "Waiting for responses",
-        "acceptee": "Accepted",
-        "terminee": "Completed",
-        "annulee": "Canceled"
-      },
-      "card": {
-        "responses": "{count} proposals",
-        "posted_on": "Posted on {date}",
-        "view_details": "View Details",
-        "no_requests": "You have no requests in this category."
-      },
-      "details": {
-        "title": "Request Details",
-        "description": "Description",
-        "location": "Location",
-        "photos": "Attached Photos",
-        "proposals_count": "{count} artisans replied",
-        "no_proposals": "No proposals yet.",
-        "cancel_request": "Cancel Request",
-        "cancel_confirm": "Are you sure? This action is irreversible.",
-        "accept_proposal": "Accept this proposal"
-      },
-      "proposal": {
-        "experience": "{years} yrs exp.",
-        "contact_whatsapp": "WhatsApp",
-        "contact_call": "Call",
-        "accept_btn": "Choose this artisan"
+      "interventions": {
+        "title": "My Projects",
+        "subtitle": "Track your active interventions and manage your photo documentation.",
+        "tabs": {
+          "active": "Active",
+          "history": "History"
+        },
+        "status": {
+          "acceptee": "Accepted (Ready to start)",
+          "en_cours": "In Progress",
+          "terminee": "Completed",
+          "annulee": "Cancelled"
+        },
+        "card": {
+          "client": "Client: {name}",
+          "location": "Location: {wilaya}, {commune}",
+          "start_job": "Start Job",
+          "finalize": "Finalize Project",
+          "view_details": "Manage File"
+        },
+        "details": {
+          "title": "Intervention File",
+          "client_info": "Client Information",
+          "actions": "Quick Actions",
+          "progress": "Progress Status",
+          "photos_title": "Project Photos",
+          "add_photo": "Add Photo",
+          "photo_before": "Before Job",
+          "photo_after": "After Job",
+          "confirm_finish": "Do you want to mark this intervention as completed? The client will be notified.",
+          "contact_client": "Contact Client"
+        },
+        "empty": {
+          "no_active": "You currently have no active interventions. Check the job board for new opportunities.",
+          "no_history": "Your intervention history is empty."
+        }
       }
     }
   }

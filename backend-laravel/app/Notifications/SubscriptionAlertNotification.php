@@ -21,7 +21,7 @@ class SubscriptionAlertNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        return ['database', 'mail', 'broadcast'];
     }
 
     public function toMail($notifiable)
@@ -38,9 +38,9 @@ class SubscriptionAlertNotification extends Notification
 
         return (new MailMessage)
             ->subject($subjects[$this->status])
-            ->greeting('Bonjour ' . ($notifiable->nomComplet ?? 'Hervé') . ' !')
+            ->greeting('Bonjour ' . ($notifiable->nomComplet ?? '') . ' !')
             ->line($lines[$this->status])
-            ->action('Gérer mon abonnement', url('/dashboard/artisan/subscription'))
+            ->action('Gérer mon abonnement', config('app.frontend_url', 'http://localhost:3000') . '/dashboard/artisan/subscription')
             ->line('Merci de continuer à grandir avec DzArtisan.')
             ->salutation('L\'équipe DzArtisan');
     }
@@ -56,5 +56,19 @@ class SubscriptionAlertNotification extends Notification
                        ? "Votre abonnement expire dans {$this->days} jours." 
                        : "Votre abonnement a expiré."
         ];
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        return new \Illuminate\Notifications\Messages\BroadcastMessage([
+            'type'   => 'subscription_alert',
+            'status' => $this->status,
+            'days'   => $this->days,
+            'icon'   => 'credit-card',
+            'title'  => 'Alerte Abonnement',
+            'text'   => $this->status === 'expiring_soon' 
+                       ? "Votre abonnement expire dans {$this->days} jours." 
+                       : "Votre abonnement a expiré."
+        ]);
     }
 }

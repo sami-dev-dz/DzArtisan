@@ -77,7 +77,7 @@ export function MobileDrawer({ isOpen, onClose, links = [] }) {
             <div className="flex items-center justify-between border-b border-slate-100 p-4 dark:border-slate-800/60">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-slate-700 flex items-center justify-center overflow-hidden">
-                  <Image src="/logo.png" alt="DzArtisan" width={24} height={24} className="w-auto h-auto object-contain" />
+                  <Image src="/logo.png" alt="DzArtisan" width={24} height={24} className="w-auto h-auto object-contain" style={{ width: "auto", height: "auto" }} />
                 </div>
                 <span className="text-lg font-bold text-blue-600">DzArtisan</span>
               </div>

@@ -8,7 +8,7 @@ import {
 } from "lucide-react"
 import { useTranslations, useLocale } from "next-intl"
 import { useAuth } from "@/context/AuthContext"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/Button"
 

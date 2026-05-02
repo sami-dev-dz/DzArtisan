@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 import { Power, Check, X, Loader2 } from "lucide-react"
 import { useAuth } from "@/context/AuthContext"
 import { useToastStore } from "@/store/toastStore"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 import { cn } from "@/lib/utils"
 
 export function AvailabilityToggle({ compact = false }) {

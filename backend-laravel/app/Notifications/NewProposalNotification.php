@@ -23,7 +23,7 @@ class NewProposalNotification extends Notification
 
     public function via($notifiable): array
     {
-        return ['database', 'mail'];
+        return ['database', 'mail', 'broadcast'];
     }
 
     public function toMail($notifiable): MailMessage
@@ -35,7 +35,7 @@ class NewProposalNotification extends Notification
             ->subject('Nouvelle proposition reçue pour : ' . $titre)
             ->greeting('Bonjour ' . ($notifiable->nomComplet ?? '') . ' !')
             ->line("{$artisanName} a soumis une proposition pour votre demande « {$titre} ».")
-            ->action('Voir les propositions', url('/dashboard/client/requests/' . $this->demande->id))
+            ->action('Voir les propositions', config('app.frontend_url', 'http://localhost:3000') . '/dashboard/client/requests/' . $this->demande->id)
             ->line('Connectez-vous pour examiner la proposition et contacter l\'artisan.')
             ->salutation('L\'équipe DzArtisan');
     }
@@ -52,5 +52,20 @@ class NewProposalNotification extends Notification
                           . ($this->demande->titre ?? 'votre demande') . ' ».',
             'link'       => '/dashboard/client/requests/' . $this->demande->id,
         ];
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        return new \Illuminate\Notifications\Messages\BroadcastMessage([
+            'type'       => 'new_proposal',
+            'demande_id' => $this->demande->id,
+            'artisan_id' => $this->artisan->id,
+            'icon'       => 'file-text',
+            'title'      => 'Nouvelle Proposition',
+            'text'       => ($this->artisan->user->nomComplet ?? 'Un artisan')
+                          . ' a soumis une proposition pour « '
+                          . ($this->demande->titre ?? 'votre demande') . ' ».',
+            'link'       => '/dashboard/client/requests/' . $this->demande->id,
+        ]);
     }
 }

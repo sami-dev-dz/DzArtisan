@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "@/i18n/routing";
-import { Loader2 } from "lucide-react";
+import { GenericPageSkeleton } from "@/components/ui/SkeletonLayouts";
 
 export default function DashboardIndex() {
   const { user, loading } = useAuth();
@@ -32,9 +32,5 @@ export default function DashboardIndex() {
     }
   }, [user, loading, router]);
 
-  return (
-    <div className="flex-1 flex items-center justify-center p-20">
-      <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-    </div>
-  );
+  return <GenericPageSkeleton />;
 }

@@ -21,7 +21,7 @@ class ComplaintNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        return ['database', 'mail', 'broadcast'];
     }
 
     public function toMail($notifiable)
@@ -46,7 +46,7 @@ class ComplaintNotification extends Notification
             ->subject($subjects[$this->status])
             ->greeting('Bonjour ' . ($notifiable->nom ?? 'Cher utilisateur') . ' !')
             ->line($lines[$this->status])
-            ->action('Voir les détails', url('/dashboard/complaints/' . $this->complaintId))
+            ->action('Voir les détails', config('app.frontend_url', 'http://localhost:3000') . '/dashboard/complaints/' . $this->complaintId)
             ->line('DzArtisan s\'engage à maintenir un haut niveau de service pour tous.')
             ->salutation('L\'équipe DzArtisan');
     }
@@ -68,5 +68,25 @@ class ComplaintNotification extends Notification
             'icon'         => 'alert-octagon',
             'text'         => $textMap[$this->status] ?? "Mise à jour de votre réclamation."
         ];
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        $textMap = [
+            'new'         => "Une nouvelle plainte a été déposée.",
+            'in_progress' => "Votre réclamation est en cours d'examen.",
+            'resolved'    => "Une plainte a été résolue.",
+            'rejected'    => "Votre plainte a été rejetée.",
+            'warning'     => "Vous avez reçu un avertissement de l'administration."
+        ];
+
+        return new \Illuminate\Notifications\Messages\BroadcastMessage([
+            'type'         => 'complaint_alert',
+            'status'       => $this->status,
+            'complaint_id' => $this->complaintId,
+            'icon'         => 'alert-octagon',
+            'title'        => 'Alerte Réclamation',
+            'text'         => $textMap[$this->status] ?? "Mise à jour de votre réclamation."
+        ]);
     }
 }

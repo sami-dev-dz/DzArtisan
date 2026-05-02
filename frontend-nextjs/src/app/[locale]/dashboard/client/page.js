@@ -4,19 +4,26 @@ import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { Wrench, Clock, Star, ArrowRight, ClipboardList, Plus, AlertTriangle, TrendingUp } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { ClientDashboardSkeleton } from "@/components/ui/SkeletonLayouts";
 import { useEffect, useState } from "react";
-import api from "@/lib/api-client";
+import api from "@/lib/axios";
+import { useRouter } from "@/i18n/routing";
 
 export default function ClientDashboardPage() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [stats, setStats] = useState({ active: 0, pending: 0, completed: 0, reviews: 0 });
   const [recentRequests, setRecentRequests] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Ne pas faire de requête si l'auth est en cours ou si l'utilisateur n'est pas connecté
+    if (authLoading || !user) {
+      if (!authLoading && !user) setLoading(false);
+      return;
+    }
+
     const fetchData = async () => {
       try {
-        // Fetch client requests to compute stats
         const res = await api.get("/client/requests");
         const requests = res.data || [];
         setRecentRequests(requests.slice(0, 3));
@@ -27,19 +34,22 @@ export default function ClientDashboardPage() {
           reviews: requests.filter(r => r.statut === "terminee").length,
         });
       } catch (err) {
-        console.error("Dashboard data fetch error:", err);
+        if (err?.response?.status !== 401) {
+          console.error("Dashboard data fetch error:", err);
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [user, authLoading]);
 
   const statCards = [
     { label: "Demandes actives", value: stats.active, icon: Wrench, color: "text-blue-500", bg: "bg-blue-500/10", ring: "ring-blue-500/20" },
     { label: "En attente", value: stats.pending, icon: Clock, color: "text-amber-500", bg: "bg-amber-500/10", ring: "ring-amber-500/20" },
     { label: "Terminées", value: stats.completed, icon: TrendingUp, color: "text-emerald-500", bg: "bg-emerald-500/10", ring: "ring-emerald-500/20" },
   ];
+  if (loading) return <ClientDashboardSkeleton />;
 
   return (
     <div className="space-y-8 relative z-10 w-full h-full">

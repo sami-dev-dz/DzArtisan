@@ -17,6 +17,7 @@ import { Link } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
 import { useToastStore } from "@/store/toastStore";
 import { cn } from "@/lib/utils";
+import api from "@/lib/axios";
 
 /* ─── Password strength ──────────────────────────────────────────── */
 const calculateStrength = (password) => {
@@ -366,11 +367,23 @@ export function ResetPasswordForm() {
 
     setLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+      const email = searchParams.get("email");
+      if (!email) {
+        setError(t("invalid_token")); // fallback if email is missing
+        setLoading(false);
+        return;
+      }
+      
+      await api.post('/auth/reset-password', {
+        token,
+        email,
+        password,
+        password_confirmation: confirmPassword
+      });
       setSuccess(true);
     } catch (err) {
       setError(
-        err.response?.status === 400 ? t("invalid_token") : t("network_error"),
+        err.response?.data?.message || (err.response?.status === 400 ? t("invalid_token") : t("network_error"))
       );
     } finally {
       setLoading(false);
@@ -605,7 +618,7 @@ export function ResetPasswordForm() {
                           >
                             <AlertCircle className="w-3.5 h-3.5 text-red-500" />
                             <span className="text-[12px] font-semibold text-red-500">
-                              Passwords don't match
+                              Passwords don&apos;t match
                             </span>
                           </motion.div>
                         )}

@@ -36,4 +36,9 @@ class Client extends Model
     {
         return $this->hasMany(DemandeIntervention::class, 'client_id');
     }
+
+    public function avis()
+    {
+        return $this->hasMany(Avis::class, 'client_id');
+    }
 }

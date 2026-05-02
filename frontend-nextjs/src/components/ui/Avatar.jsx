@@ -1,4 +1,5 @@
 import * as React from "react"
+import NextImage from "next/image"
 import { cn } from "@/lib/utils"
 
 const Avatar = React.forwardRef(({ 
@@ -59,9 +60,11 @@ const Avatar = React.forwardRef(({
         )}
       >
         {showImage ? (
-          <img
+          <NextImage
             src={src}
             alt={alt}
+            fill
+            unoptimized
             onError={() => setImageError(true)}
             className="aspect-square h-full w-full object-cover"
           />

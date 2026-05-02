@@ -61,7 +61,7 @@ export default function AdminLoginForm() {
         {/* Brand / Logo area */}
         <div className="flex flex-col items-center mb-8">
           <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center mb-4 shadow-md ring-1 ring-slate-200/80 overflow-hidden transition-transform hover:scale-105">
-            <Image src="/logo.png" alt="DzArtisan" width={40} height={40} className="w-auto h-auto object-contain" priority />
+            <Image src="/logo.png" alt="DzArtisan" width={40} height={40} className="w-auto h-auto object-contain" style={{ width: "auto", height: "auto" }} priority />
           </div>
           <h1 className="text-[15px] font-semibold text-[#0f172a] tracking-tight">
             Administration

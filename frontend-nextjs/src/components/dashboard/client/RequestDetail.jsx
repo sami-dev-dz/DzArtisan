@@ -1,11 +1,12 @@
 'use client';
 
-import { Users, Clock, X, MapPin, Calendar, MessageSquare, AlertCircle, Trash2, Phone, MessageCircle, Star, ShieldCheck, ChevronRight, ArrowLeft, Image as ImageIcon, Unlock, Lock, ExternalLink, Pencil } from 'lucide-react';
+import { Users, Clock, X, MapPin, Calendar, MessageSquare, AlertCircle, Trash2, Phone, MessageCircle, Star, ShieldCheck, ChevronRight, ArrowLeft, Image as ImageIcon, Unlock, Lock, ExternalLink, Pencil, Download } from 'lucide-react';
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { motion } from 'framer-motion';
-import api from '@/lib/api-client';
+import api from '@/lib/axios';
 import { cn } from '@/lib/utils';
 import { useRouter } from '@/i18n/routing';
 
@@ -95,6 +96,32 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
             </Button>
           </div>
         )}
+        {['acceptee', 'en_cours', 'terminee'].includes(request.statut) && (
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={async () => {
+                try {
+                  const res = await api.get(`/interventions/${request.id}/quote`, { responseType: 'blob' });
+                  const url = window.URL.createObjectURL(new Blob([res.data]));
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.setAttribute('download', `devis-INT${request.id}.pdf`);
+                  document.body.appendChild(link);
+                  link.click();
+                  link.remove();
+                } catch (err) {
+                  console.error(err);
+                }
+              }}
+              className="text-emerald-600 border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 font-bold gap-2"
+            >
+              <Download className="w-4 h-4" />
+              <span className="hidden sm:inline">Télécharger Devis</span>
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -121,7 +148,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 {request.photos.map((photo, i) => (
                   <div key={i} className="aspect-square rounded-2xl overflow-hidden bg-gray-100 dark:bg-slate-800 border-2 border-transparent hover:border-blue-500 transition-all group relative">
-                    <img src={photo.url} alt="Request detail" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+                    <Image src={photo.url} alt="Request detail" fill unoptimized className="object-cover transition-transform group-hover:scale-110" />
                   </div>
                 ))}
               </div>
@@ -277,7 +304,7 @@ const ProposalCard = ({ proposal, onAccept, isAccepting, isDisabled, isAccepted,
       <div className="flex items-center gap-4 mb-4">
         <div className="w-14 h-14 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700">
           {user.photo ? (
-            <img src={user.photo} alt={user.nomComplet} className="w-full h-full object-cover" />
+            <Image src={user.photo} alt={user.nomComplet} fill unoptimized className="object-cover" />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-xl font-bold text-slate-400">
               {user.nomComplet?.charAt(0)}

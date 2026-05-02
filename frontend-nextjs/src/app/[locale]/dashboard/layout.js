@@ -4,7 +4,7 @@ import * as React from "react"
 import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "@/i18n/routing"
 import { useLocale } from "next-intl"
-import { Loader2 } from "lucide-react"
+import { DashboardLayoutSkeleton } from "@/components/ui/SkeletonLayouts"
 import { Sidebar } from "@/components/dashboard/Sidebar"
 import { BottomNav } from "@/components/dashboard/BottomNav"
 import { cn } from "@/lib/utils"
@@ -22,16 +22,30 @@ export default function DashboardLayout({ children }) {
     }
   }, [user, loading, router])
 
+  // Initialize WebSockets for real-time notifications
+  React.useEffect(() => {
+    if (user && !loading) {
+      import('@/lib/echo').then(({ initEcho }) => {
+        const echo = initEcho();
+        if (echo) {
+          echo.private(`App.Models.User.${user.id}`)
+            .notification((notification) => {
+              // Add a toast notification dynamically
+              import('@/store/toastStore').then(({ useToastStore }) => {
+                useToastStore.getState().addToast({
+                  title: notification.title || "Nouvelle notification",
+                  message: notification.text || "Vous avez une nouvelle activité.",
+                  type: "info"
+                });
+              });
+            });
+        }
+      });
+    }
+  }, [user, loading]);
+
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0a0f1e]">
-        <div className="relative flex flex-col items-center gap-4">
-           <div className="absolute inset-0 bg-blue-600/20 rounded-full blur-3xl animate-pulse" />
-           <Loader2 className="w-12 h-12 text-blue-600 animate-spin relative z-10" />
-           <span className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 animate-pulse">DzArtisan</span>
-        </div>
-      </div>
-    )
+    return <DashboardLayoutSkeleton />
   }
 
   if (!user) return null

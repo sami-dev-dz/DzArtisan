@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { useRouter } from '@/i18n/routing'
-import api from '@/lib/api-client'
+import api from '@/lib/axios'
 
 const AuthContext = createContext(null)
 
@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
           localStorage.removeItem('google_auth_token');
         } else {
           // Sinon, charger la session habituelle par cookie
-          const { data } = await api.get('/auth/me');
+          const { data } = await api.get('/auth/me', { skipAuthRedirect: true });
           userData = data?.data?.user;
         }
 

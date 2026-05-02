@@ -94,7 +94,32 @@ class DashboardController extends Controller
         if (!$artisan) {
             return response()->json([]);
         }
-        $requests = $artisan->scopeMatchingRequests(DemandeIntervention::query())->limit(5)->get();
+
+        // Combiner pivot (many-to-many) + champ direct — même logique que ArtisanJobController
+        $categoryIds = $artisan->categories()->pluck('categorie_metiers.id')->toArray();
+        if ($artisan->categorie_id) {
+            $categoryIds[] = $artisan->categorie_id;
+        }
+        $categoryIds = array_unique(array_filter($categoryIds));
+
+        $wilayaIds = $artisan->wilayas()->pluck('wilayas.id')->toArray();
+        if ($artisan->wilaya_id) {
+            $wilayaIds[] = $artisan->wilaya_id;
+        }
+        $wilayaIds = array_unique(array_filter($wilayaIds));
+
+        if (empty($categoryIds) || empty($wilayaIds)) {
+            return response()->json([]);
+        }
+
+        $requests = DemandeIntervention::whereIn('categorie_id', $categoryIds)
+            ->whereIn('wilaya_id', $wilayaIds)
+            ->where('statut', 'en_attente')
+            ->with(['categorie', 'wilaya', 'commune', 'client.user'])
+            ->withCount('propositions')
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get();
 
         return response()->json($requests);
     }

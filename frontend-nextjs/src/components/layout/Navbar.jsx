@@ -352,6 +352,7 @@ export default function Navbar() {
                 width={48} 
                 height={48} 
                 className="w-auto h-10 object-contain"
+                style={{ width: "auto", height: "auto" }}
                 priority
               />
             </div>

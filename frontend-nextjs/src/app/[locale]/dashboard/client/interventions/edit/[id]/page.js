@@ -14,7 +14,7 @@ import { Textarea } from "@/components/ui/Textarea"
 import { cn } from "@/lib/utils"
 import { useRouter } from "@/i18n/routing"
 import dynamic from "next/dynamic"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 import wilayasJson from "@/data/wilayas.json"
 import communesJson from "@/data/communes.json"
 import { useParams } from 'next/navigation'

@@ -14,10 +14,11 @@ import {
 import { cn } from "@/lib/utils"
 import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "@/i18n/routing"
+import Image from 'next/image'
 import { useToastStore } from "@/store/toastStore"
 import { wilayas, experience_levels } from "@/data/algeria"
 import { uploadToCloudinary } from "@/lib/cloudinary"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 
 const TRADE_OPTIONS = [
    { key: "electricien", label: "Électricien", icon: Zap, gradient: "from-amber-400 to-orange-500" },
@@ -530,9 +531,9 @@ export default function ArtisanProfileSetupPage() {
                            {/* Avatar row */}
                            <div className="p-6 flex items-center gap-5">
                               <div className="relative shrink-0 group">
-                                 <div className="w-20 h-20 rounded-2xl bg-linear-to-br from-slate-100 to-slate-200 dark:from-white/6 dark:to-white/3 overflow-hidden flex items-center justify-center ring-1 ring-slate-200/80 dark:ring-white/10">
+                                 <div className="relative w-20 h-20 rounded-2xl bg-linear-to-br from-slate-100 to-slate-200 dark:from-white/6 dark:to-white/3 overflow-hidden flex items-center justify-center ring-1 ring-slate-200/80 dark:ring-white/10">
                                     {formData.photo
-                                       ? <img src={formData.photo} alt="Profil" className="w-full h-full object-cover" />
+                                       ? <Image src={formData.photo} alt="Profil" fill unoptimized className="object-cover" />
                                        : <Camera className="w-7 h-7 text-slate-300 dark:text-slate-600" />
                                     }
                                     {uploadProgress.photo > 0 && (
@@ -564,7 +565,6 @@ export default function ArtisanProfileSetupPage() {
                                     </div>
                                  </div>
                                  <p className="text-xs text-slate-400 mt-0.5">{ft.photoMax}</p>
-                                 {/* FIX #1: no underline, styled as a clean button */}
                                  <button
                                     type="button"
                                     onClick={() => setIsNameModalOpen(true)}
@@ -580,7 +580,6 @@ export default function ArtisanProfileSetupPage() {
 
                            {/* Fields */}
                            <div className="p-6 space-y-5">
-                              {/* Phone — FIX #2: removed "Visible to clients" toggle */}
                               <div className="space-y-2">
                                  <label className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                                     {ft.phone}
@@ -630,7 +629,6 @@ export default function ArtisanProfileSetupPage() {
                                        {ft.generate}
                                     </button>
                                  </div>
-                                 {/* FIX #1: no underline on link — replaced with pill button */}
                                  {formData.whatsapp && (
                                     <div className="flex items-center gap-2">
                                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20">
@@ -673,7 +671,6 @@ export default function ArtisanProfileSetupPage() {
                            </p>
                         </div>
 
-                        {/* FIX #3: Category icons — proper grid with large visible icons */}
                         <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-5 shadow-sm mb-4">
                            <div className="relative">
                               <select
@@ -691,7 +688,6 @@ export default function ArtisanProfileSetupPage() {
                            </div>
                         </div>
 
-                        {/* FIX #4 & #5: Experience redesign + improved Wilaya search */}
                         <div className="grid grid-cols-1 gap-4">
 
                            {/* Années d'expérience */}
@@ -715,7 +711,7 @@ export default function ArtisanProfileSetupPage() {
                               <p className="mt-2 text-[11px] text-slate-400">Si vous débutez, mettez 0.</p>
                            </div>
 
-                           {/* FIX #5: Wilaya search — accent-insensitive */}
+                           {/* Wilaya search */}
                            <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-5 shadow-sm">
                               <div className="flex items-center justify-between mb-4">
                                  <div className="flex items-center gap-2">
@@ -889,7 +885,6 @@ export default function ArtisanProfileSetupPage() {
                            </p>
                         </div>
 
-                        {/* FIX #6: Disponibilité redesigned — prominent, clear toggle card */}
                         <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl overflow-hidden shadow-sm">
                            <div className="p-5">
                               <div className="flex items-center gap-2 mb-4">
@@ -1014,10 +1009,8 @@ export default function ArtisanProfileSetupPage() {
                               })}
                            </div>
 
-                           {/* FIX #7: Professional verified badge CTA */}
                            <div className="mx-5 mb-5 rounded-xl overflow-hidden border border-slate-100 dark:border-white/6">
                               <div className="flex items-stretch">
-                                 {/* Left accent strip */}
                                  <div className="w-1 bg-linear-to-b from-blue-500 to-indigo-600 shrink-0 rounded-l-xl" />
                                  <div className="flex-1 px-4 py-4 flex items-start gap-3.5 bg-linear-to-r from-blue-50/60 to-indigo-50/30 dark:from-blue-500/5 dark:to-indigo-500/5">
                                     <div className="w-9 h-9 rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center shrink-0 shadow-md shadow-blue-500/20">
@@ -1039,7 +1032,7 @@ export default function ArtisanProfileSetupPage() {
                         {/* Summary strip */}
                         <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-4 flex items-center gap-4 shadow-sm">
                            {formData.photo
-                              ? <img src={formData.photo} alt="" className="w-10 h-10 rounded-xl object-cover shrink-0" />
+                              ? <Image src={formData.photo} alt="" unoptimized width={40} height={40} className="w-10 h-10 rounded-xl object-cover shrink-0" />
                               : <div className="w-10 h-10 rounded-xl bg-linear-to-br from-slate-100 to-slate-200 dark:from-white/6 dark:to-white/3 flex items-center justify-center shrink-0">
                                  <Camera className="w-4 h-4 text-slate-400" />
                               </div>

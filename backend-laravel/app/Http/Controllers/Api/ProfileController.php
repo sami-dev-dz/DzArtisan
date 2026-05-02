@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 use App\Models\Artisan;
 use App\Models\CategorieMetier;
 use App\Models\Commune;
+use App\Models\ArtisanPortfolio;
+use App\Models\ArtisanUnavailability;
 use App\Http\Requests\Profile\UpdateProfileRequest;
 
 class ProfileController extends Controller
@@ -146,5 +148,123 @@ class ProfileController extends Controller
             'message' => 'Statut mis à jour avec succès',
             'data' => ['status' => $newStatut]
         ]);
+    }
+
+    // --- Portfolio Methods ---
+
+    public function storePortfolio(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->type !== 'artisan') return response()->json(['success' => false], 403);
+
+        $validated = $request->validate([
+            'image_url' => 'required|url',
+            'public_id' => 'nullable|string',
+            'caption'   => 'nullable|string|max:255',
+        ]);
+
+        $artisan = $user->artisan;
+
+        if ($artisan->portfolio()->count() >= 10) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Vous ne pouvez pas ajouter plus de 10 photos à votre portfolio.'
+            ], 400);
+        }
+
+        $portfolio = $artisan->portfolio()->create($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Photo ajoutée au portfolio.',
+            'data' => $portfolio
+        ]);
+    }
+
+    public function destroyPortfolio($id)
+    {
+        $user = Auth::user();
+        if ($user->type !== 'artisan') return response()->json(['success' => false], 403);
+
+        $portfolio = $user->artisan->portfolio()->find($id);
+
+        if (!$portfolio) {
+            return response()->json(['success' => false, 'message' => 'Photo introuvable.'], 404);
+        }
+
+        $portfolio->delete();
+
+        return response()->json(['success' => true, 'message' => 'Photo supprimée.']);
+    }
+
+    // --- Unavailabilities Methods ---
+
+    public function getUnavailabilities()
+    {
+        $user = Auth::user();
+        if ($user->type !== 'artisan') return response()->json(['success' => false], 403);
+
+        $unavailabilities = $user->artisan->unavailabilities()
+                                ->orderBy('start_date', 'asc')
+                                ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $unavailabilities
+        ]);
+    }
+
+    public function storeUnavailability(Request $request)
+    {
+        $user = Auth::user();
+        if ($user->type !== 'artisan') return response()->json(['success' => false], 403);
+
+        $validated = $request->validate([
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date'   => 'required|date|after_or_equal:start_date',
+            'reason'     => 'nullable|string|max:255',
+        ]);
+
+        // Check for overlaps
+        $overlaps = $user->artisan->unavailabilities()
+            ->where(function ($query) use ($validated) {
+                $query->whereBetween('start_date', [$validated['start_date'], $validated['end_date']])
+                      ->orWhereBetween('end_date', [$validated['start_date'], $validated['end_date']])
+                      ->orWhere(function ($q) use ($validated) {
+                          $q->where('start_date', '<=', $validated['start_date'])
+                            ->where('end_date', '>=', $validated['end_date']);
+                      });
+            })->exists();
+
+        if ($overlaps) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cette période chevauche une indisponibilité existante.'
+            ], 400);
+        }
+
+        $unavailability = $user->artisan->unavailabilities()->create($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Période d\'indisponibilité ajoutée.',
+            'data' => $unavailability
+        ]);
+    }
+
+    public function destroyUnavailability($id)
+    {
+        $user = Auth::user();
+        if ($user->type !== 'artisan') return response()->json(['success' => false], 403);
+
+        $unavailability = $user->artisan->unavailabilities()->find($id);
+
+        if (!$unavailability) {
+            return response()->json(['success' => false, 'message' => 'Période introuvable.'], 404);
+        }
+
+        $unavailability->delete();
+
+        return response()->json(['success' => true, 'message' => 'Période d\'indisponibilité supprimée.']);
     }
 }

@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/DropdownMenu"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 import { TableSkeleton } from "@/components/ui/SkeletonLayouts"
 
@@ -83,7 +84,7 @@ export function ArtisanManagementTable({
                 <div className="flex items-center gap-4">
                   <div className="relative w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-600/10 flex items-center justify-center text-indigo-600 font-black text-lg overflow-hidden border border-indigo-100 dark:border-indigo-500/20">
                     {artisan.photo && artisan.photo !== '0' && artisan.photo !== 0 ? (
-                      <img src={artisan.photo} alt={artisan.user?.nomComplet || 'Artisan'} className="w-full h-full object-cover" />
+                      <Image src={artisan.photo} alt={artisan.user?.nomComplet || 'Artisan'} fill unoptimized className="object-cover" />
                     ) : (
                       <User size={24} className="text-indigo-400" />
                     )}

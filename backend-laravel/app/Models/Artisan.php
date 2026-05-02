@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
@@ -53,11 +54,7 @@ class Artisan extends Model
         return $this->belongsToMany(Wilaya::class, 'artisan_wilaya', 'artisan_id', 'wilaya_id');
     }
 
-    public function matchingRequests()
-    {
-        return DemandeIntervention::where('categorie_id', $this->categorie_id)
-            ->whereIn('wilaya_id', $this->wilayas()->pluck('wilayas.id'));
-    }
+
 
     public function primaryWilaya()
     {
@@ -82,6 +79,16 @@ class Artisan extends Model
     public function abonnement()
     {
         return $this->hasOne(Abonnement::class);
+    }
+
+    public function portfolio(): HasMany
+    {
+        return $this->hasMany(ArtisanPortfolio::class);
+    }
+
+    public function unavailabilities(): HasMany
+    {
+        return $this->hasMany(ArtisanUnavailability::class);
     }
 
     public function getAverageRatingAttribute()
@@ -188,12 +195,26 @@ class Artisan extends Model
 
     public function scopeMatchingRequests($query)
     {
+        // Toujours combiner pivot + champ direct (même logique que ArtisanJobController)
         $categoryIds = $this->categories()->pluck('categorie_metiers.id')->toArray();
+        if ($this->categorie_id) {
+            $categoryIds[] = $this->categorie_id;
+        }
+        $categoryIds = array_unique(array_filter($categoryIds));
+
         $wilayaIds = $this->wilayas()->pluck('wilayas.id')->toArray();
+        if ($this->wilaya_id) {
+            $wilayaIds[] = $this->wilaya_id;
+        }
+        $wilayaIds = array_unique(array_filter($wilayaIds));
+
+        if (empty($categoryIds) || empty($wilayaIds)) {
+            return DemandeIntervention::whereRaw('1=0');
+        }
 
         return DemandeIntervention::whereIn('categorie_id', $categoryIds)
             ->whereIn('wilaya_id', $wilayaIds)
-            ->where('statut', 'pending')
+            ->where('statut', 'en_attente')
             ->latest();
     }
 

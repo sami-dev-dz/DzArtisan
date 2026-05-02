@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import api from '@/lib/api-client';
+import api from '@/lib/axios';
 import { OpportunityCard } from './OpportunityCard';
 import { ProposalModal } from './ProposalModal';
 import { motion, AnimatePresence } from 'framer-motion';

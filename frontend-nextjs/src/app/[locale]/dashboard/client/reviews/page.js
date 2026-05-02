@@ -4,23 +4,10 @@ import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Star, MessageSquare, Loader2, AlertCircle, Calendar, MapPin, User } from "lucide-react"
 import { useTranslations, useLocale } from "next-intl"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 import { cn } from "@/lib/utils"
 
-function ReviewSkeleton() {
-  return (
-    <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-white/5 p-6">
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5 animate-pulse shrink-0" />
-        <div className="flex-1 space-y-3">
-          <div className="h-4 bg-slate-100 dark:bg-white/5 rounded-full w-3/4 animate-pulse" />
-          <div className="h-3 bg-slate-100 dark:bg-white/5 rounded-full w-1/2 animate-pulse" />
-          <div className="h-3 bg-slate-100 dark:bg-white/5 rounded-full w-1/3 animate-pulse" />
-        </div>
-      </div>
-    </div>
-  )
-}
+import { ReviewListSkeleton } from "@/components/ui/SkeletonLayouts"
 
 function StarDisplay({ rating, size = "w-4 h-4" }) {
   return (
@@ -101,11 +88,7 @@ export default function ClientReviewsPage() {
       )}
 
       {/* Loading */}
-      {loading && (
-        <div className="space-y-4">
-          {[1, 2, 3].map(i => <ReviewSkeleton key={i} />)}
-        </div>
-      )}
+      {loading && <ReviewListSkeleton />}
 
       {/* Empty State */}
       {!loading && !error && reviews.length === 0 && (

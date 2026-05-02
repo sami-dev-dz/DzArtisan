@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { User, Mail, Phone, Briefcase, Camera, Save, MapPin, MessageCircle, ExternalLink, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import LocationPicker from "@/components/forms/LocationPicker";
-import api from "@/lib/api-client";
+import Image from "next/image";
+import api from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
+import { ProfilePageSkeleton } from "@/components/ui/SkeletonLayouts";
 
 export default function ProfilePage() {
   const { user, setUser } = useAuth();
@@ -80,11 +82,7 @@ export default function ProfilePage() {
      }
   };
 
-  if (loading) return (
-    <div className="flex items-center justify-center min-h-[60vh]">
-      <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
-    </div>
-  );
+  if (loading) return <ProfilePageSkeleton />;
 
   const tabs = [
     { id: "general", label: "Général", icon: User },
@@ -127,9 +125,9 @@ export default function ProfilePage() {
                 {/* Profile Photo */}
                 <div className="flex flex-col md:flex-row items-center gap-6 pb-8 border-b border-white/5">
                   <div className="relative group">
-                    <div className="w-32 h-32 rounded-3xl bg-slate-800 border-2 border-white/10 overflow-hidden shadow-2xl">
+                    <div className="relative w-32 h-32 rounded-3xl bg-slate-800 border-2 border-white/10 overflow-hidden shadow-2xl">
                       {user?.photo ? (
-                        <img src={user.photo} className="w-full h-full object-cover" />
+                        <Image src={user.photo} alt="Photo de profil" fill unoptimized className="object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-slate-600">
                           <User className="w-12 h-12" />

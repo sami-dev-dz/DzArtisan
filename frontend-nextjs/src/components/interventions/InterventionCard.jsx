@@ -9,7 +9,8 @@ import {
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
-import { Skeleton } from "@/components/ui/skeleton"
+import Image from "next/image"
+import { Skeleton } from "@/components/ui/Skeleton"
 
 // Lazy-load map to avoid SSR and 3G overhead
 const MiniMap = dynamic(() => import("./MiniMap").then(m => m.MiniMap), {
@@ -55,7 +56,7 @@ export function InterventionCard({ intervention, onReview, onCancel }) {
             <button className="absolute top-6 right-6 text-white/70 hover:text-white">
               <X className="w-8 h-8" />
             </button>
-            <img src={lightbox} alt="Photo" className="max-w-full max-h-[90vh] rounded-2xl object-contain" />
+            <Image src={lightbox} alt="Photo" unoptimized width={0} height={0} style={{ width: 'auto', height: 'auto', maxWidth: '100%', maxHeight: '90vh' }} className="rounded-2xl object-contain" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -158,11 +159,12 @@ export function InterventionCard({ intervention, onReview, onCancel }) {
                           onClick={() => setLightbox(photo.url)}
                           className="relative aspect-square rounded-[16px] overflow-hidden group bg-slate-100 dark:bg-white/5"
                         >
-                          <img
+                          <Image
                             src={photo.url}
                             alt={`Photo ${i + 1}`}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                            loading="lazy"
+                            fill
+                            unoptimized
+                            className="object-cover transition-transform duration-300 group-hover:scale-110"
                           />
                           <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <ZoomIn className="w-5 h-5 text-white" />

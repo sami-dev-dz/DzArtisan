@@ -30,7 +30,8 @@ export const AdminStatistics = () => {
   const [stats, setStats] = useState(null);
   const [rankings, setRankings] = useState([]);
   const [rankingPage, setRankingPage] = useState(1);
-  const [exporting, setExporting] = useState(false);
+  const [exporting, setExporting] = useState(null);
+  const [showExportMenu, setShowExportMenu] = useState(false);
 
   const fetchStats = useCallback(async () => {
     try {
@@ -58,24 +59,24 @@ export const AdminStatistics = () => {
     fetchRankings();
   }, [fetchStats, fetchRankings]);
 
-  const handleExport = async () => {
+  const handleExport = async (type = 'artisans') => {
     try {
-      setExporting(true);
-      const response = await axios.get('/admin/stats/export', {
+      setExporting(type);
+      setShowExportMenu(false);
+      const response = await axios.get(`/admin/stats/export?type=${type}`, {
         responseType: 'blob'
       });
-      
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `dzartisan_stats_${new Date().toISOString().split('T')[0]}.csv`);
+      link.setAttribute('download', `dzartisan_${type}_${new Date().toISOString().split('T')[0]}.csv`);
       document.body.appendChild(link);
       link.click();
       link.remove();
     } catch (err) {
       console.error('Export failed:', err);
     } finally {
-      setExporting(false);
+      setExporting(null);
     }
   };
 
@@ -102,14 +103,37 @@ export const AdminStatistics = () => {
           >
             <RefreshCcw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
           </button>
-          <button 
-            onClick={handleExport}
-            disabled={exporting}
-            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-2xl shadow-xl shadow-blue-500/20 transition-all font-bold"
-          >
-            {exporting ? <RefreshCcw className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
-            <span>{t('ranking.export_btn')}</span>
-          </button>
+          {/* Export Dropdown */}
+          <div className="relative">
+            <button 
+              onClick={() => setShowExportMenu(!showExportMenu)}
+              disabled={!!exporting}
+              className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-2xl shadow-xl shadow-blue-500/20 transition-all font-bold"
+            >
+              {exporting ? <RefreshCcw className="w-5 h-5 animate-spin" /> : <Download className="w-5 h-5" />}
+              <span>Exporter CSV</span>
+            </button>
+            {showExportMenu && (
+              <div className="absolute right-0 top-full mt-2 w-56 bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-white/10 rounded-2xl shadow-2xl shadow-black/10 z-50 overflow-hidden">
+                {[
+                  { type: 'artisans',      label: '👷 Performances Artisans' },
+                  { type: 'clients',       label: '👥 Clients' },
+                  { type: 'interventions', label: '🔧 Interventions' },
+                  { type: 'transactions',  label: '💳 Transactions' },
+                ].map(({ type, label }) => (
+                  <button
+                    key={type}
+                    onClick={() => handleExport(type)}
+                    disabled={exporting === type}
+                    className="w-full text-left px-4 py-3 text-sm font-bold text-slate-700 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-blue-500/10 hover:text-blue-600 transition-colors flex items-center justify-between"
+                  >
+                    {label}
+                    {exporting === type && <RefreshCcw className="w-4 h-4 animate-spin" />}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

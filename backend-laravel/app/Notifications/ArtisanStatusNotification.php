@@ -21,9 +21,7 @@ class ArtisanStatusNotification extends Notification
 
     public function via($notifiable)
     {
-        // Only use database for now — mail is not configured in .env
-        // Add 'mail' here once MAIL_MAILER is set up in production
-        return ['database'];
+        return ['database', 'mail', 'broadcast'];
     }
 
     public function toMail($notifiable)
@@ -46,15 +44,16 @@ class ArtisanStatusNotification extends Notification
             'suspended' => 'Contacter le support'
         ];
 
+        $frontendUrl = config('app.frontend_url', 'http://localhost:3000');
         $actionUrl = [
-            'approved'  => url('/dashboard/artisan'),
-            'rejected'  => url('/dashboard/artisan/profile'),
-            'suspended' => url('/about#contact')
+            'approved'  => $frontendUrl . '/dashboard/artisan',
+            'rejected'  => $frontendUrl . '/dashboard/artisan/profile',
+            'suspended' => $frontendUrl . '/about#contact'
         ];
 
         return (new MailMessage)
             ->subject($subjects[$this->status])
-            ->greeting('Bonjour ' . ($notifiable->nomComplet ?? 'Hervé') . ' !')
+            ->greeting('Bonjour ' . ($notifiable->nomComplet ?? '') . ' !')
             ->line($lines[$this->status])
             ->action($actionText[$this->status], $actionUrl[$this->status])
             ->line('Merci de faire partie de la communauté DzArtisan.')
@@ -70,5 +69,17 @@ class ArtisanStatusNotification extends Notification
             'icon'   => $this->status === 'approved' ? 'check-circle' : ($this->status === 'rejected' ? 'x-circle' : 'alert-triangle'),
             'text'   => "Votre profil artisan a été " . ($this->status === 'approved' ? 'approuvé' : ($this->status === 'rejected' ? 'refusé' : 'suspendu')) . "."
         ];
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        return new \Illuminate\Notifications\Messages\BroadcastMessage([
+            'type'   => 'artisan_status',
+            'status' => $this->status,
+            'reason' => $this->reason,
+            'icon'   => $this->status === 'approved' ? 'check-circle' : ($this->status === 'rejected' ? 'x-circle' : 'alert-triangle'),
+            'title'  => 'Statut Profil',
+            'text'   => "Votre profil artisan a été " . ($this->status === 'approved' ? 'approuvé' : ($this->status === 'rejected' ? 'refusé' : 'suspendu')) . "."
+        ]);
     }
 }

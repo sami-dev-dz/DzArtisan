@@ -5,7 +5,8 @@ import { AdminSidebar } from "@/components/admin/AdminSidebar"
 import { AdminMobileNav } from "@/components/admin/AdminMobileNav"
 import { useAuth } from "@/context/AuthContext"
 import { useRouter } from "@/i18n/routing"
-import { Loader2, ShieldX } from "lucide-react"
+import { ShieldX } from "lucide-react"
+import { DashboardLayoutSkeleton } from "@/components/ui/SkeletonLayouts"
 import axios from "@/lib/axios"
 
 export default function AdminLayout({ children }) {
@@ -44,19 +45,7 @@ export default function AdminLayout({ children }) {
 
   /* ─── Loading state ──────────────────────────────────────────── */
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0a0f1e]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="relative">
-            <div className="absolute inset-0 bg-indigo-600/20 rounded-full blur-2xl animate-pulse" />
-            <Loader2 className="w-12 h-12 text-indigo-600 animate-spin relative z-10" />
-          </div>
-          <span className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 animate-pulse">
-            Admin Panel
-          </span>
-        </div>
-      </div>
-    )
+    return <DashboardLayoutSkeleton />
   }
 
   /* ─── Unauthorized state ──────────────────────────────────────── */

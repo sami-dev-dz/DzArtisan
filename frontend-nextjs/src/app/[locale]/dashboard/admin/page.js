@@ -10,7 +10,9 @@ import { useTranslations, useLocale } from "next-intl"
 import { useAdminOverview } from "@/hooks/useAdminOverview"
 import { KpiCard } from "@/components/admin/KpiCard"
 import { AdminAlerts } from "@/components/admin/AdminAlerts"
-import { RegistrationsChart, WilayaBarChart } from "@/components/admin/AdminCharts"
+import dynamic from "next/dynamic"
+const RegistrationsChart = dynamic(() => import("@/components/admin/AdminCharts").then(mod => mod.RegistrationsChart), { ssr: false })
+const WilayaBarChart = dynamic(() => import("@/components/admin/AdminCharts").then(mod => mod.WilayaBarChart), { ssr: false })
 import { ActivityFeed } from "@/components/admin/ActivityFeed"
 import { useAuth } from "@/context/AuthContext"
 import { cn } from "@/lib/utils"

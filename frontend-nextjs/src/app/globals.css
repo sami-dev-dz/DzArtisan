@@ -103,4 +103,24 @@ body {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
 
+@layer utilities {
+  .skeleton-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(to right, var(--color-border-base) 4%, var(--color-bg-subtle) 25%, var(--color-border-base) 36%);
+    background-size: 1000px 100%;
+  }
+
+  .dark .skeleton-shimmer {
+    background: linear-gradient(to right, var(--color-bg-subtle) 4%, var(--color-border-base) 25%, var(--color-bg-subtle) 36%);
+    background-size: 1000px 100%;
+  }
+}

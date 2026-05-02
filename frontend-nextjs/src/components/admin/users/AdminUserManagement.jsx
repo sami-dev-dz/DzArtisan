@@ -18,6 +18,7 @@ import {
 import { useTranslations } from 'next-intl';
 import { UserTable } from './UserTable';
 import { ComposeEmailModal, SuspendUserModal, DeleteUserModal } from './UserActionModals';
+import { UserDetailsModal } from './UserDetailsModal';
 import api from '@/lib/axios';
 import { useToastStore } from '@/store/toastStore';
 
@@ -313,6 +314,13 @@ const AdminUserManagement = () => {
       </div>
 
       {/* Modals */}
+      <UserDetailsModal
+        isOpen={modalType === 'view'}
+        onClose={() => setModalType(null)}
+        user={currentUser}
+        type={activeTab}
+      />
+
       <ComposeEmailModal 
         isOpen={modalType === 'email' || modalType === 'bulk_email'}
         onClose={() => setModalType(null)}

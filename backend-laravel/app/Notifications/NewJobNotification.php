@@ -19,18 +19,19 @@ class NewJobNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['database', 'mail'];
+        return ['database', 'mail', 'broadcast'];
     }
 
     public function toMail($notifiable)
     {
+        $location = $this->demande->wilaya ? $this->demande->wilaya->nom : 'votre secteur';
         return (new MailMessage)
-            ->subject('Nouvelle demande d\'intervention à Alger !')
-            ->greeting('Bonjour ' . ($notifiable->nomComplet ?? 'Hervé') . ' !')
-            ->line('Une nouvelle demande d\'intervention correspond à vos compétences dans votre secteur.')
+            ->subject("Nouvelle demande d'intervention à {$location} !")
+            ->greeting('Bonjour ' . ($notifiable->nomComplet ?? '') . ' !')
+            ->line("Une nouvelle demande d'intervention correspond à vos compétences dans {$location}.")
             ->line('Titre : ' . $this->demande->titre)
             ->line('Catégorie : ' . $this->demande->categorie->nom)
-            ->action('Voir la demande et postuler', url('/dashboard/artisan/jobs'))
+            ->action('Voir la demande et postuler', config('app.frontend_url', 'http://localhost:3000') . '/dashboard/artisan/jobs')
             ->line('Répondez rapidement pour maximiser vos chances de décrocher le projet !')
             ->salutation('L\'équipe DzArtisan');
     }
@@ -45,5 +46,17 @@ class NewJobNotification extends Notification
             'icon'       => 'briefcase',
             'text'       => "Nouvelle demande : " . $this->demande->titre
         ];
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        return new \Illuminate\Notifications\Messages\BroadcastMessage([
+            'type'       => 'new_job',
+            'demande_id' => $this->demande->id,
+            'title'      => $this->demande->titre,
+            'category'   => $this->demande->categorie->nom,
+            'icon'       => 'briefcase',
+            'text'       => "Nouvelle demande : " . $this->demande->titre
+        ]);
     }
 }

@@ -27,7 +27,7 @@ import { Input } from "@/components/ui/Input"
 import { useToastStore } from "@/store/toastStore"
 import { uploadToCloudinary } from "@/lib/cloudinary"
 import { PlanSelection } from "@/components/subscription/PlanSelection"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 import { cn } from "@/lib/utils"
 
 export default function SubscriptionPage() {
@@ -134,13 +134,25 @@ export default function SubscriptionPage() {
     }
   }
 
-  const handleDownloadReceipt = (row) => {
+  const handleDownloadReceipt = async (row) => {
     if (row.statut !== 'succes') {
       addToast({ title: "Le reçu n'est disponible que pour les paiements confirmés.", type: "error" })
       return
     }
-    addToast({ title: "Génération du reçu en cours...", type: "success" })
-    // Real logic would be: window.open(`${process.env.NEXT_PUBLIC_API_URL}/v1/receipts/${row.id}`, '_blank')
+    
+    try {
+      addToast({ title: "Génération du reçu en cours...", type: "success" })
+      const response = await api.get(`/subscription/invoice/${row.id}`, { responseType: 'blob' })
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', `facture-${row.id}.pdf`)
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    } catch (err) {
+      addToast({ title: "Erreur lors du téléchargement de la facture.", type: "error" })
+    }
   }
 
   if (loading) {

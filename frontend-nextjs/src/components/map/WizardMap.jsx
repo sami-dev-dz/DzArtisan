@@ -248,23 +248,33 @@ export default function WizardMap({ lat, lng, onPositionChange }) {
 
   // Auto-locate on mount
   useEffect(() => {
+    let mounted = true;
     if (navigator.geolocation) {
-      setIsLocating(true);
+      setTimeout(() => {
+        if (mounted) setIsLocating(true);
+      }, 0);
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          onPositionChange(pos.coords.latitude, pos.coords.longitude);
-          setIsLocating(false);
+          if (mounted) {
+            onPositionChange(pos.coords.latitude, pos.coords.longitude);
+            setIsLocating(false);
+          }
         },
         (err) => {
           console.warn("Geolocation failed", err);
-          setIsLocating(false);
+          if (mounted) setIsLocating(false);
         },
       );
     }
     // Fade in map
-    const t = setTimeout(() => setMapReady(true), 100);
-    return () => clearTimeout(t);
-  }, []);
+    const t = setTimeout(() => {
+      if (mounted) setMapReady(true);
+    }, 100);
+    return () => {
+      mounted = false;
+      clearTimeout(t);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleLocate = () => {
     if (!navigator.geolocation) return;
@@ -307,29 +317,29 @@ export default function WizardMap({ lat, lng, onPositionChange }) {
 
       {/* ── Inset border/glow ring ── */}
       <div
-        className="absolute inset-0 rounded-[28px] pointer-events-none z-[999]
-          ring-1 ring-inset ring-black/[0.06] dark:ring-white/[0.08]
+        className="absolute inset-0 rounded-[28px] pointer-events-none z-999
+          ring-1 ring-inset ring-black/6 dark:ring-white/8
           shadow-[inset_0_1px_1px_rgba(255,255,255,0.9),0_24px_64px_rgba(0,0,0,0.12)]
           dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_24px_64px_rgba(0,0,0,0.6)]"
       />
 
       {/* ── Top-left: Hint chip ── */}
-      <div className="absolute top-4 left-4 z-[1000]">
+      <div className="absolute top-4 left-4 z-1000">
         <HintChip visible={hintVisible} />
       </div>
 
       {/* ── Top-right: Locate button ── */}
-      <div className="absolute top-4 right-4 z-[1000]">
+      <div className="absolute top-4 right-4 z-1000">
         <LocateButton onLocate={handleLocate} isLocating={isLocating} />
       </div>
 
       {/* ── Bottom-left: Coordinate badge ── */}
-      <div className="absolute bottom-4 left-4 z-[1000]">
+      <div className="absolute bottom-4 left-4 z-1000">
         <CoordinateBadge lat={lat} lng={lng} />
       </div>
 
       {/* ── Bottom-right: Attribution badge ── */}
-      <div className="absolute bottom-4 right-4 z-[1000]">
+      <div className="absolute bottom-4 right-4 z-1000">
         <div
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl
             bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl

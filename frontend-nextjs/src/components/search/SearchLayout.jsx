@@ -23,8 +23,9 @@ import { Input } from "@/components/ui/Input";
 import { ArtisanFilters } from "@/components/search/ArtisanFilters";
 import { ArtisanCard } from "@/components/search/ArtisanCard";
 import { useDebounce } from "@/hooks/useDebounce";
-import api from "@/lib/api-client";
+import api from "@/lib/axios";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 const ArtisanMap = dynamic(
   () => import("@/components/search/ArtisanMap").then((mod) => mod.ArtisanMap),

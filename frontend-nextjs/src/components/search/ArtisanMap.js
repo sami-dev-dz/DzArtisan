@@ -14,6 +14,7 @@ import L from "leaflet"
 import "leaflet/dist/leaflet.css"
 import { Star, MessageCircle, Phone, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { Badge } from "@/components/ui/Badge"
 import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils"
@@ -97,8 +98,8 @@ export function ArtisanMap({ artisans, userCoords }) {
             <Popup className="custom-popup" minWidth={260}>
                <div className="p-1 space-y-3">
                   <div className="flex items-center gap-3">
-                     <div className="w-12 h-12 rounded-xl overflow-hidden border-2 border-slate-100 bg-slate-50 shrink-0">
-                        <img src={artisan.photo || "/images/placeholders/artisan.png"} alt="" className="w-full h-full object-cover" />
+                     <div className="relative w-12 h-12 rounded-xl overflow-hidden border-2 border-slate-100 bg-slate-50 shrink-0">
+                        <Image src={artisan.photo || "/images/placeholders/artisan.png"} alt="" fill unoptimized className="object-cover" />
                      </div>
                      <div>
                         <h4 className="text-sm font-black text-slate-900 uppercase leading-tight mb-0.5">{artisan.user.nomComplet}</h4>

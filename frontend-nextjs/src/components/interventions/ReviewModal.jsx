@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Star, X, Loader2, CheckCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/Button"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 import { cn } from "@/lib/utils"
 
 export function ReviewModal({ intervention, onClose, onSuccess }) {

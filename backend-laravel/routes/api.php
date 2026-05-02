@@ -11,12 +11,12 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\SubscriptionController;
 use App\Http\Controllers\Api\AvisController;
 use App\Http\Controllers\Api\AdminController;
-use App\Http\Controllers\Api\AdminArtisanController;
 use App\Http\Controllers\Api\AdminStatsController;
 use App\Http\Controllers\Api\ClientRequestController;
 use App\Http\Controllers\Api\ArtisanJobController;
 use App\Http\Controllers\Api\ArtisanStatsController;
 use App\Http\Controllers\Api\CloudinaryController;
+use App\Http\Controllers\Api\AdminPageController;
 
 Route::prefix('v1')->group(function () {
 
@@ -30,6 +30,17 @@ Route::prefix('v1')->group(function () {
 
         Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
         Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+
+        // Password Reset
+        Route::post('/forgot-password', [\App\Http\Controllers\Api\PasswordResetController::class, 'sendResetLinkEmail']);
+        Route::post('/reset-password', [\App\Http\Controllers\Api\PasswordResetController::class, 'reset']);
+
+        // Email Verification
+        Route::post('/email/verification-notification', [\App\Http\Controllers\Api\VerifyEmailController::class, 'sendVerificationEmail'])
+            ->middleware('auth:sanctum');
+        Route::get('/verify-email/{id}/{hash}', [\App\Http\Controllers\Api\VerifyEmailController::class, 'verify'])
+            ->middleware(['signed'])
+            ->name('verification.verify');
     });
 
     Route::get('/wilayas', [PublicController::class, 'getWilayas']);
@@ -39,6 +50,13 @@ Route::prefix('v1')->group(function () {
     Route::get('/artisans/slug/{slug}', [PublicController::class, 'getArtisanBySlug']);
     Route::post('/artisans/{id}/log-contact', [ArtisanStatsController::class, 'logContact']);
     Route::get('/artisans/{id}/response-rate', [ArtisanStatsController::class, 'getResponseRate']);
+
+    // Public static pages
+    Route::get('/pages', [PublicController::class, 'getPages']);
+    Route::get('/pages/{slug}', [PublicController::class, 'getPage']);
+
+    // Sitemap data
+    Route::get('/sitemap-data', [PublicController::class, 'getSitemapData']);
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/uploads/cloudinary/signature', [CloudinaryController::class, 'signUpload']);
@@ -51,6 +69,11 @@ Route::prefix('v1')->group(function () {
         Route::post('/profile', [ProfileController::class, 'update']);
         Route::post('/profile/toggle-availability', [ProfileController::class, 'toggleAvailability'])
             ->middleware('role:artisan');
+        Route::post('/profile/portfolio', [ProfileController::class, 'storePortfolio'])->middleware('role:artisan');
+        Route::delete('/profile/portfolio/{id}', [ProfileController::class, 'destroyPortfolio'])->middleware('role:artisan');
+        Route::get('/profile/unavailabilities', [ProfileController::class, 'getUnavailabilities'])->middleware('role:artisan');
+        Route::post('/profile/unavailabilities', [ProfileController::class, 'storeUnavailability'])->middleware('role:artisan');
+        Route::delete('/profile/unavailabilities/{id}', [ProfileController::class, 'destroyUnavailability'])->middleware('role:artisan');
 
         Route::get('/complaints', [\App\Http\Controllers\Api\ComplaintController::class, 'index']);
         Route::post('/complaints', [\App\Http\Controllers\Api\ComplaintController::class, 'store']);
@@ -58,6 +81,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
         Route::get('/dashboard/matching-requests', [DashboardController::class, 'matchingRequests'])
             ->middleware('role:artisan');
+
+        Route::get('/interventions/{id}/quote', [InterventionController::class, 'downloadQuote']);
 
         Route::middleware('role:client')->group(function () {
             Route::get('/interventions', [InterventionController::class, 'index']);
@@ -81,6 +106,7 @@ Route::prefix('v1')->group(function () {
             Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
             Route::post('/payments/proof', [SubscriptionController::class, 'uploadProof']);
             Route::get('/payments/history', [SubscriptionController::class, 'history']);
+            Route::get('/subscription/invoice/{id}', [SubscriptionController::class, 'downloadInvoice']);
 
             Route::get('/artisan/jobs', [ArtisanJobController::class, 'index']);
             Route::get('/artisan/jobs/applied', [ArtisanJobController::class, 'applied']);
@@ -102,11 +128,9 @@ Route::prefix('v1')->group(function () {
 
             Route::get('/users/clients', [AdminController::class, 'indexClients']);
             Route::get('/users/artisans', [AdminController::class, 'indexArtisans']);
-            Route::get('/artisans', [AdminController::class, 'indexArtisans']); 
             Route::post('/artisans/{id}/status', [AdminController::class, 'updateArtisanStatus']);
             Route::post('/artisans/{id}/promote', [AdminController::class, 'promoteArtisan']);
             Route::delete('/users/{id}', [AdminController::class, 'deleteUser']);
-            Route::post('/users/{id}/delete', [AdminController::class, 'deleteUser']);
             Route::post('/users/bulk', [AdminController::class, 'bulkAction']);
 
             Route::get('/subscriptions', [\App\Http\Controllers\Api\AdminSubscriptionController::class, 'index']);
@@ -124,6 +148,13 @@ Route::prefix('v1')->group(function () {
             Route::post('/complaints/{reclamation}/suspend', [\App\Http\Controllers\Admin\AdminComplaintController::class, 'suspend']);
 
             Route::get('/interventions', [\App\Http\Controllers\Admin\AdminInterventionController::class, 'index']);
+
+            // CMS Pages
+            Route::get('/pages', [AdminPageController::class, 'index']);
+            Route::get('/pages/{id}', [AdminPageController::class, 'show']);
+            Route::post('/pages', [AdminPageController::class, 'store']);
+            Route::put('/pages/{id}', [AdminPageController::class, 'update']);
+            Route::delete('/pages/{id}', [AdminPageController::class, 'destroy']);
         });
 
     });

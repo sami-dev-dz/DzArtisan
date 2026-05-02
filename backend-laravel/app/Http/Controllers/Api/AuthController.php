@@ -16,6 +16,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Auth\Events\Registered;
 use Throwable;
 
 class AuthController extends Controller
@@ -87,6 +88,9 @@ class AuthController extends Controller
             });
 
             Auth::login($user);
+            
+            event(new Registered($user));
+            
             $user->load(['client', 'artisan.categories', 'artisan.wilayas', 'artisan.abonnement']);
             $user->needs_artisan_onboarding = $this->needsArtisanOnboarding($user);
 

@@ -3,7 +3,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useToastStore } from '@/store/toastStore';
 
 const axios = Axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api',
+    baseURL: `${process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:8000'}/api/v1`,
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json',
@@ -11,20 +11,6 @@ const axios = Axios.create({
     },
     withCredentials: true,
 });
-
-// Request Interceptor
-axios.interceptors.request.use(
-    (config) => {
-        const token = useAuthStore.getState().token;
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`; // Using Bearer token as specified
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
 
 // Response Interceptor
 axios.interceptors.response.use(
@@ -45,6 +31,11 @@ axios.interceptors.response.use(
         const { status, data } = error.response;
 
         if (status === 401) {
+            // Ignore auto-redirect for specific calls like initial auth check
+            if (error.config?.skipAuthRedirect) {
+                return Promise.reject(error);
+            }
+
             // Auto logout
             useAuthStore.getState().logout();
             

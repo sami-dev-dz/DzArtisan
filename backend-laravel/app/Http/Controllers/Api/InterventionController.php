@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Requests\Intervention\StoreInterventionRequest;
 use App\Http\Requests\Intervention\UpdateProgressRequest;
 use App\Http\Requests\Intervention\UploadPhotoRequest;
@@ -50,7 +51,8 @@ class InterventionController extends Controller
             return $demande;
         });
 
-        $artisans = Artisan::where('categorie_id', $demande->categorie_id)
+        $artisans = Artisan::with('user')
+            ->where('categorie_id', $demande->categorie_id)
             ->where('wilaya_id', $demande->wilaya_id)
             ->where('statutValidation', 'valide')
             ->whereHas('user', fn($q) => $q->where('statut', 'actif'))
@@ -190,5 +192,30 @@ class InterventionController extends Controller
             'success' => true,
             'message' => 'Photo deleted successfully'
         ]);
+    }
+
+    public function downloadQuote($id)
+    {
+        $user = Auth::user();
+        
+        $demande = DemandeIntervention::with(['artisan.user', 'artisan.primaryCategorie', 'client.user', 'wilaya', 'commune'])
+            ->findOrFail($id);
+
+        // Verification of access (client who made request or artisan who owns it)
+        if ($user->type === 'client' && $demande->client_id !== $user->client->id) {
+            return response()->json(['message' => 'Accès refusé'], 403);
+        }
+        
+        if ($user->type === 'artisan' && $demande->artisan_id !== $user->artisan->id) {
+            return response()->json(['message' => 'Accès refusé'], 403);
+        }
+
+        $pdf = Pdf::loadView('pdf.quote', [
+            'demande' => $demande,
+            'client' => $demande->client,
+            'artisan' => $demande->artisan
+        ]);
+
+        return $pdf->download('devis-INT' . $demande->id . '.pdf');
     }
 }

@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/Input"
 import { ArtisanFilters } from "@/components/search/ArtisanFilters"
 import { ArtisanCard } from "@/components/search/ArtisanCard"
 import { useDebounce } from "@/hooks/useDebounce"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 import { cn } from "@/lib/utils"
 
 const ArtisanMap = dynamic(

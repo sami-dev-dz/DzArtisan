@@ -5,14 +5,15 @@ import {
   X, Phone, MessageSquare, MapPin, 
   Trash2, Plus, CheckCircle2, ShieldCheck, 
   Map as MapIcon, Image as ImageIcon,
-  Loader2,
+  Loader2, Download,
   Trash
 } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { Button } from '@/components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
-import api from '@/lib/api-client';
+import api from '@/lib/axios';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export const InterventionDetail = ({ isOpen, onClose, intervention, onPhotoUpdate }) => {
   const t = useTranslations('artisan.interventions');
@@ -52,6 +53,21 @@ export const InterventionDetail = ({ isOpen, onClose, intervention, onPhotoUpdat
       console.error('Delete error:', err);
     } finally {
       setDeleting(null);
+    }
+  };
+
+  const handleDownloadQuote = async () => {
+    try {
+      const response = await api.get(`/interventions/${intervention.id}/quote`, { responseType: 'blob' });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `devis-INT${intervention.id}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      console.error("Erreur lors du téléchargement du devis", err);
     }
   };
 
@@ -142,6 +158,15 @@ export const InterventionDetail = ({ isOpen, onClose, intervention, onPhotoUpdat
                      <p className="text-[10px] font-bold opacity-80">Projet en gestion sécurisée</p>
                    </div>
                 </div>
+
+                {['acceptee', 'en_cours', 'terminee'].includes(intervention.statut) && (
+                  <Button 
+                    onClick={handleDownloadQuote}
+                    className="w-full h-12 bg-white text-primary-600 border border-primary-100 hover:bg-primary-50 rounded-2xl shadow-sm font-black uppercase tracking-widest text-[10px]"
+                  >
+                    <Download className="w-4 h-4 mr-2" /> Télécharger Devis
+                  </Button>
+                )}
              </div>
           </div>
 
@@ -188,7 +213,7 @@ export const InterventionDetail = ({ isOpen, onClose, intervention, onPhotoUpdat
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                      {photosBefore.map(photo => (
                         <div key={photo.id} className="aspect-square rounded-2xl overflow-hidden relative group border border-gray-100 dark:border-gray-800 shadow-sm">
-                           <img src={photo.url} alt="Before" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+                           <Image src={photo.url} alt="Before" fill unoptimized className="object-cover transition-transform group-hover:scale-110" />
                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                               <button 
                                 onClick={() => handleDeletePhoto(photo.id)}
@@ -223,7 +248,7 @@ export const InterventionDetail = ({ isOpen, onClose, intervention, onPhotoUpdat
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                      {photosAfter.map(photo => (
                         <div key={photo.id} className="aspect-square rounded-2xl overflow-hidden relative group border border-gray-100 dark:border-gray-800 shadow-sm">
-                           <img src={photo.url} alt="After" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
+                           <Image src={photo.url} alt="After" fill unoptimized className="object-cover transition-transform group-hover:scale-110" />
                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                               <button 
                                 onClick={() => handleDeletePhoto(photo.id)}

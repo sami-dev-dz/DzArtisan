@@ -13,6 +13,7 @@ import axios from '@/lib/axios';
 import { format, formatDistanceToNow, isToday, isYesterday } from 'date-fns';
 import { fr, arDZ, enUS } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
+import { NotificationsSkeleton } from '@/components/ui/SkeletonLayouts';
 
 const iconMap = {
     'artisan_status': CheckCircle2,
@@ -93,6 +94,7 @@ export default function NotificationsPage() {
 
     if (!user) return null;
 
+    if (loading) return <NotificationsSkeleton />;
     return (
         <div className="p-4 md:p-8 space-y-8 min-h-screen bg-slate-50/20 dark:bg-transparent" dir={isRTL ? 'rtl' : 'ltr'}>
             <div className="max-w-4xl mx-auto space-y-8">
@@ -135,13 +137,7 @@ export default function NotificationsPage() {
                 </div>
 
                 {/* Content */}
-                {loading ? (
-                    <div className="space-y-6">
-                        {[1, 2, 3].map(i => (
-                            <div key={i} className="h-24 bg-white dark:bg-slate-900 rounded-3xl animate-pulse border border-gray-50 dark:border-gray-800" />
-                        ))}
-                    </div>
-                ) : Object.keys(groupedNotifications).length > 0 ? (
+                {Object.keys(groupedNotifications).length > 0 ? (
                     <div className="space-y-12 pb-20">
                         {Object.entries(groupedNotifications).map(([group, items]) => (
                             <div key={group} className="space-y-4">

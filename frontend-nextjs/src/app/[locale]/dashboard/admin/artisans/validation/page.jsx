@@ -39,7 +39,7 @@ export default function ArtisanManagementPage() {
   const fetchArtisans = React.useCallback(async (page = 1) => {
     setLoading(true)
     try {
-      const response = await axios.get("/admin/artisans", {
+      const response = await axios.get("/admin/users/artisans", {
         params: {
           status: activeTab,
           search: searchQuery,

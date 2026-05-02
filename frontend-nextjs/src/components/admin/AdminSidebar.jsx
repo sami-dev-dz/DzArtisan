@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import {
   LayoutDashboard, Users, Briefcase, CreditCard, ClipboardList,
   BarChart3, ChevronLeft, ChevronRight,
-  LogOut, ShieldCheck, MessageSquareWarning
+  LogOut, ShieldCheck, MessageSquareWarning, FileText
 } from "lucide-react"
 import { Link, usePathname } from "@/i18n/routing"
 import { useAuth } from "@/context/AuthContext"
@@ -63,6 +63,11 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
       label: t("statistics_nav"),
       icon: BarChart3,
     },
+    {
+      href: "/dashboard/admin/pages",
+      label: "Pages CMS",
+      icon: FileText,
+    },
   ]
 
   const badgeColorMap = {
@@ -92,7 +97,7 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
               className="flex items-center gap-2.5"
             >
               <div className="relative w-8 h-8 rounded-xl bg-linear-to-br from-blue-50 to-white dark:from-slate-800 dark:to-slate-900 flex items-center justify-center shadow-lg shadow-blue-500/10 ring-1 ring-blue-100/60 dark:ring-blue-800/30 overflow-hidden">
-                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="w-auto h-auto object-contain" />
+                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="w-auto h-auto object-contain" style={{ width: "auto", height: "auto" }} />
               </div>
               <div>
                 <p className="font-black text-slate-900 dark:text-white text-sm leading-none tracking-tight">DzArtisan</p>
@@ -109,7 +114,7 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
               className="mx-auto"
             >
               <div className="w-8 h-8 rounded-xl bg-linear-to-br from-blue-50 to-white dark:from-slate-800 dark:to-slate-900 flex items-center justify-center shadow-lg shadow-blue-500/10 ring-1 ring-blue-100/60 dark:ring-blue-800/30 overflow-hidden">
-                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="object-contain" />
+                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="w-auto h-auto object-contain" style={{ width: "auto", height: "auto" }} />
               </div>
             </motion.div>
           )}

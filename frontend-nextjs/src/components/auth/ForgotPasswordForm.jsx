@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button"
 import { Link } from "@/i18n/routing"
 import { useToastStore } from "@/store/toastStore"
 import { cn } from "@/lib/utils"
+import api from "@/lib/axios"
 
 /* ─── Floating orbs background (pure CSS, no JS) ─────────────────── */
 function BackgroundOrbs() {
@@ -138,10 +139,10 @@ export function ForgotPasswordForm() {
     e.preventDefault()
     setLoading(true)
     try {
-      await new Promise(resolve => setTimeout(resolve, 1200))
+      await api.post('/auth/forgot-password', { email })
       setSuccess(true)
-    } catch {
-      addToast({ title: t("network_error"), type: "error" })
+    } catch (err) {
+      addToast({ title: err.response?.data?.message || t("network_error"), type: "error" })
     } finally {
       setLoading(false)
     }

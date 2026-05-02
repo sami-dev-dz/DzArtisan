@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/Button"
 import { Badge } from "@/components/ui/Badge"
 import { Avatar } from "@/components/ui/Avatar"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 export function PendingPayments({ payments, onConfirm, onReject }) {
   const t = useTranslations("admin.subscription_management.pending_payments")
@@ -133,10 +134,14 @@ export function PendingPayments({ payments, onConfirm, onReject }) {
               >
                 <X className="w-5 h-5" />
               </Button>
-              <img 
+              <Image 
                 src={selectedProof} 
-                alt="Proof of Payment" 
-                className="rounded-2xl shadow-2xl max-w-full h-auto"
+                alt="Proof of Payment"
+                unoptimized
+                width={0}
+                height={0}
+                style={{ width: 'auto', height: 'auto', maxWidth: '100%' }}
+                className="rounded-2xl shadow-2xl"
               />
             </motion.div>
           </motion.div>

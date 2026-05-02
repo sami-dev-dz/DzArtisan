@@ -13,7 +13,8 @@ import {
   ChevronRight,
   AlertTriangle,
   Zap,
-  ArrowLeft
+  ArrowLeft,
+  Image as ImageIcon
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -60,7 +61,14 @@ export default async function ArtisanProfilePage({ params }) {
   
   if (!artisan) notFound()
 
-  const isAvailable = artisan.disponibilite === "disponible"
+  const today = new Date();
+  const isUnavailableDate = artisan.unavailabilities?.some(u => {
+    const start = new Date(u.start_date);
+    const end = new Date(u.end_date);
+    return today >= start && today <= end;
+  });
+
+  const isAvailable = artisan.disponibilite === "disponible" && !isUnavailableDate;
   const isRTL = locale === "ar"
 
   return (
@@ -100,7 +108,7 @@ export default async function ArtisanProfilePage({ params }) {
                  )}>
                     <div className={cn("w-3 h-3 rounded-full animate-pulse", isAvailable ? "bg-white" : "bg-slate-500")} />
                     <span className="font-black text-xs uppercase tracking-widest">
-                       {isAvailable ? "Disponible" : "Occupé"}
+                       {isAvailable ? "Disponible" : isUnavailableDate ? "En Congé" : "Occupé"}
                     </span>
                  </div>
               </div>
@@ -203,6 +211,30 @@ export default async function ArtisanProfilePage({ params }) {
                     ))}
                  </div>
               </div>
+
+              {/* Portfolio Section */}
+              {artisan.portfolio && artisan.portfolio.length > 0 && (
+                 <div className="space-y-6">
+                    <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-2">
+                       <h2 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400">
+                          GALERIE PORTFOLIO
+                       </h2>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                       {artisan.portfolio.map((photo) => (
+                          <div key={photo.id} className="aspect-square rounded-3xl overflow-hidden relative group shadow-sm bg-slate-100 dark:bg-slate-800">
+                             <Image 
+                               src={photo.image_url} 
+                               alt={photo.caption || "Portfolio Artisan"} 
+                               fill
+                               className="object-cover transition-transform duration-500 group-hover:scale-110"
+                               sizes="(max-width: 768px) 50vw, 25vw"
+                             />
+                          </div>
+                       ))}
+                    </div>
+                 </div>
+              )}
 
               {/* Reviews Section */}
               <div className="space-y-8">

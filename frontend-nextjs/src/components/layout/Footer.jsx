@@ -48,7 +48,8 @@ const Logo = ({ isRTL }) => (
         alt="DzArtisan" 
         width={32} 
         height={32} 
-        className="w-auto h-auto object-contain" 
+        className="w-auto h-auto object-contain"
+        style={{ width: "auto", height: "auto" }}
       />
     </div>
     <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -131,10 +132,10 @@ export function Footer() {
             <h4 className="text-slate-900 dark:text-white font-semibold mb-6">Support</h4>
             <ul className="space-y-3">
               {[
-                { label: "Conditions d'utilisation", href: "/terms" },
-                { label: "Confidentialité", href: "/privacy" },
-                { label: "Centre d'aide", href: "/help" },
-                { label: "Questions fréquentes", href: "/faq" }
+                { label: "Conditions d'utilisation", href: "/pages/terms" },
+                { label: "Confidentialité", href: "/pages/privacy" },
+                { label: "Centre d'aide", href: "/pages/help" },
+                { label: "Questions fréquentes", href: "/pages/faq" }
               ].map((link, i) => (
                 <li key={i}>
                   <Link 

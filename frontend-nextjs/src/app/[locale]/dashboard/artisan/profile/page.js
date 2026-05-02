@@ -17,9 +17,12 @@ import { Modal } from "@/components/ui/Modal"
 import { useAuth } from "@/context/AuthContext"
 import { useToastStore } from "@/store/toastStore"
 import { wilayas, experience_levels } from "@/data/algeria"
-import { uploadToCloudinary } from "@/lib/cloudinary"
-import api from "@/lib/api-client"
+import { PlanSelection } from "@/components/subscription/PlanSelection"
+import { PortfolioManager } from "@/components/dashboard/artisan/PortfolioManager"
+import { CalendarManager } from "@/components/dashboard/artisan/CalendarManager"
+import api from "@/lib/axios"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 // ─── Section Wrapper ──────────────────────────────────────────────────────
 function Section({ children, className }) {
@@ -275,7 +278,7 @@ export default function ArtisanProfileEditPage() {
             <div className="relative group shrink-0 mx-auto md:mx-0">
               <div className="w-40 h-40 rounded-full border-4 border-white dark:border-slate-800 shadow-2xl relative overflow-hidden bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
                 {formData.photo ? (
-                  <img src={formData.photo} alt="Profil" className="w-full h-full object-cover" />
+                  <Image src={formData.photo} alt="Profil" fill unoptimized className="object-cover" />
                 ) : (
                   <Camera className="w-10 h-10 text-slate-300" />
                 )}
@@ -456,7 +459,7 @@ export default function ArtisanProfileEditPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             {/* Années d'expérience */}
             <div>
-              <FieldLabel>Années d'expérience</FieldLabel>
+              <FieldLabel>Années d&apos;expérience</FieldLabel>
               <div className="relative">
                 <Award className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-500" />
                 <Input
@@ -515,6 +518,16 @@ export default function ArtisanProfileEditPage() {
               <p className="text-xs text-slate-400">{formData.about.length}/500</p>
             </div>
           </div>
+        </Section>
+
+        {/* ── 4. Portfolio ────────────────────────────── */}
+        <Section>
+          <PortfolioManager />
+        </Section>
+
+        {/* ── 5. Calendrier d'indisponibilité ────────────────────────────── */}
+        <Section>
+          <CalendarManager />
         </Section>
 
         {/* ── Completeness Checklist ────────────────────────────── */}

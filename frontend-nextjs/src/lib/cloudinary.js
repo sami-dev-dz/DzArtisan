@@ -1,4 +1,4 @@
-import api from "@/lib/api-client";
+import api from "@/lib/axios";
 
 export const uploadToCloudinary = async (file, onProgress) => {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;

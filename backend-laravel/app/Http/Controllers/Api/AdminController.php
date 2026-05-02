@@ -36,167 +36,10 @@ class AdminController extends Controller
     {
         $this->guardAdmin();
 
-        $now        = now();
-        $startMonth = $now->copy()->startOfMonth();
-        $startPrev  = $now->copy()->subMonth()->startOfMonth();
-        $endPrev    = $now->copy()->subMonth()->endOfMonth();
+        $statsService = app(\App\Services\AdminStatsService::class);
+        $data = $statsService->getOverviewData();
 
-        $totalUsers     = User::count();
-        $usersThisMonth = User::whereBetween('created_at', [$startMonth, $now])->count();
-        $usersPrevMonth = User::whereBetween('created_at', [$startPrev, $endPrev])->count();
-        $usersTrend     = $usersPrevMonth > 0
-            ? round((($usersThisMonth - $usersPrevMonth) / $usersPrevMonth) * 100, 1)
-            : 0;
-
-        $activeArtisans     = Artisan::where('statutValidation', 'valide')->count();
-        $artisansThisMonth  = Artisan::where('statutValidation', 'valide')
-            ->whereBetween('updated_at', [$startMonth, $now])->count();
-        $artisansPrevMonth  = Artisan::where('statutValidation', 'valide')
-            ->whereBetween('updated_at', [$startPrev, $endPrev])->count();
-        $artisansTrend = $artisansPrevMonth > 0
-            ? round((($artisansThisMonth - $artisansPrevMonth) / $artisansPrevMonth) * 100, 1)
-            : 0;
-
-        $requestsThisMonth = DemandeIntervention::whereBetween('created_at', [$startMonth, $now])->count();
-        $requestsPrevMonth = DemandeIntervention::whereBetween('created_at', [$startPrev, $endPrev])->count();
-        $requestsTrend = $requestsPrevMonth > 0
-            ? round((($requestsThisMonth - $requestsPrevMonth) / $requestsPrevMonth) * 100, 1)
-            : 0;
-
-        $revenueThisMonth = DB::table('paiements')
-            ->join('abonnements', 'paiements.abonnement_id', '=', 'abonnements.id')
-            ->where('paiements.statut', 'succes')
-            ->whereBetween('paiements.created_at', [$startMonth, $now])
-            ->sum('paiements.montant');
-        $revenuePrevMonth = DB::table('paiements')
-            ->join('abonnements', 'paiements.abonnement_id', '=', 'abonnements.id')
-            ->where('paiements.statut', 'succes')
-            ->whereBetween('paiements.created_at', [$startPrev, $endPrev])
-            ->sum('paiements.montant');
-        $revenueTrend = $revenuePrevMonth > 0
-            ? round((($revenueThisMonth - $revenuePrevMonth) / $revenuePrevMonth) * 100, 1)
-            : 0;
-
-        $pendingArtisans    = Artisan::where('statutValidation', 'en_attente')->count();
-        $expiringIn7Days    = Abonnement::where('statut', 'actif')
-            ->whereBetween('date_fin', [$now, $now->copy()->addDays(7)])
-            ->count();
-
-        try {
-            $unreadComplaints = DB::table('reclamations')
-                ->where('statut', 'nouveau')
-                ->count();
-        } catch (\Exception $e) {
-            $unreadComplaints = 0;
-        }
-
-        $weeklyReg = [];
-        for ($i = 7; $i >= 0; $i--) {
-            $weekStart = $now->copy()->subWeeks($i)->startOfWeek();
-            $weekEnd   = $weekStart->copy()->endOfWeek();
-            $label     = 'S' . $weekStart->weekOfYear;
-
-            $weeklyReg[] = [
-                'week'    => $label,
-                'clients'  => User::where('type', 'client')->whereBetween('created_at', [$weekStart, $weekEnd])->count(),
-                'artisans' => User::where('type', 'artisan')->whereBetween('created_at', [$weekStart, $weekEnd])->count(),
-            ];
-        }
-
-        $topWilayas = DemandeIntervention::select('wilaya_id', DB::raw('count(*) as total'))
-            ->with('wilaya:id,nom')
-            ->groupBy('wilaya_id')
-            ->orderByDesc('total')
-            ->limit(10)
-            ->get()
-            ->map(fn($r) => [
-                'wilaya' => $r->wilaya?->nom ?? 'N/A',
-                'count'  => $r->total,
-            ]);
-
-        $recentArtisans = Artisan::with('user:id,nomComplet')
-            ->latest()->limit(5)
-            ->get()
-            ->map(fn($a) => [
-                'type'    => 'artisan_submitted',
-                'message' => 'Nouveau profil artisan soumis : ' . $a->user?->nomComplet,
-                'at'      => $a->created_at,
-                'link'    => '/dashboard/admin/artisans',
-            ]);
-
-        $recentInterventions = DemandeIntervention::with('client.user:id,nomComplet')
-            ->latest()->limit(5)
-            ->get()
-            ->map(fn($i) => [
-                'type'    => 'intervention_created',
-                'message' => 'Nouvelle demande publiée : "' . $i->titre . '"',
-                'at'      => $i->created_at,
-                'link'    => '/dashboard/admin/interventions',
-            ]);
-
-        $recentSubscriptions = Abonnement::with('artisan.user:id,nomComplet')
-            ->latest()->limit(5)
-            ->get()
-            ->map(fn($s) => [
-                'type'    => 'subscription_renewed',
-                'message' => 'Abonnement activé pour : ' . $s->artisan?->user?->nomComplet,
-                'at'      => $s->created_at,
-                'link'    => '/dashboard/admin/subscriptions',
-            ]);
-
-        $activityFeed = $recentArtisans
-            ->concat($recentInterventions)
-            ->concat($recentSubscriptions)
-            ->sortByDesc('at')
-            ->take(10)
-            ->values();
-
-        return response()->json([
-            'kpis' => [
-                [
-                    'label'       => 'Utilisateurs Inscrits',
-                    'key'         => 'total_users',
-                    'value'       => $totalUsers,
-                    'trend'       => $usersTrend,
-                    'icon'        => 'Users',
-                    'color'       => 'blue',
-                ],
-                [
-                    'label'       => 'Artisans Actifs',
-                    'key'         => 'active_artisans',
-                    'value'       => $activeArtisans,
-                    'trend'       => $artisansTrend,
-                    'icon'        => 'Briefcase',
-                    'color'       => 'emerald',
-                ],
-                [
-                    'label'       => 'Demandes ce mois',
-                    'key'         => 'requests_month',
-                    'value'       => $requestsThisMonth,
-                    'trend'       => $requestsTrend,
-                    'icon'        => 'ClipboardList',
-                    'color'       => 'violet',
-                ],
-                [
-                    'label'       => 'Revenus ce mois (DA)',
-                    'key'         => 'revenue_month',
-                    'value'       => number_format($revenueThisMonth, 0, '.', ' ') . ' DA',
-                    'trend'       => $revenueTrend,
-                    'icon'        => 'TrendingUp',
-                    'color'       => 'amber',
-                ],
-            ],
-            'alerts' => [
-                'pending_artisans'   => $pendingArtisans,
-                'unread_complaints'  => $unreadComplaints,
-                'expiring_subs'      => $expiringIn7Days,
-            ],
-            'charts' => [
-                'weekly_registrations' => $weeklyReg,
-                'top_wilayas'          => $topWilayas,
-            ],
-            'activity_feed' => $activityFeed,
-        ]);
+        return response()->json($data);
     }
 
     public function indexArtisans(Request $request)
@@ -240,7 +83,7 @@ class AdminController extends Controller
         $status = $request->query('status'); 
 
         $query = Client::with(['user:id,nomComplet,email,telephone,statut,created_at', 'wilaya:id,nom'])
-            ->withCount('demandesInterventions as requests_count');
+            ->withCount(['demandesInterventions as requests_count', 'avis as reviews_left_count']);
 
         if ($search) {
             $query->whereHas('user', function ($q) use ($search) {

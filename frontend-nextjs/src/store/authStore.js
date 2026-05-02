@@ -6,15 +6,13 @@ export const useAuthStore = create(
     (set, get) => ({
       user: null,
       role: null,
-      token: null,
       isAuthenticated: false,
 
       // Actions
-      login: (userData, role, token) =>
+      login: (userData, role) =>
         set({
           user: userData,
           role: role,
-          token: token,
           isAuthenticated: true,
         }),
 
@@ -22,7 +20,6 @@ export const useAuthStore = create(
         set({
           user: null,
           role: null,
-          token: null,
           isAuthenticated: false,
         }),
 
@@ -36,7 +33,6 @@ export const useAuthStore = create(
       partialize: (state) => ({
         user: state.user,
         role: state.role,
-        token: state.token,
         isAuthenticated: state.isAuthenticated,
       }), // Save these fields to local storage
     }

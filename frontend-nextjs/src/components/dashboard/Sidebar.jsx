@@ -15,7 +15,8 @@ import {
   LogOut,
   Settings,
   Briefcase,
-  Star
+  Star,
+  Calendar
 } from "lucide-react"
 import { Link, usePathname, useRouter } from "@/i18n/routing"
 import { useAuth } from "@/context/AuthContext"
@@ -33,6 +34,7 @@ export function Sidebar({ collapsed, setCollapsed }) {
     { type: 'heading', label: 'PRINCIPAL' },
     { href: "/dashboard/artisan", icon: BarChart3, label: t("dashboard") },
     { href: "/dashboard/artisan/profile", icon: User, label: t("profile") },
+    { href: "/dashboard/artisan/calendar", icon: Calendar, label: "Planning" },
     { type: 'heading', label: 'ACTIVITÉ' },
     { href: "/dashboard/artisan/jobs", icon: ClipboardList, label: t("my_requests") },
     { href: "/dashboard/artisan/complaints", icon: AlertTriangle, label: t("my_complaints") },
@@ -67,7 +69,7 @@ export function Sidebar({ collapsed, setCollapsed }) {
               className="flex items-center gap-2.5"
             >
               <div className="relative w-8 h-8 rounded-xl bg-linear-to-br from-blue-50 to-white dark:from-slate-800 dark:to-slate-900 flex items-center justify-center shadow-lg shadow-blue-500/10 ring-1 ring-blue-100/60 dark:ring-blue-800/30 overflow-hidden">
-                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="w-auto h-auto object-contain" />
+                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="w-auto h-auto object-contain" style={{ width: "auto", height: "auto" }} />
               </div>
               <div>
                 <p className="font-black text-slate-900 dark:text-white text-sm leading-none tracking-tight">
@@ -88,7 +90,7 @@ export function Sidebar({ collapsed, setCollapsed }) {
               className="mx-auto"
             >
               <div className="w-8 h-8 rounded-xl bg-linear-to-br from-blue-50 to-white dark:from-slate-800 dark:to-slate-900 flex items-center justify-center shadow-lg shadow-blue-500/10 ring-1 ring-blue-100/60 dark:ring-blue-800/30 overflow-hidden">
-                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="object-contain" />
+                <Image src="/logo.png" alt="DzArtisan" width={26} height={26} className="w-auto h-auto object-contain" style={{ width: "auto", height: "auto" }} />
               </div>
             </motion.div>
           )}

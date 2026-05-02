@@ -8,7 +8,7 @@ import {
 } from "lucide-react"
 import { useTranslations, useLocale } from "next-intl"
 import { useAuth } from "@/context/AuthContext"
-import api from "@/lib/api-client"
+import api from "@/lib/axios"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/Button"
 
@@ -163,7 +163,7 @@ export default function ClientComplaintsPage() {
                       {complaint.description.split('\n')[0].replace('Sujet: ', '')}
                     </h3>
                     <p className="text-xs font-bold text-slate-400">
-                      Lié à l'intervention #{complaint.intervention_id}
+                      Lié à l&apos;intervention #{complaint.intervention_id}
                     </p>
                   </div>
                   <div className={cn("px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-widest", STATUS_CONFIG[complaint.statut]?.color)}>
@@ -175,7 +175,7 @@ export default function ClientComplaintsPage() {
                 </p>
                 {complaint.notes_admin && (
                   <div className="p-4 bg-blue-50 dark:bg-blue-500/10 rounded-2xl border border-blue-100 dark:border-blue-500/20">
-                    <p className="text-xs font-bold text-blue-700 dark:text-blue-400">Réponse de l'administration :</p>
+                    <p className="text-xs font-bold text-blue-700 dark:text-blue-400">Réponse de l&apos;administration :</p>
                     <p className="text-sm font-medium text-blue-600 dark:text-blue-300 mt-1">{complaint.notes_admin}</p>
                   </div>
                 )}
@@ -259,7 +259,7 @@ function NewComplaintForm({ onSuccess, onCancel }) {
 
       <div className="space-y-2">
         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-          Sélectionner l'intervention concernée
+          Sélectionner l&apos;intervention concernée
         </label>
         <select
           value={interventionId}

@@ -30,6 +30,7 @@ const cairo = Cairo({
 });
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'),
   title: "DzArtisan - Services Experts en Algérie",
   description: "Connectez facilement clients et artisans qualifiés en Algérie. 69 Wilayas couvertes.",
   manifest: "/manifest.json",
@@ -37,6 +38,28 @@ export const metadata = {
     capable: true,
     statusBarStyle: "default",
     title: "DzArtisan",
+  },
+  openGraph: {
+    title: "DzArtisan - Services Experts en Algérie",
+    description: "Trouvez les meilleurs artisans en Algérie pour tous vos travaux. Profils vérifiés, 69 Wilayas.",
+    url: "/",
+    siteName: "DzArtisan",
+    locale: "fr_DZ",
+    type: "website",
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "DzArtisan - Plateforme de mise en relation client et artisan",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DzArtisan - Services Experts en Algérie",
+    description: "Trouvez les meilleurs artisans en Algérie pour tous vos travaux.",
+    images: ["/images/og-image.jpg"],
   },
 };
 
@@ -82,20 +105,6 @@ export default async function LocaleLayout({ children, params }) {
         </AuthProvider>
       </NextIntlClientProvider>
 
-      {/* Register Service Worker for PWA */}
-      <Script id="register-sw" strategy="afterInteractive">
-        {`
-          if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-              navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-              }, function(err) {
-                console.log('ServiceWorker registration failed: ', err);
-              });
-            });
-          }
-        `}
-      </Script>
     </div>
   );
 }
