@@ -22,9 +22,11 @@ use App\Mail\ArtisanSuspended;
 use App\Mail\SuspensionLifted;
 use App\Notifications\ArtisanStatusNotification;
 
+// Contrôleur réservé à l'administrateur pour gérer les utilisateurs, artisans et statistiques
 class AdminController extends Controller
 {
 
+    // Vérifie que l'utilisateur est bien un administrateur, sinon on bloque l'accès
     private function guardAdmin()
     {
         if (Auth::user()?->type !== 'admin') {
@@ -32,6 +34,7 @@ class AdminController extends Controller
         }
     }
 
+    // Retourne les données de vue d'ensemble (stats globales) du tableau de bord admin
     public function overview()
     {
         $this->guardAdmin();
@@ -42,22 +45,23 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
+    // Liste les artisans avec filtres par statut, recherche et wilaya
     public function indexArtisans(Request $request)
     {
         $this->guardAdmin();
 
-        $status = $request->query('status', 'pending'); 
-        $search = $request->query('search');
+        $status   = $request->query('status', 'pending');
+        $search   = $request->query('search');
         $wilayaId = $request->query('wilaya_id');
 
         $query = Artisan::with([
             'user:id,nomComplet,email,telephone,statut,created_at',
-            'primaryCategorie:id,nom', 
+            'primaryCategorie:id,nom',
             'primaryWilaya:id,nom',
             'abonnement'
-        ])
-        ->withAdminStatus($status);
+        ])->withAdminStatus($status);
 
+        // Filtre par nom ou email si une recherche est fournie
         if ($search) {
             $query->whereHas('user', function ($q) use ($search) {
                 $q->where('nomComplet', 'like', "%{$search}%")
@@ -74,13 +78,14 @@ class AdminController extends Controller
         return response()->json($artisans);
     }
 
+    // Liste les clients avec filtres par recherche, wilaya et statut de compte
     public function indexClients(Request $request)
     {
         $this->guardAdmin();
 
-        $search = $request->query('search');
+        $search   = $request->query('search');
         $wilayaId = $request->query('wilaya_id');
-        $status = $request->query('status'); 
+        $status   = $request->query('status');
 
         $query = Client::with(['user:id,nomComplet,email,telephone,statut,created_at', 'wilaya:id,nom'])
             ->withCount(['demandesInterventions as requests_count', 'avis as reviews_left_count']);
@@ -105,6 +110,7 @@ class AdminController extends Controller
         return response()->json($clients);
     }
 
+    // Envoie un email direct à un utilisateur depuis l'interface admin
     public function sendDirectEmail(Request $request)
     {
         $this->guardAdmin();
@@ -122,6 +128,7 @@ class AdminController extends Controller
         return response()->json(['message' => 'E-mail envoyé avec succès.']);
     }
 
+    // Supprime un compte utilisateur en anonymisant ses données personnelles (RGPD)
     public function deleteUser(Request $request, $id)
     {
         $this->guardAdmin();
@@ -130,12 +137,14 @@ class AdminController extends Controller
             'reason' => 'required|string|max:1000'
         ]);
 
-        $user = User::findOrFail($id);
-        $userName = $user->nomComplet;
+        $user      = User::findOrFail($id);
+        $userName  = $user->nomComplet;
         $userEmail = $user->email;
 
+        // On notifie l'utilisateur par email avant de supprimer son compte
         Mail::to($userEmail)->send(new UserDeletionMail($userName, $request->reason));
 
+        // Anonymisation des données personnelles au lieu d'une suppression physique
         $user->update([
             'nomComplet' => 'Utilisateur Supprimé',
             'email'      => 'deleted_' . $user->id . '@dzartisan.dz',
@@ -146,9 +155,9 @@ class AdminController extends Controller
 
         if ($user->artisan) {
             $user->artisan->update([
-                'description' => 'Compte supprimé',
-                'telephone'   => '0000000000',
-                'photo'       => null,
+                'description'  => 'Compte supprimé',
+                'telephone'    => '0000000000',
+                'photo'        => null,
                 'lienWhatsApp' => null
             ]);
         }
@@ -163,35 +172,36 @@ class AdminController extends Controller
         return response()->json(['message' => 'Le compte a été supprimé définitivement et les données personnelles ont été anonymisées.']);
     }
 
+    // Effectue une action groupée sur plusieurs utilisateurs (envoi email ou suspension)
     public function bulkAction(Request $request)
     {
         $this->guardAdmin();
 
         $validated = $request->validate([
-            'user_ids' => 'required|array',
+            'user_ids'   => 'required|array',
             'user_ids.*' => 'exists:users,id',
-            'type' => 'required|in:email,suspend',
-            'subject' => 'required_if:type,email|string|max:255',
-            'message' => 'required|string', 
+            'type'       => 'required|in:email,suspend',
+            'subject'    => 'required_if:type,email|string|max:255',
+            'message'    => 'required|string',
         ]);
 
         $users = User::whereIn('id', $validated['user_ids'])->get();
 
         if ($validated['type'] === 'email') {
+            // On envoie les emails en file d'attente pour ne pas bloquer la requête
             foreach ($users as $user) {
-
                 Mail::to($user->email)->queue(new AdminDirectMail($user, $validated['subject'], $validated['message']));
             }
             $msg = count($users) . " e-mails ont été mis en file d'attente.";
         } else {
             User::whereIn('id', $validated['user_ids'])->update(['statut' => 'suspendu']);
-
             $msg = count($users) . " comptes ont été suspendus.";
         }
 
         return response()->json(['message' => $msg]);
     }
 
+    // Change le statut de validation d'un artisan (approuver, rejeter, suspendre, réactiver)
     public function updateArtisanStatus(Request $request, $id)
     {
         $this->guardAdmin();
@@ -202,8 +212,9 @@ class AdminController extends Controller
         ]);
 
         $artisan = Artisan::with('user')->findOrFail($id);
-        $user = $artisan->user;
+        $user    = $artisan->user;
 
+        // On applique l'action correspondante et on notifie l'artisan par email et WebSocket
         switch ($request->action) {
             case 'approve':
                 $artisan->update([
@@ -235,8 +246,7 @@ class AdminController extends Controller
             case 'unsuspend':
                 $user->update(['statut' => 'actif']);
                 $artisan->update(['suspension_reason' => null]);
-
-                $user->notify(new ArtisanStatusNotification('approved')); 
+                $user->notify(new ArtisanStatusNotification('approved'));
                 $message = "La suspension a été levée.";
                 break;
         }
@@ -247,6 +257,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // Active ou désactive la mise en avant / recommandation d'un artisan dans la recherche
     public function promoteArtisan(Request $request, $id)
     {
         $this->guardAdmin();
@@ -266,7 +277,7 @@ class AdminController extends Controller
 
         $artisan->save();
 
-        $label = $request->type === 'featured' ? 'Mise en avant' : 'Recommandation';
+        $label       = $request->type === 'featured' ? 'Mise en avant' : 'Recommandation';
         $statusLabel = $request->value ? 'activée' : 'désactivée';
 
         return response()->json([

@@ -16,8 +16,10 @@ use App\Models\ArtisanPortfolio;
 use App\Models\ArtisanUnavailability;
 use App\Http\Requests\Profile\UpdateProfileRequest;
 
+// Contrôleur qui gère la consultation et la mise à jour du profil utilisateur
 class ProfileController extends Controller
 {
+    // Retourne les informations complètes du profil de l'utilisateur connecté
     public function index()
     {
         $user = Auth::user();
@@ -34,22 +36,25 @@ class ProfileController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Profil récupéré avec succès',
-            'data' => $user
+            'data'    => $user
         ]);
     }
 
+    // Met à jour le profil utilisateur (informations générales + profil artisan si applicable)
     public function update(UpdateProfileRequest $request)
     {
         $user = Auth::user();
         $data = $request->validated();
 
+        // On log les données reçues pour faciliter le débogage
         Log::info('profile.update.received', [
-            'user_id' => $user->id,
-            'user_type' => $user->type,
+            'user_id'      => $user->id,
+            'user_type'    => $user->type,
             'payload_keys' => array_keys($data),
         ]);
 
         DB::transaction(function () use ($request, $user, $data) {
+            // Mise à jour des champs de base communs à tous les utilisateurs
             $userUpdates = [];
             if ($request->has('nomComplet')) {
                 $userUpdates['nomComplet'] = $data['nomComplet'];
@@ -61,26 +66,30 @@ class ProfileController extends Controller
                 $user->update($userUpdates);
             }
 
+            // Si ce n'est pas un artisan, on s'arrête ici
             if ($user->type !== 'artisan') {
                 return;
             }
 
             $artisan = $user->artisan;
+
+            // Si le profil artisan n'existe pas encore, on le crée avec des valeurs par défaut
             if (!$artisan) {
-                $defaultWilayaId = 16;
+                $defaultWilayaId  = 16;
                 $defaultCommuneId = Commune::where('wilaya_id', $defaultWilayaId)->value('id') ?? Commune::query()->value('id');
                 $defaultCategoryId = CategorieMetier::query()->value('id');
 
                 $artisan = Artisan::create([
-                    'user_id' => $user->id,
-                    'categorie_id' => $defaultCategoryId,
-                    'wilaya_id' => $defaultWilayaId,
-                    'commune_id' => $defaultCommuneId,
+                    'user_id'          => $user->id,
+                    'categorie_id'     => $defaultCategoryId,
+                    'wilaya_id'        => $defaultWilayaId,
+                    'commune_id'       => $defaultCommuneId,
                     'statutValidation' => 'en_attente',
-                    'disponibilite' => 'indisponible',
+                    'disponibilite'    => 'indisponible',
                 ]);
             }
 
+            // On ne met à jour que les champs qui ont été envoyés dans la requête
             $artisanUpdates = [];
             foreach ([
                 'description',
@@ -98,6 +107,7 @@ class ProfileController extends Controller
                 }
             }
 
+            // On vérifie si la colonne existe avant de l'inclure (sécurité migration)
             if (!Schema::hasColumn('artisans', 'phone_visible_to_clients')) {
                 unset($artisanUpdates['phone_visible_to_clients']);
             }
@@ -106,18 +116,21 @@ class ProfileController extends Controller
                 $artisan->update($artisanUpdates);
             }
 
+            // Synchronisation des catégories et génération du slug si nécessaire
             if ($request->has('categorie_ids') && !empty($data['categorie_ids'])) {
                 $artisan->categories()->sync($data['categorie_ids']);
                 if (!empty($data['categorie_ids'][0])) {
                     $primaryCategoryId = $data['categorie_ids'][0];
-                    $category = CategorieMetier::find($primaryCategoryId);
-                    $slugBase = Str::slug(($user->nomComplet ?? 'artisan') . '-' . ($category?->nom ?? 'expert'));
+                    $category  = CategorieMetier::find($primaryCategoryId);
+                    $slugBase  = Str::slug(($user->nomComplet ?? 'artisan') . '-' . ($category?->nom ?? 'expert'));
                     $artisan->update([
                         'categorie_id' => $primaryCategoryId,
-                        'slug' => $slugBase . '-' . Str::lower(Str::random(5)),
+                        'slug'         => $slugBase . '-' . Str::lower(Str::random(5)),
                     ]);
                 }
             }
+
+            // Synchronisation des wilayas de travail
             if ($request->has('wilaya_ids') && !empty($data['wilaya_ids'])) {
                 $artisan->wilayas()->sync($data['wilaya_ids']);
                 if (!empty($data['wilaya_ids'][0])) {
@@ -131,13 +144,14 @@ class ProfileController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Profile updated successfully',
-            'data' => ['user' => $freshUser]
+            'data'    => ['user' => $freshUser]
         ]);
     }
 
+    // Bascule la disponibilité de l'artisan entre disponible et indisponible
     public function toggleAvailability()
     {
-        $user = Auth::user();
+        $user    = Auth::user();
         $artisan = $user->artisan;
 
         $newStatut = $artisan->disponibilite === 'disponible' ? 'indisponible' : 'disponible';
@@ -146,12 +160,11 @@ class ProfileController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Statut mis à jour avec succès',
-            'data' => ['status' => $newStatut]
+            'data'    => ['status' => $newStatut]
         ]);
     }
 
-    // --- Portfolio Methods ---
-
+    // Ajoute une photo au portfolio de l'artisan (maximum 10 photos)
     public function storePortfolio(Request $request)
     {
         $user = Auth::user();
@@ -165,6 +178,7 @@ class ProfileController extends Controller
 
         $artisan = $user->artisan;
 
+        // On limite le portfolio à 10 photos par artisan
         if ($artisan->portfolio()->count() >= 10) {
             return response()->json([
                 'success' => false,
@@ -177,10 +191,11 @@ class ProfileController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Photo ajoutée au portfolio.',
-            'data' => $portfolio
+            'data'    => $portfolio
         ]);
     }
 
+    // Supprime une photo du portfolio de l'artisan
     public function destroyPortfolio($id)
     {
         $user = Auth::user();
@@ -197,8 +212,7 @@ class ProfileController extends Controller
         return response()->json(['success' => true, 'message' => 'Photo supprimée.']);
     }
 
-    // --- Unavailabilities Methods ---
-
+    // Retourne la liste des périodes d'indisponibilité de l'artisan
     public function getUnavailabilities()
     {
         $user = Auth::user();
@@ -210,10 +224,11 @@ class ProfileController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $unavailabilities
+            'data'    => $unavailabilities
         ]);
     }
 
+    // Ajoute une période d'indisponibilité en vérifiant qu'elle ne chevauche pas une période existante
     public function storeUnavailability(Request $request)
     {
         $user = Auth::user();
@@ -225,7 +240,7 @@ class ProfileController extends Controller
             'reason'     => 'nullable|string|max:255',
         ]);
 
-        // Check for overlaps
+        // Vérification des chevauchements avec les périodes déjà enregistrées
         $overlaps = $user->artisan->unavailabilities()
             ->where(function ($query) use ($validated) {
                 $query->whereBetween('start_date', [$validated['start_date'], $validated['end_date']])
@@ -248,10 +263,11 @@ class ProfileController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Période d\'indisponibilité ajoutée.',
-            'data' => $unavailability
+            'data'    => $unavailability
         ]);
     }
 
+    // Supprime une période d'indisponibilité
     public function destroyUnavailability($id)
     {
         $user = Auth::user();

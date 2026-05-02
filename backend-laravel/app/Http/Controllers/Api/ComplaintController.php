@@ -9,8 +9,10 @@ use App\Models\DemandeIntervention;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+// Contrôleur qui gère le dépôt et la consultation des réclamations (plaintes)
 class ComplaintController extends Controller
 {
+    // Retourne toutes les réclamations de l'utilisateur connecté
     public function index()
     {
         $user = Auth::user();
@@ -22,20 +24,22 @@ class ComplaintController extends Controller
         return response()->json($complaints);
     }
 
+    // Crée une nouvelle réclamation liée à une intervention existante
     public function store(Request $request)
     {
         $user = Auth::user();
 
         $validator = Validator::make($request->all(), [
             'intervention_id' => 'required|exists:demandes_interventions,id',
-            'titre' => 'required|string|max:200',
-            'description' => 'required|string|min:20',
+            'titre'           => 'required|string|max:200',
+            'description'     => 'required|string|min:20',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->first()], 422);
         }
 
+        // On vérifie que l'utilisateur est bien lié à cette intervention (client ou artisan)
         $intervention = DemandeIntervention::where('id', $request->intervention_id)
             ->where(function($query) use ($user) {
                 $query->where('client_id', $user->client?->id)
@@ -46,17 +50,18 @@ class ComplaintController extends Controller
             return response()->json(['error' => 'Intervention introuvable ou non autorisée.'], 403);
         }
 
-        $isClient = $user->role === 'client';
-        $accuseId = $isClient ? $intervention->artisan->user_id : $intervention->client->user_id;
-        $type = $isClient ? 'client_vers_artisan' : 'artisan_vers_client';
+        // On détermine qui est l'accusé selon le rôle de l'utilisateur
+        $isClient  = $user->role === 'client';
+        $accuseId  = $isClient ? $intervention->artisan->user_id : $intervention->client->user_id;
+        $type      = $isClient ? 'client_vers_artisan' : 'artisan_vers_client';
 
         $complaint = Reclamation::create([
-            'demandeur_id' => $user->id,
-            'accuse_id' => $accuseId,
-            'type' => $type,
-            'categorie' => 'mauvaise_prestation', 
-            'description' => "Sujet: " . $request->titre . "\n\n" . $request->description,
-            'statut' => 'nouveau',
+            'demandeur_id'    => $user->id,
+            'accuse_id'       => $accuseId,
+            'type'            => $type,
+            'categorie'       => 'mauvaise_prestation',
+            'description'     => "Sujet: " . $request->titre . "\n\n" . $request->description,
+            'statut'          => 'nouveau',
             'intervention_id' => $intervention->id,
         ]);
 

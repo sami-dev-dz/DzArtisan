@@ -2,8 +2,11 @@ import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import axios from '@/lib/axios';
 
+// Initialise la connexion WebSocket avec Laravel Reverb via Laravel Echo
+// Cette fonction doit être appelée uniquement côté navigateur (pas en SSR)
 export const initEcho = () => {
     if (typeof window !== 'undefined') {
+        // Pusher est requis par Echo même quand on utilise Reverb
         window.Pusher = Pusher;
 
         return new Echo({
@@ -14,7 +17,7 @@ export const initEcho = () => {
             wssPort: process.env.NEXT_PUBLIC_REVERB_PORT ?? 8080,
             forceTLS: (process.env.NEXT_PUBLIC_REVERB_SCHEME ?? 'https') === 'https',
             enabledTransports: ['ws', 'wss'],
-            // Injecting custom axios instance with cookies
+            // On utilise notre instance axios (avec les cookies Sanctum) pour authentifier les canaux privés
             authorizer: (channel, options) => {
                 return {
                     authorize: (socketId, callback) => {
@@ -33,5 +36,6 @@ export const initEcho = () => {
             },
         });
     }
+    // On retourne null si on est côté serveur
     return null;
 };

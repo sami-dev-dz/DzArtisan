@@ -16,7 +16,7 @@ export const NotificationBell = () => {
     const { user, isAuthenticated } = useAuthStore();
     const locale = useLocale();
     const isRTL = locale === 'ar';
-    
+
     const [isOpen, setIsOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
@@ -37,7 +37,7 @@ export const NotificationBell = () => {
     }, [isAuthenticated]);
 
     useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchNotifications();
         // Polling as a fallback every 3 minutes
         const interval = setInterval(fetchNotifications, 180000);
@@ -111,7 +111,7 @@ export const NotificationBell = () => {
 
     return (
         <div className="relative" ref={dropdownRef}>
-            <button 
+            <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="relative p-2.5 bg-white/5 hover:bg-white/10 rounded-xl transition-all active:scale-95 group"
             >
@@ -128,7 +128,7 @@ export const NotificationBell = () => {
 
             <AnimatePresence>
                 {isOpen && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.95, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -149,7 +149,7 @@ export const NotificationBell = () => {
                                 </p>
                             </div>
                             {unreadCount > 0 && (
-                                <button 
+                                <button
                                     onClick={markAllAsRead}
                                     className="p-2 hover:bg-primary-50 dark:hover:bg-primary-900/20 rounded-xl text-primary-600 transition-colors group"
                                     title={t('mark_all_read')}
@@ -164,7 +164,7 @@ export const NotificationBell = () => {
                             {notifications.length > 0 ? (
                                 <div className="divide-y divide-gray-50 dark:divide-gray-800/50">
                                     {notifications.map((notif) => (
-                                        <div 
+                                        <div
                                             key={notif.id}
                                             className={cn(
                                                 "p-5 flex gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors cursor-pointer relative group",
@@ -189,7 +189,7 @@ export const NotificationBell = () => {
                                                 </div>
                                             </div>
                                             {!notif.read_at && (
-                                                <button 
+                                                <button
                                                     className="opacity-0 group-hover:opacity-100 absolute top-5 right-4 p-1.5 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700 transition-opacity"
                                                     onClick={(e) => { e.stopPropagation(); markAsRead(notif.id); }}
                                                 >
@@ -212,7 +212,7 @@ export const NotificationBell = () => {
                         </div>
 
                         {/* Footer */}
-                        <Link 
+                        <Link
                             href="/dashboard/notifications"
                             className="block w-full py-4 text-center text-xs font-black text-primary-600 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all uppercase tracking-[0.2em] border-t border-gray-100 dark:border-gray-800"
                             onClick={() => setIsOpen(false)}

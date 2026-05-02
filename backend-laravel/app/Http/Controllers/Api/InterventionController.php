@@ -17,14 +17,17 @@ use App\Http\Requests\Intervention\StoreInterventionRequest;
 use App\Http\Requests\Intervention\UpdateProgressRequest;
 use App\Http\Requests\Intervention\UploadPhotoRequest;
 
+// Contrôleur qui gère tout le cycle de vie des demandes d'intervention
 class InterventionController extends Controller
 {
 
+    // Crée une nouvelle demande d'intervention et notifie les artisans correspondants
     public function store(StoreInterventionRequest $request)
     {
-        $user = Auth::user();
+        $user      = Auth::user();
         $validated = $request->validated();
 
+        // On crée la demande et ses photos dans une seule transaction
         $demande = DB::transaction(function () use ($validated, $user, $request) {
             $demande = DemandeIntervention::create([
                 'client_id'    => $user->client->id,
@@ -37,6 +40,7 @@ class InterventionController extends Controller
                 'statut'       => 'en_attente'
             ]);
 
+            // On enregistre les photos attachées à la demande si elles existent
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $file) {
                     $path = $file->store('demandes', 'public');
@@ -51,6 +55,7 @@ class InterventionController extends Controller
             return $demande;
         });
 
+        // On envoie une notification à tous les artisans correspondants (catégorie + wilaya)
         $artisans = Artisan::with('user')
             ->where('categorie_id', $demande->categorie_id)
             ->where('wilaya_id', $demande->wilaya_id)
@@ -65,13 +70,14 @@ class InterventionController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Request posted successfully',
-            'data' => ['id' => $demande->id]
+            'data'    => ['id' => $demande->id]
         ], 201);
     }
 
+    // Retourne la liste des interventions affectées à l'artisan connecté
     public function index(Request $request)
     {
-        $user = Auth::user();
+        $user    = Auth::user();
         $artisan = $user->artisan;
 
         if (!$artisan) {
@@ -81,6 +87,7 @@ class InterventionController extends Controller
         $query = DemandeIntervention::where('artisan_id', $artisan->id)
             ->with(['categorie', 'wilaya', 'commune', 'photos', 'client.user']);
 
+        // Filtre optionnel : active = en cours, history = terminées ou annulées
         $status = $request->query('status');
 
         if ($status === 'active') {
@@ -93,13 +100,14 @@ class InterventionController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $interventions
+            'data'    => $interventions
         ]);
     }
 
+    // Retourne le détail complet d'une intervention appartenant à l'artisan
     public function show($id)
     {
-        $user = Auth::user();
+        $user    = Auth::user();
         $artisan = $user->artisan;
 
         $intervention = DemandeIntervention::where('id', $id)
@@ -109,20 +117,22 @@ class InterventionController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $intervention
+            'data'    => $intervention
         ]);
     }
 
+    // Met à jour le statut d'avancement d'une intervention (ex : en_cours → terminee)
     public function updateProgress(UpdateProgressRequest $request, $id)
     {
-        $user = Auth::user();
-        $artisan = $user->artisan;
+        $user      = Auth::user();
+        $artisan   = $user->artisan;
         $validated = $request->validated();
 
         $intervention = DemandeIntervention::where('id', $id)
             ->where('artisan_id', $artisan->id)
             ->firstOrFail();
 
+        // On ne peut pas modifier une intervention déjà clôturée
         if ($intervention->statut === 'terminee' || $intervention->statut === 'annulee') {
             return response()->json([
                 'success' => false,
@@ -135,14 +145,15 @@ class InterventionController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Progress updated successfully',
-            'data' => ['statut' => $intervention->statut]
+            'data'    => ['statut' => $intervention->statut]
         ]);
     }
 
+    // Ajoute une photo (avant ou après) à une intervention
     public function uploadPhoto(UploadPhotoRequest $request, $id)
     {
-        $user = Auth::user();
-        $artisan = $user->artisan;
+        $user      = Auth::user();
+        $artisan   = $user->artisan;
         $validated = $request->validated();
 
         $intervention = DemandeIntervention::where('id', $id)
@@ -151,26 +162,27 @@ class InterventionController extends Controller
 
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('interventions', 'public');
-            $url = Storage::url($path);
+            $url  = Storage::url($path);
 
             $photo = InterventionPhoto::create([
                 'demande_id' => $intervention->id,
-                'url' => $url,
-                'type' => $validated['type']
+                'url'        => $url,
+                'type'       => $validated['type']
             ]);
 
             return response()->json([
                 'success' => true,
-                'data' => $photo
+                'data'    => $photo
             ], 201);
         }
 
         return response()->json(['success' => false, 'message' => 'No photo provided'], 400);
     }
 
+    // Supprime une photo d'une intervention (et son fichier physique si stocké localement)
     public function deletePhoto($id, $photoId)
     {
-        $user = Auth::user();
+        $user    = Auth::user();
         $artisan = $user->artisan;
 
         $intervention = DemandeIntervention::where('id', $id)
@@ -181,6 +193,7 @@ class InterventionController extends Controller
             ->where('demande_id', $intervention->id)
             ->firstOrFail();
 
+        // Suppression du fichier physique si l'image est stockée localement
         if (str_contains($photo->url, '/storage/')) {
             $path = str_replace('/storage/', 'public/', $photo->url);
             Storage::delete($path);
@@ -194,25 +207,26 @@ class InterventionController extends Controller
         ]);
     }
 
+    // Génère et télécharge le devis PDF d'une intervention (accessible au client et à l'artisan)
     public function downloadQuote($id)
     {
         $user = Auth::user();
-        
+
         $demande = DemandeIntervention::with(['artisan.user', 'artisan.primaryCategorie', 'client.user', 'wilaya', 'commune'])
             ->findOrFail($id);
 
-        // Verification of access (client who made request or artisan who owns it)
+        // Vérification des droits d'accès : seul le client ou l'artisan concerné peut télécharger
         if ($user->type === 'client' && $demande->client_id !== $user->client->id) {
             return response()->json(['message' => 'Accès refusé'], 403);
         }
-        
+
         if ($user->type === 'artisan' && $demande->artisan_id !== $user->artisan->id) {
             return response()->json(['message' => 'Accès refusé'], 403);
         }
 
         $pdf = Pdf::loadView('pdf.quote', [
             'demande' => $demande,
-            'client' => $demande->client,
+            'client'  => $demande->client,
             'artisan' => $demande->artisan
         ]);
 
