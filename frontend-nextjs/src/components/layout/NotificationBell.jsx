@@ -133,7 +133,7 @@ export const NotificationBell = () => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 10 }}
                         className={cn(
-                            "absolute top-full mt-4 w-80 md:w-96 bg-white dark:bg-[#111827] rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden z-[60]",
+                            "absolute top-full mt-4 w-80 md:w-96 bg-white dark:bg-[#111827] rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden z-60",
                             isRTL ? "left-0 origin-top-left" : "right-0 origin-top-right"
                         )}
                         dir={isRTL ? 'rtl' : 'ltr'}
@@ -160,7 +160,7 @@ export const NotificationBell = () => {
                         </div>
 
                         {/* List */}
-                        <div className="max-h-[28rem] overflow-y-auto custom-scrollbar">
+                        <div className="max-h-112 overflow-y-auto custom-scrollbar">
                             {notifications.length > 0 ? (
                                 <div className="divide-y divide-gray-50 dark:divide-gray-800/50">
                                     {notifications.map((notif) => (
