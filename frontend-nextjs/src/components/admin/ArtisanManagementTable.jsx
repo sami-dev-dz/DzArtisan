@@ -46,7 +46,7 @@ export function ArtisanManagementTable({
   }
 
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A0A0A] shadow-sm">
+    <div className="w-full overflow-visible rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0A0A0A] shadow-sm">
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-b border-slate-50 dark:border-white/5">

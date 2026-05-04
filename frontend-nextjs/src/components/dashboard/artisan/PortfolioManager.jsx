@@ -40,12 +40,12 @@ export function PortfolioManager() {
     if (!file) return;
 
     if (photos.length >= 10) {
-      addToast({ title: 'Limite atteinte (10 photos max)', type: 'error' });
+      addToast({ title: t('portfolio.limit_reached'), type: 'error' });
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      addToast({ title: 'Fichier trop volumineux (max 5 Mo)', type: 'error' });
+      addToast({ title: t('portfolio.file_too_large'), type: 'error' });
       return;
     }
 
@@ -57,9 +57,9 @@ export function PortfolioManager() {
         caption: file.name
       });
       setPhotos([...photos, res.data.data]);
-      addToast({ title: 'Photo ajoutée au portfolio', type: 'success' });
+      addToast({ title: t('portfolio.add_success'), type: 'success' });
     } catch (err) {
-      addToast({ title: 'Erreur lors de l\'ajout', type: 'error' });
+      addToast({ title: t('portfolio.add_error'), type: 'error' });
     } finally {
       setUploading(false);
     }
@@ -70,9 +70,9 @@ export function PortfolioManager() {
     try {
       await api.delete(`/profile/portfolio/${id}`);
       setPhotos(photos.filter(p => p.id !== id));
-      addToast({ title: 'Photo supprimée', type: 'success' });
+      addToast({ title: t('portfolio.delete_success'), type: 'success' });
     } catch (err) {
-      addToast({ title: 'Erreur lors de la suppression', type: 'error' });
+      addToast({ title: t('portfolio.delete_error'), type: 'error' });
     } finally {
       setDeletingId(null);
     }
@@ -88,10 +88,10 @@ export function PortfolioManager() {
         <div>
           <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
             <ImageIcon className="w-5 h-5 text-indigo-500" />
-            Galerie Portfolio
+            {t('portfolio.title')}
           </h3>
           <p className="text-xs text-slate-500 font-medium mt-1">
-            Ajoutez jusqu&apos;à 10 photos de vos réalisations pour convaincre les clients. ({photos.length}/10)
+            {t('portfolio.description', { count: photos.length })}
           </p>
         </div>
         
@@ -102,7 +102,7 @@ export function PortfolioManager() {
           ${photos.length >= 10 || uploading ? 'opacity-50 pointer-events-none' : ''}
         `}>
           {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-          {uploading ? 'Upload...' : 'Ajouter photo'}
+          {uploading ? t('portfolio.uploading') : t('portfolio.add_photo')}
           <input type="file" className="hidden" accept="image/*" onChange={handleUpload} disabled={uploading || photos.length >= 10} />
         </label>
       </div>
@@ -110,7 +110,7 @@ export function PortfolioManager() {
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {photos.map((photo) => (
           <div key={photo.id} className="aspect-square rounded-2xl overflow-hidden relative group border border-slate-200 dark:border-white/10 shadow-sm">
-            <Image src={photo.image_url} alt={photo.caption || 'Portfolio item'} fill unoptimized className="object-cover transition-transform group-hover:scale-110" />
+            <Image src={photo.image_url} alt={photo.caption || t('portfolio.item_alt')} fill unoptimized className="object-cover transition-transform group-hover:scale-110" />
             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2">
               <button 
                 onClick={() => handleDelete(photo.id)}
@@ -127,9 +127,9 @@ export function PortfolioManager() {
             <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center shadow-sm mb-4">
               <Camera className="w-8 h-8 text-slate-300 dark:text-slate-600" />
             </div>
-            <h4 className="font-bold text-slate-700 dark:text-slate-300 mb-1">Votre portfolio est vide</h4>
+            <h4 className="font-bold text-slate-700 dark:text-slate-300 mb-1">{t('portfolio.empty_title')}</h4>
             <p className="text-xs text-slate-500 max-w-[250px] leading-relaxed">
-              Les artisans avec des photos de leurs travaux reçoivent 3x plus de demandes.
+              {t('portfolio.empty_desc')}
             </p>
           </div>
         )}

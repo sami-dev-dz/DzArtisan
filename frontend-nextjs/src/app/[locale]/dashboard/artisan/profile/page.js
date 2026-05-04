@@ -24,7 +24,7 @@ import api from "@/lib/axios"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 
-// ─── Section Wrapper ──────────────────────────────────────────────────────
+// --- Section Wrapper ------------------------------------------------------
 function Section({ children, className }) {
   return (
     <motion.section
@@ -44,7 +44,7 @@ function Section({ children, className }) {
   )
 }
 
-// ─── Section Header ────────────────────────────────────────────────────────
+// --- Section Header --------------------------------------------------------
 function SectionHeader({ icon: Icon, iconColor = "bg-blue-600", title, subtitle }) {
   return (
     <div className="flex items-center gap-4 mb-8">
@@ -59,7 +59,7 @@ function SectionHeader({ icon: Icon, iconColor = "bg-blue-600", title, subtitle 
   )
 }
 
-// ─── Field Label ───────────────────────────────────────────────────────────
+// --- Field Label -----------------------------------------------------------
 function FieldLabel({ children, required }) {
   return (
     <label className="flex items-center gap-1.5 text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-2 ml-1">
@@ -69,7 +69,7 @@ function FieldLabel({ children, required }) {
   )
 }
 
-// ─── Main Page ─────────────────────────────────────────────────────────────
+// --- Main Page -------------------------------------------------------------
 export default function ArtisanProfileEditPage() {
   const t = useTranslations("onboarding")
   const dash = useTranslations("dashboard")
@@ -141,14 +141,14 @@ export default function ArtisanProfileEditPage() {
     const file = e.target.files[0]
     if (!file) return
     if (file.size > 5 * 1024 * 1024) {
-      addToast({ title: "Fichier trop volumineux (max 5 Mo)", type: "error" })
+      addToast({ title: dash("profile_page.file_too_large"), type: "error" })
       return
     }
     setPhotoUploading(true)
     try {
       const url = await uploadToCloudinary(file)
       setFormData(prev => ({ ...prev, photo: url }))
-      addToast({ title: t("upload_success"), type: "success" })
+      addToast({ title: dash("profile_page.upload_success"), type: "success" })
     } catch {
       addToast({ title: common("error"), type: "error" })
     } finally {
@@ -193,7 +193,7 @@ export default function ArtisanProfileEditPage() {
 
       const updatedUser = data?.data?.user ?? data?.user ?? null
       if (updatedUser) setUser(updatedUser)
-      addToast({ title: "Profil mis à jour avec succès !", type: "success" })
+      addToast({ title: dash("profile_page.update_success"), type: "success" })
     } catch (err) {
       const msg = err?.response?.data?.message || common("error")
       addToast({ title: msg, type: "error" })
@@ -208,7 +208,7 @@ export default function ArtisanProfileEditPage() {
         <div className="relative">
           <div className="w-16 h-16 rounded-full border-4 border-blue-100 dark:border-blue-900/30 border-t-blue-600 animate-spin" />
         </div>
-        <p className="text-xs font-black uppercase tracking-widest text-slate-400">Chargement du profil...</p>
+        <p className="text-xs font-black uppercase tracking-widest text-slate-400">{dash("profile_page.loading_profile")}</p>
       </div>
     )
   }
@@ -219,37 +219,37 @@ export default function ArtisanProfileEditPage() {
   ).slice(0, 8)
 
   const completenessItems = [
-    { label: "Photo de profil", done: !!formData.photo },
-    { label: "WhatsApp", done: !!formData.whatsapp },
-    { label: "Description (+150 car.)", done: formData.about.length >= 150 },
-    { label: "Années d'expérience", done: formData.anneesExp !== "" && Number(formData.anneesExp) > 0 },
-    { label: "Wilayas d'intervention", done: formData.wilayas.length > 1 },
+    { label: dash("profile_page.checklist_items.photo"), done: !!formData.photo },
+    { label: dash("profile_page.checklist_items.whatsapp"), done: !!formData.whatsapp },
+    { label: dash("profile_page.checklist_items.description"), done: formData.about.length >= 150 },
+    { label: dash("profile_page.checklist_items.experience"), done: formData.anneesExp !== "" && Number(formData.anneesExp) > 0 },
+    { label: dash("profile_page.checklist_items.wilayas"), done: formData.wilayas.length > 1 },
   ]
   const completenessScore = Math.round((completenessItems.filter(i => i.done).length / completenessItems.length) * 100)
 
   return (
     <div className="relative max-w-4xl mx-auto space-y-8 pb-12">
-      {/* ── Premium Ambient Background ────────────────────────────── */}
+      {/* --- Premium Ambient Background ------------------------------ */}
       <div className="absolute top-0 left-0 w-full h-[400px] bg-linear-to-b from-blue-600/5 to-transparent dark:from-blue-600/10 pointer-events-none rounded-t-[3rem] -z-10" />
       <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/10 dark:bg-blue-600/20 rounded-full blur-[120px] pointer-events-none -z-10" />
       <div className="absolute top-40 -right-20 w-[400px] h-[400px] bg-purple-600/5 dark:bg-purple-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
 
-      {/* ── Header ───────────────────────────────────────────── */}
+      {/* --- Header --------------------------------------------- */}
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <ShieldCheck className="w-4 h-4 text-blue-600" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-blue-600">Profil Professionnel</span>
+            <span className="text-[10px] font-black uppercase tracking-widest text-blue-600">{dash("profile_page.professional_profile")}</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-            {dash("profile")}
+            {dash("profile_page.title")}
           </h1>
-          <p className="text-slate-500 font-medium mt-1 text-sm">Mettez à jour vos informations pour rester attractif aux yeux des clients.</p>
+          <p className="text-slate-500 font-medium mt-1 text-sm">{dash("profile_page.subtitle")}</p>
         </div>
 
         {/* Completeness badge */}
         <div className="shrink-0 bg-white dark:bg-[#0c0c0e] border border-slate-200 dark:border-white/5 rounded-3xl p-5 min-w-[160px]">
-          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Complétude</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">{dash("profile_page.completeness")}</p>
           <div className="text-4xl font-black text-slate-900 dark:text-white">{completenessScore}<span className="text-lg text-slate-400">%</span></div>
           <div className="w-full h-2 bg-slate-100 dark:bg-white/5 rounded-full mt-3 overflow-hidden">
             <div
@@ -267,11 +267,11 @@ export default function ArtisanProfileEditPage() {
         </div>
       </header>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form id="profile-form" onSubmit={handleSubmit} className="space-y-8">
 
-        {/* ── 1. Photo & Identité ───────────────────────────────── */}
+        {/* --- 1. Photo & Identité --------------------------------- */}
         <Section>
-          <SectionHeader icon={Camera} iconColor="bg-blue-600 shadow-blue-600/30" title="Identité & Contact" subtitle="Votre visage public sur la plateforme" />
+          <SectionHeader icon={Camera} iconColor="bg-blue-600 shadow-blue-600/30" title={dash("profile_page.identity_contact")} subtitle={dash("profile_page.identity_contact_desc")} />
 
           <div className="flex flex-col md:flex-row gap-10 items-start">
             {/* Photo */}
@@ -289,7 +289,7 @@ export default function ArtisanProfileEditPage() {
                 )}
                 <label className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer flex flex-col items-center justify-center text-white text-xs font-black gap-1">
                   <Upload className="w-5 h-5" />
-                  Changer
+                  {dash("profile_page.change")}
                   <input type="file" className="hidden" accept="image/*" onChange={handlePhotoUpload} />
                 </label>
               </div>
@@ -304,7 +304,7 @@ export default function ArtisanProfileEditPage() {
             <div className="flex-1 w-full space-y-5">
               {/* Nom */}
               <div>
-                <FieldLabel>Nom complet</FieldLabel>
+                <FieldLabel>{dash("profile_page.full_name")}</FieldLabel>
                 <div className="flex items-center gap-3">
                   <div className="flex-1 bg-slate-50 dark:bg-white/3 border border-slate-200 dark:border-white/8 rounded-2xl py-4 px-5 font-bold text-slate-900 dark:text-white text-sm">
                     {formData.nomComplet}
@@ -322,14 +322,15 @@ export default function ArtisanProfileEditPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {/* Téléphone */}
                 <div>
-                  <FieldLabel>Téléphone</FieldLabel>
+                  <FieldLabel>{dash("profile_page.phone")}</FieldLabel>
                   <div className="relative">
-                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Phone className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400", isRTL ? "right-4" : "left-4")} />
                     <Input
                       value={formData.telephone}
                       onChange={e => setFormData(prev => ({ ...prev, telephone: e.target.value }))}
-                      className="pl-11 h-14 rounded-2xl bg-slate-50 dark:bg-white/3 border-slate-200 dark:border-white/8"
+                      className={cn("h-14 rounded-2xl bg-slate-50 dark:bg-white/3 border-slate-200 dark:border-white/8 text-start", isRTL ? "pr-11" : "pl-11")}
                       placeholder="05xx xx xx xx"
+                      dir="ltr"
                     />
                   </div>
                   {/* Toggle visibilité */}
@@ -342,28 +343,29 @@ export default function ArtisanProfileEditPage() {
                       ? <ToggleRight className="w-5 h-5 text-emerald-500" />
                       : <ToggleLeft className="w-5 h-5 text-slate-400" />
                     }
-                    {formData.phone_visible_to_clients ? "Visible par les clients" : "Masqué aux clients"}
+                    {formData.phone_visible_to_clients ? dash("profile_page.phone_visible") : dash("profile_page.phone_hidden")}
                   </button>
                 </div>
 
                 {/* WhatsApp */}
                 <div>
-                  <FieldLabel>Lien WhatsApp</FieldLabel>
+                  <FieldLabel>{dash("profile_page.whatsapp_link")}</FieldLabel>
                   <div className="flex gap-2">
                     <div className="relative flex-1">
-                      <MessageCircle className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
+                      <MessageCircle className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500", isRTL ? "right-4" : "left-4")} />
                       <Input
                         value={formData.whatsapp}
                         onChange={e => setFormData(prev => ({ ...prev, whatsapp: e.target.value }))}
-                        className="pl-11 h-14 rounded-2xl bg-slate-50 dark:bg-white/3 border-slate-200 dark:border-white/8"
+                        className={cn("h-14 rounded-2xl bg-slate-50 dark:bg-white/3 border-slate-200 dark:border-white/8 text-start", isRTL ? "pr-11" : "pl-11")}
                         placeholder="wa.me/213..."
+                        dir="ltr"
                       />
                     </div>
                     <button
                       type="button"
                       onClick={generateWhatsApp}
                       className="h-14 w-14 shrink-0 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center shadow-lg shadow-emerald-600/20 transition-all hover:scale-105"
-                      title="Générer depuis le téléphone"
+                      title={dash("profile_page.generate_from_phone")}
                     >
                       <Zap className="w-5 h-5" />
                     </button>
@@ -374,21 +376,21 @@ export default function ArtisanProfileEditPage() {
           </div>
         </Section>
 
-        {/* ── 2. Expertise & Zones ─────────────────────────────── */}
+        {/* --- 2. Expertise & Zones ------------------------------- */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
           {/* Catégorie */}
           <Section>
-            <SectionHeader icon={Briefcase} iconColor="bg-indigo-600 shadow-indigo-600/30" title="Métier principal" subtitle="Votre domaine d'expertise" />
+            <SectionHeader icon={Briefcase} iconColor="bg-indigo-600 shadow-indigo-600/30" title={dash("profile_page.main_job")} subtitle={dash("profile_page.expertise_domain")} />
             <div className="relative">
-              <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-indigo-500 pointer-events-none" />
-              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <Briefcase className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-indigo-500 pointer-events-none", isRTL ? "right-4" : "left-4")} />
+              <ChevronDown className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none", isRTL ? "left-4" : "right-4")} />
               <select
                 value={formData.categories[0] || ""}
                 onChange={e => setFormData(prev => ({ ...prev, categories: [parseInt(e.target.value)] }))}
-                className="w-full h-14 pl-11 pr-10 rounded-2xl bg-slate-50 dark:bg-white/3 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all"
+                className={cn("w-full h-14 rounded-2xl bg-slate-50 dark:bg-white/3 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all text-start", isRTL ? "pr-11 pl-10" : "pl-11 pr-10")}
               >
-                <option value="" disabled>Sélectionnez votre métier...</option>
+                <option value="" disabled>{dash("profile_page.select_job")}</option>
                 {categories.map(cat => (
                   <option key={cat.id} value={cat.id}>{cat.nom}</option>
                 ))}
@@ -398,14 +400,14 @@ export default function ArtisanProfileEditPage() {
 
           {/* Wilayas */}
           <Section>
-            <SectionHeader icon={MapPin} iconColor="bg-rose-500 shadow-rose-500/30" title="Zones d'intervention" subtitle="Les wilayas où vous travaillez" />
+            <SectionHeader icon={MapPin} iconColor="bg-rose-500 shadow-rose-500/30" title={dash("profile_page.intervention_zones")} subtitle={dash("profile_page.intervention_zones_desc")} />
             <div className="relative">
-              <Plus className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Plus className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400", isRTL ? "right-4" : "left-4")} />
               <Input
-                placeholder="Rechercher une wilaya..."
+                placeholder={dash("profile_page.search_wilaya")}
                 value={searchWilaya}
                 onChange={e => setSearchWilaya(e.target.value)}
-                className="pl-11 h-14 rounded-2xl bg-slate-50 dark:bg-white/3 border-slate-200 dark:border-white/8"
+                className={cn("h-14 rounded-2xl bg-slate-50 dark:bg-white/3 border-slate-200 dark:border-white/8 text-start", isRTL ? "pr-11" : "pl-11")}
               />
 
               <AnimatePresence>
@@ -445,39 +447,39 @@ export default function ArtisanProfileEditPage() {
                 ) : null
               })}
               {formData.wilayas.length === 0 && (
-                <p className="text-xs text-slate-400 italic">Aucune wilaya sélectionnée</p>
+                <p className="text-xs text-slate-400 italic">{dash("profile_page.no_wilaya_selected")}</p>
               )}
             </div>
           </Section>
         </div>
 
-        {/* ── 3. Expérience & Description ──────────────────────── */}
+        {/* --- 3. Expérience & Description ------------------------ */}
         <Section>
-          <SectionHeader icon={Star} iconColor="bg-amber-500 shadow-amber-500/30" title="Expérience & Présentation" subtitle="Décrivez votre parcours professionnel" />
+          <SectionHeader icon={Star} iconColor="bg-amber-500 shadow-amber-500/30" title={dash("profile_page.experience_presentation")} subtitle={dash("profile_page.experience_presentation_desc")} />
 
           {/* Années & Disponibilité */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
             {/* Années d'expérience */}
             <div>
-              <FieldLabel>Années d&apos;expérience</FieldLabel>
+              <FieldLabel>{dash("profile_page.years_experience")}</FieldLabel>
               <div className="relative">
-                <Award className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-500" />
+                <Award className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-amber-500", isRTL ? "right-4" : "left-4")} />
                 <Input
                   type="number"
                   min="0"
                   max="60"
                   value={formData.anneesExp}
                   onChange={e => setFormData(prev => ({ ...prev, anneesExp: e.target.value }))}
-                  className="pl-11 h-14 rounded-2xl bg-slate-50 dark:bg-white/3 border-slate-200 dark:border-white/8 text-lg font-black"
+                  className={cn("h-14 rounded-2xl bg-slate-50 dark:bg-white/3 border-slate-200 dark:border-white/8 text-lg font-black text-start", isRTL ? "pr-11" : "pl-11")}
                   placeholder="Ex: 7"
                 />
               </div>
-              <p className="text-xs text-slate-400 mt-2 ml-1">Affiché sur votre profil public</p>
+              <p className="text-xs text-slate-400 mt-2 ml-1">{dash("profile_page.shown_on_public_profile")}</p>
             </div>
 
             {/* Disponibilité */}
             <div>
-              <FieldLabel>Disponibilité</FieldLabel>
+              <FieldLabel>{dash("profile_page.availability")}</FieldLabel>
               <button
                 type="button"
                 onClick={() => setFormData(prev => ({
@@ -492,8 +494,8 @@ export default function ArtisanProfileEditPage() {
                 )}
               >
                 {formData.disponibilite === 'disponible'
-                  ? <><ToggleRight className="w-6 h-6" /> Disponible — Prêt à recevoir des missions</>
-                  : <><ToggleLeft className="w-6 h-6" /> Indisponible actuellement</>
+                  ? <><ToggleRight className="w-6 h-6" /> {dash("profile_page.available")}</>
+                  : <><ToggleLeft className="w-6 h-6" /> {dash("profile_page.unavailable")}</>
                 }
               </button>
             </div>
@@ -501,38 +503,42 @@ export default function ArtisanProfileEditPage() {
 
           {/* Description */}
           <div>
-            <FieldLabel>Description professionnelle</FieldLabel>
+            <FieldLabel>{dash("profile_page.professional_description")}</FieldLabel>
             <Textarea
               value={formData.about}
               onChange={e => setFormData(prev => ({ ...prev, about: e.target.value.slice(0, 500) }))}
-              className="min-h-[180px] rounded-3xl bg-slate-50 dark:bg-white/2 border-slate-200 dark:border-white/8 p-6 text-sm leading-relaxed resize-none"
-              placeholder="Décrivez votre expérience, vos spécialités, votre approche du travail..."
+              className="min-h-[180px] rounded-3xl bg-slate-50 dark:bg-white/2 border-slate-200 dark:border-white/8 p-6 text-sm leading-relaxed resize-none text-start"
+              placeholder={dash("profile_page.description_placeholder")}
             />
             <div className="flex justify-between items-center mt-2 px-1">
               <p className={cn(
                 "text-xs font-bold",
                 formData.about.length >= 150 ? "text-emerald-500" : "text-amber-500"
               )}>
-                {formData.about.length >= 150 ? "✓ Excellente longueur" : `${formData.about.length}/150 minimum requis`}
+                {formData.about.length >= 150 ? dash("profile_page.excellent_length") : `${formData.about.length}${dash("profile_page.min_length_required")}`}
               </p>
               <p className="text-xs text-slate-400">{formData.about.length}/500</p>
             </div>
           </div>
         </Section>
 
-        {/* ── 4. Portfolio ────────────────────────────── */}
-        <Section>
-          <PortfolioManager />
-        </Section>
+      </form>
 
-        {/* ── 5. Calendrier d'indisponibilité ────────────────────────────── */}
-        <Section>
-          <CalendarManager />
-        </Section>
+      {/* --- 4. Portfolio ------------------------------ */}
+      <Section>
+        <PortfolioManager />
+      </Section>
 
-        {/* ── Completeness Checklist ────────────────────────────── */}
+      {/* --- 5. Calendrier d'indisponibilité ------------------------------ */}
+      <Section>
+        <CalendarManager />
+      </Section>
+
+      <div className="space-y-8">
+
+        {/* --- Completeness Checklist ------------------------------ */}
         <Section>
-          <SectionHeader icon={ShieldCheck} iconColor="bg-emerald-600 shadow-emerald-600/30" title="Checklist du profil" subtitle="Complétez chaque point pour maximiser votre visibilité" />
+          <SectionHeader icon={ShieldCheck} iconColor="bg-emerald-600 shadow-emerald-600/30" title={dash("profile_page.profile_checklist")} subtitle={dash("profile_page.checklist_desc")} />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {completenessItems.map((item, i) => (
               <div key={i} className={cn(
@@ -556,30 +562,32 @@ export default function ArtisanProfileEditPage() {
           </div>
         </Section>
 
-        {/* ── Save Button ───────────────────────────────────────── */}
-        <div className="sticky bottom-6 z-20 flex justify-end">
-          <Button
-            type="submit"
-            disabled={loading}
-            className="h-16 px-12 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black text-sm uppercase tracking-widest gap-3 shadow-2xl shadow-blue-600/40 transition-all disabled:opacity-70"
-          >
-            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
-            {loading ? "Enregistrement..." : "Sauvegarder les modifications"}
-          </Button>
-        </div>
-      </form>
+      </div>
 
-      {/* ── Name Modal ────────────────────────────────────────── */}
-      <Modal isOpen={isNameModalOpen} onClose={() => setIsNameModalOpen(false)} title="Modifier votre nom">
+      {/* --- Save Button ----------------------------------------- */}
+      <div className="sticky bottom-6 z-20 flex justify-end">
+        <Button
+          form="profile-form"
+          type="submit"
+          disabled={loading}
+          className="h-16 px-12 rounded-2xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black text-sm uppercase tracking-widest gap-3 shadow-2xl shadow-blue-600/40 transition-all disabled:opacity-70"
+        >
+          {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
+          {loading ? dash("profile_page.saving") : dash("profile_page.save_changes")}
+        </Button>
+      </div>
+
+      {/* --- Name Modal ------------------------------------------ */}
+      <Modal isOpen={isNameModalOpen} onClose={() => setIsNameModalOpen(false)} title={dash("profile_page.edit_name_title")}>
         <div className="p-8 space-y-6">
           <div className="p-4 bg-amber-50 dark:bg-amber-900/10 rounded-2xl border border-amber-200/50 dark:border-amber-900/30 text-xs font-bold text-amber-700 dark:text-amber-400">
-            ⚠️ Votre nom doit correspondre à votre identité réelle. Des modifications fréquentes peuvent impacter votre badge de vérification.
+            {dash("profile_page.name_warning")}
           </div>
           <Input
             value={newName}
             onChange={e => setNewName(e.target.value)}
-            className="h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border-none font-bold"
-            placeholder="Votre nom complet"
+            className="h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border-none font-bold text-start"
+            placeholder={dash("profile_page.name_placeholder")}
           />
           <Button
             className="w-full h-14 rounded-2xl font-black bg-blue-600 hover:bg-blue-700 text-white"
@@ -588,7 +596,7 @@ export default function ArtisanProfileEditPage() {
               setIsNameModalOpen(false)
             }}
           >
-            Confirmer le changement
+            {dash("profile_page.confirm_change")}
           </Button>
         </div>
       </Modal>

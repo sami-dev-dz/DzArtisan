@@ -13,7 +13,8 @@ import { format, parseISO } from 'date-fns';
 import { cn } from '@/lib/utils';
 
 export const ArtisanCalendar = () => {
-    const t = useTranslations('dashboard.artisan.calendar');
+    const t = useTranslations('dashboard.artisan_calendar');
+    const common = useTranslations('common');
     const locale = useLocale();
     const isRTL = locale === 'ar';
 
@@ -39,7 +40,7 @@ export const ArtisanCalendar = () => {
             const formattedEvents = [
                 ...unavailabilities.map(u => ({
                     id: `unavail_${u.id}`,
-                    title: u.reason || (locale === 'fr' ? 'Indisponible' : 'Unavailable'),
+                    title: u.reason || t('unavailable'),
                     start: u.start_date,
                     end: u.end_date,
                     allDay: true,
@@ -83,12 +84,12 @@ export const ArtisanCalendar = () => {
     const handleEventClick = async (clickInfo) => {
         const { type, rawId } = clickInfo.event.extendedProps;
         if (type === 'unavailability') {
-            if (confirm(locale === 'fr' ? 'Voulez-vous supprimer cette indisponibilité ?' : 'Do you want to delete this unavailability?')) {
+            if (confirm(t('delete_confirm'))) {
                 try {
                     await api.delete(`/profile/unavailabilities/${rawId}`);
                     clickInfo.event.remove();
                 } catch (err) {
-                    alert('Erreur de suppression');
+                    alert(t('delete_error'));
                 }
             }
         }
@@ -111,7 +112,7 @@ export const ArtisanCalendar = () => {
                 fetchData(); // Refresh events
             }
         } catch (err) {
-            setError(err.response?.data?.message || 'Erreur');
+            setError(err.response?.data?.message || common('error'));
         } finally {
             setIsSubmitting(false);
         }
@@ -125,19 +126,19 @@ export const ArtisanCalendar = () => {
                         <CalendarIcon className="w-6 h-6" />
                     </div>
                     <div>
-                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Mon Planning</h2>
-                        <p className="text-sm text-gray-500">Gérez vos disponibilités et interventions</p>
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t('title')}</h2>
+                        <p className="text-sm text-gray-500">{t('subtitle')}</p>
                     </div>
                 </div>
                 
                 <div className="flex items-center gap-4 text-xs font-medium">
                     <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                        <span className="text-gray-600 dark:text-gray-300">Interventions</span>
+                        <span className="text-gray-600 dark:text-gray-300">{t('interventions')}</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                        <span className="text-gray-600 dark:text-gray-300">Indisponible</span>
+                        <span className="text-gray-600 dark:text-gray-300">{t('unavailable')}</span>
                     </div>
                 </div>
             </div>
@@ -166,10 +167,10 @@ export const ArtisanCalendar = () => {
                             eventClick={handleEventClick}
                             height={700}
                             buttonText={{
-                                today: locale === 'fr' ? "Aujourd'hui" : "Today",
-                                month: locale === 'fr' ? "Mois" : "Month",
-                                week: locale === 'fr' ? "Semaine" : "Week",
-                                day: locale === 'fr' ? "Jour" : "Day"
+                                today: locale === 'fr' ? "Aujourd'hui" : (locale === 'ar' ? "اليوم" : "Today"),
+                                month: locale === 'fr' ? "Mois" : (locale === 'ar' ? "شهر" : "Month"),
+                                week: locale === 'fr' ? "Semaine" : (locale === 'ar' ? "أسبوع" : "Week"),
+                                day: locale === 'fr' ? "Jour" : (locale === 'ar' ? "يوم" : "Day")
                             }}
                         />
                     </div>
@@ -186,7 +187,7 @@ export const ArtisanCalendar = () => {
                             className="bg-white dark:bg-slate-900 rounded-3xl p-6 w-full max-w-md shadow-2xl border border-gray-100 dark:border-gray-800"
                         >
                             <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Ajouter une indisponibilité</h3>
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white">{t('add_unavailability')}</h3>
                                 <button onClick={() => setShowAddModal(false)} className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                                     <X className="w-5 h-5" />
                                 </button>
@@ -201,21 +202,21 @@ export const ArtisanCalendar = () => {
 
                             <form onSubmit={handleAddSubmit} className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Période</label>
-                                    <div className="px-4 py-3 bg-gray-50 dark:bg-slate-800 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300">
-                                        Du {format(parseISO(selectedDateRange.start), 'dd/MM/yyyy')} 
-                                        {selectedDateRange.end !== selectedDateRange.start && ` au ${format(new Date(new Date(selectedDateRange.end).getTime() - 86400000), 'dd/MM/yyyy')}`}
+                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{t('period')}</label>
+                                    <div className="px-4 py-3 bg-gray-50 dark:bg-slate-800 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 text-start">
+                                        {t('from')} {format(parseISO(selectedDateRange.start), 'dd/MM/yyyy')} 
+                                        {selectedDateRange.end !== selectedDateRange.start && ` ${t('to')} ${format(new Date(new Date(selectedDateRange.end).getTime() - 86400000), 'dd/MM/yyyy')}`}
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Raison (Optionnel)</label>
+                                    <label className="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">{t('reason_optional')}</label>
                                     <input 
                                         type="text" 
                                         value={formData.reason}
                                         onChange={(e) => setFormData({ reason: e.target.value })}
-                                        placeholder="Ex: Vacances, Maladie..."
-                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white"
+                                        placeholder={t('reason_placeholder')}
+                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none transition-all dark:text-white text-start"
                                     />
                                 </div>
 
@@ -225,7 +226,7 @@ export const ArtisanCalendar = () => {
                                     className="w-full py-3.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-500/30 mt-6"
                                 >
                                     {isSubmitting ? <Loader2 className="w-5 h-5 animate-spin" /> : <CalendarOff className="w-5 h-5" />}
-                                    Confirmer l'indisponibilité
+                                    {t('confirm')}
                                 </button>
                             </form>
                         </motion.div>

@@ -8,8 +8,13 @@ import { ClientDashboardSkeleton } from "@/components/ui/SkeletonLayouts";
 import { useEffect, useState } from "react";
 import api from "@/lib/axios";
 import { useRouter } from "@/i18n/routing";
+import { useTranslations, useLocale } from "next-intl";
+import { cn } from "@/lib/utils";
 
 export default function ClientDashboardPage() {
+  const t = useTranslations("dashboard_client");
+  const locale = useLocale();
+  const isRTL = locale === "ar";
   const { user, loading: authLoading } = useAuth();
   const [stats, setStats] = useState({ active: 0, pending: 0, completed: 0, reviews: 0 });
   const [recentRequests, setRecentRequests] = useState([]);
@@ -45,9 +50,9 @@ export default function ClientDashboardPage() {
   }, [user, authLoading]);
 
   const statCards = [
-    { label: "Demandes actives", value: stats.active, icon: Wrench, color: "text-blue-500", bg: "bg-blue-500/10", ring: "ring-blue-500/20" },
-    { label: "En attente", value: stats.pending, icon: Clock, color: "text-amber-500", bg: "bg-amber-500/10", ring: "ring-amber-500/20" },
-    { label: "Terminées", value: stats.completed, icon: TrendingUp, color: "text-emerald-500", bg: "bg-emerald-500/10", ring: "ring-emerald-500/20" },
+    { label: t("active_requests"), value: stats.active, icon: Wrench, color: "text-blue-500", bg: "bg-blue-500/10", ring: "ring-blue-500/20" },
+    { label: t("pending"), value: stats.pending, icon: Clock, color: "text-amber-500", bg: "bg-amber-500/10", ring: "ring-amber-500/20" },
+    { label: t("completed"), value: stats.completed, icon: TrendingUp, color: "text-emerald-500", bg: "bg-emerald-500/10", ring: "ring-emerald-500/20" },
   ];
   if (loading) return <ClientDashboardSkeleton />;
 
@@ -62,17 +67,17 @@ export default function ClientDashboardPage() {
       >
         <div>
           <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">
-            Bonjour, {user?.nomComplet || "Client"} !
+            {t("greeting", { name: user?.nomComplet || "Client" })}
           </h1>
           <p className="text-slate-500 dark:text-slate-400 font-medium">
-            Trouvez les meilleurs artisans pour vos travaux.
+            {t("subtitle")}
           </p>
         </div>
         <Link href="/dashboard/client/interventions/new">
           <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-2xl font-bold transition-all shadow-lg shadow-blue-500/20 group">
             <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform" />
-            Nouvelle demande
-            <ArrowRight className="w-4 h-4" />
+            {t("new_request")}
+            <ArrowRight className={cn("w-4 h-4", isRTL && "rotate-180")} />
           </button>
         </Link>
       </motion.div>
@@ -111,11 +116,11 @@ export default function ClientDashboardPage() {
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight flex items-center gap-2">
               <ClipboardList className="w-5 h-5 text-blue-500" />
-              Demandes récentes
+              {t("recent_requests")}
             </h2>
             <Link href="/dashboard/client/requests">
               <span className="text-xs font-black text-blue-600 uppercase tracking-widest hover:underline cursor-pointer">
-                Voir tout
+                {t("view_all")}
               </span>
             </Link>
           </div>
@@ -128,12 +133,6 @@ export default function ClientDashboardPage() {
                 terminee: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
                 annulee: "bg-slate-100 text-slate-600 dark:bg-slate-500/15 dark:text-slate-400",
               };
-              const statusLabels = {
-                en_attente: "En attente",
-                acceptee: "Acceptée",
-                terminee: "Terminée",
-                annulee: "Annulée",
-              };
               return (
                 <div key={req.id} className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 transition-colors group">
                   <div className="flex items-center gap-3 min-w-0">
@@ -143,12 +142,12 @@ export default function ClientDashboardPage() {
                     <div className="min-w-0">
                       <p className="font-bold text-sm text-slate-900 dark:text-white truncate">{req.titre}</p>
                       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                        {req.categorie?.nom} • {req.propositions_count || 0} proposition{(req.propositions_count || 0) !== 1 ? "s" : ""}
+                        {req.categorie?.nom} • {t("propositions", { count: req.propositions_count || 0 })}
                       </p>
                     </div>
                   </div>
                   <span className={`shrink-0 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${statusColors[req.statut] || statusColors.en_attente}`}>
-                    {statusLabels[req.statut] || req.statut}
+                    {t(`status.${req.statut}`) || req.statut}
                   </span>
                 </div>
               );
@@ -170,10 +169,10 @@ export default function ClientDashboardPage() {
               <Star className="w-5 h-5 text-amber-500" />
             </div>
             <div>
-              <p className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Mes avis</p>
-              <p className="text-xs text-slate-400">Consultez vos évaluations</p>
+              <p className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">{t("my_reviews")}</p>
+              <p className="text-xs text-slate-400">{t("reviews_subtitle")}</p>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-300 ml-auto group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className={cn("w-4 h-4 text-slate-300 transition-transform", isRTL ? "mr-auto group-hover:-translate-x-1 rotate-180" : "ml-auto group-hover:translate-x-1")} />
           </div>
         </Link>
         <Link href="/dashboard/client/complaints">
@@ -182,10 +181,10 @@ export default function ClientDashboardPage() {
               <AlertTriangle className="w-5 h-5 text-red-500" />
             </div>
             <div>
-              <p className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">Mes réclamations</p>
-              <p className="text-xs text-slate-400">Signalez un problème</p>
+              <p className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">{t("my_complaints")}</p>
+              <p className="text-xs text-slate-400">{t("complaints_subtitle")}</p>
             </div>
-            <ArrowRight className="w-4 h-4 text-slate-300 ml-auto group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className={cn("w-4 h-4 text-slate-300 transition-transform", isRTL ? "mr-auto group-hover:-translate-x-1 rotate-180" : "ml-auto group-hover:translate-x-1")} />
           </div>
         </Link>
       </motion.div>

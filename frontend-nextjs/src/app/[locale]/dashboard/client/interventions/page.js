@@ -28,7 +28,7 @@ export default function ClientInterventionsPage() {
       const res = await api.get("/interventions")
       setInterventions(res.data || [])
     } catch (err) {
-      setError(err.response?.data?.error || "Erreur de chargement")
+      setError(err.response?.data?.error || t("history.loading_error"))
     } finally {
       setLoading(false)
     }
@@ -39,7 +39,7 @@ export default function ClientInterventionsPage() {
   }, [fetchInterventions])
 
   const handleCancel = async (intervention) => {
-    if (!confirm(`Annuler la demande "${intervention.titre}" ?`)) return
+    if (!confirm(t("history.cancel_confirm", { title: intervention.titre }))) return
     setCancellingId(intervention.id)
     try {
       await api.post(`/interventions/${intervention.id}/cancel`)
@@ -47,7 +47,7 @@ export default function ClientInterventionsPage() {
         prev.map(i => i.id === intervention.id ? { ...i, statut: "annule" } : i)
       )
     } catch (err) {
-      alert(err.response?.data?.error || "Erreur lors de l'annulation")
+      alert(err.response?.data?.error || t("history.cancel_error"))
     } finally {
       setCancellingId(null)
     }
@@ -67,7 +67,7 @@ export default function ClientInterventionsPage() {
           </h1>
           {!loading && (
             <p className="text-xs font-bold text-slate-400 mt-1">
-              {interventions.length} demande{interventions.length !== 1 ? "s" : ""}
+              {t("history.count", { count: interventions.length })}
             </p>
           )}
         </div>
@@ -85,7 +85,7 @@ export default function ClientInterventionsPage() {
           <AlertCircle className="w-5 h-5 shrink-0" />
           <p className="text-sm font-bold">{error}</p>
           <Button variant="ghost" onClick={fetchInterventions} className="ml-auto text-xs font-black uppercase tracking-widest">
-            Réessayer
+            {t("history.retry")}
           </Button>
         </div>
       )}

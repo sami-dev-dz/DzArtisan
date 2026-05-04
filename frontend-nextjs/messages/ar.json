@@ -8,6 +8,8 @@
     "loading": "جاري التحميل...",
     "error": "حدث خطأ.",
     "success": "تمت العملية بنجاح.",
+    "access_denied": "تم رفض الوصول",
+    "client_only": "هذه المنطقة مخصصة للعملاء فقط.",
     "search": "بحث",
     "see_more": "عرض المزيد",
     "see_all": "عرض جميع التنبيهات",
@@ -23,7 +25,16 @@
         "subscription_alert": "الاشتراك",
         "complaint_alert": "شكوى"
       }
-    }
+    },
+    "back": "رجوع",
+    "welcome": "مرحباً",
+    "next": "التالي"
+  },
+  "cookie_consent": {
+    "title": "نحن نحترم خصوصيتك",
+    "description": "نحن نستخدم ملفات تعريف الارتباط لتحسين تجربتك وتحليل حركة المرور وتقديم إعلانات ذات صلة. بالنقر فوق \"قبول الكل\"، فإنك توافق على استخدامنا لملفات تعريف الارتباط.",
+    "accept_all": "قبول الكل",
+    "manage_preferences": "إدارة التفضيلات"
   },
   "navigation": {
     "home": "الرئيسية",
@@ -36,9 +47,14 @@
     "my_requests": "طلباتي",
     "my_reviews": "تقييماتي",
     "my_subscription": "اشتراكي",
-    "my_complaints": "شكاواي",
+    "subscription": "الاشتراك",
+    "my_complaints": "شكاوي",
     "admin_dashboard": "لوحة مسؤول النظام",
-    "contact_locations": "الجزائر، بجاية"
+    "contact_locations": "الجزائر، بجاية",
+    "planning": "الجدول الزمني",
+    "heading_main": "الرئيسية",
+    "heading_activity": "النشاط",
+    "heading_billing": "الفواتير"
   },
   "hero": {
     "badge": "المرجع الأول في الجزائر 🇩🇿",
@@ -90,70 +106,71 @@
       "pro": { "name": "شهري", "price": "500", "duration": "شهر", "benefit": "وصول كامل وسريع" },
       "premium": { "name": "فصلي", "price": "1300", "duration": "3 أشهر", "benefit": "وفر 200 دج" },
       "annual": { "name": "سنوي", "price": "4500", "duration": "سنة كاملة", "benefit": "وفر 1500 دج", "badge": "الأكثر توفيراً" }
+    },
+    "banner": {
+      "active_title": "اشتراك نشط",
+      "active_desc": "يتبقى لك {days} يوماً في اشتراك {plan}.",
+      "warning_title": "اقتراب انتهاء الصلاحية",
+      "warning_desc": "ينتهي اشتراكك خلال {days} يوماً. جدده للحفاظ على ظهورك.",
+      "warning_btn": "تجديد",
+      "expired_title": "اشتراك منتهي",
+      "expired_desc": "لم يعد ملفك الشخصي مرئياً للزبائن الجدد. جدد اشتراكك!",
+      "expired_btn": "إعادة تفعيل"
     }
   },
   "authentication": {
+    "error": "حدث خطأ. يرجى المحاولة مرة أخرى.",
+    "success": "تم إنشاء الحساب بنجاح!",
     "login_title": "مرحباً بعودتك",
-    "login_subtitle": "سجل الدخول للوصول إلى لوحة التحكم.",
+    "login_subtitle": "سجل الدخول للوصول إلى لوحة التحكم الخاصة بك.",
     "register_title": "إنشاء حساب",
-    "register_subtitle": "انضم إلى أكبر منصة للحرفيين في الجزائر.",
+    "register_subtitle": "انضم إلى أكبر مجتمع للحرفيين في الجزائر.",
     "tab_client": "أنا زبون",
     "tab_artisan": "أنا حرفي",
     "email_label": "البريد الإلكتروني",
+    "email_hint": "لن نشارك بريدك الإلكتروني أبداً.",
     "email_placeholder": "your@email.com",
-    "email_invalid": "تنسيق البريد الإلكتروني غير صالح.",
+    "email_invalid": "صيغة البريد الإلكتروني غير صالحة.",
     "password_label": "كلمة المرور",
+    "password_hint": "استخدم كلمة مرور معقدة.",
     "password_placeholder": "••••••••",
     "password_min_length": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل.",
     "forgot_link": "هل نسيت كلمة المرور؟",
-    "strength_empty": "فارغ",
-    "strength_weak": "ضعيف",
-    "strength_medium": "متوسط",
-    "strength_strong": "قوي",
     "confirm_label": "تأكيد كلمة المرور",
     "confirm_placeholder": "••••••••",
     "confirm_mismatch": "كلمات المرور غير متطابقة.",
     "name_label": "الاسم الكامل",
-    "name_placeholder": "مثال: أمين محمد",
-    "name_artisan_hint": "سيظهر هذا الاسم في ملفك الشخصي. أي تغيير مستقبلي سيتطلب مراجعة.",
+    "name_placeholder": "مثال: محمد أمين",
+    "name_artisan_hint": "سيظهر هذا الاسم في ملفك الشخصي العام. أي تغييرات مستقبلية ستتطلب التحقق.",
     "phone_label": "رقم الهاتف",
-    "phone_invalid": "تنسيق غير صالح (مثال: 05xx, 06xx, 07xx و 8 أرقام).",
-    "terms_prefix": "أوافق على",
-    "terms_link": "شروط الاستخدام",
+    "phone_invalid": "صيغة غير صالحة (مثال: 05xx، 06xx، 07xx و 8 أرقام).",
+    "terms_prefix": "أنا أوافق على",
+    "terms_link": "شروط الخدمة",
     "privacy_prefix": "و",
     "privacy_link": "سياسة الخصوصية",
     "btn_login": "تسجيل الدخول",
     "btn_register": "إنشاء حساب",
     "btn_submitting": "يرجى الانتظار...",
+    "trust_signal": "تسجيل دخول آمن بواسطة DzArtisan",
     "or_continue_with": "أو المتابعة باستخدام",
-    "google_btn": "تسجيل الدخول بواسطة جوجل",
+    "google_btn": "تسجيل الدخول باستخدام جوجل",
     "oauth_coming_soon_title": "الميزة قادمة قريباً",
-    "oauth_coming_soon_message": "تسجيل الدخول عبر جوجل سيكون متاحاً قريباً. يرجى استخدام البريد الإلكتروني وكلمة المرور في الوقت الحالي.",
-    "artisan_google_note": "لأسباب أمنية ومهنية، تسجيل الدخول عبر جوجل غير متاح للحرفيين. يرجى استخدام البريد الإلكتروني.",
-    "artisan_pending_note": "الحساب الخاص بك سيتطلب موافقة من الإدارة قبل أن يصبح ملفك الشخصي متاحاً للعموم.",
-    "duplicate_email": "البريد الإلكتروني مسجل بالفعل. الرجاء تسجيل الدخول.",
-    "duplicate_phone": "رقم الهاتف هذا مرتبط بحساب آخر بالفعل.",
-    "generic_login_error": "بيانات الدخول المقدمة غير صحيحة.",
+    "oauth_coming_soon_message": "سيتوفر تسجيل الدخول باستخدام جوجل قريباً. يرجى استخدام البريد الإلكتروني وكلمة المرور في الوقت الحالي.",
+    "artisan_pending_note": "سيطلب حسابك التحقق من قبل فريقنا الإداري قبل أن يصبح ملفك الشخصي عاماً.",
+    "duplicate_email": "هذا البريد الإلكتروني مسجل بالفعل. يرجى تسجيل الدخول.",
+    "duplicate_phone": "رقم الهاتف هذا مرتبط بالفعل بحساب آخر.",
+    "generic_login_error": "بيانات الاعتماد المقدمة غير صحيحة.",
     "forgot_title": "نسيت كلمة المرور؟",
-    "forgot_subtitle": "أدخل بريدك الإلكتروني لتلقي رابط إستعادة آمن.",
-    "btn_send_link": "إرسال الرابط",
-    "forgot_success_msg": "إذا كان هذا البريد الإلكتروني موجوداً في نظامنا، فقد تم إرسال رابط الإستعادة إليك.",
+    "forgot_subtitle": "أدخل بريدك الإلكتروني لتلقي رابط إعادة تعيين آمن.",
+    "btn_send_link": "إرسال رابط إعادة التعيين",
+    "forgot_success_msg": "إذا كان هذا البريد الإلكتروني موجوداً في نظامنا، فقد تم إرسال رابط إعادة التعيين إليك.",
     "back_to_login": "العودة لتسجيل الدخول",
     "reset_title": "كلمة مرور جديدة",
-    "reset_subtitle": "الرجاء تعيين كلمة المرور الجديدة.",
-    "btn_reset": "إعادة تعيين",
-    "reset_success_msg": "تم تغيير كلمة المرور بنجاح.",
-    "invalid_token": "رابط الإستعادة غير صالح أو منتهي الصلاحية.",
-    "btn_request_new": "طلب رابط جديد",
-    "network_error": "لا يمكن الاتصال بالخادم. تحقق من اتصالك.",
-    "no_account": "ليس لديك حساب؟ سجل الآن",
-    "have_account": "لديك حساب بالفعل؟ سجل الدخول",
-    "no_account_prefix": "ليس لديك حساب؟",
-    "no_account_action": "سجل الآن",
-    "have_account_prefix": "لديك حساب بالفعل؟",
-    "have_account_action": "سجل الدخول",
+    "reset_subtitle": "يرجى تعيين كلمة المرور الجديدة الخاصة بك.",
     "show_password": "إظهار كلمة المرور",
-    "hide_password": "إخفاء كلمة المرور"
+    "hide_password": "إخفاء كلمة المرور",
+    "no_account_prefix": "ليس لديك حساب؟",
+    "no_account_action": "أنشئ حساباً"
   },
   "artisan_profile": {
     "about": "حول",
@@ -317,6 +334,12 @@
       }
     },
     "subscription_management": {
+      "refresh": "تحديث",
+      "manual_activation": {
+        "btn": "تفعيل يدوي",
+        "search_artisan": "ابحث عن حرفي...",
+        "success": "تمت العملية بنجاح"
+      },
       "title": "إدارة الاشتراكات",
       "subtitle": "تتبع الإيرادات، التحقق من الدفع اليدوي، وإدارة فترات التفعيل.",
       "stats": {
@@ -541,6 +564,10 @@
     "about_placeholder": "مثال: أنا سباك مؤهل بخبرة 5 سنوات. أتخصص في تركيب الغلايات...",
     "about_min_chars": "مطلوب {count} أحرف كحد أدنى.",
     "availability_title": "التوفر الحالي",
+    "available": "متوفر",
+    "unavailable": "غير متوفر",
+    "on": "تشغيل",
+    "off": "إيقاف",
     "availability_desc": "أشر إذا كنت مستعداً لتلقي الطلبات فوراً.",
     "docs_title": "الوثائق المهنية",
     "docs_desc": "إضافة الوثائق تزيد بشكل كبير من معدل الاتصال بك وتفتح شارة 'موثق'.",
@@ -592,6 +619,7 @@
     "profile": "ملفي الشخصي",
     "greeting": "مرحباً",
     "artisan_verified": "حرفي موثق",
+    "welcome_subtitle": "لوحة التحكم المركزية الخاصة بك. جاهز لتحويل الفرص الجديدة إلى إنجازات استثنائية؟",
     "opportunities_title": "فرص عمل لك",
     "opportunities_desc": "بناءً على تخصصاتك وولاياتك.",
     "growth_title": "النمو",
@@ -606,9 +634,142 @@
     },
     "no_requests": "لم يتم العثور على طلبات",
     "no_requests_hint": "قم بتوسيع ولاياتك أو تخصصاتك لمزيد من الظهور.",
+    "view_all": "عرض الكل",
     "support_title": "دعم متميز",
     "support_desc": "هل تحتاج لمساعدة في تحسين ملفك؟",
-    "support_btn": "اتصل بالدعم"
+    "support_btn": "اتصل بالدعم",
+    "request_default_title": "طلب تدخل",
+    "category_default": "أعمال عامة",
+    "wilaya_default": "الجزائر",
+    "urgent_label": "عاجل",
+    "view_details": "عرض التفاصيل",
+    "stats_labels": {
+      "missions_dispos": "مهام متاحة",
+      "devis_soumis": "عروض مقدمة",
+      "missions_terminees": "مهام مكتملة",
+      "note_globale": "التقييم العام",
+      "missions_postees": "طلبات منشورة",
+      "depenses_totales": "إجمالي المصاريف"
+    },
+    "profile_page": {
+      "title": "ملفي الشخصي",
+      "subtitle": "قم بتحديث معلوماتك لتبقى جذاباً للعملاء.",
+      "professional_profile": "الملف المهني",
+      "completeness": "اكتمال الملف",
+      "identity_contact": "الهوية والاتصال",
+      "identity_contact_desc": "واجهتك العامة على المنصة",
+      "change": "تغيير",
+      "full_name": "الاسم الكامل",
+      "phone": "الهاتف",
+      "phone_visible": "مرئي للعملاء",
+      "phone_hidden": "مخفي عن العملاء",
+      "whatsapp_link": "رابط واتساب",
+      "generate_from_phone": "إنشاء من الهاتف",
+      "main_job": "المهنة الأساسية",
+      "expertise_domain": "مجال خبرتك",
+      "select_job": "اختر مهنتك...",
+      "intervention_zones": "مناطق العمل",
+      "intervention_zones_desc": "الولايات التي تعمل بها",
+      "search_wilaya": "ابحث عن ولاية...",
+      "no_wilaya_selected": "لم يتم تحديد أي ولاية",
+      "experience_presentation": "الخبرة والتقديم",
+      "experience_presentation_desc": "صف مسيرتك المهنية",
+      "years_experience": "سنوات الخبرة",
+      "shown_on_public_profile": "يظهر في ملفك العام",
+      "availability": "التوفر",
+      "available": "متاح — مستعد لاستقبال الطلبات",
+      "unavailable": "غير متاح حالياً",
+      "professional_description": "الوصف المهني",
+      "description_placeholder": "صف خبرتك، تخصصاتك، ونهجك في العمل...",
+      "excellent_length": "✓ طول ممتاز",
+      "min_length_required": "/150 كحد أدنى",
+      "profile_checklist": "قائمة التحقق من الملف",
+      "checklist_desc": "أكمل كل نقطة لزيادة ظهورك",
+      "saving": "جاري الحفظ...",
+      "save_changes": "حفظ التغييرات",
+      "edit_name_title": "تعديل اسمك",
+      "name_warning": "⚠️ يجب أن يطابق اسمك هويتك الحقيقية. التعديلات المتكررة قد تؤثر على شارة التوثيق الخاصة بك.",
+      "name_placeholder": "اسمك الكامل",
+      "confirm_change": "تأكيد التغيير",
+      "loading_profile": "جاري تحميل الملف...",
+      "update_success": "تم تحديث الملف بنجاح!",
+      "upload_success": "تم رفع الصورة بنجاح",
+      "file_too_large": "حجم الملف كبير جداً (الحد الأقصى 5 ميغابايت)",
+      "checklist_items": {
+        "photo": "صورة الملف الشخصي",
+        "whatsapp": "واتساب",
+        "description": "الوصف (+150 حرف)",
+        "experience": "سنوات الخبرة",
+        "wilayas": "ولايات العمل"
+      }
+    },
+    "portfolio": {
+      "title": "معرض الأعمال",
+      "limit_reached": "تم الوصول للحد الأقصى (10 صور)",
+      "file_too_large": "حجم الملف كبير جداً (الحد الأقصى 5 ميغابايت)",
+      "add_success": "تم إضافة الصورة للمعرض",
+      "add_error": "حدث خطأ أثناء الإضافة",
+      "delete_success": "تم حذف الصورة",
+      "delete_error": "حدث خطأ أثناء الحذف",
+      "description": "أضف ما يصل إلى 10 صور لأعمالك لإقناع العملاء. ({count}/10)",
+      "uploading": "جاري الرفع...",
+      "add_photo": "إضافة صورة",
+      "item_alt": "عنصر من الأعمال",
+      "empty_title": "معرض أعمالك فارغ",
+      "empty_desc": "الحرفيون الذين لديهم صور لأعمالهم يتلقون طلبات أكثر بـ 3 مرات."
+    },
+    "calendar": {
+      "title": "تقويم الغيابات",
+      "description": "قم بحظر الأيام التي لا ترغب في تلقي طلبات جديدة فيها.",
+      "add_unavailability": "إضافة فترة غياب",
+      "start_date": "تاريخ البدء",
+      "end_date": "تاريخ الانتهاء",
+      "reason_optional": "السبب (اختياري)",
+      "reason_placeholder": "مثال: عطلة",
+      "add_success": "تم إضافة فترة الحظر",
+      "add_error": "حدث خطأ أثناء الإضافة",
+      "delete_success": "تم إلغاء فترة الحظر",
+      "delete_error": "حدث خطأ أثناء الحذف",
+      "from_to": "من {start} إلى {end}",
+      "blocked_period": "فترة محظورة",
+      "no_unavailability": "لا توجد فترات غياب مجدولة."
+    },
+    "artisan_calendar": {
+      "title": "جدولي الزمني",
+      "subtitle": "إدارة توافرك وتدخلاتك",
+      "interventions": "التدخلات",
+      "unavailable": "غير متاح",
+      "add_unavailability": "إضافة عدم توفر",
+      "period": "الفترة",
+      "from": "من",
+      "to": "إلى",
+      "reason_optional": "السبب (اختياري)",
+      "reason_placeholder": "مثل: إجازة، مرض...",
+      "confirm": "تأكيد عدم التوفر",
+      "delete_confirm": "هل تريد حذف فترة عدم التوفر هذه؟",
+      "delete_error": "خطأ في الحذف"
+    }
+  },
+  "dashboard_client": {
+    "greeting": "مرحباً، {name}!",
+    "subtitle": "ابحث عن أفضل الحرفيين لأعمالك.",
+    "new_request": "طلب جديد",
+    "active_requests": "الطلبات النشطة",
+    "pending": "قيد الانتظار",
+    "completed": "المكتملة",
+    "recent_requests": "الطلبات الأخيرة",
+    "view_all": "عرض الكل",
+    "status": {
+      "en_attente": "قيد الانتظار",
+      "acceptee": "مقبول",
+      "terminee": "مكتمل",
+      "annulee": "ملغي"
+    },
+    "propositions": "{count, plural, =0 {لا توجد عروض} one {عرض واحد} two {عرضان} few {# عروض} many {# عرضاً} other {# عرض}}",
+    "my_reviews": "تقييماتي",
+    "reviews_subtitle": "عرض تقييماتك",
+    "my_complaints": "شكاوي",
+    "complaints_subtitle": "الإبلاغ عن مشكلة"
   },
   "subscription": {
     "title": "إدارة الاشتراك",
@@ -675,58 +836,8 @@
     "verified_profile": "ملف رسمي",
     "exp_years": "{count} سنوات خبرة"
   },
-  "wizard": {
-    "steps": {
-      "details": "التفاصيل",
-      "location": "الموقع",
-      "photos": "الصور والإرسال"
-    },
-    "step1": {
-      "title": "تفاصيل التدخل",
-      "headline": "ما الذي تبحث عنه؟",
-      "request_title": "عنوان الطلب",
-      "request_title_placeholder": "مثال: إصلاح تسرب مياه تحت حوض المطبخ",
-      "category": "فئة الخدمة",
-      "description": "وصف المشكلة",
-      "description_placeholder": "اشرح حاجتك بدقة (المواد اللازمة، الاستعجال، الأعراض...)",
-      "preferred_date": "التاريخ المفضل",
-      "date_hint": "اتركه فارغاً إذا كنت مرناً",
-      "next": "الخطوة التالية"
-    },
-    "step2": {
-      "title": "أين سيتم التدخل؟",
-      "method_title": "كيف تريد تحديد موقعك؟",
-      "auto_geo": "تحديد الموقع التلقائي",
-      "auto_geo_desc": "سريع ودقيق بنسبة 100٪",
-      "manual_entry": "إدخال يدوي",
-      "manual_entry_desc": "لعنوان مختلف",
-      "geo_btn": "اسمح لنا بتحديد موقعك",
-      "geo_denied": "تم رفض الوصول. يرجى استخدام الإدخال اليدوي.",
-      "wilaya": "اختر ولايتك",
-      "commune": "اختر بلديتك",
-      "address": "تفاصيل العنوان (الحي، الرقم، الطابق...)",
-      "map_hint": "يمكنك تحريك العلامة لمزيد من الدقة",
-      "back": "السابق",
-      "next": "الخطوة الأخيرة"
-    },
-    "step3": {
-      "title": "الصور والملخص",
-      "upload_title": "أضف صوراً (بحد أقصى 5)",
-      "upload_hint": "اسحب وأفلت أو انقر للتصفح",
-      "upload_formats": "التنسيقات: JPG، PNG، WebP (بحد أقصى 5 ميجابايت)",
-      "summary_title": "ملخص الطلب",
-      "edit_step": "تعديل الخطوة",
-      "submit": "نشر طلبي",
-      "submitting": "جاري النشر..."
-    },
-    "success": {
-      "title": "تم نشر الطلب!",
-      "message": "تم تسجيل طلبك بنجاح. سيتمكن الحرفيون في منطقتك الآن من الاتصال بك.",
-      "explanation": "ستتلقى العروض مباشرة عبر الهاتف أو واتساب.",
-      "view_requests": "عرض طلباتي",
-      "back_home": "العودة للرئيسية"
-    },
-    "client": {
+
+  "client": {
       "requests": {
         "title": "طلبات التدخل الخاصة بي",
         "subtitle": "تتبع حالة طلباتك واطلع على عروض الحرفيين.",
@@ -735,6 +846,9 @@
           "archived": "المؤرشفة",
           "all": "الكل"
         },
+        "new_request_btn": "طلب جديد",
+        "search_placeholder": "بحث بالعنوان أو المهنة...",
+        "publish_first_btn": "نشر طلبي الأول",
         "status": {
           "en_attente": "في انتظار الردود",
           "acceptee": "تم قبول التدخل",
@@ -742,7 +856,7 @@
           "annulee": "ملغى"
         },
         "card": {
-          "responses": "{count} عرض (عروض)",
+          "responses": "{count, plural, =0 {لا توجد عروض} one {عرض واحد} two {عرضان} few {# عروض} many {# عرضاً} other {# عرض}}",
           "posted_on": "نُشر في {date}",
           "view_details": "عرض التفاصيل",
           "no_requests": "ليس لديك أي طلبات في هذه الفئة."
@@ -756,7 +870,17 @@
           "no_proposals": "لا توجد عروض حالياً. قمنا بإخطار الحرفيين في منطقتك.",
           "cancel_request": "إلغاء الطلب",
           "cancel_confirm": "هل أنت متأكد من إلغاء هذا الطلب؟ هذا الإجراء غير قابل للتراجع.",
-          "accept_proposal": "قبول هذا العرض"
+          "accept_proposal": "قبول هذا العرض",
+          "modifiable": "قابل للتعديل",
+          "locked": "مقفل",
+          "edit": "تعديل",
+          "download_quote": "تحميل الفاتورة التقديرية",
+          "phone": "الهاتف",
+          "not_provided": "غير متوفر",
+          "proposals": "العروض ({count})",
+          "chosen": "تم الاختيار",
+          "contacted_btn": "لقد تواصلت مع هذا الحرفي",
+          "default_proposal_message": "مرحباً، أنا متاح لهذا التدخل. اتصل بي لمناقشة التفاصيل."
         },
         "proposal": {
           "experience": "خبرة {years} سنوات",
@@ -764,6 +888,81 @@
           "contact_call": "اتصال",
           "accept_btn": "اختيار هذا الحرفي"
         }
+      }
+    },
+    "client_reviews": {
+      "title": "تقييماتي",
+      "count": "{count} تقييم",
+      "retry": "إعادة المحاولة",
+      "empty_title": "لا توجد تقييمات حالياً",
+      "empty_desc": "ستظهر تقييماتك هنا بعد تقييم الحرفي بعد انتهاء التدخل.",
+      "artisan_label": "حرفي"
+    },
+    "client_complaints": {
+      "title": "شكاوي",
+      "subtitle": "الإبلاغ عن مشكلة تتعلق بتدخل أو حرفي.",
+      "new_btn": "شكوى جديدة",
+      "retry": "إعادة المحاولة",
+      "empty_title": "لا توجد شكاوى",
+      "empty_desc": "ليس لديك أي شكاوى حالية. إذا واجهت مشكلة، فلا تتردد في تقديم واحدة.",
+      "linked_to": "مرتبط بالتدخل #{id}",
+      "admin_reply": "رد الإدارة:",
+      "info_note": "💡 يتم مراجعة الشكاوى من قبل فريقنا في غضون 24 ساعة. ستتلقى إشعاراً بمجرد توفر تحديث.",
+      "form": {
+        "title": "تقديم شكوى",
+        "subtitle": "صف مشكلتك بالتفصيل. سيرد فريقنا في غضون 24 ساعة.",
+        "select_intervention": "اختر التدخل المعني",
+        "select_placeholder": "اختر التدخل",
+        "subject_label": "موضوع الشكوى",
+        "subject_placeholder": "مثال: مشكلة مع الحرفي، عمل غير مكتمل...",
+        "desc_label": "وصف مفصل",
+        "desc_placeholder": "اشرح بالتفصيل المشكلة التي واجهتها...",
+        "cancel": "إلغاء",
+        "submit": "إرسال الشكوى",
+        "submitting": "جاري الإرسال...",
+        "error_fields": "يرجى ملء جميع الحقول.",
+        "error_min_length": "يجب أن يحتوي الوصف على 20 حرفاً على الأقل.",
+        "error_send": "خطأ في إرسال الشكوى. يرجى الاتصال بالدعم."
+      },
+      "status": {
+        "ouverte": "مفتوحة",
+        "en_cours": "قيد المعالجة",
+        "resolue": "تم الحل",
+        "fermee": "مغلقة"
+      }
+    },
+    "artisan_complaints": {
+      "title": "شكاويي",
+      "subtitle": "أبلغ عن مشكلة متعلقة بتدخل أو بعميل.",
+      "new_btn": "شكوى جديدة",
+      "retry": "إعادة المحاولة",
+      "error_loading": "خطأ في التحميل",
+      "empty_title": "لا توجد شكاوى",
+      "empty_desc": "ليس لديك أي شكوى جارية. إذا واجهت مشكلة، لا تتردد في تقديمها.",
+      "linked_to": "مرتبط بالتدخل #{id}",
+      "admin_reply": "رد الإدارة:",
+      "info_note": "💡 يتم فحص الشكاوى من قبل فريقنا خلال 24 ساعة. ستتلقى إشعارًا فور توفر تحديث.",
+      "form": {
+        "title": "تقديم شكوى",
+        "subtitle": "صف مشكلتك بالتفصيل. سيرد عليك فريقنا خلال 24 ساعة.",
+        "select_intervention": "اختر التدخل المعني",
+        "select_placeholder": "اختر تدخلاً",
+        "subject_label": "موضوع الشكوى",
+        "subject_placeholder": "مثال: مشكلة مع العميل، إلغاء غير مبرر...",
+        "desc_label": "وصف تفصيلي",
+        "desc_placeholder": "اشرح بالتفصيل المشكلة التي واجهتها...",
+        "cancel": "إلغاء",
+        "submit": "إرسال الشكوى",
+        "submitting": "جاري الإرسال...",
+        "error_fields": "يرجى ملء جميع الحقول.",
+        "error_min_length": "يجب أن يحتوي الوصف على 20 حرفاً على الأقل.",
+        "error_send": "خطأ في إرسال الشكوى. يرجى الاتصال بالدعم."
+      },
+      "status": {
+        "ouverte": "مفتوحة",
+        "en_cours": "قيد المعالجة",
+        "resolue": "تم الحل",
+        "fermee": "مغلقة"
       }
     },
     "artisan": {
@@ -832,7 +1031,6 @@
         "empty": {
           "no_active": "ليس لديك أي تدخلات جارية حالياً. ابحث عن فرص جديدة في ملف الطلبات.",
           "no_history": "سجل التدخلات الخاص بك فارغ."
-        }
       }
     }
   },
@@ -844,6 +1042,83 @@
   },
   "search": {
     "currently_available": "{count} حرفيين متاحين حالياً"
+  },
+  "wizard": {
+    "steps": {
+      "details": "التفاصيل",
+      "location": "الموقع",
+      "summary": "التأكيد"
+    },
+    "step1": {
+      "title": "صف احتياجاتك",
+      "subtitle": "قدم أكبر قدر ممكن من التفاصيل للحصول على أفضل العروض.",
+      "fields": {
+        "title": "عنوان الطلب *",
+        "title_placeholder": "مثال: إصلاح تسرب مياه تحت الحوض",
+        "category": "فئة الخدمة *",
+        "category_placeholder": "اختر فئة مهنية...",
+        "description": "وصف المشكلة *",
+        "description_placeholder": "اشرح احتياجاتك بدقة (المواد المطلوبة، الاستعجال، الأعراض...)",
+        "phone": "رقم الهاتف *",
+        "whatsapp": "واتساب",
+        "whatsapp_optional": "(اختياري)",
+        "whatsapp_placeholder": "wa.me/213…",
+        "generate": "توليد",
+        "link_generated": "تم توليد الرابط",
+        "test": "تجربة",
+        "date": "التاريخ المطلوب",
+        "date_optional": "(اختياري)",
+        "date_info": "اتركه فارغاً إذا كنت مرناً"
+      },
+      "errors": {
+        "title_short": "العنوان قصير جداً (5 أحرف على الأقل)",
+        "category_required": "يرجى اختيار فئة",
+        "description_short": "يجب أن يكون الوصف 20 حرفاً على الأقل",
+        "phone_invalid": "يرجى إدخال رقم هاتف صحيح"
+      },
+      "next": "الخطوة التالية"
+    },
+    "step2": {
+      "title": "الموقع",
+      "subtitle": "حدد موقع التدخل للعثور على الحرفيين القريبين.",
+      "fields": {
+        "wilaya": "الولاية *",
+        "wilaya_placeholder": "اختر ولاية...",
+        "commune": "البلدية *",
+        "commune_placeholder": "اختر بلدية...",
+        "address": "تكملة العنوان (حي، رقم، طابق...)",
+        "address_placeholder": "مثال: حي 500 مسكن، عمارة B، الطابق 3"
+      },
+      "errors": {
+        "wilaya_required": "يرجى اختيار ولاية",
+        "commune_required": "يرجى اختيار بلدية"
+      },
+      "map_info": "انقر على الخريطة أو حرك العلامة لمزيد من الدقة",
+      "back": "السابق",
+      "next": "تأكيد"
+    },
+    "step3": {
+      "title": "الملخص",
+      "subtitle": "تحقق من المعلومات قبل نشر طلبك.",
+      "sections": {
+        "details": "تفاصيل الطلب",
+        "location": "الموقع"
+      },
+      "fields": {
+        "title": "العنوان",
+        "category": "الفئة",
+        "description": "الوصف",
+        "phone": "الهاتف",
+        "whatsapp": "واتساب",
+        "date": "التاريخ",
+        "location_auto": "تحديد الموقع ({lat}, {lng})"
+      },
+      "modify": "تعديل",
+      "back": "السابق",
+      "submit": "نشر طلبي",
+      "submitting": "جاري النشر...",
+      "error_general": "حدث خطأ أثناء النشر"
+    }
   }
 }
 

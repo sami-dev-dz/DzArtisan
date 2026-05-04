@@ -31,19 +31,19 @@ export function Sidebar({ collapsed, setCollapsed }) {
   const { user, logout } = useAuth()
 
   const navItems = user?.type === 'artisan' ? [
-    { type: 'heading', label: 'PRINCIPAL' },
+    { type: 'heading', label: t("heading_main") },
     { href: "/dashboard/artisan", icon: BarChart3, label: t("dashboard") },
     { href: "/dashboard/artisan/profile", icon: User, label: t("profile") },
-    { href: "/dashboard/artisan/calendar", icon: Calendar, label: "Planning" },
-    { type: 'heading', label: 'ACTIVITÉ' },
+    { href: "/dashboard/artisan/calendar", icon: Calendar, label: t("planning") },
+    { type: 'heading', label: t("heading_activity") },
     { href: "/dashboard/artisan/jobs", icon: ClipboardList, label: t("my_requests") },
     { href: "/dashboard/artisan/complaints", icon: AlertTriangle, label: t("my_complaints") },
-    { type: 'heading', label: 'FACTURATION' },
+    { type: 'heading', label: t("heading_billing") },
     { href: "/dashboard/artisan/subscription", icon: CreditCard, label: t("my_subscription") },
   ] : [
-    { type: 'heading', label: 'PRINCIPAL' },
+    { type: 'heading', label: t("heading_main") },
     { href: "/dashboard/client", icon: BarChart3, label: t("dashboard") },
-    { type: 'heading', label: 'ACTIVITÉ' },
+    { type: 'heading', label: t("heading_activity") },
     { href: "/dashboard/client/requests", icon: ClipboardList, label: t("my_requests") },
     { href: "/dashboard/client/reviews", icon: Star, label: t("my_reviews") || "Mes avis" },
     { href: "/dashboard/client/complaints", icon: AlertTriangle, label: t("my_complaints") },
@@ -98,12 +98,12 @@ export function Sidebar({ collapsed, setCollapsed }) {
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg flex items-center justify-center text-slate-400 dark:text-white/30 hover:text-slate-700 dark:hover:text-white/70 hover:bg-slate-100 dark:hover:bg-white/5 transition-all duration-200"
+          className={cn(
+            "absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg flex items-center justify-center text-slate-400 dark:text-white/30 hover:text-slate-700 dark:hover:text-white/70 hover:bg-slate-100 dark:hover:bg-white/5 transition-all duration-200",
+            isRTL ? "left-3" : "right-3"
+          )}
         >
-          {collapsed
-            ? (isRTL ? <ChevronLeft className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />)
-            : (isRTL ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />)
-          }
+          {collapsed ? <ChevronRight className={cn("w-3.5 h-3.5", isRTL && "rotate-180")} /> : <ChevronLeft className={cn("w-3.5 h-3.5", isRTL && "rotate-180")} />}
         </button>
       </div>
 

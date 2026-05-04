@@ -1,10 +1,16 @@
 import React from 'react';
 import { ArtisanCalendar } from '@/components/dashboard/artisan/ArtisanCalendar';
 
-export const metadata = {
-  title: 'DzArtisan - Planning et Disponibilités',
-  description: 'Gérez votre emploi du temps, vos interventions et vos périodes d\'indisponibilité.',
-};
+import { getTranslations } from 'next-intl/server';
+
+export async function generateMetadata({ params: { locale } }) {
+  const t = await getTranslations({ locale, namespace: 'dashboard.artisan_calendar' });
+  
+  return {
+    title: `DzArtisan - ${t('title')}`,
+    description: t('subtitle'),
+  };
+}
 
 export default function ArtisanCalendarPage() {
   return (

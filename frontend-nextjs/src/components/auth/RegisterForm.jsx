@@ -284,19 +284,38 @@ export function RegisterForm() {
         type: "success",
       });
     } catch (err) {
-      if (!err.response) {
-        addToast({ title: t("network_error"), type: "error" });
-      } else {
-        const msg = err.response?.data?.message || "";
-        const ve = err.response?.data?.errors || {};
+      console.error("=== REGISTER ERROR ===", JSON.stringify(err, null, 2));
+      console.error("err.response:", err.response);
+      console.error("err.status:", err.status);
+      console.error("err.errors:", err.errors);
+
+      // Case 1: interceptor-reformatted 422 validation error (no .response)
+      if (err.status === 422 && err.errors) {
+        if (err.errors.email)
+          setErrors((p) => ({ ...p, email: err.errors.email }));
+        else if (err.errors.telephone)
+          setErrors((p) => ({ ...p, phone: err.errors.telephone }));
+        else
+          setGenericError(Object.values(err.errors).join(", ") || t("error"));
+      }
+      // Case 2: 409 duplicate from controller (has .response)
+      else if (err.response?.status === 409) {
+        const ve = err.response.data?.errors || {};
         if (ve?.email)
           setErrors((p) => ({ ...p, email: t("duplicate_email") }));
         else if (ve?.telephone)
           setErrors((p) => ({ ...p, phone: t("duplicate_phone") }));
-        else if (ve?.duplicate) {
-          setGenericError(t("duplicate_email"));
-        }
-        else setGenericError(msg || t("error"));
+        else
+          setGenericError(err.response.data?.message || t("error"));
+      }
+      // Case 3: network error
+      else if (!err.response && !err.errors) {
+        addToast({ title: t("network_error"), type: "error" });
+      }
+      // Case 4: any other server error
+      else {
+        const msg = err.response?.data?.message || err.message || "";
+        setGenericError(msg || t("error"));
       }
     } finally {
       submitLockRef.current = false;

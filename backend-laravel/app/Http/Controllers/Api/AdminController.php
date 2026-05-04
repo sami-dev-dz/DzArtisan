@@ -223,7 +223,11 @@ class AdminController extends Controller
                     'rejection_reason' => null
                 ]);
                 $user->update(['statut' => 'actif']);
-                $user->notify(new ArtisanStatusNotification('approved'));
+                try {
+                    $user->notify(new ArtisanStatusNotification('approved'));
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::error('Failed to send approval email: ' . $e->getMessage());
+                }
                 $message = "L'artisan a été approuvé avec succès.";
                 break;
 
@@ -232,21 +236,33 @@ class AdminController extends Controller
                     'statutValidation' => 'refuse',
                     'rejection_reason' => $request->reason
                 ]);
-                $user->notify(new ArtisanStatusNotification('rejected', $request->reason));
+                try {
+                    $user->notify(new ArtisanStatusNotification('rejected', $request->reason));
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::error('Failed to send rejection email: ' . $e->getMessage());
+                }
                 $message = "Le dossier de l'artisan a été rejeté.";
                 break;
 
             case 'suspend':
                 $user->update(['statut' => 'suspendu']);
                 $artisan->update(['suspension_reason' => $request->reason]);
-                $user->notify(new ArtisanStatusNotification('suspended', $request->reason));
+                try {
+                    $user->notify(new ArtisanStatusNotification('suspended', $request->reason));
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::error('Failed to send suspension email: ' . $e->getMessage());
+                }
                 $message = "Le compte de l'artisan a été suspendu.";
                 break;
 
             case 'unsuspend':
                 $user->update(['statut' => 'actif']);
                 $artisan->update(['suspension_reason' => null]);
-                $user->notify(new ArtisanStatusNotification('approved'));
+                try {
+                    $user->notify(new ArtisanStatusNotification('approved'));
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::error('Failed to send unsuspension email: ' . $e->getMessage());
+                }
                 $message = "La suspension a été levée.";
                 break;
         }

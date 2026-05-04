@@ -87,11 +87,11 @@ export default function SubscriptionPage() {
     const maxSize = 2 * 1024 * 1024 // 2 MB
 
     if (!validTypes.includes(file.type)) {
-      addToast({ title: "Format non supporté (JPG, PNG, WEBP, PDF).", type: "error" })
+      addToast({ title: t("unsupported_format"), type: "error" })
       return
     }
     if (file.size > maxSize) {
-      addToast({ title: "La taille maximale est de 2 Mo.", type: "error" })
+      addToast({ title: t("max_size"), type: "error" })
       return
     }
     
@@ -136,12 +136,12 @@ export default function SubscriptionPage() {
 
   const handleDownloadReceipt = async (row) => {
     if (row.statut !== 'succes') {
-      addToast({ title: "Le reçu n'est disponible que pour les paiements confirmés.", type: "error" })
+      addToast({ title: t("receipt_unavailable"), type: "error" })
       return
     }
     
     try {
-      addToast({ title: "Génération du reçu en cours...", type: "success" })
+      addToast({ title: t("generating_receipt"), type: "success" })
       const response = await api.get(`/subscription/invoice/${row.id}`, { responseType: 'blob' })
       const url = window.URL.createObjectURL(new Blob([response.data]))
       const link = document.createElement('a')
@@ -151,7 +151,7 @@ export default function SubscriptionPage() {
       link.click()
       link.remove()
     } catch (err) {
-      addToast({ title: "Erreur lors du téléchargement de la facture.", type: "error" })
+      addToast({ title: t("download_error"), type: "error" })
     }
   }
 
@@ -185,8 +185,8 @@ export default function SubscriptionPage() {
             <div className="flex items-start gap-4 px-6 py-5 rounded-2xl bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-500/20">
               <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
               <div>
-                <p className="font-black text-slate-900 dark:text-white text-sm">Vous êtes actuellement sur le Plan Gratuit</p>
-                <p className="text-xs text-slate-500 font-medium mt-0.5">Choisissez un plan payant ci-dessous pour accéder à toutes les fonctionnalités Premium.</p>
+                <p className="font-black text-slate-900 dark:text-white text-sm">{t("free_plan_title")}</p>
+                <p className="text-xs text-slate-500 font-medium mt-0.5">{t("free_plan_desc")}</p>
               </div>
             </div>
           )}
@@ -199,9 +199,9 @@ export default function SubscriptionPage() {
       <section className={cn(
         "relative rounded-3xl p-8 md:p-12 overflow-hidden shadow-xl border transition-all duration-500",
         subStatus?.statut === 'actif'
-          ? "bg-gradient-to-br from-emerald-500 to-teal-600 border-emerald-400 text-white shadow-emerald-500/20"
+          ? "bg-linear-to-br from-emerald-500 to-teal-600 border-emerald-400 text-white shadow-emerald-500/20"
           : subStatus?.expiring_soon
-          ? "bg-gradient-to-br from-amber-400 to-orange-500 border-amber-300 text-white shadow-amber-500/20"
+          ? "bg-linear-to-br from-amber-400 to-orange-500 border-amber-300 text-white shadow-amber-500/20"
           : "bg-white dark:bg-slate-900 border-slate-100 dark:border-white/5 text-slate-900 dark:text-white"
       )}>
         {/* Background Patterns */}
@@ -220,12 +220,12 @@ export default function SubscriptionPage() {
               <div className="flex flex-wrap gap-4">
                  <div className="bg-black/10 backdrop-blur-md rounded-2xl p-4 min-w-[140px]">
                     <span className="text-[10px] font-black uppercase tracking-widest opacity-70 block mb-1">{t("plan")}</span>
-                    <span className="text-xl font-black uppercase">{subStatus?.plan === 'none' ? 'AUCUN' : subStatus?.plan}</span>
+                    <span className="text-xl font-black uppercase">{subStatus?.plan === 'none' ? t("none") : subStatus?.plan}</span>
                  </div>
                  <div className="bg-black/10 backdrop-blur-md rounded-2xl p-4 min-w-[140px]">
                     <span className="text-[10px] font-black uppercase tracking-widest opacity-70 block mb-1">{t("expires_on")}</span>
                     <span className="text-xl font-black">
-                       {subStatus?.date_fin ? new Date(subStatus.date_fin).toLocaleDateString() : 'N/A'}
+                       {subStatus?.date_fin ? new Date(subStatus.date_fin).toLocaleDateString() : t("na")}
                     </span>
                  </div>
               </div>
@@ -283,7 +283,7 @@ export default function SubscriptionPage() {
               >
                  {plan.best_value && (
                     <div className="absolute top-5 right-[-30px] rotate-45 bg-indigo-600 text-white text-[9px] font-black uppercase py-1 px-8 tracking-widest shadow-xl">
-                       Populaire
+                       {t("popular")}
                     </div>
                  )}
 
@@ -370,7 +370,7 @@ export default function SubscriptionPage() {
                  ))}
                  {history.length === 0 && (
                    <tr>
-                      <td colSpan="6" className="p-20 text-center text-slate-400 font-bold italic">Aucune transaction trouvée.</td>
+                      <td colSpan="6" className="p-20 text-center text-slate-400 font-bold italic">{t("no_transaction")}</td>
                    </tr>
                  )}
               </tbody>
@@ -440,21 +440,21 @@ export default function SubscriptionPage() {
                        <div className="p-6 bg-blue-50 dark:bg-blue-600/5 rounded-3xl border border-blue-100 dark:border-blue-600/10 flex gap-4">
                           <Info className="w-6 h-6 text-blue-600 shrink-0" />
                           <p className="text-sm font-bold text-blue-700 dark:text-blue-400 leading-relaxed italic">
-                             Vous allez être redirigé vers la plateforme sécurisée de paiement Edahabia/CIB.
+                             {t("edahabia_info")}
                           </p>
                        </div>
                        
                        <div className="grid grid-cols-2 gap-4">
                          <div className="col-span-2">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 mb-2 block">Numéro de carte</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 mb-2 block">{t("card_number")}</label>
                             <Input placeholder="6280 XXXX XXXX XXXX" className="h-14 rounded-2xl font-black tracking-[0.2em] bg-slate-50 dark:bg-slate-900 border-none" />
                          </div>
                          <div>
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 mb-2 block">Expiration</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 mb-2 block">{t("expiration")}</label>
                             <Input placeholder="MM / YY" className="h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border-none" />
                          </div>
                          <div>
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 mb-2 block">CVV</label>
+                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 mb-2 block">{t("cvv")}</label>
                             <Input placeholder="XXX" className="h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border-none" />
                          </div>
                        </div>
@@ -478,7 +478,7 @@ export default function SubscriptionPage() {
                           <div className="space-y-2 pt-2">
                              <div className="flex justify-between items-center py-3 border-b border-emerald-100 dark:border-white/5">
                                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{t("ccp_account")}</span>
-                                <Button size="sm" variant="ghost" className="h-8 px-2 text-emerald-600 hover:bg-emerald-100">Copier</Button>
+                                <Button size="sm" variant="ghost" className="h-8 px-2 text-emerald-600 hover:bg-emerald-100">{t("copy")}</Button>
                              </div>
                              <div className="py-3">
                                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{t("ccp_name")}</span>
@@ -500,7 +500,7 @@ export default function SubscriptionPage() {
                                    <div className="w-16 h-16 rounded-full bg-emerald-500 flex items-center justify-center text-white mx-auto shadow-xl shadow-emerald-500/20">
                                       <Check className="w-8 h-8 stroke-3" />
                                    </div>
-                                   <p className="text-sm font-black text-emerald-600 uppercase tracking-widest">Reçu téléchargé</p>
+                                   <p className="text-sm font-black text-emerald-600 uppercase tracking-widest">{t("receipt_uploaded")}</p>
                                 </div>
                              ) : isUploading ? (
                                 <div className="w-12 h-12 rounded-full border-4 border-blue-600/20 border-t-blue-600 animate-spin" />

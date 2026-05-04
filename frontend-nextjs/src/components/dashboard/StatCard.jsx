@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 import { 
   Eye, PhoneCall, Star, MessagesSquare, 
   ArrowUpRight, ArrowDownRight, Zap, 
@@ -17,7 +18,22 @@ const Icons = {
 }
 
 export function StatCard({ label, value, icon, trend, index }) {
+  const t = useTranslations("dashboard.stats_labels")
   const Icon = Icons[icon] || Eye
+
+  // Map backend labels (French) to translation keys
+  const labelMap = {
+    "Missions Dispos": "missions_dispos",
+    "Devis Soumis": "devis_soumis",
+    "Missions Terminées": "missions_terminees",
+    "Note Globale": "note_globale",
+    "Missions Postées": "missions_postees",
+    "Dépenses Totales": "depenses_totales"
+  }
+
+  const translationKey = labelMap[label]
+  const translatedLabel = translationKey ? t(translationKey) : label
+
   const isPositive = trend?.startsWith('+')
   
   // Custom color palettes based on index for a premium enterprise look
@@ -69,7 +85,7 @@ export function StatCard({ label, value, icon, trend, index }) {
          <h4 className="text-4xl lg:text-[40px] font-black tracking-tight text-slate-900 dark:text-white flex items-baseline gap-1">
            {value}
          </h4>
-         <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{label}</p>
+         <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{translatedLabel}</p>
       </div>
       
       {/* Subtle border bottom gradient on hover */}

@@ -23,7 +23,7 @@ export function BottomNav() {
 
   const navItems = user?.type === 'artisan' ? [
     { href: "/dashboard/artisan", icon: BarChart3, label: t("dashboard") },
-    { href: "/dashboard/artisan/calendar", icon: Calendar, label: "Planning" },
+    { href: "/dashboard/artisan/calendar", icon: Calendar, label: t("planning") },
     { href: "/dashboard/artisan/jobs", icon: ClipboardList, label: t("my_requests") },
     { href: "/dashboard/artisan/subscription", icon: CreditCard, label: t("subscription") },
     { href: "/dashboard/artisan/complaints", icon: AlertTriangle, label: t("my_complaints") },

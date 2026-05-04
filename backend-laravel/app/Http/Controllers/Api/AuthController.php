@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Artisan;
 use App\Models\Client;
 use App\Models\Commune;
+use App\Models\Wilaya;
 use App\Models\CategorieMetier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,7 @@ class AuthController extends Controller
     // Inscription d'un nouvel utilisateur (client ou artisan)
     public function register(RegisterRequest $request)
     {
+        \Illuminate\Support\Facades\Log::info('--- TENTATIVE D\'INSCRIPTION ---', ['email' => $request->email]);
         try {
             // On vérifie qu'il existe au moins une catégorie de métier avant de créer un artisan
             if ($request->type === 'artisan' && !CategorieMetier::query()->exists()) {
@@ -55,9 +57,11 @@ class AuthController extends Controller
                 ], 409);
             }
 
-            // Wilaya et commune par défaut : Alger (id=16)
-            $defaultWilayaId = 16;
-            $defaultCommuneId = Commune::where('wilaya_id', $defaultWilayaId)->value('id') ?? Commune::query()->value('id');
+            // Wilaya et commune par défaut : Alger (id=16), avec fallback si les tables sont vides
+            $defaultWilayaId = Wilaya::query()->value('id') ?? null;
+            $defaultCommuneId = $defaultWilayaId
+                ? (Commune::where('wilaya_id', $defaultWilayaId)->value('id') ?? Commune::query()->value('id'))
+                : null;
 
             // On utilise une transaction pour que l'utilisateur et son profil soient créés ensemble
             $user = DB::transaction(function () use ($request, $defaultWilayaId, $defaultCommuneId) {
@@ -72,24 +76,24 @@ class AuthController extends Controller
 
                 // Création du profil client
                 if ($createdUser->type === 'client') {
-                    Client::create([
-                        'user_id'    => $createdUser->id,
-                        'wilaya_id'  => $defaultWilayaId,
-                        'commune_id' => $defaultCommuneId,
-                    ]);
+                    $clientData = ['user_id' => $createdUser->id];
+                    if ($defaultWilayaId) $clientData['wilaya_id'] = $defaultWilayaId;
+                    if ($defaultCommuneId) $clientData['commune_id'] = $defaultCommuneId;
+                    Client::create($clientData);
                 }
 
                 // Création du profil artisan (en attente de validation)
                 if ($createdUser->type === 'artisan') {
                     $defaultCategoryId = CategorieMetier::query()->value('id');
-                    Artisan::create([
+                    $artisanData = [
                         'user_id'          => $createdUser->id,
-                        'categorie_id'     => $defaultCategoryId,
-                        'wilaya_id'        => $defaultWilayaId,
-                        'commune_id'       => $defaultCommuneId,
                         'statutValidation' => 'en_attente',
                         'disponibilite'    => 'indisponible',
-                    ]);
+                    ];
+                    if ($defaultCategoryId) $artisanData['categorie_id'] = $defaultCategoryId;
+                    if ($defaultWilayaId) $artisanData['wilaya_id'] = $defaultWilayaId;
+                    if ($defaultCommuneId) $artisanData['commune_id'] = $defaultCommuneId;
+                    Artisan::create($artisanData);
                 }
 
                 return $createdUser;
@@ -99,7 +103,12 @@ class AuthController extends Controller
             Auth::login($user);
 
             // Déclenche l'événement d'inscription (envoi de l'email de vérification)
-            event(new Registered($user));
+            // On enveloppe dans un try-catch pour que l'échec d'envoi d'email ne bloque pas l'inscription
+            try {
+                event(new Registered($user));
+            } catch (\Throwable $mailError) {
+                \Illuminate\Support\Facades\Log::warning('Email de vérification non envoyé', ['error' => $mailError->getMessage()]);
+            }
 
             $user->load(['client', 'artisan.categories', 'artisan.wilayas', 'artisan.abonnement']);
             $user->needs_artisan_onboarding = $this->needsArtisanOnboarding($user);
@@ -111,24 +120,41 @@ class AuthController extends Controller
             ], 201);
 
         } catch (QueryException $e) {
-            // Erreur de doublon au niveau de la base de données
+            \Illuminate\Support\Facades\Log::error('Register QueryException', ['code' => $e->getCode(), 'msg' => $e->getMessage()]);
+
+            // Erreur d'intégrité (doublon ou clé étrangère manquante)
             if ((string) $e->getCode() === '23000') {
+                // Vérifier si c'est un vrai doublon (code MySQL 1062) ou une clé étrangère (1452)
+                $mysqlCode = $e->errorInfo[1] ?? 0;
+
+                if ($mysqlCode === 1062) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Email ou téléphone déjà utilisé.',
+                        'errors' => [
+                            'duplicate' => ['Cette adresse email ou ce numéro de téléphone est déjà utilisé.'],
+                        ],
+                    ], 409);
+                }
+
+                // Clé étrangère ou autre contrainte
                 return response()->json([
                     'success' => false,
-                    'message' => 'Email ou téléphone déjà utilisé.',
+                    'message' => 'Erreur de configuration serveur. Veuillez contacter le support.',
                     'errors' => [
-                        'duplicate' => ['Cette adresse email ou ce numéro de téléphone est déjà utilisé.'],
+                        'server' => ['Données de référence manquantes (wilayas/communes). Contactez l\'administrateur.'],
                     ],
-                ], 409);
+                ], 500);
             }
 
             throw $e;
         } catch (Throwable $e) {
+            \Illuminate\Support\Facades\Log::error('Register Throwable', ['class' => get_class($e), 'msg' => $e->getMessage(), 'file' => $e->getFile(), 'line' => $e->getLine()]);
             return response()->json([
                 'success' => false,
                 'message' => 'Erreur serveur lors de la création du compte.',
                 'errors' => [
-                    'server' => ['Veuillez réessayer dans quelques instants.'],
+                    'server' => [$e->getMessage()],
                 ],
             ], 500);
         }
@@ -137,25 +163,45 @@ class AuthController extends Controller
     // Connexion d'un utilisateur existant
     public function login(LoginRequest $request)
     {
+        \Illuminate\Support\Facades\Log::info('--- TENTATIVE DE CONNEXION ---', [
+            'email' => $request->email,
+            'role' => $request->role,
+            'ip' => $request->ip()
+        ]);
+        
         $user = User::where('email', $request->email)->first();
+        \Illuminate\Support\Facades\Log::info('Utilisateur trouvé ?', ['found' => !!$user]);
 
         // Vérification du mot de passe
         if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Les identifiants fournis sont incorrects.'],
-            ]);
+            \Illuminate\Support\Facades\Log::info('Échec mot de passe');
+            return response()->json([
+                'success' => false,
+                'message' => 'Les identifiants fournis sont incorrects.',
+                'errors' => ['email' => ['Les identifiants fournis sont incorrects.']]
+            ], 422);
         }
 
         // Le rôle demandé doit correspondre au type du compte
         if ($request->filled('role') && $request->role !== $user->type) {
-            throw ValidationException::withMessages([
-                'role' => ['Le rôle sélectionné ne correspond pas à ce compte.'],
-            ]);
+            \Illuminate\Support\Facades\Log::info('Échec rôle', ['expected' => $user->type, 'got' => $request->role]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Le rôle sélectionné ne correspond pas à ce compte.',
+                'errors' => ['role' => ['Le rôle sélectionné ne correspond pas à ce compte.']]
+            ], 422);
         }
 
+        \Illuminate\Support\Facades\Log::info('Authentification en cours...');
         Auth::login($user);
+        
+        \Illuminate\Support\Facades\Log::info('Chargement des relations...');
         $user->load(['client', 'artisan.categories', 'artisan.wilayas', 'artisan.abonnement']);
+        
+        \Illuminate\Support\Facades\Log::info('Calcul onboarding...');
         $user->needs_artisan_onboarding = $this->needsArtisanOnboarding($user);
+
+        \Illuminate\Support\Facades\Log::info('Login terminé avec succès');
 
         return response()->json([
             'success' => true,

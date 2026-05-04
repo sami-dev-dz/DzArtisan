@@ -7,7 +7,9 @@
     "submit": "Submit",
     "loading": "Loading...",
     "error": "An error occurred.",
-    "success": "Operation successful.",
+    "success": "Success",
+    "access_denied": "Access Denied",
+    "client_only": "This area is reserved for clients.",
     "search": "Search",
     "see_more": "See more",
     "see_all": "View all notifications",
@@ -31,6 +33,12 @@
     "next": "Next",
     "back": "Back"
   },
+  "cookie_consent": {
+    "title": "We respect your privacy",
+    "description": "We use cookies to improve your experience, analyze traffic and serve relevant ads. By clicking \"Accept all\", you consent to our use of cookies.",
+    "accept_all": "Accept all",
+    "manage_preferences": "Manage preferences"
+  },
   "navigation": {
     "home": "Home",
     "login": "Login",
@@ -45,7 +53,11 @@
     "subscription": "Subscription",
     "my_complaints": "My complaints",
     "admin_dashboard": "Admin Dashboard",
-    "contact_locations": "Alger, Béjaïa"
+    "contact_locations": "Alger, Béjaïa",
+    "planning": "Planning",
+    "heading_main": "MAIN",
+    "heading_activity": "ACTIVITY",
+    "heading_billing": "BILLING"
   },
   "hero": {
     "badge": "THE REFERENCE IN ALGERIA 🇩🇿",
@@ -154,6 +166,16 @@
         "benefit": "Best value with continuous visibility all year",
         "badge": "Best value"
       }
+    },
+    "banner": {
+      "active_title": "Active Subscription",
+      "active_desc": "You have {days} days left on your {plan} subscription.",
+      "warning_title": "Expiring Soon",
+      "warning_desc": "Your subscription expires in {days} days. Renew it to keep your visibility.",
+      "warning_btn": "Renew",
+      "expired_title": "Subscription Expired",
+      "expired_desc": "Your profile is no longer visible to new clients. Renew your subscription!",
+      "expired_btn": "Reactivate"
     }
   },
   "authentication": {
@@ -164,9 +186,11 @@
     "tab_client": "I'm a Client",
     "tab_artisan": "I'm an Artisan",
     "email_label": "Email address",
+    "email_hint": "We'll never share your email.",
     "email_placeholder": "your@email.com",
     "email_invalid": "Invalid email format.",
     "password_label": "Password",
+    "password_hint": "Use a complex password.",
     "password_placeholder": "••••••••",
     "password_min_length": "Password must be at least 8 characters.",
     "forgot_link": "Forgot password?",
@@ -185,6 +209,7 @@
     "btn_login": "Sign In",
     "btn_register": "Sign Up",
     "btn_submitting": "Please wait...",
+    "trust_signal": "Secure login by DzArtisan",
     "or_continue_with": "Or continue with",
     "google_btn": "Sign in with Google",
     "oauth_coming_soon_title": "Feature coming soon",
@@ -196,6 +221,10 @@
     "forgot_title": "Forgot Password?",
     "forgot_subtitle": "Enter your email to receive a secure reset link.",
     "btn_send_link": "Send reset link",
+    "show_password": "Show password",
+    "hide_password": "Hide password",
+    "no_account_prefix": "Don't have an account?",
+    "no_account_action": "Sign up",
     "forgot_success_msg": "If this email exists in our system, a reset link has been sent to you.",
     "back_to_login": "Back to login",
     "reset_title": "New Password",
@@ -205,8 +234,6 @@
     "invalid_token": "The reset link is invalid or expired.",
     "btn_request_new": "Request a new link",
     "network_error": "Server is unreachable. Please check your connection.",
-    "no_account": "Don't have an account? Sign up",
-    "have_account": "Already have an account? Sign in",
     "no_account_prefix": "Don't have an account?",
     "no_account_action": "Sign up",
     "have_account_prefix": "Already have an account?",
@@ -397,6 +424,12 @@
       }
     },
     "subscription_management": {
+      "refresh": "Refresh",
+      "manual_activation": {
+        "btn": "Manual Activation",
+        "search_artisan": "Search for an artisan...",
+        "success": "Operation successful"
+      },
       "title": "Subscription Management",
       "subtitle": "Track revenue, validate manual payments, and manage activation periods.",
       "tabs": {
@@ -627,6 +660,10 @@
     "about_placeholder": "Ex: I am a certified plumber with 5 years of experience. I specialize in boiler installation...",
     "about_min_chars": "{count} minimum characters required.",
     "availability_title": "Current Availability",
+    "available": "Available",
+    "unavailable": "Unavailable",
+    "on": "On",
+    "off": "Off",
     "availability_desc": "Indicate if you are ready to receive requests immediately.",
     "docs_title": "Professional Documents",
     "docs_desc": "Adding documents greatly increases your contact rate and unlocks the 'Verified' badge.",
@@ -678,6 +715,7 @@
     "profile": "My Profile",
     "greeting": "Hello",
     "artisan_verified": "Verified Artisan",
+    "welcome_subtitle": "Your centralized dashboard. Ready to turn new opportunities into exceptional achievements?",
     "opportunities_title": "Job Opportunities",
     "opportunities_desc": "Based on your specialties and wilayas.",
     "growth_title": "Growth",
@@ -692,9 +730,142 @@
     },
     "no_requests": "No requests found",
     "no_requests_hint": "Expand your wilayas or specialties for more visibility.",
+    "view_all": "View All",
     "support_title": "Premium Support",
     "support_desc": "Need help improving your profile?",
-    "support_btn": "Contact Support"
+    "support_btn": "Contact Support",
+    "request_default_title": "Service Request",
+    "category_default": "General Works",
+    "wilaya_default": "Algiers",
+    "urgent_label": "Urgent",
+    "view_details": "View Details",
+    "stats_labels": {
+      "missions_dispos": "Available Jobs",
+      "devis_soumis": "Quotes Submitted",
+      "missions_terminees": "Jobs Completed",
+      "note_globale": "Overall Rating",
+      "missions_postees": "Requests Posted",
+      "depenses_totales": "Total Spent"
+    },
+    "profile_page": {
+      "title": "My Profile",
+      "subtitle": "Update your information to remain attractive to clients.",
+      "professional_profile": "Professional Profile",
+      "completeness": "Completeness",
+      "identity_contact": "Identity & Contact",
+      "identity_contact_desc": "Your public face on the platform",
+      "change": "Change",
+      "full_name": "Full Name",
+      "phone": "Phone",
+      "phone_visible": "Visible to clients",
+      "phone_hidden": "Hidden from clients",
+      "whatsapp_link": "WhatsApp Link",
+      "generate_from_phone": "Generate from phone",
+      "main_job": "Main Profession",
+      "expertise_domain": "Your domain of expertise",
+      "select_job": "Select your profession...",
+      "intervention_zones": "Intervention Zones",
+      "intervention_zones_desc": "The wilayas where you work",
+      "search_wilaya": "Search a wilaya...",
+      "no_wilaya_selected": "No wilaya selected",
+      "experience_presentation": "Experience & Presentation",
+      "experience_presentation_desc": "Describe your professional background",
+      "years_experience": "Years of experience",
+      "shown_on_public_profile": "Shown on your public profile",
+      "availability": "Availability",
+      "available": "Available — Ready to receive missions",
+      "unavailable": "Currently unavailable",
+      "professional_description": "Professional description",
+      "description_placeholder": "Describe your experience, specialties, work approach...",
+      "excellent_length": "✓ Excellent length",
+      "min_length_required": "/150 minimum required",
+      "profile_checklist": "Profile Checklist",
+      "checklist_desc": "Complete each point to maximize your visibility",
+      "saving": "Saving...",
+      "save_changes": "Save changes",
+      "edit_name_title": "Edit your name",
+      "name_warning": "⚠️ Your name must match your real identity. Frequent changes may impact your verification badge.",
+      "name_placeholder": "Your full name",
+      "confirm_change": "Confirm change",
+      "loading_profile": "Loading profile...",
+      "update_success": "Profile successfully updated!",
+      "upload_success": "Photo uploaded successfully",
+      "file_too_large": "File too large (max 5 MB)",
+      "checklist_items": {
+        "photo": "Profile Photo",
+        "whatsapp": "WhatsApp",
+        "description": "Description (+150 chars)",
+        "experience": "Years of experience",
+        "wilayas": "Intervention Wilayas"
+      }
+    },
+    "portfolio": {
+      "title": "Portfolio Gallery",
+      "limit_reached": "Limit reached (10 photos max)",
+      "file_too_large": "File too large (max 5 MB)",
+      "add_success": "Photo added to portfolio",
+      "add_error": "Error while adding",
+      "delete_success": "Photo deleted",
+      "delete_error": "Error while deleting",
+      "description": "Add up to 10 photos of your work to convince clients. ({count}/10)",
+      "uploading": "Uploading...",
+      "add_photo": "Add photo",
+      "item_alt": "Portfolio item",
+      "empty_title": "Your portfolio is empty",
+      "empty_desc": "Artisans with photos of their work receive 3x more requests."
+    },
+    "calendar": {
+      "title": "Absence Calendar",
+      "description": "Block days when you do not wish to receive new requests.",
+      "add_unavailability": "Add unavailability",
+      "start_date": "Start Date",
+      "end_date": "End Date",
+      "reason_optional": "Reason (Optional)",
+      "reason_placeholder": "Ex: Vacation",
+      "add_success": "Blocked period added",
+      "add_error": "Error while adding",
+      "delete_success": "Period unblocked",
+      "delete_error": "Error while deleting",
+      "from_to": "From {start} to {end}",
+      "blocked_period": "Blocked period",
+      "no_unavailability": "No planned unavailability period."
+    },
+    "artisan_calendar": {
+      "title": "My Schedule",
+      "subtitle": "Manage your availability and interventions",
+      "interventions": "Interventions",
+      "unavailable": "Unavailable",
+      "add_unavailability": "Add unavailability",
+      "period": "Period",
+      "from": "From",
+      "to": "to",
+      "reason_optional": "Reason (Optional)",
+      "reason_placeholder": "Ex: Vacation, Illness...",
+      "confirm": "Confirm unavailability",
+      "delete_confirm": "Do you want to delete this unavailability?",
+      "delete_error": "Deletion error"
+    }
+  },
+  "dashboard_client": {
+    "greeting": "Hello, {name}!",
+    "subtitle": "Find the best artisans for your projects.",
+    "new_request": "New Request",
+    "active_requests": "Active Requests",
+    "pending": "Pending",
+    "completed": "Completed",
+    "recent_requests": "Recent Requests",
+    "view_all": "View All",
+    "status": {
+      "en_attente": "Pending",
+      "acceptee": "Accepted",
+      "terminee": "Completed",
+      "annulee": "Cancelled"
+    },
+    "propositions": "{count, plural, =0 {No proposals} one {1 proposal} other {# proposals}}",
+    "my_reviews": "My Reviews",
+    "reviews_subtitle": "View your ratings",
+    "my_complaints": "My Complaints",
+    "complaints_subtitle": "Report an issue"
   },
   "subscription": {
     "title": "Subscription Management",
@@ -726,7 +897,25 @@
     "table_amount": "Amount",
     "table_method": "Method",
     "table_status": "Status",
-    "download_receipt": "Receipt"
+    "download_receipt": "Receipt",
+    "unsupported_format": "Unsupported format (JPG, PNG, WEBP, PDF).",
+    "max_size": "Maximum size is 2 MB.",
+    "upload_success": "Receipt uploaded successfully.",
+    "receipt_unavailable": "Receipt is only available for confirmed payments.",
+    "generating_receipt": "Generating receipt...",
+    "download_error": "Error downloading invoice.",
+    "free_plan_title": "You are currently on the Free Plan",
+    "free_plan_desc": "Choose a paid plan below to access all Premium features.",
+    "popular": "Popular",
+    "none": "NONE",
+    "na": "N/A",
+    "no_transaction": "No transaction found.",
+    "edahabia_info": "You will be redirected to the secure Edahabia/CIB payment platform.",
+    "card_number": "Card Number",
+    "expiration": "Expiration",
+    "cvv": "CVV",
+    "copy": "Copy",
+    "receipt_uploaded": "Receipt uploaded"
   },
   "search": {
     "placeholder": "Search by name or specialty...",
@@ -761,58 +950,8 @@
     "verified_profile": "Official Profile",
     "exp_years": "{count} years exp."
   },
-  "wizard": {
-    "steps": {
-      "details": "Details",
-      "location": "Location",
-      "photos": "Photos & Send"
-    },
-    "step1": {
-      "title": "Intervention details",
-      "headline": "What are you looking for?",
-      "request_title": "Request title",
-      "request_title_placeholder": "Ex: Kitchen sink leak repair",
-      "category": "Service category",
-      "description": "Problem description",
-      "description_placeholder": "Explain your need precisely (materials, urgency, symptoms...)",
-      "preferred_date": "Preferred date",
-      "date_hint": "Leave blank if flexible",
-      "next": "Next Step"
-    },
-    "step2": {
-      "title": "Where is the intervention?",
-      "method_title": "How do you want to indicate your location?",
-      "auto_geo": "Automatic Geolocation",
-      "auto_geo_desc": "Fast and 100% accurate",
-      "manual_entry": "Manual Entry",
-      "manual_entry_desc": "For a different address",
-      "geo_btn": "Allow us to locate you",
-      "geo_denied": "Access denied. Please use manual entry.",
-      "wilaya": "Select your Wilaya",
-      "commune": "Select your Commune",
-      "address": "Address details (Quarter, No, Floor...)",
-      "map_hint": "You can drag the pin for more precision",
-      "back": "Previous",
-      "next": "Final Step"
-    },
-    "step3": {
-      "title": "Photos & Summary",
-      "upload_title": "Add photos (max 5)",
-      "upload_hint": "Drag and drop or click to browse",
-      "upload_formats": "Formats: JPG, PNG, WebP (Max 5MB)",
-      "summary_title": "Request Summary",
-      "edit_step": "Edit step",
-      "submit": "Publish my request",
-      "submitting": "Publishing..."
-    },
-    "success": {
-      "title": "Request published!",
-      "message": "Your request has been successfully recorded. Artisans in your area can now contact you.",
-      "explanation": "You will receive proposals directly via phone or WhatsApp.",
-      "view_requests": "View my requests",
-      "back_home": "Back to Home"
-    },
-    "client": {
+
+  "client": {
       "requests": {
         "title": "My Service Requests",
         "subtitle": "Follow your requests and consult artisan proposals.",
@@ -821,6 +960,9 @@
           "archived": "Archived",
           "all": "All"
         },
+        "new_request_btn": "New Request",
+        "search_placeholder": "Search by title or job...",
+        "publish_first_btn": "Publish my first request",
         "status": {
           "en_attente": "Waiting for responses",
           "acceptee": "Accepted",
@@ -828,7 +970,7 @@
           "annulee": "Canceled"
         },
         "card": {
-          "responses": "{count} proposals",
+          "responses": "{count, plural, =0 {No proposals} one {1 proposal} other {# proposals}}",
           "posted_on": "Posted on {date}",
           "view_details": "View Details",
           "no_requests": "You have no requests in this category."
@@ -842,7 +984,17 @@
           "no_proposals": "No proposals yet. We have notified artisans in your area.",
           "cancel_request": "Cancel Request",
           "cancel_confirm": "Are you sure? This action is irreversible.",
-          "accept_proposal": "Accept this proposal"
+          "accept_proposal": "Accept this proposal",
+          "modifiable": "Modifiable",
+          "locked": "Locked",
+          "edit": "Edit",
+          "download_quote": "Download Quote",
+          "phone": "Phone",
+          "not_provided": "Not provided",
+          "proposals": "Proposals ({count})",
+          "chosen": "Chosen",
+          "contacted_btn": "I contacted this artisan",
+          "default_proposal_message": "Hello, I am available for this intervention. Contact me to discuss it."
         },
         "proposal": {
           "experience": "{years} yrs exp.",
@@ -850,6 +1002,81 @@
           "contact_call": "Call",
           "accept_btn": "Choose this artisan"
         }
+      }
+    },
+    "client_reviews": {
+      "title": "My Reviews",
+      "count": "{count} review{count, plural, one {} other {s}} left",
+      "retry": "Retry",
+      "empty_title": "No reviews yet",
+      "empty_desc": "Your reviews will appear here after evaluating an artisan following a completed intervention.",
+      "artisan_label": "Artisan"
+    },
+    "client_complaints": {
+      "title": "My Complaints",
+      "subtitle": "Report an issue related to an intervention or an artisan.",
+      "new_btn": "New complaint",
+      "retry": "Retry",
+      "empty_title": "No complaints",
+      "empty_desc": "You have no ongoing complaints. If you encounter an issue, feel free to submit one.",
+      "linked_to": "Linked to intervention #{id}",
+      "admin_reply": "Administration reply:",
+      "info_note": "💡 Complaints are reviewed by our team within 24h. You will receive a notification as soon as an update is available.",
+      "form": {
+        "title": "Submit a complaint",
+        "subtitle": "Describe your issue in detail. Our team will respond within 24h.",
+        "select_intervention": "Select the relevant intervention",
+        "select_placeholder": "Select an intervention",
+        "subject_label": "Complaint subject",
+        "subject_placeholder": "Ex: Problem with the artisan, work not finished...",
+        "desc_label": "Detailed description",
+        "desc_placeholder": "Explain in detail the problem encountered...",
+        "cancel": "Cancel",
+        "submit": "Send complaint",
+        "submitting": "Sending...",
+        "error_fields": "Please fill in all fields.",
+        "error_min_length": "Description must be at least 20 characters.",
+        "error_send": "Error sending complaint. Please contact support."
+      },
+      "status": {
+        "ouverte": "Open",
+        "en_cours": "In progress",
+        "resolue": "Resolved",
+        "fermee": "Closed"
+      }
+    },
+    "artisan_complaints": {
+      "title": "My Complaints",
+      "subtitle": "Report an issue related to an intervention or a client.",
+      "new_btn": "New complaint",
+      "retry": "Retry",
+      "error_loading": "Loading error",
+      "empty_title": "No complaints",
+      "empty_desc": "You have no ongoing complaints. If you encounter an issue, feel free to submit one.",
+      "linked_to": "Linked to intervention #{id}",
+      "admin_reply": "Administration reply:",
+      "info_note": "💡 Complaints are reviewed by our team within 24h. You will receive a notification as soon as an update is available.",
+      "form": {
+        "title": "Submit a complaint",
+        "subtitle": "Describe your issue in detail. Our team will respond within 24h.",
+        "select_intervention": "Select the relevant intervention",
+        "select_placeholder": "Select an intervention",
+        "subject_label": "Complaint subject",
+        "subject_placeholder": "Ex: Problem with the client, unjustified cancellation...",
+        "desc_label": "Detailed description",
+        "desc_placeholder": "Explain in detail the problem encountered...",
+        "cancel": "Cancel",
+        "submit": "Send complaint",
+        "submitting": "Sending...",
+        "error_fields": "Please fill in all fields.",
+        "error_min_length": "Description must be at least 20 characters.",
+        "error_send": "Error sending complaint. Please contact support."
+      },
+      "status": {
+        "ouverte": "Open",
+        "en_cours": "In progress",
+        "resolue": "Resolved",
+        "fermee": "Closed"
       }
     },
     "artisan": {
@@ -919,6 +1146,96 @@
           "no_active": "You currently have no active interventions. Check the job board for new opportunities.",
           "no_history": "Your intervention history is empty."
         }
+      },
+      "interventions": {
+        "history": {
+          "title": "My Interventions",
+          "count": "{count, plural, =0 {No requests} one {1 request} other {# requests}}",
+          "new_request": "New Request",
+          "empty_title": "No Interventions",
+          "empty_desc": "You haven't published any intervention requests on the platform yet.",
+          "empty_btn": "Publish my first request",
+          "loading_error": "Error loading",
+          "retry": "Retry",
+          "cancel_confirm": "Do you really want to cancel the request \"{title}\"?",
+          "cancel_error": "Error during cancellation"
+        }
+      },
+      "wizard": {
+      "steps": {
+        "details": "Details",
+        "location": "Location",
+        "summary": "Validation"
+      },
+      "step1": {
+        "title": "Describe your need",
+        "subtitle": "Provide as much detail as possible to receive the best proposals.",
+        "fields": {
+          "title": "Request title *",
+          "title_placeholder": "Ex: Sink leak repair",
+          "category": "Service category *",
+          "category_placeholder": "Select a professional category...",
+          "description": "Problem description *",
+          "description_placeholder": "Explain precisely your need (material needed, urgency, symptoms...)",
+          "phone": "Phone number *",
+          "whatsapp": "WhatsApp",
+          "whatsapp_optional": "(optional)",
+          "whatsapp_placeholder": "wa.me/213…",
+          "generate": "Generate",
+          "link_generated": "Link generated",
+          "test": "Test",
+          "date": "Preferred date",
+          "date_optional": "(optional)",
+          "date_info": "Leave blank if you are flexible"
+        },
+        "errors": {
+          "title_short": "Title too short (minimum 5 characters)",
+          "category_required": "Please choose a category",
+          "description_short": "Description must be at least 20 characters",
+          "phone_invalid": "Please enter a valid phone number"
+        },
+        "next": "Next step"
+      },
+      "step2": {
+        "title": "Location",
+        "subtitle": "Indicate the location of the intervention to find nearby artisans.",
+        "fields": {
+          "wilaya": "Wilaya *",
+          "wilaya_placeholder": "Select a wilaya...",
+          "commune": "Commune *",
+          "commune_placeholder": "Select a commune...",
+          "address": "Address complement (District, No., Floor...)",
+          "address_placeholder": "Ex: District 500, Building B, 3rd floor"
+        },
+        "errors": {
+          "wilaya_required": "Please select a wilaya",
+          "commune_required": "Please select a commune"
+        },
+        "map_info": "Click on the map or move the marker for more precision",
+        "back": "Previous",
+        "next": "Validate"
+      },
+      "step3": {
+        "title": "Summary",
+        "subtitle": "Check the information before publishing your request.",
+        "sections": {
+          "details": "Request details",
+          "location": "Location"
+        },
+        "fields": {
+          "title": "Title",
+          "category": "Category",
+          "description": "Description",
+          "phone": "Phone",
+          "whatsapp": "WhatsApp",
+          "date": "Date",
+          "location_auto": "Geolocation ({lat}, {lng})"
+        },
+        "modify": "Edit",
+        "back": "Previous",
+        "submit": "Publish my request",
+        "submitting": "Publishing...",
+        "error_general": "An error occurred during publication"
       }
     }
   }

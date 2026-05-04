@@ -83,7 +83,7 @@ export const MyRequests = () => {
         <Link href="/dashboard/client/interventions/new">
           <button className="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl shadow-lg shadow-blue-500/20 transition-all font-bold group">
             <PlusCircle className="w-5 h-5 group-hover:rotate-90 transition-transform" />
-            <span>Nouvelle demande</span>
+            <span>{t('new_request_btn') || "Nouvelle demande"}</span>
           </button>
         </Link>
       </div>
@@ -113,7 +113,7 @@ export const MyRequests = () => {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input 
             type="text" 
-            placeholder="Rechercher par titre ou métier..."
+            placeholder={t('search_placeholder') || "Rechercher par titre ou métier..."}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-11 pr-4 py-3 bg-transparent border-0 ring-1 ring-gray-100 dark:ring-gray-800 focus:ring-2 focus:ring-blue-500 rounded-2xl text-sm text-gray-900 dark:text-white transition-all outline-none"
@@ -165,7 +165,7 @@ export const MyRequests = () => {
             </p>
             <Link href="/dashboard/client/interventions/new">
               <span className="text-blue-600 font-black text-sm uppercase tracking-widest hover:underline cursor-pointer">
-                Publier ma première demande
+                {t('publish_first_btn') || "Publier ma première demande"}
               </span>
             </Link>
           </div>

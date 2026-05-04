@@ -26,18 +26,31 @@ class InterventionController extends Controller
     {
         $user      = Auth::user();
         $validated = $request->validated();
+        
+        $client = $user->client;
+        if (!$client) {
+            $client = $user->client()->create([
+                'wilaya_id'  => $validated['wilaya_id'] ?? 16,
+                'commune_id' => $validated['commune_id'] ?? 1,
+            ]);
+        }
 
         // On crée la demande et ses photos dans une seule transaction
-        $demande = DB::transaction(function () use ($validated, $user, $request) {
+        $demande = DB::transaction(function () use ($validated, $client, $request) {
             $demande = DemandeIntervention::create([
-                'client_id'    => $user->client->id,
-                'categorie_id' => $validated['categorie_id'],
-                'wilaya_id'    => $validated['wilaya_id'],
-                'commune_id'   => $validated['commune_id'],
-                'titre'        => $validated['titre'],
-                'description'  => $validated['description'],
-                'adresse'      => $validated['adresse'],
-                'statut'       => 'en_attente'
+                'client_id'      => $client->id,
+                'categorie_id'   => $validated['categorie_id'],
+                'wilaya_id'      => $validated['wilaya_id'],
+                'commune_id'     => $validated['commune_id'],
+                'titre'          => $validated['titre'],
+                'description'    => $validated['description'],
+                'adresse'        => $validated['adresse'] ?? null,
+                'latitude'       => $validated['latitude'] ?? null,
+                'longitude'      => $validated['longitude'] ?? null,
+                'telephone'      => $validated['telephone'] ?? null,
+                'whatsapp'       => $validated['whatsapp'] ?? null,
+                'date_souhaitee' => $validated['date_souhaitee'] ?? null,
+                'statut'         => 'en_attente'
             ]);
 
             // On enregistre les photos attachées à la demande si elles existent
@@ -64,28 +77,42 @@ class InterventionController extends Controller
             ->get();
 
         if ($artisans->isNotEmpty()) {
-            Notification::send($artisans->pluck('user'), new NewJobNotification($demande));
+            try {
+                // Il est nécessaire de charger la relation categorie pour la notification
+                $demande->load(['categorie', 'wilaya']);
+                Notification::send($artisans->pluck('user'), new NewJobNotification($demande));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Impossible d\'envoyer la notification de nouveau job', ['error' => $e->getMessage()]);
+            }
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Request posted successfully',
-            'data'    => ['id' => $demande->id]
+            'message' => 'Demande publiée avec succès',
+            'data'    => $demande
         ], 201);
     }
 
     // Retourne la liste des interventions affectées à l'artisan connecté
     public function index(Request $request)
     {
-        $user    = Auth::user();
-        $artisan = $user->artisan;
-
-        if (!$artisan) {
-            return response()->json(['message' => 'Artisan profile not found'], 404);
+        $user = Auth::user();
+        
+        if ($user->type === 'client') {
+            $client = $user->client;
+            if (!$client) {
+                return response()->json(['message' => 'Client profile not found'], 404);
+            }
+            $query = DemandeIntervention::where('client_id', $client->id)
+                ->with(['categorie', 'wilaya', 'commune', 'photos', 'artisan.user', 'avis']);
+        } else {
+            $artisan = $user->artisan;
+            if (!$artisan) {
+                return response()->json(['message' => 'Artisan profile not found'], 404);
+            }
+            $query = DemandeIntervention::where('artisan_id', $artisan->id)
+                ->with(['categorie', 'wilaya', 'commune', 'photos', 'client.user', 'avis']);
         }
-
-        $query = DemandeIntervention::where('artisan_id', $artisan->id)
-            ->with(['categorie', 'wilaya', 'commune', 'photos', 'client.user']);
 
         // Filtre optionnel : active = en cours, history = terminées ou annulées
         $status = $request->query('status');

@@ -60,11 +60,11 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
               {request.titre}
               {request.statut === 'en_attente' ? (
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20 text-[10px] font-black uppercase text-emerald-700 dark:text-emerald-400 tracking-widest shadow-sm">
-                   <Unlock className="w-3 h-3" /> Modifiable
+                   <Unlock className="w-3 h-3" /> {t('details.modifiable')}
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 tracking-widest shadow-sm">
-                   <Lock className="w-3 h-3" /> Verrouillé
+                   <Lock className="w-3 h-3" /> {t('details.locked')}
                 </span>
               )}
             </h2>
@@ -82,7 +82,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
               className="text-blue-500 border-blue-200 hover:text-blue-600 hover:bg-blue-50 font-bold gap-2"
             >
               <Pencil className="w-4 h-4" />
-              <span className="hidden sm:inline">Modifier</span>
+              <span className="hidden sm:inline">{t('details.edit')}</span>
             </Button>
             <Button 
               variant="ghost" 
@@ -118,7 +118,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
               className="text-emerald-600 border-emerald-200 hover:text-emerald-700 hover:bg-emerald-50 font-bold gap-2"
             >
               <Download className="w-4 h-4" />
-              <span className="hidden sm:inline">Télécharger Devis</span>
+              <span className="hidden sm:inline">{t('details.download_quote')}</span>
             </Button>
           </div>
         )}
@@ -184,7 +184,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
                 <Phone className="w-5 h-5 text-slate-700 dark:text-slate-300" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] text-gray-500 font-bold uppercase truncate">Téléphone</p>
+                <p className="text-[10px] text-gray-500 font-bold uppercase truncate">{t('details.phone')}</p>
                 <p className="text-sm font-bold text-gray-900 dark:text-white tracking-widest font-mono truncate">{request.telephone}</p>
               </div>
             </div>
@@ -208,7 +208,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
                  </div>
                  <div className="min-w-0 flex-1">
                    <p className="text-[10px] text-gray-500 font-bold uppercase truncate">WhatsApp</p>
-                   <p className="text-sm font-bold text-gray-500 truncate">Non renseigné</p>
+                   <p className="text-sm font-bold text-gray-500 truncate">{t('details.not_provided')}</p>
                  </div>
                </div>
             )}
@@ -220,7 +220,7 @@ export const RequestDetail = ({ request, onBack, onUpdate }) => {
           <div className="sticky top-24 space-y-4">
             <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
               <Users className="w-5 h-5 text-emerald-500" />
-              Propositions ({request.propositions?.length || 0})
+              {t('details.proposals', { count: request.propositions?.length || 0 })}
             </h3>
 
             <div className="space-y-4">
@@ -297,7 +297,7 @@ const ProposalCard = ({ proposal, onAccept, isAccepting, isDisabled, isAccepted,
     >
       {isAccepted && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
-          Choisi
+          {t('details.chosen')}
         </div>
       )}
 
@@ -331,7 +331,7 @@ const ProposalCard = ({ proposal, onAccept, isAccepting, isDisabled, isAccepted,
       </div>
 
       <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 mb-5 text-sm text-gray-600 dark:text-gray-400 italic">
-        &quot;{proposal.message || "Bonjour, je suis disponible pour cette intervention. Contactez-moi pour en discuter."}&quot;
+        &quot;{proposal.message || t('details.default_proposal_message')}&quot;
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -362,7 +362,7 @@ const ProposalCard = ({ proposal, onAccept, isAccepting, isDisabled, isAccepted,
           loading={marking}
           className="mt-4 rounded-xl font-black uppercase tracking-widest text-[10px] h-10 border-blue-200 text-blue-600 hover:bg-blue-50"
         >
-          {marking ? "Chargement..." : "J'ai contacté cet artisan"}
+          {marking ? "..." : t('details.contacted_btn')}
         </Button>
       )}
 

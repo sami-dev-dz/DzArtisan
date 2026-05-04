@@ -17,7 +17,7 @@ export function Toaster() {
   const { toasts, removeToast } = useToastStore()
 
   return (
-    <div className="fixed z-50 flex flex-col gap-2 p-4 bottom-0 sm:bottom-auto sm:top-0 sm:right-0 w-full sm:w-auto overflow-hidden pointer-events-none">
+    <div className="fixed z-2000 flex flex-col gap-2 p-4 top-20 sm:top-24 right-0 sm:right-4 w-full sm:w-auto overflow-hidden pointer-events-none">
       <AnimatePresence mode="popLayout">
         {toasts.map((toast) => (
           <motion.div

@@ -15,23 +15,23 @@ export function SubscriptionBanner({ data = {} }) {
     active: {
       color: "bg-emerald-600 border-emerald-500 shadow-emerald-600/10",
       icon: CheckCircle2,
-      title: "Abonnement Actif",
-      desc: `Il vous reste ${days_left} jours d'abonnement ${plan || ''}.`,
+      title: t("banner.active_title"),
+      desc: t("banner.active_desc", { days: days_left, plan: plan || '' }),
       btn: null
     },
     warning: {
       color: "bg-orange-600 border-orange-500 shadow-orange-600/10",
       icon: AlertCircle,
-      title: "Expiration Proche",
-      desc: `Votre abonnement expire dans ${days_left} jours. Renouvelez-le pour garder votre visibilité.`,
-      btn: "Renouveler"
+      title: t("banner.warning_title"),
+      desc: t("banner.warning_desc", { days: days_left }),
+      btn: t("banner.warning_btn")
     },
     expired: {
       color: "bg-red-600 border-red-500 shadow-red-600/20",
-      icon: XCircle,
-      title: "Abonnement Expiré",
-      desc: "Votre profil n'est plus visible aux nouveaux clients. Renouvelez votre abonnement !",
-      btn: "Réactiver"
+      icon: AlertCircle, // Replaced XCircle with AlertCircle as it was a local component
+      title: t("banner.expired_title"),
+      desc: t("banner.expired_desc"),
+      btn: t("banner.expired_btn")
     }
   }
 

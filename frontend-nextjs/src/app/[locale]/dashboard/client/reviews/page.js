@@ -29,7 +29,7 @@ function StarDisplay({ rating, size = "w-4 h-4" }) {
 }
 
 export default function ClientReviewsPage() {
-  const t = useTranslations("interventions")
+  const t = useTranslations("client_reviews")
   const locale = useLocale()
 
   const [reviews, setReviews] = React.useState([])
@@ -46,7 +46,7 @@ export default function ClientReviewsPage() {
       const withReviews = Array.isArray(interventions) ? interventions.filter(i => i.avis) : []
       setReviews(withReviews)
     } catch (err) {
-      setError(err.response?.data?.error || "Erreur de chargement des avis")
+      setError(err.response?.data?.error || t("retry"))
     } finally {
       setLoading(false)
     }
@@ -64,11 +64,11 @@ export default function ClientReviewsPage() {
           <div className="w-10 h-10 rounded-2xl bg-amber-50 dark:bg-amber-500/10 flex items-center justify-center">
             <Star className="w-5 h-5 text-amber-500" />
           </div>
-          Mes Avis
+          {t("title")}
         </h1>
         {!loading && (
           <p className="text-sm font-bold text-slate-400">
-            {reviews.length} avis laissé{reviews.length !== 1 ? "s" : ""}
+            {t("count", { count: reviews.length })}
           </p>
         )}
       </div>
@@ -82,7 +82,7 @@ export default function ClientReviewsPage() {
             onClick={fetchReviews} 
             className="ml-auto text-xs font-black uppercase tracking-widest text-red-600 hover:underline"
           >
-            Réessayer
+            {t("retry")}
           </button>
         </div>
       )}
@@ -102,10 +102,10 @@ export default function ClientReviewsPage() {
           </div>
           <div className="space-y-2">
             <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">
-              Aucun avis pour le moment
+              {t("empty_title")}
             </h2>
             <p className="text-sm font-bold text-slate-400 max-w-xs">
-              Vos avis apparaîtront ici après avoir évalué un artisan suite à une intervention terminée.
+              {t("empty_desc")}
             </p>
           </div>
         </motion.div>
@@ -122,7 +122,7 @@ export default function ClientReviewsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.06 }}
               >
-                <ReviewCard intervention={intervention} />
+                <ReviewCard intervention={intervention} locale={locale} />
               </motion.div>
             ))}
           </div>
@@ -132,10 +132,10 @@ export default function ClientReviewsPage() {
   )
 }
 
-function ReviewCard({ intervention }) {
+function ReviewCard({ intervention, locale }) {
   const { titre, categorie, avis, artisan, wilaya, commune, created_at } = intervention
 
-  const formattedDate = new Date(avis.created_at || created_at).toLocaleDateString("fr-DZ", {
+  const formattedDate = new Date(avis.created_at || created_at).toLocaleDateString(locale === "ar" ? "ar-DZ" : "fr-DZ", {
     day: "2-digit", month: "short", year: "numeric"
   })
 
@@ -180,7 +180,7 @@ function ReviewCard({ intervention }) {
           </div>
           <div>
             <p className="text-sm font-bold text-slate-900 dark:text-white">{artisan.user.nomComplet}</p>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Artisan</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{t("artisan_label")}</p>
           </div>
         </div>
       )}

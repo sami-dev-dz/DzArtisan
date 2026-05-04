@@ -82,7 +82,7 @@ export function AvailabilityToggle({ compact = false }) {
           "text-[9px] font-black uppercase px-2 py-0.5 rounded-full",
           isAvailable ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-600"
         )}>
-          {isAvailable ? "On" : "Off"}
+          {isAvailable ? t("on") : t("off")}
         </span>
       </div>
       
@@ -111,7 +111,7 @@ export function AvailabilityToggle({ compact = false }) {
           "font-black text-xs uppercase tracking-wider flex-1 text-left rtl:text-right",
           isAvailable ? "text-white" : "text-slate-600 dark:text-slate-400"
         )}>
-          {isAvailable ? "Disponible" : "Indisponible"}
+          {isAvailable ? t("available") : t("unavailable")}
         </span>
 
         {isAvailable && (

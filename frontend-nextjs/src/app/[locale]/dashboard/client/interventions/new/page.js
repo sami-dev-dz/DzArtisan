@@ -39,12 +39,12 @@ export default function NewInterventionWizard() {
 
   const validateField = (field, value) => {
     let msg = null
-    if (field === 'titre' && (!value || value.length < 5)) msg = "Titre trop court (minimum 5 caractères)"
-    if (field === 'categorie_id' && !value) msg = "Veuillez choisir une catégorie"
-    if (field === 'description' && (!value || value.length < 20)) msg = "La description doit faire au moins 20 caractères"
-    if (field === 'telephone' && (!value || value.length < 9)) msg = "Veuillez saisir un numéro de téléphone valide"
-    if (field === 'wilaya_id' && !value) msg = "Veuillez sélectionner une wilaya"
-    if (field === 'commune_id' && !value) msg = "Veuillez sélectionner une commune"
+    if (field === 'titre' && (!value || value.length < 5)) msg = t("step1.errors.title_short")
+    if (field === 'categorie_id' && !value) msg = t("step1.errors.category_required")
+    if (field === 'description' && (!value || value.length < 20)) msg = t("step1.errors.description_short")
+    if (field === 'telephone' && (!value || value.length < 9)) msg = t("step1.errors.phone_invalid")
+    if (field === 'wilaya_id' && !value) msg = t("step2.errors.wilaya_required")
+    if (field === 'commune_id' && !value) msg = t("step2.errors.commune_required")
     
     setFieldErrors(prev => ({ ...prev, [field]: msg }))
     return msg === null
@@ -145,14 +145,14 @@ export default function NewInterventionWizard() {
     const newErrors = {}
 
     if (currentStep === 0) {
-      if (!formData.titre || formData.titre.length < 5) { newErrors.titre = "Titre trop court (minimum 5 caractères)"; isValid = false }
-      if (!formData.categorie_id) { newErrors.categorie_id = "Veuillez choisir une catégorie"; isValid = false }
-      if (!formData.description || formData.description.length < 20) { newErrors.description = "La description doit faire au moins 20 caractères"; isValid = false }
-      if (!formData.telephone || formData.telephone.length < 9) { newErrors.telephone = "Veuillez saisir un numéro de téléphone valide"; isValid = false }
+      if (!formData.titre || formData.titre.length < 5) { newErrors.titre = t("step1.errors.title_short"); isValid = false }
+      if (!formData.categorie_id) { newErrors.categorie_id = t("step1.errors.category_required"); isValid = false }
+      if (!formData.description || formData.description.length < 20) { newErrors.description = t("step1.errors.description_short"); isValid = false }
+      if (!formData.telephone || formData.telephone.length < 9) { newErrors.telephone = t("step1.errors.phone_invalid"); isValid = false }
     }
     if (currentStep === 1) {
-      if (!formData.wilaya_id) { newErrors.wilaya_id = "Veuillez sélectionner une wilaya"; isValid = false }
-      if (!formData.commune_id) { newErrors.commune_id = "Veuillez sélectionner une commune"; isValid = false }
+      if (!formData.wilaya_id) { newErrors.wilaya_id = t("step2.errors.wilaya_required"); isValid = false }
+      if (!formData.commune_id) { newErrors.commune_id = t("step2.errors.commune_required"); isValid = false }
     }
     
     setFieldErrors(newErrors)
@@ -180,7 +180,7 @@ export default function NewInterventionWizard() {
       // Redirect to My Requests page after success
       router.push("/dashboard/client/requests")
     } catch (err) {
-      setError(err.response?.data?.message || err.response?.data?.error || "Une erreur est survenue lors de la publication")
+      setError(err.response?.data?.message || err.response?.data?.error || t("step3.error_general"))
     } finally {
       setIsSubmitting(false)
     }
@@ -219,9 +219,9 @@ export default function NewInterventionWizard() {
                const isActive = index === currentStep
                const isCompleted = index < currentStep
                const labels = {
-                 details: "Détails",
-                 location: "Localisation", 
-                 summary: "Validation"
+                 details: t("steps.details"),
+                 location: t("steps.location"), 
+                 summary: t("steps.summary")
                }
                return (
                  <div key={step} className="relative z-10 flex flex-col items-center gap-2">
@@ -259,22 +259,22 @@ export default function NewInterventionWizard() {
             <div className="p-6 md:p-10 space-y-8">
                <div className="space-y-2">
                   <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                     Décrivez votre besoin
+                     {t("step1.title")}
                   </h2>
                   <p className="text-slate-500 font-medium text-sm">
-                     Donnez un maximum de détails pour recevoir les meilleures propositions.
+                     {t("step1.subtitle")}
                   </p>
                </div>
 
                <div className="space-y-6">
                   {/* Title */}
                   <div className="space-y-2">
-                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Titre de la demande *</label>
+                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t("step1.fields.title")}</label>
                      <Input 
                        value={formData.titre}
                        onChange={(e) => handleChange('titre', e.target.value)}
                        onBlur={(e) => validateField('titre', e.target.value)}
-                       placeholder="Ex: Réparation fuite d'eau sous évier"
+                       placeholder={t("step1.fields.title_placeholder")}
                        className={cn("h-14 rounded-2xl px-5 text-base font-bold border-2 transition-all", fieldErrors.titre ? "border-red-500 bg-red-50/30" : "border-slate-100 dark:border-white/10 focus:border-blue-600")}
                        maxLength={100}
                      />
@@ -286,7 +286,7 @@ export default function NewInterventionWizard() {
 
                   {/* Category */}
                   <div className="space-y-2">
-                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Catégorie de service *</label>
+                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t("step1.fields.category")}</label>
                      <div className="relative">
                         <select 
                           value={formData.categorie_id}
@@ -294,7 +294,7 @@ export default function NewInterventionWizard() {
                           onBlur={(e) => validateField('categorie_id', e.target.value)}
                           className={cn("w-full h-14 rounded-2xl bg-white dark:bg-slate-900 border-2 px-5 font-bold focus:border-blue-600 transition-all outline-none appearance-none text-slate-900 dark:text-white", fieldErrors.categorie_id ? "border-red-500 bg-red-50/30 text-red-900" : "border-slate-100 dark:border-white/10")}
                         >
-                           <option value="">Sélectionnez une catégorie professionnelle...</option>
+                           <option value="">{t("step1.fields.category_placeholder")}</option>
                            {categories.map((cat) => (
                              <option key={cat.id} value={cat.id}>{cat.nom}</option>
                            ))}
@@ -306,12 +306,12 @@ export default function NewInterventionWizard() {
 
                   {/* Description */}
                   <div className="space-y-2">
-                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Description du problème *</label>
+                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">{t("step1.fields.description")}</label>
                      <Textarea 
                        value={formData.description}
                        onChange={(e) => handleChange('description', e.target.value)}
                        onBlur={(e) => validateField('description', e.target.value)}
-                       placeholder="Expliquez précisément votre besoin (matériel nécessaire, urgence, symptômes...)"
+                       placeholder={t("step1.fields.description_placeholder")}
                        className={cn("min-h-[120px] rounded-2xl p-5 text-base font-medium border-2 transition-all", fieldErrors.description ? "border-red-500 bg-red-50/30" : "border-slate-100 dark:border-white/10 focus:border-blue-600")}
                        maxLength={1000}
                      />
@@ -325,7 +325,7 @@ export default function NewInterventionWizard() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                      <div className="space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1">
-                          <Phone className="w-3 h-3" /> Numéro de téléphone *
+                          <Phone className="w-3 h-3" /> {t("step1.fields.phone")}
                         </label>
                         <Input 
                           type="tel"
@@ -339,8 +339,8 @@ export default function NewInterventionWizard() {
                      </div>
                      <div className="space-y-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1">
-                          <MessageCircle className="w-3 h-3 text-[#25D366]" /> WhatsApp
-                          <span className="text-slate-300 ml-1">(optionnel)</span>
+                          <MessageCircle className="w-3 h-3 text-[#25D366]" /> {t("step1.fields.whatsapp")}
+                          <span className="text-slate-300 ml-1">{t("step1.fields.whatsapp_optional")}</span>
                         </label>
                         <div className="flex gap-2">
                           <div className="relative flex-1">
@@ -350,7 +350,7 @@ export default function NewInterventionWizard() {
                              <Input
                                 value={formData.whatsapp || ""}
                                 onChange={(e) => handleChange('whatsapp', e.target.value)}
-                                placeholder="wa.me/213…"
+                                placeholder={t("step1.fields.whatsapp_placeholder")}
                                 className="w-full h-14 pl-12 pr-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-white/10 text-base font-bold text-slate-900 dark:text-white placeholder:text-slate-300 dark:placeholder:text-slate-600 focus:border-[#25D366] transition-all"
                              />
                           </div>
@@ -360,14 +360,14 @@ export default function NewInterventionWizard() {
                              className="shrink-0 h-14 px-5 rounded-2xl bg-[#25D366] hover:bg-[#1fb855] text-white text-sm font-bold transition-colors flex items-center gap-2 shadow-lg shadow-[#25D366]/20"
                           >
                              <Zap className="w-4 h-4" />
-                             <span className="hidden sm:inline">Générer</span>
+                             <span className="hidden sm:inline">{t("step1.fields.generate")}</span>
                           </button>
                         </div>
                         {formData.whatsapp && formData.whatsapp.includes("wa.me") && (
                            <div className="flex items-center gap-2 mt-2">
                               <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20">
                                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                                 <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">Lien généré</span>
+                                 <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">{t("step1.fields.link_generated")}</span>
                               </div>
                               <a
                                  href={`https://${formData.whatsapp}`}
@@ -376,7 +376,7 @@ export default function NewInterventionWizard() {
                                  className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-xl"
                               >
                                  <ExternalLink className="w-3 h-3" />
-                                 Tester
+                                 {t("step1.fields.test")}
                               </a>
                            </div>
                         )}
@@ -386,8 +386,8 @@ export default function NewInterventionWizard() {
                   {/* Preferred Date */}
                   <div className="space-y-2">
                      <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-1">
-                       <Calendar className="w-3 h-3" /> Date souhaitée
-                       <span className="text-slate-300 ml-1">(optionnel)</span>
+                       <Calendar className="w-3 h-3" /> {t("step1.fields.date")}
+                       <span className="text-slate-300 ml-1">{t("step1.fields.date_optional")}</span>
                      </label>
                      <Input 
                        type="date"
@@ -397,14 +397,14 @@ export default function NewInterventionWizard() {
                        className="h-14 rounded-2xl px-5 text-base font-bold border-2 border-slate-100 dark:border-white/10"
                      />
                      <p className="mt-1 text-[10px] flex items-center gap-1 font-bold text-slate-400 uppercase tracking-widest">
-                        <Info className="w-3 h-3" /> Laissez vide si vous êtes flexible
+                        <Info className="w-3 h-3" /> {t("step1.fields.date_info")}
                      </p>
                   </div>
                </div>
 
                <div className="pt-4">
                   <Button onClick={nextStep} className="w-full h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-[0.2em] gap-3 shadow-xl shadow-blue-500/20">
-                     Étape suivante <ArrowRight className="w-4 h-4" />
+                     {t("step1.next")} <ArrowRight className={cn("w-4 h-4", isRTL && "rotate-180")} />
                   </Button>
                </div>
             </div>
@@ -415,10 +415,10 @@ export default function NewInterventionWizard() {
             <div className="p-6 md:p-10 space-y-8">
                <div className="space-y-2">
                   <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                     Localisation
+                     {t("step2.title")}
                   </h2>
                   <p className="text-slate-500 font-medium text-sm">
-                     Indiquez l&apos;emplacement de l&apos;intervention pour trouver les artisans proches.
+                     {t("step2.subtitle")}
                   </p>
                </div>
 
@@ -426,7 +426,7 @@ export default function NewInterventionWizard() {
                <div className="space-y-4 animate-in slide-in-from-top-4 duration-300">
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                           <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Wilaya *</label>
+                           <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{t("step2.fields.wilaya")}</label>
                            <div className="relative">
                               <select 
                                 className={cn("w-full h-14 rounded-2xl bg-white dark:bg-slate-900 border-2 px-5 font-bold focus:border-blue-600 transition-all outline-none appearance-none text-slate-900 dark:text-white", fieldErrors.wilaya_id ? "border-red-500 bg-red-50/30 text-red-900" : "border-slate-100 dark:border-white/10")}
@@ -434,7 +434,7 @@ export default function NewInterventionWizard() {
                                 onChange={(e) => handleChange('wilaya_id', e.target.value)}
                                 onBlur={(e) => validateField('wilaya_id', e.target.value)}
                               >
-                                 <option value="">Sélectionnez une wilaya...</option>
+                                 <option value="">{t("step2.fields.wilaya_placeholder")}</option>
                                  {wilayasJson.map(w => (
                                    <option key={w.id} value={w.id}>{w.code} - {w.name}</option>
                                  ))}
@@ -444,7 +444,7 @@ export default function NewInterventionWizard() {
                            {fieldErrors.wilaya_id && <p className="text-[10px] font-bold text-red-500 animate-in fade-in slide-in-from-top-1 mt-1">{fieldErrors.wilaya_id}</p>}
                         </div>
                         <div className="space-y-2">
-                           <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Commune *</label>
+                           <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{t("step2.fields.commune")}</label>
                            <div className="relative">
                               <select 
                                 className={cn("w-full h-14 rounded-2xl bg-white dark:bg-slate-900 border-2 px-5 font-bold focus:border-blue-600 transition-all outline-none appearance-none text-slate-900 dark:text-white disabled:opacity-50", fieldErrors.commune_id ? "border-red-500 bg-red-50/30 text-red-900" : "border-slate-100 dark:border-white/10")}
@@ -453,7 +453,7 @@ export default function NewInterventionWizard() {
                                 onBlur={(e) => validateField('commune_id', e.target.value)}
                                 disabled={!formData.wilaya_id}
                               >
-                                 <option value="">Sélectionnez une commune...</option>
+                                 <option value="">{t("step2.fields.commune_placeholder")}</option>
                                  {filteredCommunes.map(c => (
                                    <option key={c.id} value={c.id}>{c.name}</option>
                                  ))}
@@ -464,9 +464,9 @@ export default function NewInterventionWizard() {
                         </div>
                      </div>
                      <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Complément d&apos;adresse (Cité, N°, Étage...)</label>
+                        <label className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{t("step2.fields.address")}</label>
                         <Input 
-                          placeholder="Ex: Cité 500 logements, Bâtiment B, 3ème étage"
+                          placeholder={t("step2.fields.address_placeholder")}
                           value={formData.adresse}
                           onChange={(e) => handleChange('adresse', e.target.value)}
                           className="h-14 rounded-2xl px-5 text-base font-bold border-2 border-slate-100 dark:border-white/10 transition-all focus:border-blue-600"
@@ -484,7 +484,7 @@ export default function NewInterventionWizard() {
                      />
                   </div>
                   <p className="text-center text-[10px] font-black text-slate-400 uppercase tracking-widest italic flex items-center justify-center gap-2">
-                     <Info className="w-3 h-3 text-blue-600" /> Cliquez sur la carte ou déplacez le marqueur pour plus de précision
+                     <Info className="w-3 h-3 text-blue-600" /> {t("step2.map_info")}
                   </p>
                </div>
 
@@ -495,10 +495,10 @@ export default function NewInterventionWizard() {
                     onClick={prevStep}
                     className="flex-1 h-14 rounded-2xl border-2 border-slate-100 dark:border-white/5 font-black text-xs uppercase tracking-widest gap-2"
                   >
-                     <ChevronLeft className="w-4 h-4" /> Précédent
+                     <ChevronLeft className={cn("w-4 h-4", isRTL && "rotate-180")} /> {t("step2.back")}
                   </Button>
                   <Button onClick={nextStep} className="flex-2 h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-[0.2em] gap-3 shadow-xl shadow-blue-500/20">
-                     Valider <ArrowRight className="w-4 h-4" />
+                     {t("step2.next")} <ArrowRight className={cn("w-4 h-4", isRTL && "rotate-180")} />
                   </Button>
                </div>
             </div>
@@ -509,10 +509,10 @@ export default function NewInterventionWizard() {
             <div className="p-6 md:p-10 space-y-8">
                <div className="space-y-2">
                   <h2 className="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tight">
-                     Récapitulatif
+                     {t("step3.title")}
                   </h2>
                   <p className="text-slate-500 font-medium text-sm">
-                     Vérifiez les informations avant de publier votre demande.
+                     {t("step3.subtitle")}
                   </p>
                </div>
 
@@ -523,45 +523,45 @@ export default function NewInterventionWizard() {
                   <div className="space-y-3">
                      <div className="flex items-center justify-between">
                         <p className="text-[10px] font-black uppercase text-blue-600 tracking-widest flex items-center gap-1">
-                          <FileText className="w-3 h-3" /> Détails de la demande
+                          <FileText className="w-3 h-3" /> {t("step3.sections.details")}
                         </p>
                         <button 
                           type="button"
                           onClick={() => setCurrentStep(0)} 
                           className="text-xs font-bold text-slate-400 hover:text-blue-600 transition-colors"
                         >
-                          Modifier
+                          {t("step3.modify")}
                         </button>
                      </div>
                      
                      <div className="space-y-3">
                         <div className="flex items-start gap-3">
-                           <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">Titre</span>
+                           <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">{t("step3.fields.title")}</span>
                            <span className="font-bold text-slate-900 dark:text-white text-sm">{formData.titre}</span>
                         </div>
                         <div className="flex items-start gap-3">
-                           <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">Catégorie</span>
+                           <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">{t("step3.fields.category")}</span>
                            <span className="font-bold text-slate-900 dark:text-white text-sm">{getSelectedCategoryName()}</span>
                         </div>
                         <div className="flex items-start gap-3">
-                           <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">Description</span>
+                           <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">{t("step3.fields.description")}</span>
                            <span className="text-sm text-slate-600 dark:text-slate-300 line-clamp-3">{formData.description}</span>
                         </div>
                         <div className="flex items-start gap-3">
-                           <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">Téléphone</span>
+                           <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">{t("step3.fields.phone")}</span>
                            <span className="font-bold text-slate-900 dark:text-white text-sm">{formData.telephone}</span>
                         </div>
                         {formData.whatsapp && (
                           <div className="flex items-start gap-3">
-                             <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">WhatsApp</span>
+                             <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">{t("step3.fields.whatsapp")}</span>
                              <span className="font-bold text-[#25D366] text-sm">{formData.whatsapp}</span>
                           </div>
                         )}
                         {formData.date_souhaitee && (
                           <div className="flex items-start gap-3">
-                             <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">Date</span>
+                             <span className="text-[10px] font-bold text-slate-400 uppercase w-20 shrink-0 pt-0.5">{t("step3.fields.date")}</span>
                              <span className="font-bold text-slate-900 dark:text-white text-sm">
-                               {new Date(formData.date_souhaitee).toLocaleDateString("fr-DZ", { day: "2-digit", month: "long", year: "numeric" })}
+                               {new Date(formData.date_souhaitee).toLocaleDateString(locale === "ar" ? "ar-DZ" : "fr-DZ", { day: "2-digit", month: "long", year: "numeric" })}
                              </span>
                           </div>
                         )}
@@ -581,14 +581,14 @@ export default function NewInterventionWizard() {
                           onClick={() => setCurrentStep(1)} 
                           className="text-xs font-bold text-slate-400 hover:text-blue-600 transition-colors"
                         >
-                          Modifier
+                          {t("step3.modify")}
                         </button>
                      </div>
                      
                      <div className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
                         <MapPin className="w-4 h-4 text-blue-600" />
                         {formData.location_method === 'auto' 
-                          ? `Géolocalisation (${formData.latitude.toFixed(4)}, ${formData.longitude.toFixed(4)})`
+                          ? t("step3.fields.location_auto", { lat: formData.latitude.toFixed(4), lng: formData.longitude.toFixed(4) })
                           : `${getSelectedWilayaName()} — ${getSelectedCommuneName()}`
                         }
                      </div>
@@ -605,7 +605,7 @@ export default function NewInterventionWizard() {
                     onClick={prevStep}
                     className="flex-1 h-14 rounded-2xl border-2 border-slate-100 dark:border-white/5 font-black text-xs uppercase tracking-widest gap-2"
                   >
-                     <ChevronLeft className="w-4 h-4" /> Précédent
+                     <ChevronLeft className="w-4 h-4" /> {t("step3.back")}
                   </Button>
                   <Button 
                     onClick={handleSubmit} 
@@ -615,11 +615,11 @@ export default function NewInterventionWizard() {
                      {isSubmitting ? (
                        <>
                          <Loader2 className="w-4 h-4 animate-spin" />
-                         Publication en cours...
+                         {t("step3.submitting")}
                        </>
                      ) : (
                        <>
-                         Publier ma demande <Check className="w-4 h-4" />
+                         {t("step3.submit")} <Check className="w-4 h-4" />
                        </>
                      )}
                   </Button>

@@ -33,6 +33,8 @@ import { DashboardArtisanSkeleton } from "@/components/ui/SkeletonLayouts"
 export default function ArtisanDashboard() {
   const t = useTranslations("dashboard")
   const common = useTranslations("common")
+  const locale = useLocale()
+  const isRTL = locale === "ar"
   const { user } = useAuth()
   const router = useRouter()
 
@@ -105,7 +107,7 @@ export default function ArtisanDashboard() {
               <ShieldCheck className="w-5 h-5 drop-shadow-sm" />
             </div>
             <span className="text-[11px] font-black uppercase tracking-[0.3em] text-blue-600 dark:text-blue-400 drop-shadow-sm">
-              Artisan Vérifié
+              {t("artisan_verified")}
             </span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-[56px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.1]">
@@ -120,7 +122,7 @@ export default function ArtisanDashboard() {
             >👋</motion.span>
           </h1>
           <p className="text-slate-500 dark:text-slate-400 font-bold text-lg mt-3 max-w-xl leading-relaxed">
-            Votre tableau de bord centralisé. Prêt à transformer de nouvelles opportunités en réalisations d'exception ?
+            {t("welcome_subtitle")}
           </p>
         </motion.div>
 
@@ -131,6 +133,9 @@ export default function ArtisanDashboard() {
       </div>
 
 
+
+      {/* ── Subscription Status ────────────────────────────────────────── */}
+      <SubscriptionBanner data={subscriptionStatus} />
 
       {/* ── Stats Grid ──────────────────────────────────────────────── */}
       <motion.div 
@@ -155,11 +160,11 @@ export default function ArtisanDashboard() {
                 <Zap className="w-4 h-4 fill-current" />
               </div>
               <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">
-                Opportunités pour vous
+                {t("opportunities_title")}
               </h3>
             </div>
             <Link href="/dashboard/artisan/jobs" className="text-sm font-black text-blue-600 flex items-center gap-1 hover:gap-2 transition-all">
-              Tout voir <ArrowRight className="w-4 h-4" />
+              {t("view_all")} <ArrowRight className={cn("w-4 h-4", isRTL && "rotate-180")} />
             </Link>
           </div>
 
@@ -176,8 +181,8 @@ export default function ArtisanDashboard() {
                   <LayoutDashboard className="w-8 h-8" />
                 </div>
                 <div>
-                  <p className="font-black text-slate-900 dark:text-white">Aucune demande trouvée</p>
-                  <p className="text-sm text-slate-400 font-medium mt-1">Élargissez vos wilayas ou vos catégories pour plus de visibilité.</p>
+                  <p className="font-black text-slate-900 dark:text-white">{t("no_requests")}</p>
+                  <p className="text-sm text-slate-400 font-medium mt-1">{t("no_requests_hint")}</p>
                 </div>
               </div>
             )}

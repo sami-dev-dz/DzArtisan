@@ -122,12 +122,12 @@ export function AdminSidebar({ collapsed, setCollapsed, pendingCounts = {} }) {
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg flex items-center justify-center text-slate-400 dark:text-white/30 hover:text-slate-700 dark:hover:text-white/70 hover:bg-slate-100 dark:hover:bg-white/5 transition-all duration-200"
+          className={cn(
+            "absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-lg flex items-center justify-center text-slate-400 dark:text-white/30 hover:text-slate-700 dark:hover:text-white/70 hover:bg-slate-100 dark:hover:bg-white/5 transition-all duration-200 z-50",
+            isRTL ? "left-3" : "right-3"
+          )}
         >
-          {collapsed
-            ? (isRTL ? <ChevronLeft className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />)
-            : (isRTL ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />)
-          }
+          {collapsed ? <ChevronRight className={cn("w-3.5 h-3.5", isRTL && "rotate-180")} /> : <ChevronLeft className={cn("w-3.5 h-3.5", isRTL && "rotate-180")} />}
         </button>
       </div>
 

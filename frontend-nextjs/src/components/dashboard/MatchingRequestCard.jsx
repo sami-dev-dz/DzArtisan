@@ -8,7 +8,7 @@ import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
 export function MatchingRequestCard({ request, index }) {
-  const t = useTranslations("onboarding")
+  const t = useTranslations("dashboard")
   const common = useTranslations("common")
 
   return (
@@ -27,10 +27,10 @@ export function MatchingRequestCard({ request, index }) {
            </div>
            <div>
               <h5 className="font-black text-slate-900 dark:text-white text-lg leading-tight group-hover:text-blue-600 transition-colors">
-                {request.titre || "Demande d'intervention"}
+                {request.titre || t("request_default_title")}
               </h5>
               <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mt-1">
-                 {request.categorie?.nom || "Bricolage"}
+                 {request.categorie?.nom || t("category_default")}
               </p>
            </div>
         </div>
@@ -49,7 +49,7 @@ export function MatchingRequestCard({ request, index }) {
                <MapPin className="w-4 h-4" />
             </div>
             <span className="text-xs font-bold text-slate-600 dark:text-slate-400">
-               {request.wilaya?.nom || "Alger"}
+               {request.wilaya?.nom || t("wilaya_default")}
             </span>
          </div>
          
@@ -58,14 +58,14 @@ export function MatchingRequestCard({ request, index }) {
                <Calendar className="w-4 h-4" />
             </div>
             <span className="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-tighter">
-               Urgent
+               {t("urgent_label")}
             </span>
          </div>
       </div>
 
       <Link href={`/dashboard/interventions/${request.id}`}>
          <button className="w-full h-12 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[10px] uppercase tracking-[0.2em] flex items-center justify-center gap-3 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-xl shadow-slate-900/10 active:scale-95">
-            Voir les détails
+            {t("view_details")}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
          </button>
       </Link>

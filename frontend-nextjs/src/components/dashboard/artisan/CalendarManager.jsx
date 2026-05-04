@@ -46,9 +46,9 @@ export function CalendarManager() {
       const res = await api.post('/profile/unavailabilities', formData);
       setUnavailabilities([...unavailabilities, res.data.data].sort((a, b) => new Date(a.start_date) - new Date(b.start_date)));
       setFormData({ start_date: '', end_date: '', reason: '' });
-      addToast({ title: 'Période bloquée ajoutée', type: 'success' });
+      addToast({ title: t('calendar.add_success'), type: 'success' });
     } catch (err) {
-      const msg = err.response?.data?.message || 'Erreur lors de l\'ajout';
+      const msg = err.response?.data?.message || t('calendar.add_error');
       addToast({ title: msg, type: 'error' });
     } finally {
       setAdding(false);
@@ -60,9 +60,9 @@ export function CalendarManager() {
     try {
       await api.delete(`/profile/unavailabilities/${id}`);
       setUnavailabilities(unavailabilities.filter(u => u.id !== id));
-      addToast({ title: 'Période débloquée', type: 'success' });
+      addToast({ title: t('calendar.delete_success'), type: 'success' });
     } catch (err) {
-      addToast({ title: 'Erreur lors de la suppression', type: 'error' });
+      addToast({ title: t('calendar.delete_error'), type: 'error' });
     } finally {
       setDeletingId(null);
     }
@@ -80,21 +80,21 @@ export function CalendarManager() {
       <div>
         <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
           <Calendar className="w-5 h-5 text-rose-500" />
-          Calendrier des absences
+          {t('calendar.title')}
         </h3>
         <p className="text-xs text-slate-500 font-medium mt-1">
-          Bloquez les jours où vous ne souhaitez pas recevoir de nouvelles demandes.
+          {t('calendar.description')}
         </p>
       </div>
 
       {/* Add Form */}
       <form onSubmit={handleAdd} className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-100 dark:border-white/5 space-y-4">
         <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-2 flex items-center gap-2">
-          <Plus className="w-4 h-4" /> Ajouter une indisponibilité
+          <Plus className="w-4 h-4" /> {t('calendar.add_unavailability')}
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1 ml-1">Date de début</label>
+            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1 ml-1">{t('calendar.start_date')}</label>
             <Input 
               type="date" 
               min={today}
@@ -105,7 +105,7 @@ export function CalendarManager() {
             />
           </div>
           <div>
-            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1 ml-1">Date de fin</label>
+            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1 ml-1">{t('calendar.end_date')}</label>
             <Input 
               type="date" 
               min={formData.start_date || today}
@@ -116,11 +116,11 @@ export function CalendarManager() {
             />
           </div>
           <div>
-            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1 ml-1">Motif (Optionnel)</label>
+            <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1 ml-1">{t('calendar.reason_optional')}</label>
             <div className="flex gap-2">
               <Input 
                 type="text" 
-                placeholder="Ex: Congés"
+                placeholder={t('calendar.reason_placeholder')}
                 value={formData.reason}
                 onChange={(e) => setFormData({...formData, reason: e.target.value})}
                 className="h-12 bg-white dark:bg-slate-800 rounded-xl flex-1"
@@ -144,10 +144,10 @@ export function CalendarManager() {
                 </div>
                 <div>
                   <p className="font-bold text-sm text-slate-900 dark:text-white">
-                    Du {new Date(item.start_date).toLocaleDateString()} au {new Date(item.end_date).toLocaleDateString()}
+                    {t('calendar.from_to', { start: new Date(item.start_date).toLocaleDateString(), end: new Date(item.end_date).toLocaleDateString() })}
                   </p>
                   <p className="text-xs text-slate-500 font-medium">
-                    {item.reason || 'Période bloquée'}
+                    {item.reason || t('calendar.blocked_period')}
                   </p>
                 </div>
               </div>
@@ -162,7 +162,7 @@ export function CalendarManager() {
           ))
         ) : (
           <div className="py-8 text-center text-slate-500 text-sm font-medium italic">
-            Aucune période d&apos;indisponibilité programmée.
+            {t('calendar.no_unavailability')}
           </div>
         )}
       </div>
