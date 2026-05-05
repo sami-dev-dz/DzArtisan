@@ -54,7 +54,7 @@ export function Sidebar({ collapsed, setCollapsed }) {
       initial={false}
       animate={{ width: collapsed ? 76 : 272 }}
       transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-      className="hidden lg:flex flex-col h-[calc(100vh-5rem)] sticky top-20 z-50 overflow-hidden shrink-0 bg-white dark:bg-[#0C0C0C] border-r border-slate-200 dark:border-white/6"
+      className={cn("hidden lg:flex flex-col h-[calc(100vh-5rem)] sticky top-20 z-50 overflow-hidden shrink-0 bg-white dark:bg-[#0C0C0C] border-slate-200 dark:border-white/6", isRTL ? "border-l" : "border-r")}
     >
       {/* ── HEADER ─────────────────────────────────────────── */}
       <div className="relative px-4 py-4 flex items-center justify-between shrink-0 border-b border-slate-200 dark:border-white/6">
@@ -141,13 +141,13 @@ export function Sidebar({ collapsed, setCollapsed }) {
                   )}
 
                   {/* Active Accent Bar */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeBarClient"
-                      className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-blue-600 dark:bg-blue-500 rounded-r-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"
-                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    />
-                  )}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeBarClient"
+                        className={cn("absolute top-1/2 -translate-y-1/2 w-1 h-6 bg-blue-600 dark:bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]", isRTL ? "right-0 rounded-l-full" : "left-0 rounded-r-full")}
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      />
+                    )}
 
                   {/* Icon */}
                   <div className={cn(
@@ -220,7 +220,7 @@ export function Sidebar({ collapsed, setCollapsed }) {
             collapsed ? "justify-center" : "justify-start"
           )}
         >
-          <LogOut className="w-5 h-5 shrink-0 transition-transform duration-300 group-hover:-translate-x-1" strokeWidth={2.5} />
+          <LogOut className={cn("w-5 h-5 shrink-0 transition-transform duration-300", isRTL ? "group-hover:translate-x-1 rotate-180" : "group-hover:-translate-x-1")} strokeWidth={2.5} />
           <AnimatePresence>
             {!collapsed && (
               <motion.span

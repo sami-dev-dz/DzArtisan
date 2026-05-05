@@ -8,6 +8,7 @@
     "loading": "Chargement...",
     "error": "Une erreur est survenue.",
     "success": "Opération réussie.",
+    "refresh": "Actualiser",
     "access_denied": "Accès refusé",
     "client_only": "Cette zone est réservée aux clients.",
     "search": "Rechercher",
@@ -70,7 +71,50 @@
     "trust_wilayas": "69 Wilayas",
     "trust_verified_desc": "Chaque artisan est vérifié avant d'être listé.",
     "trust_fast_desc": "Obtenez des réponses en moins de 24 heures.",
-    "trust_wilayas_desc": "Couverture nationale à travers l'Algérie."
+    "trust_wilayas_desc": "Couverture nationale à travers l'Algérie.",
+    "badge_verified": "Artisans vérifiés",
+    "badge_fast": "Réponse rapide",
+    "badge_no_commitment": "Sans engagement",
+    "trades": {
+      "electric": "Électricité",
+      "plumbing": "Plomberie",
+      "masonry": "Maçonnerie",
+      "mechanics": "Mécanique",
+      "painting": "Peinture",
+      "delivery": "Livraison"
+    }
+  },
+  "featured_artisans": {
+    "title": "Artisans à la une",
+    "subtitle": "Découvrez nos experts vérifiés, choisis pour la qualité de leurs prestations et leur réactivité.",
+    "view_all": "Voir tous les profils",
+    "join_title": "Exercez-vous en tant qu'artisan ?",
+    "join_desc": "Notre réseau se développe continuellement. Rejoignez DzArtisan dès aujourd'hui pour bénéficier d'une visibilité accrue et d'outils professionnels pensés pour développer votre activité.",
+    "benefit_verified": "Profil vérifié",
+    "benefit_dashboard": "Tableau de bord",
+    "benefit_direct": "Mise en relation directe",
+    "cta_register": "Créer mon profil professionnel"
+  },
+  "footer": {
+    "about": "La plateforme de référence en Algérie pour la mise en relation entre clients et artisans qualifiés. Performance, sécurité et proximité garanties.",
+    "secure_platform": "Plateforme vérifiée & sécurisée",
+    "heading_explore": "Explorez",
+    "heading_support": "Support",
+    "heading_contact": "Contact",
+    "rights_reserved": "Tous droits réservés.",
+    "law_compliance": "Conforme à la loi 18-07",
+    "hosted_in": "Hébergé en Algérie",
+    "links": {
+      "find_artisan": "Trouver un artisan",
+      "post_request": "Publier une demande",
+      "pricing": "Tarifs artisans",
+      "coverage": "Villes desservies",
+      "admin": "Administration",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Confidentialité",
+      "help": "Centre d'aide",
+      "faq": "Questions fréquentes"
+    }
   },
   "how_it_works": {
     "title": "Comment ça marche ?",
@@ -180,6 +224,9 @@
   "authentication": {
     "error": "Une erreur est survenue. Veuillez réessayer.",
     "success": "Compte créé avec succès !",
+    "admin_login_title": "Portail Administrateur",
+    "admin_login_subtitle": "Accès réservé au personnel autorisé de DzArtisan.",
+    "admin_login_btn": "Se connecter à l'administration",
     "login_title": "Bon retour parmi nous",
     "login_subtitle": "Connectez-vous pour accéder à votre espace.",
     "register_title": "Créer un compte",
@@ -621,64 +668,13 @@
     }
   },
   "onboarding": {
-    "title": "Configurons votre profil",
-    "subtitle": "Complétez ces informations pour devenir visible auprès des clients en Algérie.",
-    "step_info": "Étape {current} sur {total}",
-    "section_required": "Obligatoire",
-    "section_optional": "Optionnel",
-    "photo_title": "Photo de profil",
-    "photo_hint": "Une photo professionnelle augmente vos chances de 80%.",
-    "photo_upload": "Charger une photo",
-    "photo_remove": "Supprimer",
-    "name_edit_title": "Modifier mon nom",
-    "name_edit_desc": "Votre nom complet est utilisé pour la facturation et la confiance client. Il doit correspondre à vos documents officiels.",
-    "whatsapp_label": "Lien WhatsApp",
-    "whatsapp_placeholder": "Lien vers votre discussion WhatsApp",
-    "whatsapp_btn": "Générer le lien",
-    "whatsapp_test": "Tester le lien",
-    "categories_title": "Métiers & Services",
-    "categories_desc": "Sélectionnez un ou plusieurs domaines d'expertise.",
-    "wilayas_title": "Zones d'intervention",
-    "wilayas_desc": "Dans quelles wilayas pouvez-vous vous déplacer ?",
-    "wilayas_placeholder": "Rechercher une wilaya...",
-    "exp_title": "Niveau d'expérience",
-    "exp_beginner": "Débutant",
-    "exp_1_3": "1-3 ans",
-    "exp_3_5": "3-5 ans",
-    "exp_5_10": "5-10 ans",
-    "exp_10_plus": "10 ans et plus",
-    "about_title": "À propos de vous",
-    "about_placeholder": "Ex: Je suis un plombier certifié avec 5 ans d'expérience. Je me spécialise dans l'installation de chaudières...",
-    "about_min_chars": "{count} caractères minimum requis.",
-    "availability_title": "Disponibilité actuelle",
+    "step_final": "Étape finale",
+    "account_approved": "Compte Approuvé",
+    "availability_title": "Statut de visibilité",
+    "on": "ON",
+    "off": "OFF",
     "available": "Disponible",
-    "unavailable": "Indisponible",
-    "on": "On",
-    "off": "Off",
-    "availability_desc": "Indiquez si vous êtes prêt à recevoir des demandes immédiatement.",
-    "docs_title": "Documents professionnels",
-    "docs_desc": "L'ajout de documents augmente considérablement votre taux de contact et débloque le badge 'Vérifié'.",
-    "doc_diploma": "Diplôme / Certificat",
-    "doc_card": "Carte d'artisan / Registre",
-    "doc_upload_hint": "Cliquez ou glissez-déposez",
-    "doc_size_limit": "Max 5Mo (JPG, PNG, PDF)",
-    "btn_finish": "Finaliser mon profil",
-    "error_required_fields": "Veuillez remplir tous les champs obligatoires.",
-    "upload_success": "Fichier téléchargé avec succès",
-    "name_label": "Nom complet",
-    "phone_label": "Téléphone",
-    "btn_submitting": "Enregistrement en cours...",
-    "identity_title": "Identification",
-    "name_locked_hint": "Nom défini à l'inscription. Cliquez sur ✏️ pour le modifier.",
-    "phone_visibility_label": "Visible aux clients",
-    "availability_on": "Activé",
-    "availability_off": "Désactivé",
-    "doc_uploaded": "{label} importé",
-    "trusted_network_note": "Réseau de prestataires de confiance DzArtisan • Algérie 2026",
-    "invalid_image_format": "Format non supporté (JPG, PNG, WEBP).",
-    "invalid_doc_format": "Format non supporté (JPG, PNG, WEBP, PDF).",
-    "invalid_phone": "Numéro de téléphone invalide (Ex: 05xx, 06xx, 07xx).",
-    "invalid_whatsapp": "Le lien WhatsApp est obligatoire et doit être valide."
+    "unavailable": "Indisponible"
   },
   "artisan_waiting": {
     "title": "Profil en cours de révision",
@@ -906,7 +902,36 @@
     "expiration": "Expiration",
     "cvv": "CVV",
     "copy": "Copier",
-    "receipt_uploaded": "Reçu téléchargé"
+    "receipt_uploaded": "Reçu téléchargé",
+    "selection": {
+      "badge": "Choisissez votre plan",
+      "title": "Débloquez tout votre potentiel",
+      "subtitle": "Choisissez un plan pour commencer à recevoir des missions et développer votre activité.",
+      "error_load": "Impossible de charger les plans.",
+      "recommended": "Recommandé",
+      "currency": "DA",
+      "price_free": "Gratuit",
+      "activation": "Activation...",
+      "continue_free": "Continuer gratuitement",
+      "choose": "Choisir",
+      "per_month": "/ mois",
+      "per_3_months": "/ 3 mois",
+      "per_year": "/ an",
+      "modal": {
+        "title": "Attendez un instant !",
+        "desc": "Avec le plan Free, vous ne pourrez pas contacter de clients ni soumettre de propositions.",
+        "popular_hint": "≈ 500 DA/mois · Le plus populaire",
+        "plan_3_months": "Plan 3 Mois — 1 500 DA",
+        "choose_3_months": "Choisir 3 Mois (1 500 DA)",
+        "continue_limited": "Continuer avec le plan gratuit (accès limité)"
+      },
+      "features": {
+        "unlimited": "Propositions illimitées",
+        "direct": "Contact direct clients",
+        "badge": "Badge Artisan Pro",
+        "support": "Support prioritaire"
+      }
+    }
   },
   "search": {
     "placeholder": "Rechercher par nom ou spécialité...",
@@ -941,291 +966,290 @@
     "verified_profile": "Profil Officiel",
     "exp_years": "{count} ans d'exp."
   },
-
   "client": {
-      "requests": {
-        "title": "Mes Demandes d'Intervention",
-        "subtitle": "Suivez l'état de vos demandes et consultez les propositions des artisans.",
-        "tabs": {
-          "active": "En cours",
-          "archived": "Archivées",
-          "all": "Toutes"
-        },
-        "new_request_btn": "Nouvelle demande",
-        "search_placeholder": "Rechercher par titre ou métier...",
-        "publish_first_btn": "Publier ma première demande",
-        "status": {
-          "en_attente": "En attente de réponses",
-          "acceptee": "Intervention acceptée",
-          "terminee": "Terminée",
-          "annulee": "Annulée"
-        },
-        "card": {
-          "responses": "{count, plural, =0 {Aucune proposition} one {1 proposition} other {# propositions}}",
-          "posted_on": "Publiée le {date}",
-          "view_details": "Voir les détails",
-          "no_requests": "Vous n'avez aucune demande dans cette catégorie."
-        },
-        "details": {
-          "title": "Détails de la demande",
-          "description": "Description",
-          "location": "Localisation",
-          "photos": "Photos jointes",
-          "proposals_count": "{count} artisan(s) ont répondu",
-          "no_proposals": "Aucune proposition pour le moment. Nous avons notifié les artisans de votre région.",
-          "cancel_request": "Annuler la demande",
-          "cancel_confirm": "Êtes-vous sûr ? Cette action est irréversible.",
-          "accept_proposal": "Accepter cette proposition",
-          "modifiable": "Modifiable",
-          "locked": "Verrouillé",
-          "edit": "Modifier",
-          "download_quote": "Télécharger Devis",
-          "phone": "Téléphone",
-          "not_provided": "Non renseigné",
-          "proposals": "Propositions ({count})",
-          "chosen": "Choisi",
-          "contacted_btn": "J'ai contacté cet artisan",
-          "default_proposal_message": "Bonjour, je suis disponible pour cette intervention. Contactez-moi pour en discuter."
-        },
-        "proposal": {
-          "experience": "{years} ans d'exp.",
-          "contact_whatsapp": "WhatsApp",
-          "contact_call": "Appeler",
-          "accept_btn": "Choisir cet artisan"
-        }
-      }
-    },
-    "client_reviews": {
-      "title": "Mes Avis",
-      "count": "{count} avis laissé{count, plural, one {} other {s}}",
-      "retry": "Réessayer",
-      "empty_title": "Aucun avis pour le moment",
-      "empty_desc": "Vos avis apparaîtront ici après avoir évalué un artisan suite à une intervention terminée.",
-      "artisan_label": "Artisan"
-    },
-    "client_complaints": {
-      "title": "Mes Réclamations",
-      "subtitle": "Signalez un problème lié à une intervention ou à un artisan.",
-      "new_btn": "Nouvelle réclamation",
-      "retry": "Réessayer",
-      "empty_title": "Aucune réclamation",
-      "empty_desc": "Vous n'avez aucune réclamation en cours. Si vous rencontrez un problème, n'hésitez pas à en soumettre une.",
-      "linked_to": "Lié à l'intervention #{id}",
-      "admin_reply": "Réponse de l'administration :",
-      "info_note": "💡 Les réclamations sont examinées par notre équipe sous 24h. Vous recevrez une notification dès qu'une mise à jour est disponible.",
-      "form": {
-        "title": "Soumettre une réclamation",
-        "subtitle": "Décrivez votre problème en détail. Notre équipe vous répondra sous 24h.",
-        "select_intervention": "Sélectionner l'intervention concernée",
-        "select_placeholder": "Sélectionnez une intervention",
-        "subject_label": "Sujet de la réclamation",
-        "subject_placeholder": "Ex: Problème avec l'artisan, travail non terminé...",
-        "desc_label": "Description détaillée",
-        "desc_placeholder": "Expliquez en détail le problème rencontré...",
-        "cancel": "Annuler",
-        "submit": "Envoyer la réclamation",
-        "submitting": "Envoi en cours...",
-        "error_fields": "Veuillez remplir tous les champs.",
-        "error_min_length": "La description doit contenir au moins 20 caractères.",
-        "error_send": "Erreur lors de l'envoi de la réclamation. Veuillez contacter le support."
+    "requests": {
+      "title": "Mes Demandes d'Intervention",
+      "subtitle": "Suivez l'état de vos demandes et consultez les propositions des artisans.",
+      "tabs": {
+        "active": "En cours",
+        "archived": "Archivées",
+        "all": "Toutes"
       },
+      "new_request_btn": "Nouvelle demande",
+      "search_placeholder": "Rechercher par titre ou métier...",
+      "publish_first_btn": "Publier ma première demande",
       "status": {
-        "ouverte": "Ouverte",
-        "en_cours": "En cours",
-        "resolue": "Résolue",
-        "fermee": "Fermée"
-      }
-    },
-    "artisan_complaints": {
-      "title": "Mes Réclamations",
-      "subtitle": "Signalez un problème lié à une intervention ou à un client.",
-      "new_btn": "Nouvelle réclamation",
-      "retry": "Réessayer",
-      "error_loading": "Erreur de chargement",
-      "empty_title": "Aucune réclamation",
-      "empty_desc": "Vous n'avez aucune réclamation en cours. Si vous rencontrez un problème, n'hésitez pas à en soumettre une.",
-      "linked_to": "Lié à l'intervention #{id}",
-      "admin_reply": "Réponse de l'administration :",
-      "info_note": "💡 Les réclamations sont examinées par notre équipe sous 24h. Vous recevrez une notification dès qu'une mise à jour est disponible.",
-      "form": {
-        "title": "Soumettre une réclamation",
-        "subtitle": "Décrivez votre problème en détail. Notre équipe vous répondra sous 24h.",
-        "select_intervention": "Sélectionner l'intervention concernée",
-        "select_placeholder": "Sélectionnez une intervention",
-        "subject_label": "Sujet de la réclamation",
-        "subject_placeholder": "Ex: Problème avec le client, annulation injustifiée...",
-        "desc_label": "Description détaillée",
-        "desc_placeholder": "Expliquez en détail le problème rencontré...",
-        "cancel": "Annuler",
-        "submit": "Envoyer la réclamation",
-        "submitting": "Envoi en cours...",
-        "error_fields": "Veuillez remplir tous les champs.",
-        "error_min_length": "La description doit contenir au moins 20 caractères.",
-        "error_send": "Erreur lors de l'envoi de la réclamation. Veuillez contacter le support."
+        "en_attente": "En attente de réponses",
+        "acceptee": "Intervention acceptée",
+        "terminee": "Terminée",
+        "annulee": "Annulée"
       },
-      "status": {
-        "ouverte": "Ouverte",
-        "en_cours": "En cours",
-        "resolue": "Résolue",
-        "fermee": "Fermée"
-      }
-    },
-    "artisan": {
-      "jobs": {
-        "title": "Opportunités d'emploi disponibles",
-        "subtitle": "Trouvez des projets qui correspondent à vos compétences dans votre région.",
-        "tabs": {
-          "new": "Nouvelles Offres",
-          "applied": "Mes Candidatures"
-        },
-        "card": {
-          "distance": "à {km} km",
-          "posted": "Publié il y a {time}",
-          "view_request": "Détails",
-          "apply_now": "Soumettre une offre",
-          "applied_on": "Postulé le {date}"
-        },
-        "modal": {
-          "title": "Soumettre une offre",
-          "placeholder": "Décrivez brièvement pourquoi vous êtes le meilleur pour ce projet (ex: expérience similaire, disponibilité immédiate...)",
-          "send": "Envoyer l'offre",
-          "success": "Votre offre a été envoyée avec succès !"
-        },
-        "empty": {
-          "no_jobs": "Aucune nouvelle opportunité pour le moment. Nous vous informerons lorsqu'un client publiera un projet dans vos spécialités.",
-          "no_applied": "Vous n'avez pas encore soumis d'offres."
-        },
-        "status": {
-          "en_attente": "En attente",
-          "acceptee": "Acceptée !",
-          "rejetee": "Non retenue"
-        }
+      "card": {
+        "responses": "{count, plural, =0 {Aucune proposition} one {1 proposition} other {# propositions}}",
+        "posted_on": "Publiée le {date}",
+        "view_details": "Voir les détails",
+        "no_requests": "Vous n'avez aucune demande dans cette catégorie."
       },
-      "interventions": {
-        "title": "Mes Projets",
-        "subtitle": "Suivez vos interventions actives et gérez votre documentation photographique.",
-        "tabs": {
-          "active": "Actifs",
-          "history": "Historique"
-        },
-        "status": {
-          "acceptee": "Acceptée (Prêt à commencer)",
-          "en_cours": "En cours",
-          "terminee": "Terminée",
-          "annulee": "Annulée"
-        },
-        "card": {
-          "client": "Client : {name}",
-          "location": "Lieu : {wilaya}, {commune}",
-          "start_job": "Démarrer l'intervention",
-          "finalize": "Terminer le projet",
-          "view_details": "Gérer le dossier"
-        },
-        "details": {
-          "title": "Dossier d'intervention",
-          "client_info": "Informations du Client",
-          "actions": "Actions Rapides",
-          "progress": "État d'avancement",
-          "photos_title": "Photos du projet",
-          "add_photo": "Ajouter une photo",
-          "photo_before": "Avant l'intervention",
-          "photo_after": "Après l'intervention",
-          "confirm_finish": "Voulez-vous marquer cette intervention comme terminée ? Le client en sera informé.",
-          "contact_client": "Contacter le Client"
-        },
-        "empty": {
-          "no_active": "Vous n'avez actuellement aucune intervention active. Consultez les offres d'emploi pour de nouvelles opportunités.",
-          "no_history": "Votre historique d'interventions est vide."
-        },
-        "history": {
-          "title": "Mes Interventions",
-          "count": "{count, plural, =0 {Aucune demande} one {1 demande} other {# demandes}}",
-          "new_request": "Nouvelle demande",
-          "empty_title": "Aucune intervention",
-          "empty_desc": "Vous n'avez pas encore publié de demande d'intervention sur la plateforme.",
-          "empty_btn": "Publier ma première demande",
-          "loading_error": "Erreur de chargement",
-          "retry": "Réessayer",
-          "cancel_confirm": "Voulez-vous vraiment annuler la demande \"{title}\" ?",
-          "cancel_error": "Erreur lors de l'annulation"
-        }
-      },
-      "wizard": {
-      "steps": {
-        "details": "Détails",
+      "details": {
+        "title": "Détails de la demande",
+        "description": "Description",
         "location": "Localisation",
-        "summary": "Validation"
+        "photos": "Photos jointes",
+        "proposals_count": "{count} artisan(s) ont répondu",
+        "no_proposals": "Aucune proposition pour le moment. Nous avons notifié les artisans de votre région.",
+        "cancel_request": "Annuler la demande",
+        "cancel_confirm": "Êtes-vous sûr ? Cette action est irréversible.",
+        "accept_proposal": "Accepter cette proposition",
+        "modifiable": "Modifiable",
+        "locked": "Verrouillé",
+        "edit": "Modifier",
+        "download_quote": "Télécharger Devis",
+        "phone": "Téléphone",
+        "not_provided": "Non renseigné",
+        "proposals": "Propositions ({count})",
+        "chosen": "Choisi",
+        "contacted_btn": "J'ai contacté cet artisan",
+        "default_proposal_message": "Bonjour, je suis disponible pour cette intervention. Contactez-moi pour en discuter."
       },
-      "step1": {
-        "title": "Décrivez votre besoin",
-        "subtitle": "Donnez un maximum de détails pour recevoir les meilleures propositions.",
-        "fields": {
-          "title": "Titre de la demande *",
-          "title_placeholder": "Ex: Réparation fuite d'eau sous évier",
-          "category": "Catégorie de service *",
-          "category_placeholder": "Sélectionnez une catégorie professionnelle...",
-          "description": "Description du problème *",
-          "description_placeholder": "Expliquez précisément votre besoin (matériel nécessaire, urgence, symptômes...)",
-          "phone": "Numéro de téléphone *",
-          "whatsapp": "WhatsApp",
-          "whatsapp_optional": "(optionnel)",
-          "whatsapp_placeholder": "wa.me/213…",
-          "generate": "Générer",
-          "link_generated": "Lien généré",
-          "test": "Tester",
-          "date": "Date souhaitée",
-          "date_optional": "(optionnel)",
-          "date_info": "Laissez vide si vous êtes flexible"
-        },
-        "errors": {
-          "title_short": "Titre trop court (minimum 5 caractères)",
-          "category_required": "Veuillez choisir une catégorie",
-          "description_short": "La description doit faire au moins 20 caractères",
-          "phone_invalid": "Veuillez saisir un numéro de téléphone valide"
-        },
-        "next": "Étape suivante"
-      },
-      "step2": {
-        "title": "Localisation",
-        "subtitle": "Indiquez l'emplacement de l'intervention pour trouver les artisans proches.",
-        "fields": {
-          "wilaya": "Wilaya *",
-          "wilaya_placeholder": "Sélectionnez une wilaya...",
-          "commune": "Commune *",
-          "commune_placeholder": "Sélectionnez une commune...",
-          "address": "Complément d'adresse (Cité, N°, Étage...)",
-          "address_placeholder": "Ex: Cité 500 logements, Bâtiment B, 3ème étage"
-        },
-        "errors": {
-          "wilaya_required": "Veuillez sélectionner une wilaya",
-          "commune_required": "Veuillez sélectionner une commune"
-        },
-        "map_info": "Cliquez sur la carte ou déplacez le marqueur pour plus de précision",
-        "back": "Précédent",
-        "next": "Valider"
-      },
-      "step3": {
-        "title": "Récapitulatif",
-        "subtitle": "Vérifiez les informations avant de publier votre demande.",
-        "sections": {
-          "details": "Détails de la demande",
-          "location": "Localisation"
-        },
-        "fields": {
-          "title": "Titre",
-          "category": "Catégorie",
-          "description": "Description",
-          "phone": "Téléphone",
-          "whatsapp": "WhatsApp",
-          "date": "Date",
-          "location_auto": "Géolocalisation ({lat}, {lng})"
-        },
-        "modify": "Modifier",
-        "back": "Précédent",
-        "submit": "Publier ma demande",
-        "submitting": "Publication en cours...",
-        "error_general": "Une erreur est survenue lors de la publication"
+      "proposal": {
+        "experience": "{years} ans d'exp.",
+        "contact_whatsapp": "WhatsApp",
+        "contact_call": "Appeler",
+        "accept_btn": "Choisir cet artisan"
       }
+    }
+  },
+  "client_reviews": {
+    "title": "Mes Avis",
+    "count": "{count} avis laissé{count, plural, one {} other {s}}",
+    "retry": "Réessayer",
+    "empty_title": "Aucun avis pour le moment",
+    "empty_desc": "Vos avis apparaîtront ici après avoir évalué un artisan suite à une intervention terminée.",
+    "artisan_label": "Artisan"
+  },
+  "client_complaints": {
+    "title": "Mes Réclamations",
+    "subtitle": "Signalez un problème lié à une intervention ou à un artisan.",
+    "new_btn": "Nouvelle réclamation",
+    "retry": "Réessayer",
+    "empty_title": "Aucune réclamation",
+    "empty_desc": "Vous n'avez aucune réclamation en cours. Si vous rencontrez un problème, n'hésitez pas à en soumettre une.",
+    "linked_to": "Lié à l'intervention #{id}",
+    "admin_reply": "Réponse de l'administration :",
+    "info_note": "💡 Les réclamations sont examinées par notre équipe sous 24h. Vous recevrez une notification dès qu'une mise à jour est disponible.",
+    "form": {
+      "title": "Soumettre une réclamation",
+      "subtitle": "Décrivez votre problème en détail. Notre équipe vous répondra sous 24h.",
+      "select_intervention": "Sélectionner l'intervention concernée",
+      "select_placeholder": "Sélectionnez une intervention",
+      "subject_label": "Sujet de la réclamation",
+      "subject_placeholder": "Ex: Problème avec l'artisan, travail non terminé...",
+      "desc_label": "Description détaillée",
+      "desc_placeholder": "Expliquez en détail le problème rencontré...",
+      "cancel": "Annuler",
+      "submit": "Envoyer la réclamation",
+      "submitting": "Envoi en cours...",
+      "error_fields": "Veuillez remplir tous les champs.",
+      "error_min_length": "La description doit contenir au moins 20 caractères.",
+      "error_send": "Erreur lors de l'envoi de la réclamation. Veuillez contacter le support."
+    },
+    "status": {
+      "ouverte": "Ouverte",
+      "en_cours": "En cours",
+      "resolue": "Résolue",
+      "fermee": "Fermée"
+    }
+  },
+  "artisan_complaints": {
+    "title": "Mes Réclamations",
+    "subtitle": "Signalez un problème lié à une intervention ou à un client.",
+    "new_btn": "Nouvelle réclamation",
+    "retry": "Réessayer",
+    "error_loading": "Erreur de chargement",
+    "empty_title": "Aucune réclamation",
+    "empty_desc": "Vous n'avez aucune réclamation en cours. Si vous rencontrez un problème, n'hésitez pas à en soumettre une.",
+    "linked_to": "Lié à l'intervention #{id}",
+    "admin_reply": "Réponse de l'administration :",
+    "info_note": "💡 Les réclamations sont examinées par notre équipe sous 24h. Vous recevrez une notification dès qu'une mise à jour est disponible.",
+    "form": {
+      "title": "Soumettre une réclamation",
+      "subtitle": "Décrivez votre problème en détail. Notre équipe vous répondra sous 24h.",
+      "select_intervention": "Sélectionner l'intervention concernée",
+      "select_placeholder": "Sélectionnez une intervention",
+      "subject_label": "Sujet de la réclamation",
+      "subject_placeholder": "Ex: Problème avec le client, annulation injustifiée...",
+      "desc_label": "Description détaillée",
+      "desc_placeholder": "Expliquez en détail le problème rencontré...",
+      "cancel": "Annuler",
+      "submit": "Envoyer la réclamation",
+      "submitting": "Envoi en cours...",
+      "error_fields": "Veuillez remplir tous les champs.",
+      "error_min_length": "La description doit contenir au moins 20 caractères.",
+      "error_send": "Erreur lors de l'envoi de la réclamation. Veuillez contacter le support."
+    },
+    "status": {
+      "ouverte": "Ouverte",
+      "en_cours": "En cours",
+      "resolue": "Résolue",
+      "fermee": "Fermée"
+    }
+  },
+  "artisan": {
+    "jobs": {
+      "title": "Opportunités d'emploi disponibles",
+      "subtitle": "Trouvez des projets qui correspondent à vos compétences dans votre région.",
+      "tabs": {
+        "new": "Nouvelles Offres",
+        "applied": "Mes Candidatures"
+      },
+      "card": {
+        "distance": "à {km} km",
+        "posted": "Publié il y a {time}",
+        "view_request": "Détails",
+        "apply_now": "Soumettre une offre",
+        "applied_on": "Postulé le {date}"
+      },
+      "modal": {
+        "title": "Soumettre une offre",
+        "placeholder": "Décrivez brièvement pourquoi vous êtes le meilleur pour ce projet (ex: expérience similaire, disponibilité immédiate...)",
+        "send": "Envoyer l'offre",
+        "success": "Votre offre a été envoyée avec succès !"
+      },
+      "empty": {
+        "no_jobs": "Aucune nouvelle opportunité pour le moment. Nous vous informerons lorsqu'un client publiera un projet dans vos spécialités.",
+        "no_applied": "Vous n'avez pas encore soumis d'offres."
+      },
+      "status": {
+        "en_attente": "En attente",
+        "acceptee": "Acceptée !",
+        "rejetee": "Non retenue"
+      }
+    },
+    "interventions": {
+      "title": "Mes Projets",
+      "subtitle": "Suivez vos interventions actives et gérez votre documentation photographique.",
+      "tabs": {
+        "active": "Actifs",
+        "history": "Historique"
+      },
+      "status": {
+        "acceptee": "Acceptée (Prêt à commencer)",
+        "en_cours": "En cours",
+        "terminee": "Terminée",
+        "annulee": "Annulée"
+      },
+      "card": {
+        "client": "Client : {name}",
+        "location": "Lieu : {wilaya}, {commune}",
+        "start_job": "Démarrer l'intervention",
+        "finalize": "Terminer le projet",
+        "view_details": "Gérer le dossier"
+      },
+      "details": {
+        "title": "Dossier d'intervention",
+        "client_info": "Informations du Client",
+        "actions": "Actions Rapides",
+        "progress": "État d'avancement",
+        "photos_title": "Photos du projet",
+        "add_photo": "Ajouter une photo",
+        "photo_before": "Avant l'intervention",
+        "photo_after": "Après l'intervention",
+        "confirm_finish": "Voulez-vous marquer cette intervention comme terminée ? Le client en sera informé.",
+        "contact_client": "Contacter le Client"
+      },
+      "empty": {
+        "no_active": "Vous n'avez actuellement aucune intervention active. Consultez les offres d'emploi pour de nouvelles opportunités.",
+        "no_history": "Votre historique d'interventions est vide."
+      },
+      "history": {
+        "title": "Mes Interventions",
+        "count": "{count, plural, =0 {Aucune demande} one {1 demande} other {# demandes}}",
+        "new_request": "Nouvelle demande",
+        "empty_title": "Aucune intervention",
+        "empty_desc": "Vous n'avez pas encore publié de demande d'intervention sur la plateforme.",
+        "empty_btn": "Publier ma première demande",
+        "loading_error": "Erreur de chargement",
+        "retry": "Réessayer",
+        "cancel_confirm": "Voulez-vous vraiment annuler la demande \"{title}\" ?",
+        "cancel_error": "Erreur lors de l'annulation"
+      }
+    }
+  },
+  "wizard": {
+    "steps": {
+      "details": "Détails",
+      "location": "Localisation",
+      "summary": "Validation"
+    },
+    "step1": {
+      "title": "Décrivez votre besoin",
+      "subtitle": "Donnez un maximum de détails pour recevoir les meilleures propositions.",
+      "fields": {
+        "title": "Titre de la demande *",
+        "title_placeholder": "Ex: Réparation fuite d'eau sous évier",
+        "category": "Catégorie de service *",
+        "category_placeholder": "Sélectionnez une catégorie professionnelle...",
+        "description": "Description du problème *",
+        "description_placeholder": "Expliquez précisément votre besoin (matériel nécessaire, urgence, symptômes...)",
+        "phone": "Numéro de téléphone *",
+        "whatsapp": "WhatsApp",
+        "whatsapp_optional": "(optionnel)",
+        "whatsapp_placeholder": "wa.me/213…",
+        "generate": "Générer",
+        "link_generated": "Lien généré",
+        "test": "Tester",
+        "date": "Date souhaitée",
+        "date_optional": "(optionnel)",
+        "date_info": "Laissez vide si vous êtes flexible"
+      },
+      "errors": {
+        "title_short": "Titre trop court (minimum 5 caractères)",
+        "category_required": "Veuillez choisir une catégorie",
+        "description_short": "La description doit faire au moins 20 caractères",
+        "phone_invalid": "Veuillez saisir un numéro de téléphone valide"
+      },
+      "next": "Étape suivante"
+    },
+    "step2": {
+      "title": "Localisation",
+      "subtitle": "Indiquez l'emplacement de l'intervention pour trouver les artisans proches.",
+      "fields": {
+        "wilaya": "Wilaya *",
+        "wilaya_placeholder": "Sélectionnez une wilaya...",
+        "commune": "Commune *",
+        "commune_placeholder": "Sélectionnez une commune...",
+        "address": "Complément d'adresse (Cité, N°, Étage...)",
+        "address_placeholder": "Ex: Cité 500 logements, Bâtiment B, 3ème étage"
+      },
+      "errors": {
+        "wilaya_required": "Veuillez sélectionner une wilaya",
+        "commune_required": "Veuillez sélectionner une commune"
+      },
+      "map_info": "Cliquez sur la carte ou déplacez le marqueur pour plus de précision",
+      "back": "Précédent",
+      "next": "Valider"
+    },
+    "step3": {
+      "title": "Récapitulatif",
+      "subtitle": "Vérifiez les informations avant de publier votre demande.",
+      "sections": {
+        "details": "Détails de la demande",
+        "location": "Localisation"
+      },
+      "fields": {
+        "title": "Titre",
+        "category": "Catégorie",
+        "description": "Description",
+        "phone": "Téléphone",
+        "whatsapp": "WhatsApp",
+        "date": "Date",
+        "location_auto": "Géolocalisation ({lat}, {lng})"
+      },
+      "modify": "Modifier",
+      "back": "Précédent",
+      "submit": "Publier ma demande",
+      "submitting": "Publication en cours...",
+      "error_general": "Une erreur est survenue lors de la publication"
     }
   }
 }

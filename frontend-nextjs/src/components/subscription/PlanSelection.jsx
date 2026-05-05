@@ -6,7 +6,9 @@ import {
   CheckCircle2, X, Zap, Crown, Star, Shield, ArrowRight,
   Sparkles, TrendingUp, AlertTriangle, Loader2
 } from "lucide-react"
+import { useTranslations, useLocale } from "next-intl"
 import api from "@/lib/axios"
+import { cn } from "@/lib/utils"
 
 // Color config per plan id
 const colorMap = {
@@ -48,13 +50,14 @@ const colorMap = {
   },
 }
 
-const durationLabel = {
-  mensuel: "/ mois",
-  trimestriel: "/ 3 mois",
-  annuel: "/ an",
-}
-
 export function PlanSelection({ onSuccess, compact = false }) {
+  const t = useTranslations("subscription.selection")
+  const locale = useLocale()
+  const durationLabel = {
+    mensuel: t("per_month"),
+    trimestriel: t("per_3_months"),
+    annuel: t("per_year"),
+  }
   const [plans, setPlans] = React.useState([])
   const [fetchLoading, setFetchLoading] = React.useState(true)
   const [showUpgradeModal, setShowUpgradeModal] = React.useState(false)
@@ -64,7 +67,7 @@ export function PlanSelection({ onSuccess, compact = false }) {
   React.useEffect(() => {
     api.get("/subscription/plans")
       .then(res => setPlans(res.data.plans || []))
-      .catch(() => setError("Impossible de charger les plans."))
+      .catch(() => setError(t("error_load")))
       .finally(() => setFetchLoading(false))
   }, [])
 
@@ -84,7 +87,7 @@ export function PlanSelection({ onSuccess, compact = false }) {
       setShowUpgradeModal(false)
       if (onSuccess) onSuccess(planId)
     } catch (err) {
-      setError(err?.response?.data?.message || "Une erreur s'est produite.")
+      setError(err?.response?.data?.message || t("error_generic"))
     } finally {
       setLoading(null)
     }
@@ -105,13 +108,13 @@ export function PlanSelection({ onSuccess, compact = false }) {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-500/20 mb-5">
             <Sparkles className="w-4 h-4 text-blue-600" />
-            <span className="text-xs font-black text-blue-600 uppercase tracking-widest">Choisissez votre plan</span>
+            <span className="text-xs font-black text-blue-600 uppercase tracking-widest">{t("badge")}</span>
           </div>
           <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-3">
-            Débloquez tout votre potentiel
+            {t("title")}
           </h2>
           <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto">
-            Choisissez un plan pour commencer à recevoir des missions et développer votre activité.
+            {t("subtitle")}
           </p>
         </div>
       )}
@@ -130,7 +133,7 @@ export function PlanSelection({ onSuccess, compact = false }) {
           const c = colorMap[plan.id] ?? colorMap.mensuel
           const Icon = c.icon_comp
           const isLoading = loading === plan.id
-          const priceLabel = plan.price === 0 ? "Gratuit" : `${plan.price.toLocaleString()} DA`
+          const priceLabel = plan.price === 0 ? t("price_free") : `${plan.price.toLocaleString()} ${t("currency")}`
 
           return (
             <motion.div
@@ -143,7 +146,7 @@ export function PlanSelection({ onSuccess, compact = false }) {
               {/* Badge */}
               {plan.best_value && c.badge && (
                 <div className={`absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest whitespace-nowrap shadow-sm ${c.badge}`}>
-                  Recommandé
+                  {t("recommended")}
                 </div>
               )}
 
@@ -178,12 +181,12 @@ export function PlanSelection({ onSuccess, compact = false }) {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
                     </svg>
-                    Activation...
+                    {t("activation")}
                   </span>
                 ) : plan.id === "gratuit" ? (
-                  <>Continuer gratuitement</>
+                  <>{t("continue_free")}</>
                 ) : (
-                  <>Choisir <ArrowRight className="w-4 h-4" /></>
+                  <>{t("choose")} <ArrowRight className={cn("w-4 h-4", locale === 'ar' && "rotate-180")} /></>
                 )}
               </button>
             </motion.div>
@@ -209,7 +212,7 @@ export function PlanSelection({ onSuccess, compact = false }) {
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
               className="relative w-full max-w-md bg-white dark:bg-[#0C0C0C] rounded-3xl shadow-2xl border border-slate-200 dark:border-white/8 overflow-hidden"
             >
-              <div className="h-1.5 w-full bg-gradient-to-r from-indigo-500 via-blue-500 to-purple-500" />
+              <div className="h-1.5 w-full bg-linear-to-r from-indigo-500 via-blue-500 to-purple-500" />
               <div className="p-8">
                 <button
                   onClick={() => setShowUpgradeModal(false)}
@@ -223,10 +226,10 @@ export function PlanSelection({ onSuccess, compact = false }) {
                 </div>
 
                 <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-2">
-                  Attendez un instant !
+                  {t("modal.title")}
                 </h2>
                 <p className="text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-6">
-                  Avec le plan <strong>Free</strong>, vous ne pourrez pas contacter de clients ni soumettre de propositions.
+                  {t("modal.desc")}
                 </p>
 
                 <div className="rounded-2xl border-2 border-indigo-200 dark:border-indigo-500/30 bg-indigo-50 dark:bg-indigo-900/10 p-5 mb-6">
@@ -235,13 +238,13 @@ export function PlanSelection({ onSuccess, compact = false }) {
                       <Star className="w-4 h-4 text-white fill-white" />
                     </div>
                     <div>
-                      <p className="font-black text-slate-900 dark:text-white text-sm">Plan 3 Mois — 1 500 DA</p>
-                      <p className="text-xs text-indigo-600 dark:text-indigo-400 font-bold mt-0.5">≈ 500 DA/mois · Le plus populaire</p>
+                      <p className="font-black text-slate-900 dark:text-white text-sm">{t("modal.plan_3_months")}</p>
+                      <p className="text-xs text-indigo-600 dark:text-indigo-400 font-bold mt-0.5">{t("modal.popular_hint")}</p>
                       <ul className="mt-2.5 space-y-1">
-                        {["Propositions illimitées", "Contact direct clients", "Badge Artisan Pro", "Support prioritaire"].map(f => (
+                        {["unlimited", "direct", "badge", "support"].map(f => (
                           <li key={f} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300 font-medium">
                             <CheckCircle2 className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
-                            {f}
+                            {t(`features.${f}`)}
                           </li>
                         ))}
                       </ul>
@@ -255,14 +258,14 @@ export function PlanSelection({ onSuccess, compact = false }) {
                     className="w-full h-12 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-sm uppercase tracking-wide flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <Zap className="w-4 h-4" />
-                    Choisir 3 Mois (1 500 DA)
+                    {t("modal.choose_3_months")}
                   </button>
                   <button
                     onClick={() => doSubscribe("gratuit")}
                     disabled={!!loading}
                     className="w-full h-10 rounded-2xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 text-sm font-medium transition-colors disabled:opacity-50"
                   >
-                    {loading === "gratuit" ? "Activation..." : "Continuer avec le plan gratuit (accès limité)"}
+                    {loading === "gratuit" ? t("activation") : t("modal.continue_limited")}
                   </button>
                 </div>
               </div>

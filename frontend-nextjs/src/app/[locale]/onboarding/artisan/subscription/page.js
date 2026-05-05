@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { motion } from "framer-motion"
 import { Award, Zap, ArrowRight, ShieldCheck } from "lucide-react"
 import { useRouter } from "@/i18n/routing"
@@ -9,17 +9,18 @@ import { PlanSelection } from "@/components/subscription/PlanSelection"
 import { useAuth } from "@/context/AuthContext"
 
 export default function ArtisanOnboardingSubscriptionPage() {
-  const router = useRouter()
   const { user } = useAuth()
+  const t = useTranslations("onboarding")
+  const locale = useLocale()
+  const artisanConfirmed = user?.artisan?.statutValidation === "valide"
 
   const handleSuccess = () => {
     // Force a page refresh to update auth context from the modified user load
     window.location.href = "/dashboard/artisan"
-    // router.push("/dashboard/artisan")
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#09090b] flex flex-col">
+    <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#09090b] flex flex-col" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       {/* Top Navigation Bar */}
       <div className="flex-none p-6 md:px-10">
         <div className="flex items-center justify-between">
@@ -29,13 +30,13 @@ export default function ArtisanOnboardingSubscriptionPage() {
             </div>
             <div>
               <span className="text-sm font-bold text-slate-900 dark:text-white tracking-tight block">DzArtisan Pro</span>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Étape finale</span>
+              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{t("step_final")}</span>
             </div>
           </div>
 
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20">
             <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">Compte Approuvé</span>
+            <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">{t("account_approved")}</span>
           </div>
         </div>
       </div>

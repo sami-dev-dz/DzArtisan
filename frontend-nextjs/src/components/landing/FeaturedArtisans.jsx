@@ -13,7 +13,7 @@ import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
 export function FeaturedArtisans() {
-  const t = useTranslations("navigation")
+  const t = useTranslations("featured_artisans")
   const locale = useLocale()
   const isRTL = locale === "ar"
 
@@ -30,7 +30,7 @@ export function FeaturedArtisans() {
               viewport={{ once: true }}
               className="text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white"
             >
-              Artisans à la une
+              {t("title")}
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 10 }}
@@ -39,13 +39,13 @@ export function FeaturedArtisans() {
               transition={{ delay: 0.1 }}
               className="text-lg text-slate-500 dark:text-slate-400"
             >
-              Découvrez nos experts vérifiés, choisis pour la qualité de leurs prestations et leur réactivité.
+              {t("subtitle")}
             </motion.p>
           </div>
           <Link href="/artisans" className="hidden md:flex shrink-0">
-            <Button variant="outline" className="group rounded-full px-6 border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900">
-              Voir tous les profils
-              <ChevronRight className={cn("ml-2 h-4 w-4 transition-transform group-hover:translate-x-1", isRTL && "rotate-180")} />
+            <Button variant="outline" className="group rounded-full px-6 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">
+              {t("view_all")}
+              <ChevronRight className={cn("ml-2 h-4 w-4 transition-transform", isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1")} />
             </Button>
           </Link>
         </div>
@@ -67,24 +67,24 @@ export function FeaturedArtisans() {
 
             <div className="flex-1 text-center md:text-left rtl:md:text-right">
               <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
-                Exercez-vous en tant qu&apos;artisan ?
+                {t("join_title")}
               </h3>
               <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-6 max-w-2xl text-lg">
-                Notre réseau se développe continuellement. Rejoignez DzArtisan dès aujourd&apos;hui pour bénéficier d&apos;une visibilité accrue et d&apos;outils professionnels pensés pour développer votre activité.
+                {t("join_desc")}
               </p>
               
               <ul className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-8 text-sm font-medium text-slate-700 dark:text-slate-300 items-center md:items-start rtl:md:items-start">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
-                  <span>Profil vérifié</span>
+                  <span>{t("benefit_verified")}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
-                  <span>Tableau de bord</span>
+                  <span>{t("benefit_dashboard")}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0" />
-                  <span>Mise en relation directe</span>
+                  <span>{t("benefit_direct")}</span>
                 </li>
               </ul>
 
@@ -93,8 +93,8 @@ export function FeaturedArtisans() {
                   size="lg"
                   className="rounded-xl px-8 w-full sm:w-auto font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-500/20 transition-all group"
                 >
-                  Créer mon profil professionnel
-                  <ChevronRight className={cn("ml-2 h-4 w-4 transition-transform group-hover:translate-x-1", isRTL && "rotate-180")} />
+                  {t("cta_register")}
+                  <ChevronRight className={cn("ml-2 h-4 w-4 transition-transform", isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1")} />
                 </Button>
               </Link>
             </div>
@@ -104,9 +104,10 @@ export function FeaturedArtisans() {
         {/* Mobile View All */}
         <div className="mt-8 md:hidden">
           <Link href="/artisans">
-            <Button variant="outline" className="w-full h-12 rounded-xl group border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
-              Voir tous les profils
-              <ChevronRight className={cn("ml-2 h-4 w-4 transition-transform group-hover:translate-x-1", isRTL && "rotate-180")} />
+            <Button variant="outline" className="w-full h-12 rounded-xl group border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300">
+              {isRTL ? <ChevronRight className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1 rotate-180" /> : null}
+              {t("view_all")}
+              {!isRTL ? <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" /> : null}
             </Button>
           </Link>
         </div>

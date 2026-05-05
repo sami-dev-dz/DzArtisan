@@ -35,16 +35,16 @@ const TRUST_KEYS = [
    Trade icons for the orbiting ring
 ───────────────────────────────────────────────*/
 const TRADES = [
-  { icon: Zap, color: "#f59e0b", label: { fr: "Électricité", ar: "كهرباء", en: "Electric" } },
-  { icon: Droplets, color: "#3b82f6", label: { fr: "Plomberie", ar: "سباكة", en: "Plumbing" } },
-  { icon: Hammer, color: "#ef4444", label: { fr: "Maçonnerie", ar: "بناء", en: "Masonry" } },
-  { icon: Wrench, color: "#10b981", label: { fr: "Mécanique", ar: "ميكانيك", en: "Mechanics" } },
-  { icon: Paintbrush, color: "#8b5cf6", label: { fr: "Peinture", ar: "دهان", en: "Painting" } },
-  { icon: Truck, color: "#f97316", label: { fr: "Livraison", ar: "توصيل", en: "Delivery" } },
+  { icon: Zap, color: "#f59e0b", key: "electric" },
+  { icon: Droplets, color: "#3b82f6", key: "plumbing" },
+  { icon: Hammer, color: "#ef4444", key: "masonry" },
+  { icon: Wrench, color: "#10b981", key: "mechanics" },
+  { icon: Paintbrush, color: "#8b5cf6", key: "painting" },
+  { icon: Truck, color: "#f97316", key: "delivery" },
 ]
 
-function TrustVisual({ locale }) {
-  const tl = (map) => map[locale] ?? map.fr
+function TrustVisual() {
+  const t = useTranslations("hero")
   const cx = 200
   const cy = 200
   const R = 140 // orbit radius
@@ -174,9 +174,9 @@ function TrustVisual({ locale }) {
 
       {/* Floating label cards anchored to specific positions */}
       {[
-        { label: { fr: "Artisans vérifiés", ar: "حرفيون موثّقون", en: "Verified pros" }, icon: ShieldCheck, color: "#3b82f6", x: -30, y: 30 },
-        { label: { fr: "Réponse rapide", ar: "رد سريع", en: "Fast reply" }, icon: Clock, color: "#10b981", x: 290, y: 30 },
-        { label: { fr: "Sans engagement", ar: "بدون التزام", en: "No commitment" }, icon: CheckCircle2, color: "#8b5cf6", x: 120, y: 340 },
+        { key: "badge_verified", icon: ShieldCheck, color: "#3b82f6", x: -30, y: 30 },
+        { key: "badge_fast",     icon: Clock,       color: "#10b981", x: 290, y: 30 },
+        { key: "badge_no_commitment", icon: CheckCircle2, color: "#8b5cf6", x: 120, y: 340 },
       ].map((card, i) => {
         const Icon = card.icon
         return (
@@ -216,7 +216,7 @@ function TrustVisual({ locale }) {
               fontSize: 11.5, fontWeight: 600, color: "var(--text-secondary)",
               fontFamily: "var(--font-sans)", letterSpacing: "-0.01em",
             }}>
-              {tl(card.label)}
+              {t(card.key)}
             </span>
           </motion.div>
         )
@@ -403,16 +403,25 @@ export function Hero() {
         }
         .marquee-track {
           display: flex; gap: 48px; width: max-content;
-          animation: marquee-scroll 28s linear infinite;
+        }
+        .marquee-track.ltr {
+          animation: marquee-scroll-ltr 28s linear infinite;
+        }
+        .marquee-track.rtl {
+          animation: marquee-scroll-rtl 28s linear infinite;
         }
         .marquee-item {
           display: flex; align-items: center; gap: 8px;
           font-size: 12px; font-weight: 500; color: var(--text-muted);
           font-family: var(--font-sans); white-space: nowrap;
         }
-        @keyframes marquee-scroll {
+        @keyframes marquee-scroll-ltr {
+          from { transform: translateX(-12.5%); }
+          to   { transform: translateX(0); }
+        }
+        @keyframes marquee-scroll-rtl {
           from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
+          to   { transform: translateX(-12.5%); }
         }
       `}</style>
 
@@ -478,23 +487,23 @@ export function Hero() {
 
           {/* ── RIGHT — animated orbit ── */}
           <div className="hero-right">
-            <TrustVisual locale={locale} />
+            <TrustVisual />
           </div>
 
         </div>
 
         {/* Scrolling marquee at the bottom */}
-        <div className="marquee-wrap">
-          <div className="marquee-track">
-            {[...Array(2)].flatMap(() =>
+        <div className="marquee-wrap" dir="ltr">
+          <div className={`marquee-track ${isRTL ? "rtl" : "ltr"}`}>
+            {[...Array(8)].map((_, copyIdx) =>
               TRADES.map((trade, i) => {
                 const Icon = trade.icon
-                const label = trade.label[locale] ?? trade.label.fr
+                const label = t(`trades.${trade.key}`)
                 return (
-                  <div className="marquee-item" key={`${i}-${Math.random()}`}>
+                  <div className="marquee-item" key={`marquee-${copyIdx}-${trade.key}`} dir={isRTL ? "rtl" : "ltr"}>
                     <Icon size={13} color={trade.color} strokeWidth={2} />
                     <span>{label}</span>
-                    <span style={{ color: "var(--card-border)", marginLeft: 16 }}>·</span>
+                    <span style={{ color: "var(--card-border)", [isRTL ? 'marginRight' : 'marginLeft']: 16 }}>·</span>
                   </div>
                 )
               })

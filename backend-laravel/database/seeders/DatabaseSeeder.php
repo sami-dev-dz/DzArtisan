@@ -17,20 +17,20 @@ class DatabaseSeeder extends Seeder
 
         // 2. Catégories (Métiers)
         $categories = [
-            ['nom' => 'Plomberie',            'icone' => '🔧'],
-            ['nom' => 'Électricité',          'icone' => '⚡'],
-            ['nom' => 'Peinture',             'icone' => '🎨'],
-            ['nom' => 'Maçonnerie',           'icone' => '🧱'],
-            ['nom' => 'Menuiserie',           'icone' => '🪵'],
-            ['nom' => 'Climatisation',        'icone' => '❄️'],
-            ['nom' => 'Soudure',              'icone' => '👨‍🏭'],
-            ['nom' => 'Mécanique',            'icone' => '🚗'],
-            ['nom' => 'Jardinage',            'icone' => '🌿'],
-            ['nom' => 'Nettoyage',            'icone' => '🧹'],
-            ['nom' => 'Froid & Frigo',        'icone' => '🍦'],
-            ['nom' => 'Plâtrerie & PVC',      'icone' => '🏗️'],
-            ['nom' => 'Électroménager',       'icone' => '📺'],
-            ['nom' => 'Aluminium & Vitrage',  'icone' => '🪟'],
+            ['nom' => 'Plomberie',            'nom_ar' => 'سباكة',            'icone' => '🔧'],
+            ['nom' => 'Électricité',          'nom_ar' => 'كهرباء',           'icone' => '⚡'],
+            ['nom' => 'Peinture',             'nom_ar' => 'دهان',             'icone' => '🎨'],
+            ['nom' => 'Maçonnerie',           'nom_ar' => 'بناء',             'icone' => '🧱'],
+            ['nom' => 'Menuiserie',           'nom_ar' => 'نجارة',            'icone' => '🪵'],
+            ['nom' => 'Climatisation',        'nom_ar' => 'تبريد وتكييف',      'icone' => '❄️'],
+            ['nom' => 'Soudure',              'nom_ar' => 'تلحيم',            'icone' => '👨‍🏭'],
+            ['nom' => 'Mécanique',            'nom_ar' => 'ميكانيك',          'icone' => '🚗'],
+            ['nom' => 'Jardinage',            'nom_ar' => 'بستنة',            'icone' => '🌿'],
+            ['nom' => 'Nettoyage',            'nom_ar' => 'تنظيف',            'icone' => '🧹'],
+            ['nom' => 'Froid & Frigo',        'nom_ar' => 'تبريد',            'icone' => '🍦'],
+            ['nom' => 'Plâtrerie & PVC',      'nom_ar' => 'جبس و PVC',        'icone' => '🏗️'],
+            ['nom' => 'Électroménager',       'nom_ar' => 'كهرومنزلية',       'icone' => '📺'],
+            ['nom' => 'Aluminium & Vitrage',  'nom_ar' => 'ألمنيوم وزجاج',      'icone' => '🪟'],
         ];
         foreach ($categories as $c) {
             CategorieMetier::updateOrCreate(['nom' => $c['nom']], $c);

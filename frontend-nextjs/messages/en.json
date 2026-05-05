@@ -71,7 +71,50 @@
     "trust_wilayas": "69 Wilayas",
     "trust_verified_desc": "Every artisan is reviewed before being listed.",
     "trust_fast_desc": "Get responses in under 24 hours.",
-    "trust_wilayas_desc": "Nationwide coverage across Algeria."
+    "trust_wilayas_desc": "Nationwide coverage across Algeria.",
+    "badge_verified": "Verified pros",
+    "badge_fast": "Fast reply",
+    "badge_no_commitment": "No commitment",
+    "trades": {
+      "electric": "Electric",
+      "plumbing": "Plumbing",
+      "masonry": "Masonry",
+      "mechanics": "Mechanics",
+      "painting": "Painting",
+      "delivery": "Delivery"
+    }
+  },
+  "featured_artisans": {
+    "title": "Featured Artisans",
+    "subtitle": "Discover our verified experts, chosen for the quality of their services and their responsiveness.",
+    "view_all": "View all profiles",
+    "join_title": "Are you an artisan?",
+    "join_desc": "Our network is continuously growing. Join DzArtisan today to benefit from increased visibility and professional tools designed to grow your business.",
+    "benefit_verified": "Verified profile",
+    "benefit_dashboard": "Dashboard",
+    "benefit_direct": "Direct connection",
+    "cta_register": "Create my professional profile"
+  },
+  "footer": {
+    "about": "The leading platform in Algeria for connecting customers and qualified artisans. Performance, security, and proximity guaranteed.",
+    "secure_platform": "Verified & Secure Platform",
+    "heading_explore": "Explore",
+    "heading_support": "Support",
+    "heading_contact": "Contact",
+    "rights_reserved": "All rights reserved.",
+    "law_compliance": "Compliant with law 18-07",
+    "hosted_in": "Hosted in Algeria",
+    "links": {
+      "find_artisan": "Find an artisan",
+      "post_request": "Post a request",
+      "pricing": "Artisan rates",
+      "coverage": "Service areas",
+      "admin": "Administration",
+      "terms": "Terms of Use",
+      "privacy": "Privacy Policy",
+      "help": "Help Center",
+      "faq": "Frequently Asked Questions"
+    }
   },
   "how_it_works": {
     "title": "How it works?",
@@ -186,11 +229,11 @@
     "tab_client": "I'm a Client",
     "tab_artisan": "I'm an Artisan",
     "email_label": "Email address",
-    "email_hint": "We'll never share your email.",
+    "email_hint": "Enter the email address associated with your account",
     "email_placeholder": "your@email.com",
     "email_invalid": "Invalid email format.",
     "password_label": "Password",
-    "password_hint": "Use a complex password.",
+    "password_hint": "Enter your password (minimum 8 characters)",
     "password_placeholder": "••••••••",
     "password_min_length": "Password must be at least 8 characters.",
     "forgot_link": "Forgot password?",
@@ -209,7 +252,7 @@
     "btn_login": "Sign In",
     "btn_register": "Sign Up",
     "btn_submitting": "Please wait...",
-    "trust_signal": "Secure login by DzArtisan",
+    "trust_signal": "Secure login · SSL encrypted data",
     "or_continue_with": "Or continue with",
     "google_btn": "Sign in with Google",
     "oauth_coming_soon_title": "Feature coming soon",
@@ -234,16 +277,11 @@
     "invalid_token": "The reset link is invalid or expired.",
     "btn_request_new": "Request a new link",
     "network_error": "Server is unreachable. Please check your connection.",
-    "no_account_prefix": "Don't have an account?",
-    "no_account_action": "Sign up",
     "have_account_prefix": "Already have an account?",
     "have_account_action": "Sign in",
     "admin_login_title": "Administration",
     "admin_login_subtitle": "DzArtisan secure management area.",
     "admin_login_btn": "Access Administration",
-    "email_hint": "Enter the email address associated with your account",
-    "password_hint": "Enter your password (minimum 8 characters)",
-    "trust_signal": "Secure login · SSL encrypted data",
     "reset_success_title": "Password Updated!",
     "secure_note": "Secure page — SSL encrypted.",
     "privacy_policy": "Privacy Policy",
@@ -259,9 +297,7 @@
     "strength_empty": "Empty",
     "strength_weak": "Weak",
     "strength_medium": "Medium",
-    "strength_strong": "Strong",
-    "show_password": "Show password",
-    "hide_password": "Hide password"
+    "strength_strong": "Strong"
   },
   "artisan_profile": {
     "about": "About",
@@ -427,8 +463,12 @@
       "refresh": "Refresh",
       "manual_activation": {
         "btn": "Manual Activation",
-        "search_artisan": "Search for an artisan...",
-        "success": "Operation successful"
+        "title": "Manual Activation",
+        "search_artisan": "Search Artisan",
+        "select_plan": "Select Plan",
+        "amount_label": "Amount Received (DZD)",
+        "method_label": "Payment Method",
+        "success": "Subscription successfully activated."
       },
       "title": "Subscription Management",
       "subtitle": "Track revenue, validate manual payments, and manage activation periods.",
@@ -467,15 +507,6 @@
         "expired_ago": "Expired {days}d ago",
         "manual_method": "Manual / Transfer",
         "no_data": "No subscriptions matching this filter."
-      },
-      "manual_activation": {
-        "btn": "Manual Activation",
-        "title": "Manual Activation",
-        "search_artisan": "Search Artisan",
-        "select_plan": "Select Plan",
-        "amount_label": "Amount Received (DZD)",
-        "method_label": "Payment Method",
-        "success": "Subscription successfully activated."
       }
     },
     "complaints_management": {
@@ -950,293 +981,255 @@
     "verified_profile": "Official Profile",
     "exp_years": "{count} years exp."
   },
-
   "client": {
-      "requests": {
-        "title": "My Service Requests",
-        "subtitle": "Follow your requests and consult artisan proposals.",
-        "tabs": {
-          "active": "Active",
-          "archived": "Archived",
-          "all": "All"
-        },
-        "new_request_btn": "New Request",
-        "search_placeholder": "Search by title or job...",
-        "publish_first_btn": "Publish my first request",
-        "status": {
-          "en_attente": "Waiting for responses",
-          "acceptee": "Accepted",
-          "terminee": "Completed",
-          "annulee": "Canceled"
-        },
-        "card": {
-          "responses": "{count, plural, =0 {No proposals} one {1 proposal} other {# proposals}}",
-          "posted_on": "Posted on {date}",
-          "view_details": "View Details",
-          "no_requests": "You have no requests in this category."
-        },
-        "details": {
-          "title": "Request Details",
-          "description": "Description",
-          "location": "Location",
-          "photos": "Attached Photos",
-          "proposals_count": "{count} artisans replied",
-          "no_proposals": "No proposals yet. We have notified artisans in your area.",
-          "cancel_request": "Cancel Request",
-          "cancel_confirm": "Are you sure? This action is irreversible.",
-          "accept_proposal": "Accept this proposal",
-          "modifiable": "Modifiable",
-          "locked": "Locked",
-          "edit": "Edit",
-          "download_quote": "Download Quote",
-          "phone": "Phone",
-          "not_provided": "Not provided",
-          "proposals": "Proposals ({count})",
-          "chosen": "Chosen",
-          "contacted_btn": "I contacted this artisan",
-          "default_proposal_message": "Hello, I am available for this intervention. Contact me to discuss it."
-        },
-        "proposal": {
-          "experience": "{years} yrs exp.",
-          "contact_whatsapp": "WhatsApp",
-          "contact_call": "Call",
-          "accept_btn": "Choose this artisan"
-        }
-      }
-    },
-    "client_reviews": {
-      "title": "My Reviews",
-      "count": "{count} review{count, plural, one {} other {s}} left",
-      "retry": "Retry",
-      "empty_title": "No reviews yet",
-      "empty_desc": "Your reviews will appear here after evaluating an artisan following a completed intervention.",
-      "artisan_label": "Artisan"
-    },
-    "client_complaints": {
-      "title": "My Complaints",
-      "subtitle": "Report an issue related to an intervention or an artisan.",
-      "new_btn": "New complaint",
-      "retry": "Retry",
-      "empty_title": "No complaints",
-      "empty_desc": "You have no ongoing complaints. If you encounter an issue, feel free to submit one.",
-      "linked_to": "Linked to intervention #{id}",
-      "admin_reply": "Administration reply:",
-      "info_note": "💡 Complaints are reviewed by our team within 24h. You will receive a notification as soon as an update is available.",
-      "form": {
-        "title": "Submit a complaint",
-        "subtitle": "Describe your issue in detail. Our team will respond within 24h.",
-        "select_intervention": "Select the relevant intervention",
-        "select_placeholder": "Select an intervention",
-        "subject_label": "Complaint subject",
-        "subject_placeholder": "Ex: Problem with the artisan, work not finished...",
-        "desc_label": "Detailed description",
-        "desc_placeholder": "Explain in detail the problem encountered...",
-        "cancel": "Cancel",
-        "submit": "Send complaint",
-        "submitting": "Sending...",
-        "error_fields": "Please fill in all fields.",
-        "error_min_length": "Description must be at least 20 characters.",
-        "error_send": "Error sending complaint. Please contact support."
+    "requests": {
+      "title": "My Service Requests",
+      "subtitle": "Follow your requests and consult artisan proposals.",
+      "tabs": {
+        "active": "Active",
+        "archived": "Archived",
+        "all": "All"
       },
+      "new_request_btn": "New Request",
+      "search_placeholder": "Search by title or job...",
+      "publish_first_btn": "Publish my first request",
       "status": {
-        "ouverte": "Open",
-        "en_cours": "In progress",
-        "resolue": "Resolved",
-        "fermee": "Closed"
-      }
-    },
-    "artisan_complaints": {
-      "title": "My Complaints",
-      "subtitle": "Report an issue related to an intervention or a client.",
-      "new_btn": "New complaint",
-      "retry": "Retry",
-      "error_loading": "Loading error",
-      "empty_title": "No complaints",
-      "empty_desc": "You have no ongoing complaints. If you encounter an issue, feel free to submit one.",
-      "linked_to": "Linked to intervention #{id}",
-      "admin_reply": "Administration reply:",
-      "info_note": "💡 Complaints are reviewed by our team within 24h. You will receive a notification as soon as an update is available.",
-      "form": {
-        "title": "Submit a complaint",
-        "subtitle": "Describe your issue in detail. Our team will respond within 24h.",
-        "select_intervention": "Select the relevant intervention",
-        "select_placeholder": "Select an intervention",
-        "subject_label": "Complaint subject",
-        "subject_placeholder": "Ex: Problem with the client, unjustified cancellation...",
-        "desc_label": "Detailed description",
-        "desc_placeholder": "Explain in detail the problem encountered...",
-        "cancel": "Cancel",
-        "submit": "Send complaint",
-        "submitting": "Sending...",
-        "error_fields": "Please fill in all fields.",
-        "error_min_length": "Description must be at least 20 characters.",
-        "error_send": "Error sending complaint. Please contact support."
+        "en_attente": "Waiting for responses",
+        "acceptee": "Accepted",
+        "terminee": "Completed",
+        "annulee": "Canceled"
       },
-      "status": {
-        "ouverte": "Open",
-        "en_cours": "In progress",
-        "resolue": "Resolved",
-        "fermee": "Closed"
-      }
-    },
-    "artisan": {
-      "jobs": {
-        "title": "Available Job Opportunities",
-        "subtitle": "Find projects that match your skills in your area.",
-        "tabs": {
-          "new": "New Offers",
-          "applied": "My Applications"
-        },
-        "card": {
-          "distance": "{km} km away",
-          "posted": "Posted {time} ago",
-          "view_request": "Details",
-          "apply_now": "Submit Offer",
-          "applied_on": "Applied on {date}"
-        },
-        "modal": {
-          "title": "Submit Offer",
-          "placeholder": "Briefly describe why you are the best fit for this project (e.g., similar experience, immediate availability...)",
-          "send": "Send Offer",
-          "success": "Your offer was sent successfully!"
-        },
-        "empty": {
-          "no_jobs": "No new opportunities right now. We will notify you when a client posts a project in your specialties.",
-          "no_applied": "You haven't submitted any offers yet."
-        },
-        "status": {
-          "en_attente": "Pending",
-          "acceptee": "Accepted!",
-          "rejetee": "Not Accepted"
-        }
+      "card": {
+        "responses": "{count, plural, =0 {No proposals} one {1 proposal} other {# proposals}}",
+        "posted_on": "Posted on {date}",
+        "view_details": "View Details",
+        "no_requests": "You have no requests in this category."
       },
-      "interventions": {
-        "title": "My Projects",
-        "subtitle": "Track your active interventions and manage your photo documentation.",
-        "tabs": {
-          "active": "Active",
-          "history": "History"
-        },
-        "status": {
-          "acceptee": "Accepted (Ready to start)",
-          "en_cours": "In Progress",
-          "terminee": "Completed",
-          "annulee": "Cancelled"
-        },
-        "card": {
-          "client": "Client: {name}",
-          "location": "Location: {wilaya}, {commune}",
-          "start_job": "Start Job",
-          "finalize": "Finalize Project",
-          "view_details": "Manage File"
-        },
-        "details": {
-          "title": "Intervention File",
-          "client_info": "Client Information",
-          "actions": "Quick Actions",
-          "progress": "Progress Status",
-          "photos_title": "Project Photos",
-          "add_photo": "Add Photo",
-          "photo_before": "Before Job",
-          "photo_after": "After Job",
-          "confirm_finish": "Do you want to mark this intervention as completed? The client will be notified.",
-          "contact_client": "Contact Client"
-        },
-        "empty": {
-          "no_active": "You currently have no active interventions. Check the job board for new opportunities.",
-          "no_history": "Your intervention history is empty."
-        }
-      },
-      "interventions": {
-        "history": {
-          "title": "My Interventions",
-          "count": "{count, plural, =0 {No requests} one {1 request} other {# requests}}",
-          "new_request": "New Request",
-          "empty_title": "No Interventions",
-          "empty_desc": "You haven't published any intervention requests on the platform yet.",
-          "empty_btn": "Publish my first request",
-          "loading_error": "Error loading",
-          "retry": "Retry",
-          "cancel_confirm": "Do you really want to cancel the request \"{title}\"?",
-          "cancel_error": "Error during cancellation"
-        }
-      },
-      "wizard": {
-      "steps": {
-        "details": "Details",
+      "details": {
+        "title": "Request Details",
+        "description": "Description",
         "location": "Location",
-        "summary": "Validation"
+        "photos": "Attached Photos",
+        "proposals_count": "{count} artisans replied",
+        "no_proposals": "No proposals yet. We have notified artisans in your area.",
+        "cancel_request": "Cancel Request",
+        "cancel_confirm": "Are you sure? This action is irreversible.",
+        "accept_proposal": "Accept this proposal",
+        "modifiable": "Modifiable",
+        "locked": "Locked",
+        "edit": "Edit",
+        "download_quote": "Download Quote",
+        "phone": "Phone",
+        "not_provided": "Not provided",
+        "proposals": "Proposals ({count})",
+        "chosen": "Chosen",
+        "contacted_btn": "I contacted this artisan",
+        "default_proposal_message": "Hello, I am available for this intervention. Contact me to discuss it."
       },
-      "step1": {
-        "title": "Describe your need",
-        "subtitle": "Provide as much detail as possible to receive the best proposals.",
-        "fields": {
-          "title": "Request title *",
-          "title_placeholder": "Ex: Sink leak repair",
-          "category": "Service category *",
-          "category_placeholder": "Select a professional category...",
-          "description": "Problem description *",
-          "description_placeholder": "Explain precisely your need (material needed, urgency, symptoms...)",
-          "phone": "Phone number *",
-          "whatsapp": "WhatsApp",
-          "whatsapp_optional": "(optional)",
-          "whatsapp_placeholder": "wa.me/213…",
-          "generate": "Generate",
-          "link_generated": "Link generated",
-          "test": "Test",
-          "date": "Preferred date",
-          "date_optional": "(optional)",
-          "date_info": "Leave blank if you are flexible"
-        },
-        "errors": {
-          "title_short": "Title too short (minimum 5 characters)",
-          "category_required": "Please choose a category",
-          "description_short": "Description must be at least 20 characters",
-          "phone_invalid": "Please enter a valid phone number"
-        },
-        "next": "Next step"
-      },
-      "step2": {
-        "title": "Location",
-        "subtitle": "Indicate the location of the intervention to find nearby artisans.",
-        "fields": {
-          "wilaya": "Wilaya *",
-          "wilaya_placeholder": "Select a wilaya...",
-          "commune": "Commune *",
-          "commune_placeholder": "Select a commune...",
-          "address": "Address complement (District, No., Floor...)",
-          "address_placeholder": "Ex: District 500, Building B, 3rd floor"
-        },
-        "errors": {
-          "wilaya_required": "Please select a wilaya",
-          "commune_required": "Please select a commune"
-        },
-        "map_info": "Click on the map or move the marker for more precision",
-        "back": "Previous",
-        "next": "Validate"
-      },
-      "step3": {
-        "title": "Summary",
-        "subtitle": "Check the information before publishing your request.",
-        "sections": {
-          "details": "Request details",
-          "location": "Location"
-        },
-        "fields": {
-          "title": "Title",
-          "category": "Category",
-          "description": "Description",
-          "phone": "Phone",
-          "whatsapp": "WhatsApp",
-          "date": "Date",
-          "location_auto": "Geolocation ({lat}, {lng})"
-        },
-        "modify": "Edit",
-        "back": "Previous",
-        "submit": "Publish my request",
-        "submitting": "Publishing...",
-        "error_general": "An error occurred during publication"
+      "proposal": {
+        "experience": "{years} yrs exp.",
+        "contact_whatsapp": "WhatsApp",
+        "contact_call": "Call",
+        "accept_btn": "Choose this artisan"
       }
+    }
+  },
+  "client_reviews": {
+    "title": "My Reviews",
+    "count": "{count} review{count, plural, one {} other {s}} left",
+    "retry": "Retry",
+    "empty_title": "No reviews yet",
+    "empty_desc": "Your reviews will appear here after evaluating an artisan following a completed intervention.",
+    "artisan_label": "Artisan"
+  },
+  "client_complaints": {
+    "title": "My Complaints",
+    "subtitle": "Report an issue related to an intervention or an artisan.",
+    "new_btn": "New complaint",
+    "retry": "Retry",
+    "empty_title": "No complaints",
+    "empty_desc": "You have no ongoing complaints. If you encounter an issue, feel free to submit one.",
+    "linked_to": "Linked to intervention #{id}",
+    "admin_reply": "Administration reply:",
+    "info_note": "💡 Complaints are reviewed by our team within 24h. You will receive a notification as soon as an update is available.",
+    "form": {
+      "title": "Submit a complaint",
+      "subtitle": "Describe your issue in detail. Our team will respond within 24h.",
+      "select_intervention": "Select the relevant intervention",
+      "select_placeholder": "Select an intervention",
+      "subject_label": "Complaint subject",
+      "subject_placeholder": "Ex: Problem with the artisan, work not finished...",
+      "desc_label": "Detailed description",
+      "desc_placeholder": "Explain in detail the problem encountered...",
+      "cancel": "Cancel",
+      "submit": "Send complaint",
+      "submitting": "Sending...",
+      "error_fields": "Please fill in all fields.",
+      "error_min_length": "Description must be at least 20 characters.",
+      "error_send": "Error sending complaint. Please contact support."
+    },
+    "status": {
+      "ouverte": "Open",
+      "en_cours": "In progress",
+      "resolue": "Resolved",
+      "fermee": "Closed"
+    }
+  },
+  "artisan_complaints": {
+    "title": "My Complaints",
+    "subtitle": "Report an issue related to an intervention or a client.",
+    "new_btn": "New complaint",
+    "retry": "Retry",
+    "error_loading": "Loading error",
+    "empty_title": "No complaints",
+    "empty_desc": "You have no ongoing complaints. If you encounter an issue, feel free to submit one.",
+    "linked_to": "Linked to intervention #{id}",
+    "admin_reply": "Administration reply:",
+    "info_note": "💡 Complaints are reviewed by our team within 24h. You will receive a notification as soon as an update is available.",
+    "form": {
+      "title": "Submit a complaint",
+      "subtitle": "Describe your issue in detail. Our team will respond within 24h.",
+      "select_intervention": "Select the relevant intervention",
+      "select_placeholder": "Select an intervention",
+      "subject_label": "Complaint subject",
+      "subject_placeholder": "Ex: Problem with the client, unjustified cancellation...",
+      "desc_label": "Detailed description",
+      "desc_placeholder": "Explain in detail the problem encountered...",
+      "cancel": "Cancel",
+      "submit": "Send complaint",
+      "submitting": "Sending...",
+      "error_fields": "Please fill in all fields.",
+      "error_min_length": "Description must be at least 20 characters.",
+      "error_send": "Error sending complaint. Please contact support."
+    },
+    "status": {
+      "ouverte": "Open",
+      "en_cours": "In progress",
+      "resolue": "Resolved",
+      "fermee": "Closed"
+    }
+  },
+  "artisan": {
+    "jobs": {
+      "title": "Available Job Opportunities",
+      "subtitle": "Find projects that match your skills in your area.",
+      "tabs": {
+        "new": "New Offers",
+        "applied": "My Applications"
+      },
+      "card": {
+        "distance": "{km} km away",
+        "posted": "Posted {time} ago",
+        "view_request": "Details",
+        "apply_now": "Submit Offer",
+        "applied_on": "Applied on {date}"
+      },
+      "modal": {
+        "title": "Submit Offer",
+        "placeholder": "Briefly describe why you are the best fit for this project (e.g., similar experience, immediate availability...)",
+        "send": "Send Offer",
+        "success": "Your offer was sent successfully!"
+      },
+      "empty": {
+        "no_jobs": "No new opportunities right now. We will notify you when a client posts a project in your specialties.",
+        "no_applied": "You haven't submitted any offers yet."
+      },
+      "status": {
+        "en_attente": "Pending",
+        "acceptee": "Accepted!",
+        "rejetee": "Not Accepted"
+      }
+    },
+    "interventions": {
+      "history": {
+        "title": "My Interventions",
+        "count": "{count, plural, =0 {No requests} one {1 request} other {# requests}}",
+        "new_request": "New Request",
+        "empty_title": "No Interventions",
+        "empty_desc": "You haven't published any intervention requests on the platform yet.",
+        "empty_btn": "Publish my first request",
+        "loading_error": "Error loading",
+        "retry": "Retry",
+        "cancel_confirm": "Do you really want to cancel the request \"{title}\"?",
+        "cancel_error": "Error during cancellation"
+      }
+    }
+  },
+  "wizard": {
+    "steps": {
+      "details": "Details",
+      "location": "Location",
+      "summary": "Validation"
+    },
+    "step1": {
+      "title": "Describe your need",
+      "subtitle": "Provide as much detail as possible to receive the best proposals.",
+      "fields": {
+        "title": "Request title *",
+        "title_placeholder": "Ex: Sink leak repair",
+        "category": "Service category *",
+        "category_placeholder": "Select a professional category...",
+        "description": "Problem description *",
+        "description_placeholder": "Explain precisely your need (material needed, urgency, symptoms...)",
+        "phone": "Phone number *",
+        "whatsapp": "WhatsApp",
+        "whatsapp_optional": "(optional)",
+        "whatsapp_placeholder": "wa.me/213…",
+        "generate": "Generate",
+        "link_generated": "Link generated",
+        "test": "Test",
+        "date": "Preferred date",
+        "date_optional": "(optional)",
+        "date_info": "Leave blank if you are flexible"
+      },
+      "errors": {
+        "title_short": "Title too short (minimum 5 characters)",
+        "category_required": "Please choose a category",
+        "description_short": "Description must be at least 20 characters",
+        "phone_invalid": "Please enter a valid phone number"
+      },
+      "next": "Next step"
+    },
+    "step2": {
+      "title": "Location",
+      "subtitle": "Indicate the location of the intervention to find nearby artisans.",
+      "fields": {
+        "wilaya": "Wilaya *",
+        "wilaya_placeholder": "Select a wilaya...",
+        "commune": "Commune *",
+        "commune_placeholder": "Select a commune...",
+        "address": "Address complement (District, No., Floor...)",
+        "address_placeholder": "Ex: District 500, Building B, 3rd floor"
+      },
+      "errors": {
+        "wilaya_required": "Please select a wilaya",
+        "commune_required": "Please select a commune"
+      },
+      "map_info": "Click on the map or move the marker for more precision",
+      "back": "Previous",
+      "next": "Validate"
+    },
+    "step3": {
+      "title": "Summary",
+      "subtitle": "Check the information before publishing your request.",
+      "sections": {
+        "details": "Request details",
+        "location": "Location"
+      },
+      "fields": {
+        "title": "Title",
+        "category": "Category",
+        "description": "Description",
+        "phone": "Phone",
+        "whatsapp": "WhatsApp",
+        "date": "Date",
+        "location_auto": "Geolocation ({lat}, {lng})"
+      },
+      "modify": "Edit",
+      "back": "Previous",
+      "submit": "Publish my request",
+      "submitting": "Publishing...",
+      "error_general": "An error occurred during publication"
     }
   }
 }

@@ -85,11 +85,19 @@ const FORM_I18N = {
       continue: "Continuer",
       sending: "Envoi…",
       submit: "Soumettre le profil",
+      experienceYears: "Années d'expérience",
+      experienceHint: "Si vous débutez, mettez 0.",
+      selected: "sélectionnée",
+      selectTrade: "Sélectionnez votre métier principal...",
       editNameTitle: "Modifier le nom",
       editNameDesc: "Ce nom sera affiché publiquement sur votre profil. Utilisez votre vrai nom pour renforcer la confiance.",
       fullName: "Nom complet",
       cancel: "Annuler",
       save: "Enregistrer",
+      visibleSearch: "Visible dans les recherches",
+      hiddenSearch: "Masqué des recherches",
+      diplomaLabel: "Diplôme / Attestation",
+      cardLabel: "Carte professionnelle",
    },
    en: {
       artisanPro: "Artisan Pro",
@@ -136,11 +144,19 @@ const FORM_I18N = {
       continue: "Continue",
       sending: "Sending…",
       submit: "Submit profile",
+      experienceYears: "Years of experience",
+      experienceHint: "If you're a beginner, put 0.",
+      selected: "selected",
+      selectTrade: "Select your primary trade...",
       editNameTitle: "Edit name",
       editNameDesc: "This name appears publicly on your profile. Use your real name to increase trust.",
       fullName: "Full name",
       cancel: "Cancel",
       save: "Save",
+      visibleSearch: "Visible in searches",
+      hiddenSearch: "Hidden from searches",
+      diplomaLabel: "Diploma / Certificate",
+      cardLabel: "Professional card",
    },
    ar: {
       artisanPro: "حرفي محترف",
@@ -187,11 +203,19 @@ const FORM_I18N = {
       continue: "متابعة",
       sending: "جارٍ الإرسال…",
       submit: "إرسال الملف",
+      experienceYears: "سنوات الخبرة",
+      experienceHint: "إذا كنت مبتدئاً، ضع 0.",
+      selected: "مختارة",
+      selectTrade: "اختر مهنتك الأساسية...",
       editNameTitle: "تعديل الاسم",
       editNameDesc: "سيظهر هذا الاسم علنياً في ملفك الشخصي. استخدم اسمك الحقيقي لزيادة الثقة.",
       fullName: "الاسم الكامل",
       cancel: "إلغاء",
       save: "حفظ",
+      visibleSearch: "يظهر في نتائج البحث",
+      hiddenSearch: "مخفي من نتائج البحث",
+      diplomaLabel: "الدبلوم / شهادة الكفاءة",
+      cardLabel: "البطاقة المهنية",
    },
 }
 
@@ -237,7 +261,17 @@ export default function ArtisanProfileSetupPage() {
    const [wilayaFocused, setWilayaFocused] = React.useState(false)
    const [uploadProgress, setUploadProgress] = React.useState({ photo: 0, doc_diploma: 0, doc_card: 0 })
    const [currentStep, setCurrentStep] = React.useState(1)
+   const [categoryOpen, setCategoryOpen] = React.useState(false)
    const searchRef = React.useRef(null)
+
+   React.useEffect(() => {
+      if (!categoryOpen) return
+      const handler = (e) => {
+         if (!e.target.closest('[data-category-dropdown]')) setCategoryOpen(false)
+      }
+      document.addEventListener('mousedown', handler)
+      return () => document.removeEventListener('mousedown', handler)
+   }, [categoryOpen])
 
    React.useEffect(() => {
       const fetchCategories = async () => {
@@ -672,19 +706,57 @@ export default function ArtisanProfileSetupPage() {
                         </div>
 
                         <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-5 shadow-sm mb-4">
-                           <div className="relative">
-                              <select
-                                 value={formData.category_id || ""}
-                                 onChange={(e) => setFormData(p => ({ ...p, category_id: e.target.value }))}
-                                 className="w-full h-14 pl-12 pr-10 rounded-2xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-sans"
+                           <div className="relative w-full" data-category-dropdown>
+                              <button
+                                 type="button"
+                                 onClick={() => setCategoryOpen(prev => !prev)}
+                                 className={cn(
+                                    "w-full h-14 rounded-2xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 font-semibold transition-all outline-none flex items-center justify-between px-12",
+                                    isRTL ? "flex-row-reverse text-right" : "flex-row text-left",
+                                    categoryOpen ? "border-blue-500 ring-2 ring-blue-500/10" : ""
+                                 )}
                               >
-                                 <option value="" disabled>Sélectionnez votre métier principal...</option>
-                                 {categories.map((cat) => (
-                                    <option key={cat.id} value={cat.id}>{cat.nom}</option>
-                                 ))}
-                              </select>
-                              <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-600" />
-                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+                                 <span className={cn("truncate", !formData.category_id && "text-slate-400 font-medium")}>
+                                    {formData.category_id
+                                       ? (() => {
+                                          const cat = categories.find(c => String(c.id) === String(formData.category_id))
+                                          return cat ? (locale === "ar" ? (cat.nom_ar || cat.nom) : cat.nom) : ""
+                                       })()
+                                       : ft.selectTrade
+                                    }
+                                 </span>
+                                 <ChevronDown className={cn("w-5 h-5 text-slate-400 shrink-0 transition-transform", categoryOpen && "rotate-180")} />
+                                 <Briefcase className={cn("absolute top-1/2 -translate-y-1/2 w-5 h-5 text-blue-600", isRTL ? "right-4" : "left-4")} />
+                              </button>
+
+                              {categoryOpen && (
+                                 <div className={cn(
+                                    "absolute top-[calc(100%+6px)] left-0 right-0 z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl shadow-xl overflow-hidden max-h-60 overflow-y-auto"
+                                 )}>
+                                    {categories.map((cat) => (
+                                       <button
+                                          key={cat.id}
+                                          type="button"
+                                          onClick={() => {
+                                             setFormData(p => ({ ...p, category_id: String(cat.id) }))
+                                             setCategoryOpen(false)
+                                          }}
+                                          className={cn(
+                                             "w-full px-5 py-3.5 font-bold text-sm transition-colors flex items-center gap-2",
+                                             isRTL ? "text-right flex-row-reverse" : "text-left",
+                                             String(formData.category_id) === String(cat.id)
+                                                ? "bg-blue-50 dark:bg-blue-500/10 text-blue-600"
+                                                : "text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-white/5"
+                                          )}
+                                       >
+                                          {String(formData.category_id) === String(cat.id) && (
+                                             <Check className="w-4 h-4 text-blue-600 shrink-0" />
+                                          )}
+                                          {locale === "ar" ? (cat.nom_ar || cat.nom) : cat.nom}
+                                       </button>
+                                    ))}
+                                 </div>
+                              )}
                            </div>
                         </div>
 
@@ -694,21 +766,24 @@ export default function ArtisanProfileSetupPage() {
                            <div className="bg-white dark:bg-white/4 border border-slate-200/80 dark:border-white/7 rounded-2xl p-5 shadow-sm">
                               <div className="flex items-center gap-2 mb-4">
                                  <Award className="w-4 h-4 text-blue-600" />
-                                 <span className="text-sm font-bold text-slate-900 dark:text-white">Années d'expérience</span>
+                                 <span className="text-sm font-bold text-slate-900 dark:text-white">{ft.experienceYears}</span>
                               </div>
                               <div className="relative">
-                                 <Award className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                 <Award className={cn("absolute top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400", isRTL ? "right-4" : "left-4")} />
                                  <input
                                     type="number"
                                     min="0"
                                     max="60"
                                     value={formData.anneesExp}
                                     onChange={e => setFormData(prev => ({ ...prev, anneesExp: e.target.value }))}
-                                    className="w-full h-14 pl-12 pr-4 rounded-2xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
+                                    className={cn(
+                                       "w-full h-14 rounded-2xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-semibold text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all",
+                                       isRTL ? "pr-12 pl-4" : "pl-12 pr-4"
+                                    )}
                                     placeholder="Ex: 7"
                                  />
                               </div>
-                              <p className="mt-2 text-[11px] text-slate-400">Si vous débutez, mettez 0.</p>
+                              <p className="mt-2 text-[11px] text-slate-400">{ft.experienceHint}</p>
                            </div>
 
                            {/* Wilaya search */}
@@ -720,23 +795,26 @@ export default function ArtisanProfileSetupPage() {
                                  </div>
                                  {formData.wilayas.length > 0 && (
                                     <span className="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 px-2 py-0.5 rounded-full">
-                                       {formData.wilayas.length} sélectionnée{formData.wilayas.length > 1 ? "s" : ""}
+                                       {formData.wilayas.length} {ft.selected}
                                     </span>
                                  )}
                               </div>
 
                               {/* Search input */}
                               <div className="relative">
-                                 <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                                 <input
-                                    ref={searchRef}
-                                    placeholder={ft.wilayaSearch}
-                                    value={searchWilaya}
-                                    onChange={(e) => setSearchWilaya(e.target.value)}
-                                    onFocus={() => setWilayaFocused(true)}
-                                    onBlur={() => setTimeout(() => setWilayaFocused(false), 150)}
-                                    className="w-full h-11 pl-10 pr-4 rounded-xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
-                                 />
+                                 <MapPin className={cn("absolute top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400", isRTL ? "right-3.5" : "left-3.5")} />
+                                    <input
+                                       ref={searchRef}
+                                       placeholder={ft.wilayaSearch}
+                                       value={searchWilaya}
+                                       onChange={(e) => setSearchWilaya(e.target.value)}
+                                       onFocus={() => setWilayaFocused(true)}
+                                       onBlur={() => setTimeout(() => setWilayaFocused(false), 150)}
+                                       className={cn(
+                                          "w-full h-11 rounded-xl bg-slate-50 dark:bg-white/4 border border-slate-200 dark:border-white/8 text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all",
+                                          isRTL ? "pr-10 pl-4" : "pl-10 pr-4"
+                                       )}
+                                    />
                                  {searchWilaya && (
                                     <button type="button" onClick={() => setSearchWilaya("")}
                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500 transition-colors">
@@ -775,7 +853,7 @@ export default function ArtisanProfileSetupPage() {
                                                          "font-semibold",
                                                          already ? "text-blue-700 dark:text-blue-300" : "text-slate-700 dark:text-slate-300"
                                                       )}>
-                                                         {w.name}
+                                                         {locale === "ar" ? (w.ar_name || w.name) : w.name}
                                                       </span>
                                                    </div>
                                                    {already
@@ -893,8 +971,8 @@ export default function ArtisanProfileSetupPage() {
                               </div>
                               <div className="grid grid-cols-2 gap-3">
                                  {[
-                                    { value: "disponible", label: ft.available, sub: "Visible dans les recherches", dot: "bg-emerald-500", border: "border-emerald-500", bg: "bg-emerald-500/5 dark:bg-emerald-500/10", text: "text-emerald-700 dark:text-emerald-400" },
-                                    { value: "indisponible", label: ft.unavailable, sub: "Masqué des recherches", dot: "bg-slate-400", border: "border-slate-200 dark:border-white/8", bg: "bg-slate-50 dark:bg-white/3", text: "text-slate-600 dark:text-slate-400" },
+                                    { value: "disponible", label: ft.available, sub: ft.visibleSearch, dot: "bg-emerald-500", border: "border-emerald-500", bg: "bg-emerald-500/5 dark:bg-emerald-500/10", text: "text-emerald-700 dark:text-emerald-400" },
+                                    { value: "indisponible", label: ft.unavailable, sub: ft.hiddenSearch, dot: "bg-slate-400", border: "border-slate-200 dark:border-white/8", bg: "bg-slate-50 dark:bg-white/3", text: "text-slate-600 dark:text-slate-400" },
                                  ].map(opt => {
                                     const isActive = formData.disponibilite === opt.value
                                     return (
@@ -947,8 +1025,8 @@ export default function ArtisanProfileSetupPage() {
 
                            <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
                               {[
-                                 { id: "doc_diploma", label: "Diplôme / Attestation", icon: Award },
-                                 { id: "doc_card", label: "Carte professionnelle", icon: ShieldCheck },
+                                 { id: "doc_diploma", label: ft.diplomaLabel, icon: Award },
+                                 { id: "doc_card", label: ft.cardLabel, icon: ShieldCheck },
                               ].map(doc => {
                                  const isUploaded = !!formData[doc.id]
                                  const progress = uploadProgress[doc.id]
@@ -1081,7 +1159,7 @@ export default function ArtisanProfileSetupPage() {
                            className="h-11 px-7 rounded-xl bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 text-sm font-extrabold transition-all flex items-center gap-2 shadow-lg shadow-slate-900/20"
                         >
                            {ft.continue}
-                           <ArrowRight className="w-4 h-4" />
+                           <ArrowRight className={cn("w-4 h-4 transition-transform", isRTL && "rotate-180")} />
                         </button>
                      ) : (
                         <button
@@ -1098,7 +1176,7 @@ export default function ArtisanProfileSetupPage() {
                            ) : (
                               <>
                                  {ft.submit}
-                                 <ArrowRight className="w-4 h-4" />
+                                 <ArrowRight className={cn("w-4 h-4 transition-transform", isRTL && "rotate-180")} />
                               </>
                            )}
                         </button>

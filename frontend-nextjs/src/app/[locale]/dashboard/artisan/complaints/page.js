@@ -34,7 +34,7 @@ function ComplaintSkeleton() {
 }
 
 export default function ArtisanComplaintsPage() {
-  const t = useTranslations("dashboard.artisan_complaints")
+  const t = useTranslations("artisan_complaints")
   const locale = useLocale()
   const { user } = useAuth()
 
@@ -210,7 +210,7 @@ function ComplaintCard({ complaint, t }) {
 }
 
 function NewComplaintForm({ onSuccess, onCancel }) {
-  const t = useTranslations("dashboard.artisan_complaints.form")
+  const t = useTranslations("artisan_complaints.form")
   const [subject, setSubject] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [interventionId, setInterventionId] = React.useState("")

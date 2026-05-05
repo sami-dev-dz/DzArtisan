@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { 
   MapPin, Search, ChevronDown,
   RotateCcw, Star, Briefcase, Check, Zap
@@ -26,6 +26,7 @@ function FilterSection({ label, icon: Icon, children }) {
 export function ArtisanFilters({ filters, setFilters, categories, wilayas, onReset, onGeoActivate }) {
   const t = useTranslations("search")
   const common = useTranslations("common")
+  const locale = useLocale()
 
   const [wilayaSearch, setWilayaSearch] = React.useState("")
   const [isWilayaOpen, setIsWilayaOpen] = React.useState(false)
@@ -165,7 +166,9 @@ export function ArtisanFilters({ filters, setFilters, categories, wilayas, onRes
                   {filters.categories.includes(cat.id) && <Check className="w-2.5 h-2.5 text-white stroke-3" />}
                 </div>
                 <input type="checkbox" className="hidden" checked={filters.categories.includes(cat.id)} onChange={() => toggleCategory(cat.id)} />
-                <span className="text-[11px] font-bold">{cat.nom}</span>
+                <span className="text-[11px] font-bold">
+                  {locale === "ar" ? (cat.nom_ar || cat.nom) : cat.nom}
+                </span>
               </div>
               <span className="text-[10px] font-bold text-slate-400 bg-slate-100 dark:bg-white/5 px-1.5 py-0.5 rounded-md">
                 {cat.artisans_count || 0}

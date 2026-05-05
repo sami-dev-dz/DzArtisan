@@ -8,6 +8,7 @@ import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 import { NotificationBell } from "./NotificationBell";
+import { cn } from "@/lib/utils";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -18,7 +19,7 @@ export default function Navbar() {
   });
   const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef(null);
-  
+
   const t = useTranslations("navigation");
   const locale = useLocale();
   const pathname = usePathname();
@@ -84,8 +85,8 @@ export default function Navbar() {
   };
 
   const dashboardUrl = user?.type === 'admin' ? '/dashboard/admin' :
-                      user?.type === 'artisan' ? '/dashboard/artisan' :
-                      '/dashboard/client';
+    user?.type === 'artisan' ? '/dashboard/artisan' :
+      '/dashboard/client';
 
   return (
     <>
@@ -346,19 +347,19 @@ export default function Navbar() {
               }}
               className="transition-transform duration-300 group-hover:scale-105"
             >
-              <Image 
-                src="/logo.png" 
-                alt="DzArtisan Logo" 
-                width={48} 
-                height={48} 
-                className="w-auto h-10 object-contain"
+              <Image
+                src="/logo.png"
+                alt="DzArtisan Logo"
+                width={64}
+                height={64}
+                className="w-auto h-14 object-contain"
                 style={{ width: "auto", height: "auto" }}
                 priority
               />
             </div>
             <span
               style={{
-                fontSize: "1.6rem",
+                fontSize: "1.8rem",
                 fontWeight: 800,
                 color: "var(--nav-text-active)",
                 letterSpacing: "-0.04em",
@@ -426,12 +427,12 @@ export default function Navbar() {
                 aria-label="Change language"
                 onClick={() => setLangOpen((o) => !o)}
               >
-                <Globe size={13} strokeWidth={2} />
+                <Globe size={13} strokeWidth={2.5} />
                 {LANGS.find((l) => l.code === locale)?.short}
                 <motion.span
                   animate={{ rotate: langOpen ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
-                  style={{ display: "flex" }}
+                  style={{ display: "flex", ...(locale === "ar" ? { transform: 'scaleX(-1)' } : {}) }}
                 >
                   <ChevronDown size={12} strokeWidth={2.5} />
                 </motion.span>
@@ -475,18 +476,19 @@ export default function Navbar() {
 
             {/* Auth */}
             {user ? (
-               <>
-                 <NotificationBell />
-                 {artisanConfirmed && (
-                   <Link href={dashboardUrl} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <User size={14} />
-                      {t("dashboard")}
-                   </Link>
-                 )}
-                 <button onClick={logout} className="icon-btn" title={t("logout")}>
-                   <LogOut size={14} />
-                 </button>
-               </>
+              <>
+                <NotificationBell />
+                {artisanConfirmed && (
+                  <Link href={dashboardUrl} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {locale !== 'ar' && <User size={14} />}
+                    {t("dashboard")}
+                    {locale === 'ar' && <User size={14} />}
+                  </Link>
+                )}
+                <button onClick={logout} className="icon-btn" title={t("logout")}>
+                  <LogOut size={14} className={cn(locale === 'ar' && "rotate-180")} />
+                </button>
+              </>
             ) : (
               <>
                 <Link href="/login" className="btn-ghost">
@@ -494,7 +496,7 @@ export default function Navbar() {
                 </Link>
                 <Link href="/register" className="btn-primary">
                   {t("register")}
-                  <ChevronRight size={13} strokeWidth={2.5} />
+                  <ChevronRight size={13} strokeWidth={2.5} className={cn("ml-1.5", locale === "ar" && "rotate-180 ml-0 mr-1.5")} />
                 </Link>
               </>
             )}
@@ -585,7 +587,7 @@ export default function Navbar() {
                       onClick={() => setIsOpen(false)}
                     >
                       {link.label}
-                      <ChevronRight size={15} strokeWidth={2} style={{ color: "var(--nav-text)", opacity: 0.4 }} />
+                      <ChevronRight size={15} strokeWidth={2} className={cn(locale === "ar" && "rotate-180 opacity-40")} style={{ color: "var(--nav-text)" }} />
                     </Link>
                   </motion.div>
                 ))}
@@ -653,7 +655,7 @@ export default function Navbar() {
                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
                           }}
                         >
-                           <User size={14} /> {t("dashboard")}
+                          <User size={14} /> {t("dashboard")}
                         </Link>
                       )}
                       <button

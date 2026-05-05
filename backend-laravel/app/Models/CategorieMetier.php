@@ -12,6 +12,7 @@ class CategorieMetier extends Model
 
     protected $fillable = [
         'nom',
+        'nom_ar',
         'slug',
         'icone'
     ];

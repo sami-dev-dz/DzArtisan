@@ -7,7 +7,7 @@ import {
   MapPin, Calendar, Clock, Tag, ChevronDown, ChevronUp,
   Image as ImageIcon, Loader2, X, ZoomIn
 } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { Skeleton } from "@/components/ui/Skeleton"
@@ -27,6 +27,7 @@ const STATUS_CONFIG = {
 
 export function InterventionCard({ intervention, onReview, onCancel }) {
   const t = useTranslations("interventions")
+  const locale = useLocale()
   const [expanded, setExpanded] = React.useState(false)
   const [lightbox, setLightbox] = React.useState(null)
 
@@ -91,12 +92,12 @@ export function InterventionCard({ intervention, onReview, onCancel }) {
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] font-bold text-slate-400 uppercase tracking-wide">
               {categorie && (
                 <span className="flex items-center gap-1">
-                  <Tag className="w-3 h-3" /> {categorie.nom}
+                  <Tag className="w-3 h-3" /> {locale === "ar" ? (categorie.nom_ar || categorie.nom) : categorie.nom}
                 </span>
               )}
               {wilaya && commune && (
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-3 h-3" /> {commune.nom}, {wilaya.nom}
+                  <MapPin className="w-3 h-3" /> {locale === "ar" ? (commune.ar_name || commune.nom) : commune.nom}, {locale === "ar" ? (wilaya.ar_name || wilaya.nom) : wilaya.nom}
                 </span>
               )}
               <span className="flex items-center gap-1">

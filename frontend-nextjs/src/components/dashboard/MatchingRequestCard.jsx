@@ -1,15 +1,17 @@
 "use client"
 
 import * as React from "react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { motion } from "framer-motion"
-import { MapPin, Calendar, ClipboardCheck, ArrowRight, Star, Clock } from "lucide-react"
+import { MapPin, Calendar, ClipboardCheck, ArrowRight, ArrowLeft, Star, Clock } from "lucide-react"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
 export function MatchingRequestCard({ request, index }) {
   const t = useTranslations("dashboard")
   const common = useTranslations("common")
+  const locale = useLocale()
+  const isRTL = locale === "ar"
 
   return (
     <motion.div
@@ -66,7 +68,11 @@ export function MatchingRequestCard({ request, index }) {
       <Link href={`/dashboard/interventions/${request.id}`}>
          <button className="w-full h-12 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-[10px] uppercase tracking-[0.2em] flex items-center justify-center gap-3 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-xl shadow-slate-900/10 active:scale-95">
             {t("view_details")}
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            {isRTL ? (
+               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            ) : (
+               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            )}
          </button>
       </Link>
     </motion.div>

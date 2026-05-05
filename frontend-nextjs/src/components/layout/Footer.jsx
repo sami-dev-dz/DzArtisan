@@ -59,7 +59,8 @@ const Logo = ({ isRTL }) => (
 )
 
 export function Footer() {
-  const t = useTranslations("navigation")
+  const t = useTranslations("footer")
+  const tNav = useTranslations("navigation")
   const locale = useLocale()
   const isRTL = locale === "ar"
   const pathname = usePathname()
@@ -77,7 +78,7 @@ export function Footer() {
           <div className="lg:col-span-2 flex flex-col rtl:items-start">
             <Logo isRTL={isRTL} />
             <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-8 max-w-sm">
-              La plateforme de référence en Algérie pour la mise en relation entre clients et artisans qualifiés. Performance, sécurité et proximité garanties.
+              {t("about")}
             </p>
             <div className="flex items-center gap-3">
               {[
@@ -99,21 +100,21 @@ export function Footer() {
             <div className="mt-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/30">
                <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-500" />
                <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">
-                  Plateforme vérifiée & sécurisée
+                  {t("secure_platform")}
                </span>
             </div>
           </div>
 
           {/* Column 2: Platform Links */}
           <div className="flex flex-col rtl:items-start">
-            <h4 className="text-slate-900 dark:text-white font-semibold mb-6">Explorez</h4>
+            <h4 className="text-slate-900 dark:text-white font-semibold mb-6">{t("heading_explore")}</h4>
             <ul className="space-y-3">
               {[
-                { label: "Trouver un artisan", href: "/artisans" },
-                { label: "Publier une demande", href: "/requests/new" },
-                { label: "Tarifs artisans", href: "/pricing" },
-                { label: "Villes desservies", href: "/coverage" },
-                { label: "Administration", href: "/admin/login" }
+                { label: t("links.find_artisan"), href: "/artisans" },
+                { label: t("links.post_request"), href: "/requests/new" },
+                { label: t("links.pricing"), href: "/pricing" },
+                { label: t("links.coverage"), href: "/coverage" },
+                { label: t("links.admin"), href: "/admin/login" }
               ].map((link, i) => (
                 <li key={i}>
                   <Link 
@@ -129,13 +130,13 @@ export function Footer() {
 
           {/* Column 3: Legal & Help */}
           <div className="flex flex-col rtl:items-start">
-            <h4 className="text-slate-900 dark:text-white font-semibold mb-6">Support</h4>
+            <h4 className="text-slate-900 dark:text-white font-semibold mb-6">{t("heading_support")}</h4>
             <ul className="space-y-3">
               {[
-                { label: "Conditions d'utilisation", href: "/pages/terms" },
-                { label: "Confidentialité", href: "/pages/privacy" },
-                { label: "Centre d'aide", href: "/pages/help" },
-                { label: "Questions fréquentes", href: "/pages/faq" }
+                { label: t("links.terms"), href: "/pages/terms" },
+                { label: t("links.privacy"), href: "/pages/privacy" },
+                { label: t("links.help"), href: "/pages/help" },
+                { label: t("links.faq"), href: "/pages/faq" }
               ].map((link, i) => (
                 <li key={i}>
                   <Link 
@@ -151,12 +152,12 @@ export function Footer() {
 
           {/* Column 4: Contact Inf */}
           <div className="flex flex-col rtl:items-start">
-            <h4 className="text-slate-900 dark:text-white font-semibold mb-6">Contact</h4>
+            <h4 className="text-slate-900 dark:text-white font-semibold mb-6">{t("heading_contact")}</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                  <MapPin className="h-5 w-5 text-slate-400 shrink-0 mt-0.5" />
                  <span className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-                   {t("contact_locations")}
+                   {tNav("contact_locations")}
                  </span>
               </li>
               <li className="flex items-center gap-3">
@@ -181,12 +182,12 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-slate-500 dark:text-slate-500">
-            © {currentYear} DzArtisan. Tous droits réservés. 🇩🇿
+            © {currentYear} DzArtisan. {t("rights_reserved")} 🇩🇿
           </p>
           <div className="flex items-center gap-4 text-xs font-medium text-slate-400">
-            <span>Conforme à la loi 18-07</span>
+            <span>{t("law_compliance")}</span>
             <div className="h-3 w-px bg-slate-300 dark:bg-slate-700 hidden sm:block" />
-            <span className="hidden sm:inline">Hébergé en Algérie</span>
+            <span className="hidden sm:inline">{t("hosted_in")}</span>
           </div>
         </div>
       </div>
