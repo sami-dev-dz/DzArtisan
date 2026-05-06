@@ -1,11 +1,9 @@
-FROM php:8.2-cli
+FROM php:8.4-cli
 
-# Installer les extensions PHP nécessaires
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libzip-dev libpng-dev libonig-dev libxml2-dev libicu-dev \
     && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl bcmath fileinfo intl
 
-# Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -14,8 +12,6 @@ ENV COMPOSER_MEMORY_LIMIT=-1
 WORKDIR /var/www
 
 COPY . .
-
-RUN ls -la
 
 RUN composer install --optimize-autoloader --no-dev --no-interaction --no-scripts
 
