@@ -13,12 +13,9 @@ WORKDIR /var/www
 
 COPY . .
 
-# Créer les dossiers nécessaires avant composer
-RUN mkdir -p storage/framework/{sessions,views,cache} \
-    storage/logs \
-    bootstrap/cache
+RUN mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cache
 
-RUN composer install --optimize-autoloader --no-dev --no-interaction --no-scripts --no-cache
+RUN composer install --optimize-autoloader --no-dev --no-interaction --no-scripts
 
 RUN chmod -R 775 storage bootstrap/cache
 
