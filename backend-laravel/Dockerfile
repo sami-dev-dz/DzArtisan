@@ -13,10 +13,17 @@ WORKDIR /var/www
 
 COPY . .
 
-RUN composer install --optimize-autoloader --no-dev --no-interaction --no-scripts
+# Créer les dossiers nécessaires avant composer
+RUN mkdir -p storage/framework/{sessions,views,cache} \
+    storage/logs \
+    bootstrap/cache
+
+RUN composer install --optimize-autoloader --no-dev --no-interaction --no-scripts --no-cache
 
 RUN chmod -R 775 storage bootstrap/cache
 
 EXPOSE 8000
 
-CMD php artisan package:discover --ansi && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT
+CMD php artisan package:discover --ansi && \
+    php artisan migrate --force && \
+    php artisan serve --host=0.0.0.0 --port=${PORT:-8000}
