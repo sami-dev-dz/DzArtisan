@@ -224,9 +224,6 @@
   "authentication": {
     "error": "Une erreur est survenue. Veuillez réessayer.",
     "success": "Compte créé avec succès !",
-    "admin_login_title": "Portail Administrateur",
-    "admin_login_subtitle": "Accès réservé au personnel autorisé de DzArtisan.",
-    "admin_login_btn": "Se connecter à l'administration",
     "login_title": "Bon retour parmi nous",
     "login_subtitle": "Connectez-vous pour accéder à votre espace.",
     "register_title": "Créer un compte",

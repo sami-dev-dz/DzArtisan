@@ -1,0 +1,25 @@
+# Backend
+backend-laravel/node_modules
+backend-laravel/vendor
+backend-laravel/public/storage
+backend-laravel/storage/*.key
+backend-laravel/.env
+backend-laravel/.env.backup
+backend-laravel/.env.production
+backend-laravel/auth.json
+
+# Frontend
+frontend-nextjs/node_modules
+frontend-nextjs/.next/
+frontend-nextjs/out/
+frontend-nextjs/build/
+frontend-nextjs/.env*
+frontend-nextjs/.vercel
+frontend-nextjs/playwright-report/
+frontend-nextjs/test-results/
+
+# General
+.DS_Store
+*.log
+.vscode/
+.idea/

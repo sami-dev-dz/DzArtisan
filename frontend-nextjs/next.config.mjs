@@ -26,6 +26,10 @@ const nextConfig = {
         hostname: "lh3.googleusercontent.com", // Google OAuth avatars
       },
       {
+        protocol: "https",
+        hostname: "dzArtisan.vercel.app",
+      },
+      {
         protocol: "http",
         hostname: "localhost",
       },
